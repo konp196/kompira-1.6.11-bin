@@ -1,0 +1,11 @@
+{% load i18n core_extras %}
+{% if extra_properties %}
+<table class="table table-striped table-sm view-table table-label-left">
+  {% for prop, value in extra_properties.items %}
+  <tr id="id_extra-{{ prop }}">
+    <th class="obj-display-name"><span class="toggle-name">{% trans prop %}</span><span class="toggle-name" style="display: none;">{{ prop }}</span></th>
+    <td class="obj-value">{{ value|to_link }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}

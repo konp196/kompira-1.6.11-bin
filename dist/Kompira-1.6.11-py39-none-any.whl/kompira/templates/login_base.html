@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static i18n core_extras %}
+{% load cache %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'tempusdominus-bootstrap-4-5.39.0/css/tempusdominus-bootstrap-4.min.css' %}">
+<link rel="stylesheet" href="{% static 'select2-bootstrap4-1.3.4/css/select2-bootstrap4.css' %}">
+<script type="text/javascript" src="{% static 'jquery-3.5.1/js/jquery-3.5.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap-4.5.2/js/bootstrap.bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'moment-unknown/js/moment-with-locales.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'tempusdominus-bootstrap-4-5.39.0/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+<script type="text/javascript" src="{% static 'kompira/js/kompira.js' %}"></script>
+<script type="text/javascript" src="{% static 'kompira/js/toggle_password.js' %}"></script>
+<script type="text/javascript" src="{% static 'kompira/js/utils.js' %}"></script>
+<script type="text/javascript">
+kompira.config.paginator.pagesize_max = {{ settings.KOMPIRA_PAGESIZE_MAX }};
+kompira.config.paginator.pagesize_default = {{ settings.KOMPIRA_PAGESIZE_DEFAULT }};
+kompira.config.paginator.pagesize_list = {{ settings.KOMPIRA_PAGESIZE_LIST }};
+</script>
+{% endblock extra_head %}
+
+{% block header_title %}{{ object_property.abspath }}{% endblock %}
+
+{% block base_body %}
+<header>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    {% with home_url=user.home_directory %}
+    {% include "brand.html" %}
+    {% endwith %}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown noprint">
+          <a href="#" id="nav-menu-filesystem" class="nav-link dropdown-toggle" data-toggle="dropdown">
+            {% trans 'file system'|capfirst %}
+            <span class="caret"></span>
+          </a>
+          <div class="dropdown-menu">
+            {% for object in nav_side %}
+            <a class="dropdown-item" href="{{ object.abspath }}">
+              <i class="fas fa-folder-open"></i> {{ object.name }}</a>
+            {% for item in object.children %}
+            <a class="dropdown-item" href="{{ item.abspath }}">
+              <i class="fas fa-minus"></i> {{ item.name }}</a>
+            {% endfor %}
+            {% if not forloop.last %}<div class="dropdown-divider"></div>{% endif %}
+            {% endfor %}
+          </div>
+        </li>
+        {% for item in nav_menu %}
+        <li class="nav-item noprint"><a id="nav-menu-{{ item.name }}" class="nav-link" href="{{ item.abspath }}?is_active=True">{{ item.display_name }}</a></li>
+        {% endfor %}
+        <li class="nav-item dropdown noprint">
+          <a href="#" id="nav-menu-config" class="nav-link dropdown-toggle" data-toggle="dropdown">
+            {% trans 'config'|capfirst %}
+            <span class="caret"></span>
+          </a>
+          <div class="dropdown-menu">
+            {% for item in nav_config %}
+            <a class="dropdown-item" href="{{ item.abspath }}">{{ item.display_name }}</a>
+            {% endfor %}
+          </div>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" id="nav-menu-help" href="{{ help_url }}" target="_blank"><i class="fas fa-book" title="{% trans 'help'|capfirst %}"></i><span class="d-sm-none d-md-inline"> {% trans 'help'|capfirst %}</span></a></li>
+        <li class="nav-item dropdown">
+          <a id="nav-menu-user" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fas fa-user" title="{{ user.username }}"></i><span class="d-sm-none d-md-inline"> <span id="nav-username">{{ user.username }}</span><span class="caret noprint"></span></span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" id="nav-menu-user-information" href="{{ user.abspath }}"><i class="fas fa-user"></i> {% trans 'user information'|capfirst %}</a>
+            <a class="dropdown-item" id="nav-menu-change-password" href="{{ user.abspath }}.password"><i class="fas fa-edit"></i> {% trans 'change password'|capfirst %}</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" id="nav-menu-logout" href="{% url 'logout' %}"><i class="fas fa-power-off"></i> {% trans 'logout'|capfirst %}</a>
+          </div>
+        </li>
+      </ul>
+    </div><!--/.container-fluid -->
+  </nav><!--/.navbar .navbar-fixed-top -->
+</header>
+<main>
+  <div class="container-fluid mt-3">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      <a class="close" data-dismiss="alert" href="#">&times;</a>
+      {% trans message.message %}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% block extra_header %}{% endblock extra_header %}
+    {% block page_header %}
+    <div class="page-header clearfix">
+      {% block page_header_prepend %}{% endblock page_header_prepend %}
+      <div class="float-left">
+        <h4 class="page-title">
+        {% block page_title %}
+          <div class="page-main-title">{% block page_main_title %}{% endblock page_main_title %}</div>
+          <div class="page-sub-title">{% block page_sub_title %}{% endblock page_sub_title %}</div>
+        {% endblock page_title %}
+        </h4>
+      </div>
+      {% block page_header_append %}
+      <div class="float-right">
+        <span class="data-loading" style="display: none;"><img src="{% static 'kompira/img/console-loading.gif' %}" /></span>
+      </div>
+      {% endblock page_header_append %}
+    </div>
+    {% endblock page_header %}
+    <section class="article">
+      {% block article_header %}{% endblock %}
+      <div class="row">
+        {% block article %}{% endblock %}
+      </div><!--/row-->
+      {% block article_footer %}{% endblock %}
+    </section>
+  </div><!--/.fluid-container-->
+</main>
+<!-- keybind の設定-->
+<div class="modal hide keybind-help" id="keybind-help" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="title">{% trans 'keyboard shortcuts'|capfirst %}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="help-keybind container-fluid"></div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">{% trans 'Close' %}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% include "error_dialog.html" %}
+
+<link rel="stylesheet" href="{% static 'kompira/css/keybind.css' %}">
+<script src="{% static 'kompira/js/keybind.js' %}"></script>
+{% block extra_js %}{% endblock %}
+<!-- select2 と jquery.formset.js の相性のため、select2_field.js は js_field_form.html の内部で呼び出している field_array.js より後に読み込む必要がある -->
+<script type="text/javascript" src="{% static 'kompira/js/select2_field.js' %}"></script>
+<script type="text/javascript">$(kompira.init_login_base);</script>
+{% endblock %}

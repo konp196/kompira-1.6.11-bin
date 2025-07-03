@@ -1,0 +1,146 @@
+=======================
+Creole Wiki 記法
+=======================
+
+:著者: Kompira開発チーム
+
+はじめに
+========
+
+Kompiraオブジェクトとして作成できるウィキページでは、Creole記法を採用しています。
+
+本稿ではCreole記法の文法について説明します。
+
+
+記法
+======
+
+イタリック
+-----------
+.. code-block:: none
+
+    //italics//
+
+*italics*
+
+太字
+-----
+.. code-block:: none
+  
+    **bold**
+
+**bold**
+
+リスト
+------
+.. code-block:: none
+  
+    * Bullet list
+    * Second item
+    ** Sub item
+
+- Bullet list
+
+- Second item
+
+  - Sub item
+
+番号付きリスト
+---------------
+.. code-block:: none
+
+    # Numbered list
+    # Second item
+    ## Sub item
+
+1. Numbered list
+
+2. Second item
+
+  1. Sub item
+
+リンク
+-------
+.. code-block:: none
+
+    Link to [[/home]]
+    [[http://www.wikicreole.org|wikicreole]]
+
+Link to  `/home </home>`_
+
+`WikiCreole <http://www.wikicreole.org>`_
+
+見出し
+-------
+.. code-block:: none
+   
+    == Large heading
+    === Medium heading
+    ==== Small heading
+
+
+Large heading
+==============
+
+Medium heading
+----------------
+
+Small heading
+``````````````
+
+
+改行
+-----
+.. code-block:: none
+   
+    Force\\linebreak
+
+Force
+
+linebreak
+
+水平線
+-------
+.. code-block:: none
+
+    Horizontal line:
+    ----
+
+Horizontal line:
+
+----
+
+テーブル
+---------
+.. code-block:: none
+
+    |=|=table|=header|
+    |a|table|row|
+    |b|table|row|
+
++---+-----+------+
+|   |table|header|
++===+=====+======+
+| a |table|row   |
++---+-----+------+
+| b |table|row   |
++---+-----+------+
+
+引用
+-----
+.. code-block:: none
+
+    {{{
+      == [[Nowiki]]:
+      //**don't format//
+    }}}
+
+
+.. code-block:: none
+
+    == [[Nowiki]]:
+    //**don't format//
+
+その他
+------
+`WikiCreole(外部サイト) <http://www.wikicreole.org/wiki/Creole1.0>`_

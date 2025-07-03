@@ -1,0 +1,4 @@
+[console_scripts]
+kompira_jobmngrd = kompira_jobmngr.kompira_jobmngrd:main
+kompira_sendevt = kompira_sendevt.kompira_sendevt:main
+

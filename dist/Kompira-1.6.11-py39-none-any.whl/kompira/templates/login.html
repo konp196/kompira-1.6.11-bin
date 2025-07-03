@@ -1,0 +1,68 @@
+{% extends "nologin_base.html" %}
+{% load static i18n %}
+
+{% block header_title %}{% trans 'login'|capfirst %}{% endblock %}
+{% block extra_head %}
+<style type="text/css">
+html, body {
+  background-color: gray!important;
+}
+.card {
+  margin-top: 3rem;
+}
+.login-logo {
+  width: 10rem;
+  height: 10rem;
+  background-color: white; padding: 1rem; border-radius: 0.25rem;
+}
+.login-btn {
+  width: 100%;
+}
+</style>
+{% endblock %}
+
+{% block article %}
+<form action="{% url 'login' %}" method="post">
+  {% csrf_token %}
+  <div class="card border-secondary text-center">
+    {% if settings.KOMPIRA_LOGIN_LOGO %}
+    <div class="card-body">
+      <img class="login-logo" src="{% static settings.KOMPIRA_LOGIN_LOGO %}">
+    </div>
+    {% endif %}
+    <div class="card-body">
+      <h4 class="card-title">{% blocktrans %}Welcome to {{ brand_title }}{% endblocktrans %}</h4>
+    </div>
+    <div class="card-body">
+      {% if messages %}
+      {% for message in messages %}
+      <div id="{{ message.tags }}-message" class="alert alert-{{ message.tags }}">
+        {% trans message.message %}
+      </div>
+      {% endfor %}
+      {% endif %}
+      <input type="hidden" name="next" value="{{ next }}">
+      <div class="form-group row">
+        <label class="col-4 col-form-label text-right" for="username">{% trans 'user'|capfirst %}</label>
+        <div class="col-8">
+          <input class="form-control" id="username" type="text" name="username" required="required">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-4 col-form-label text-right" for="password">{% trans 'password'|capfirst %}</label>
+        <div class="col-8">
+          <input class="form-control" id="password" type="password" name="password" autocomplete="off">
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary submit-btn login-btn">{% trans 'login'|capfirst %}</button>
+    </div>
+  </div>
+</form>
+<script type="text/javascript">
+window.onload = function(){
+  document.getElementById('username').focus();
+}
+</script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "selectable_list.html" %}
+{% load i18n core_extras %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include 'lib/tablesorter.html' %}
+{% endblock extra_head %}
+
+{% block header_title %}{% trans 'task list'|capfirst %}{% endblock %}
+{% block page_main_title %}{% trans 'task list'|capfirst %}{% endblock %}
+
+{% block display_select %}
+{% with act_objects=_("active tasks") all_objects=_("all tasks") %}
+{{ block.super }}
+{% endwith %}
+{% endblock %}
+
+{% block selectable_list %}
+  <table class="table table-bordered table-striped table-sm tablesorter list-table">
+    <thead>
+      <tr>
+        <th class="column-selector {sorter: false}"><input type="checkbox" id="selectAll"></th>
+        <th>{% trans 'ID' %}</th>
+        <th>{% trans 'name'|capfirst %}</th>
+        <th>{% trans 'title'|capfirst %}</th>
+        <th>{% trans 'status'|capfirst %}</th>
+        <th>{% trans 'owner'|capfirst %}</th>
+        <th>{% trans 'datetime'|capfirst %}</th>
+      </tr>
+    </thead>
+    <tbody id="task-list">
+      {% for task in object_list %}
+      <tr>
+        <td class="column-selector"><input class="delete-checkbox" type="checkbox"
+                   id="id_checkbox-{{ task.id }}" name="delete_id" value="{{ task.id }}"
+                   {% if not task.is_closed %}disabled{% endif %}></td>
+        <td><a href="{{ task.abspath }}">{{ task.id }}</a></td>
+        <td><a href="{{ task.abspath }}">{{ task.name }}</a></td>
+        <td>{{ task.title }}</td>
+        <td>{% trans task.status %}</td>
+        <td>{{ task.owner }}</td>
+        <td>{{ task.created_date }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot><tr class="no_applicable_data" style="{% if object_list|length > 0 %}display: none;{% endif %}"><th colspan="7">{% blocktrans %}No applicable {{ model_verbose_name }}{% endblocktrans %}</th></tr></tfoot>
+  </table>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript">
+(function(kompira) {
+  var deletable = $(".page_filters .active").data('deletable');
+  $('#id_selectable_delete-btn').attr('disabled', !deletable);
+})(kompira);
+</script>
+{% endblock %}

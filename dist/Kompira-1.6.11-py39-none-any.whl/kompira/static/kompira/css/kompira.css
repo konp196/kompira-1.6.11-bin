@@ -1,0 +1,857 @@
+/*
+ * overwrite bootstrap-responsive style
+ */
+
+/* 以前のbootstrapのpre スタイルを継承 */
+pre {
+    padding: 9.5px;
+    background-color: #f5f5f5;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+/*
+ * メニューバーのスタイル定義
+ */
+.navbar {
+    padding: 0.5rem;
+}
+.navbar .navbar-brand {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-right: 0;
+}
+.navbar .brand-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.25rem;
+    background-color: white;
+}
+.navbar .brand-name {           /* ブランド名の下にバージョンを表示するため、すこし上に配置する */
+    position: relative;
+    float: right;               /* バージョン番号とともに右寄せ */
+    top: -0.25rem;
+    font-weight: bold;
+}
+.navbar .brand-version {        /* バージョンは小さめにブランド名の下に表示する */
+    position: relative;
+    clear: right;               /* ブランド名の右寄せを一旦クリア */
+    float: right;               /* あらためてバージョン番号を右寄せ */
+    right: 0;
+    bottom: -0.25rem;
+    line-height: 0;
+    font-size: 0.625rem;
+    opacity: 0.75;
+}
+.navbar .navbar-toggler {
+    padding: 0.25rem;
+}
+/* 画面幅が狭いときにメニューバーを省略表記させる（折り返さない） */
+@media (min-width: 576px) {
+.navbar .navbar-collapse,
+.navbar .nav-item {
+    min-width: 0;
+}
+.navbar .navbar-collapse .navbar-nav:nth-child(1),
+.navbar .navbar-collapse .nav-item > a {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.navbar .dropdown {
+    position: initial;
+}
+.navbar .navbar-collapse .dropdown-menu {
+    position: absolute;
+    top: 3rem;
+    left: auto;
+    margin-right: 0.5rem;
+}
+}
+/* メニュー項目に hover してる間は shrink させない、また背景色を強調する */
+/* .navbar .navbar-brand:hover, */
+.navbar .navbar-collapse .nav-item:hover {
+    flex-shrink: 0;
+    border-radius: 0.25rem;
+    background-color: rgba(0,0,0,0.25);
+}
+/* ドロップダウンメニューが表示されている間は shrink させない */
+.navbar .navbar-collapse .nav-item.show {
+    flex-shrink: 0;
+}
+
+
+.page-main-title {
+    font-weight: bold;
+}
+.page-sub-title {
+    font-size: 70%;
+    color: #6c757d!important;
+}
+.page-sub-title a {
+    color: #6c757d!important;
+    text-decoration: none!important;
+}
+
+.deadlink {
+    color: #999;
+}
+
+/*
+ * インシデント一覧での状態ごとのカラーリング
+ */
+.coloring tr[data-status=OPENED] {
+    background-color: #f2dede;
+}
+.coloring tr[data-status=OPENED]:nth-child(odd) {
+    background-color: #eed3d7;
+}
+.coloring tr[data-status=WORKING] {
+    background-color: #fcf8e3;
+}
+.coloring tr[data-status=WORKING]:nth-child(odd) {
+    background-color: #fbeed5;
+}
+.coloring tr[data-status=CLOSED] {
+    background-color: #dff0d8;
+}
+.coloring tr[data-status=CLOSED]:nth-child(odd) {
+    background-color: #d6e9c6;
+}
+
+
+/*
+ * プロセス一覧での状態ごとのカラーリング
+ */
+.coloring tr[data-status$=ABORTED] {
+    background-color: #f2dede;
+}
+.coloring tr[data-status$=ABORTED]:nth-child(odd) {
+    background-color: #eed3d7;
+}
+.coloring tr[data-status$=DONE] {
+    background-color: #dff0d8;
+}
+.coloring tr[data-status$=DONE]:nth-child(odd) {
+    background-color: #d6e9c6;
+}
+.coloring tr[data-status=READY],
+.coloring tr[data-status=RUNNING],
+.coloring tr[data-status=WAITING] {
+    background-color: #d9edf7;
+}
+.coloring tr[data-status=READY]:nth-child(odd),
+.coloring tr[data-status=RUNNING]:nth-child(odd),
+.coloring tr[data-status=WAITING]:nth-child(odd) {
+    background-color: #bce8f1;
+}
+.coloring tr[data-status=SUSPENDED-READY],
+.coloring tr[data-status=SUSPENDED-RUNNING],
+.coloring tr[data-status=SUSPENDED-WAITING] {
+    background-color: #fcf8e3;
+}
+.coloring tr[data-status=SUSPENDED-READY]:nth-child(odd),
+.coloring tr[data-status=SUSPENDED-RUNNING]:nth-child(odd),
+.coloring tr[data-status=SUSPENDED-WAITING]:nth-child(odd) {
+    background-color: #fbeed5;
+}
+
+
+.coloring tr .row-red {
+    background-color: #f2dede;
+}
+.coloring tr:nth-child(odd) .row-red {
+    background-color: #eed3d7;
+}
+
+.coloring tr .row-green {
+    background-color: #dff0d8;
+}
+.coloring tr:nth-child(odd) .row-green {
+    background-color: #d6e9c6;
+}
+
+.coloring tr .row-blue  {
+    background-color: #d9edf7;
+}
+.coloring tr:nth-child(odd) .row-blue {
+    background-color: #bce8f1;
+}
+
+.coloring tr .row-yellow {
+    background-color: #fcf8e3;
+}
+.coloring tr:nth-child(odd) .row-yellow {
+    background-color: #fbeed5;
+}
+
+.coloring tr:hover td,
+.coloring tr:nth-child(odd):hover td {
+    background-color: #f9f9f9;
+}
+
+.wordbreak {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.view-table pre {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: initial;
+    white-space: pre-wrap;
+}
+
+.table span.alt-name>span:nth-child(2) {
+    padding-left: 10px;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    font-size: small;
+}
+
+.jstree span.alt-name>span:nth-child(2) {
+    padding-left: 10px;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    font-size: small;
+}
+
+.password-container {
+    display: table;
+    width: 100%;
+}
+.password-form-input {
+    display: table-cell;
+    width: 100%;
+}
+.password-form-button {
+    display: table-cell;
+}
+.password-form-button-toggle {
+    white-space: nowrap;
+    margin-left: 4px;
+    min-width: 120px;
+}
+
+.nologin_container {
+    min-width: 260px;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table.table-fixed {
+    table-layout: fixed;
+}
+
+table.list-table,
+table.view-table,
+table.edit-table {
+    min-width: 400px;
+}
+
+table.list-table table,
+table.view-table table,
+table.edit-table table {
+    margin-bottom: initial;
+}
+
+table.list-table tr.no_applicable_data>th,
+table.view-table tr.no_applicable_data>th {
+    text-align: center;
+    vertical-align: middle;
+    height: 120px;
+    color: gray;
+}
+
+.table .column-selector {
+    width: 1px;
+}
+.table .column-selector input {
+    margin: 0px;
+    height: 16px;
+}
+.table .column-selector input:focus {
+    outline: none;
+}
+
+/*
+ *  フォーム中の入力フィールドと help_text の間の空白を抑止する
+ *  (clearable_file_input widget に含まれる br は対象外とする)
+ */
+form:is(#id_edit_form,#submit-form) td br:not(label+br) {
+    display: none;
+}
+
+/* Firefix で tablesorter の表示が崩れるのでコメントアウト(2013/03/28) */
+/*
+table.list-table>*>tr:first-child>th,
+table.view-table>*>tr:first-child>th,
+table.edit-table>*>tr:first-child>th {
+    white-space: nowrap;
+}
+*/
+
+table.table-label-left>*>tr>th:first-child,
+table.table-label-left>*>tr>td:first-child {
+    width: 220px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 979px) {
+table.table-label-left>*>tr>th:first-child,
+table.table-label-left>*>tr>td:first-child {
+    width: 120px;
+}
+}
+
+@media (max-width: 767px) {
+table.table-label-left>*>tr>th:first-child,
+table.table-label-left>*>tr>td:first-child {
+    width: 80px;
+}
+}
+
+table.table-create-btn>*>tr>th:first-child,
+table.table-create-btn>*>tr>td:first-child {
+    width: 220px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 979px) {
+table.table-create-btn>*>tr>th:first-child,
+table.table-create-btn>*>tr>td:first-child {
+    width: 140px;
+}
+}
+
+@media (max-width: 767px) {
+table.table-create-btn>*>tr>th:first-child,
+table.table-create-btn>*>tr>td:first-child {
+    width: 100px;
+}
+}
+
+table.table-operation-right>*>tr>th:last-child,
+table.table-operation-right>*>tr>td:last-child {
+    white-space: nowrap;
+    width: 1px;
+}
+
+table .table-operation {
+    white-space: nowrap;
+    width: 1px;
+}
+
+/* .main-list の中では、操作メニューのドロップダウンを右揃えにする */
+.main-list table.table-operation-right>*>tr>th:last-child .dropdown-menu,
+.main-list table.table-operation-right>*>tr>td:last-child .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+.main-list .table-operation .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+/* 768px 未満では、操作メニューのドロップダウンを右揃えにする */
+@media (max-width: 767px) {
+table.table-operation-right>*>tr>th:last-child .dropdown-menu,
+table.table-operation-right>*>tr>td:last-child .dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 120px;
+}
+.table-operation .dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 120px;
+}
+}
+
+.dir-search-results {
+    color: #999;
+    line-height: 35px;
+}
+
+.dir-search-config {
+    margin-left: 4px;
+}
+
+.dropdown-menu li.disabled>a:hover {
+    background-color: lightgray;
+}
+
+.dropdown-menu a,
+.dropdown-menu a>label {
+    cursor: pointer;
+}
+.dropdown-menu .disabled>a:hover,
+.dropdown-menu .disabled>a>label:hover {
+    cursor: default;
+}
+
+#additional-operation .nav-pills {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+#additional-operation .nav-pills>li>a {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.page-header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.page-header h1 {
+    margin-top: 0;
+    line-height: 26px;
+}
+.page-header h1 small {
+    font-size: 16px;
+}
+
+.contents-header {
+    margin-bottom: 10px;
+}
+.contents-header .btn-toolbar {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.contents-header .pagination.mini {
+    height: 30px;
+    margin: 0;
+}
+.contents-header .pagination.mini .page-current {
+    min-width: 100px;
+}
+.contents-header h2 {
+    margin: 0;
+}
+.contents-header .btn-outline-secondary {
+    border: 1px solid #ced4da;
+}
+
+tr.obj-row>td table {
+    width: 100%;
+}
+tr.obj-row>td .field-boolean {
+    display: block;
+    text-align: center;
+}
+tr.obj-row>td .field-integer {
+    display: block;
+    text-align: right;
+}
+tr.obj-row>td .field-nofile {
+    color: #CCC;
+}
+tr.obj-row>td .field-none {
+    color: #CCC;
+}
+tr.obj-row>td .field-error {
+    color: #F00;
+    background-color: #FF0;
+}
+tr.obj-row>td table.field tr td:first-child {
+    border-left: none;
+}
+table.inner-table tr:first-child td {
+    border: none;
+}
+table.inner-table tr:first-child th {
+    border: none;
+}
+
+.form-inline label.checkbox.inline {
+    padding-top: 0;
+}
+
+/* table.table-striped の内側の .table-striped でないテーブルのセルがストライプにならないようにする */
+table.table-striped table:not(.table-striped) tr {
+    background-color: transparent;
+}
+
+/* table.table-bordered thead の border-bottom が太くならないようにする */
+table.table-bordered thead td, table.table-bordered thead th {
+    border-bottom-width: inherit;
+}
+
+.view-array-value {
+}
+.edit-array-value {
+    width: 100%;
+}
+.view-dict-key, .edit-dict-key {
+    width: 35%;
+}
+.view-dict-value, .edit-dict-value {
+    width: 65%;
+}
+.view-field-name, .edit-field-name {
+    width: 30%;
+}
+.view-field-dispname, .edit-field-dispname, .view-field-display_name, .edit-field-display_name {
+    width: 30%;
+}
+.view-field-type, .edit-field-type {
+    width: 15%;
+}
+.view-field-qualifier, .edit-field-qualifier,.view-field-qual {
+    width: 25%;
+}
+
+.prettyprint li {
+    font-family: 'MS Gothic', monospace;
+    font-size: 14px;
+    line-height: 20px;
+    -webkit-tab-size: 4;
+    -moz-tab-size: 4;
+    -ms-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    overflow-wrap: anywhere;
+}
+
+pre.prettyprint {
+    white-space: pre-wrap;
+}
+
+.prettyprint .label>span {
+    color: white;
+}
+.prettyprint .path_identifier * {
+    color: #08c;
+}
+.prettyprint .path_identifier:hover * {
+    color: #005580;
+}
+.prettyprint ol.linenums {
+    margin-left: 3.7em;
+}
+.prettyprint li.highlightLine {
+    background-color: yellow;
+}
+
+/* プロセスコンソールのスタイル */
+#log pre {
+    height: 350px;
+    font-family: 'MS Gothic', monospace;
+    font-size: 14px;
+    line-height: 20px;
+}
+#console pre {
+    font-family: 'MS Gothic', monospace;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: pre-wrap;
+}
+#console .console-scrollable {
+    height: 350px;
+    overflow-y: auto;
+    background-color: rgb(245,245,245);
+    border: solid 1px rgba(0,0,0,0.15);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding-bottom: 10px;
+    overflow-wrap: anywhere;
+}
+#console .console-scrollable pre {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    background-color: inherit;
+    border: none;
+    border-radius: 0px;
+    white-space: pre-wrap;
+}
+#console .console-mode {
+    height: 22px;
+    padding-left: 9.5px;
+}
+
+#result pre {
+    font-family: 'MS Gothic', monospace;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: pre-wrap;
+}
+#result .result-scrollable {
+    overflow-y: auto;
+    background-color: rgb(245,245,245);
+    border: solid 1px rgba(0,0,0,0.15);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow-wrap: anywhere;
+}
+#result .result-scrollable pre {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color: inherit;
+    border: none;
+    border-radius: 0px;
+    white-space: pre-wrap;
+}
+#result .result-mode {
+    height: 22px;
+    padding-left: 9.5px;
+}
+
+/* CodeMirror のスタイル */
+.CodeMirror {
+    /* width: 100%; */
+    font-family: 'MS Gothic', monospace;
+    font-size: 16px;
+    line-height: 20px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+/* focued のとき bootstrap のスタイルに合わせる  */
+.CodeMirror-focused {
+    border-color:rgba(82,168,236,0.8);
+    outline:0;
+    outline:thin dotted \9;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+    -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6)
+}
+
+/* default テーマのスタイル上書き */
+div.CodeMirror.cm-s-default span.CodeMirror-nonmatchingbracket {
+    color: #ff3;
+    background-color: #f33;
+}
+div.CodeMirror.cm-s-default .cm-error {
+    color: #f00;
+    background-color: #ff3;
+}
+div.CodeMirror.cm-s-default .cm-invalidchar {
+    color: #f00;
+    background-color: #ff3;
+}
+
+.CodeMirror-merge .CodeMirror-merge-left > .CodeMirror.cm-s-default.CodeMirror-wrap {
+    background-color: #F2F2F2;
+}
+
+/* デフォルトの高さを上書き */
+.CodeMirror,
+.CodeMirror-merge,
+.CodeMirror-merge .CodeMirror {
+    height: 500px;
+}
+
+div.modal .CodeMirror,
+div.modal .CodeMirror-merge,
+div.modal .CodeMirror-merge .CodeMirror {
+    height: 350px;
+}
+
+/* 保存/提出ボタンは右寄せ */
+.submit-btn {
+    float: right;
+}
+
+.CodeMirror-usage {
+    color: gray;
+    font-size: 13px;
+    text-align: right;
+}
+
+.CodeMirror-merge {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 2px solid transparent;
+}
+
+.CodeMirror-merge > .CodeMirror-merge-gap {
+    border: 0;
+    font-size: 20px;
+}
+
+.kompira-editor-container {
+}
+
+.kompira-editor-container[disabled] > .CodeMirror-wrap *,
+.kompira-editor-container[disabled] > .CodeMirror-merge * {
+    cursor: not-allowed;
+}
+.kompira-editor-container[disabled] .CodeMirror-wrap {
+    background-color: #eee;
+}
+.kompira-editor-container[disabled] .CodeMirror-activeline-background {
+    background-color: #eee;
+}
+
+.kompira-editor-container[cm-mode=jobflow] .CodeMirror-wrap .cm-link {
+}
+
+.kompira-editor-container.fullscreen {
+    display: block;
+    position: fixed;
+    /* top 位置は navbar の高さに合わせること */
+    top: 56px; left: 0; right: 0; bottom: 0;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.kompira-editor-container.fullscreen > .CodeMirror-wrap,
+.kompira-editor-container.fullscreen > .CodeMirror-merge
+{
+    display: block;
+    position: fixed;
+    /* top 位置は navbar 高さ + CodeMirror-menubar navbar の高さに合わせること */
+    top: 96px; left: 0; right: 0; bottom: 0;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    /* width: 100%; */
+    z-index: 999;
+    border-radius: initial;
+}
+.kompira-editor-container.fullscreen > .CodeMirror-merge {
+    border-bottom: 0;
+}
+.kompira-editor-container.fullscreen > .CodeMirror-merge > .CodeMirror-merge-pane {
+    position: relative;
+    height: 100%;
+}
+.kompira-editor-container.fullscreen > .CodeMirror-merge > .CodeMirror-merge-pane > .CodeMirror-wrap {
+    display: block;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    /* border: 0; */
+    border-radius: initial;
+}
+.kompira-editor-container.fullscreen > .CodeMirror-merge > .CodeMirror-merge-gap {
+}
+
+.kompira-editor-container.fullscreen .CodeMirror-menubar.navbar {
+    margin-bottom: 0px;
+}
+.kompira-editor-container.fullscreen .CodeMirror-menubar.navbar {
+    border-radius: initial;
+}
+
+.CodeMirror-menubar.navbar {
+    min-height: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.CodeMirror-menubar.navbar .nav>li>a {
+    padding: 6px 10px 6px;
+}
+.CodeMirror-menubar.navbar .keybind {
+    color: darkgray;
+    margin-left: 160px;
+    float: right;
+}
+.CodeMirror-menubar.navbar .command {
+    float: none;
+}
+.CodeMirror-menubar .dropdown-menu {
+    font-size: 10pt;
+}
+
+.fullscreen-target.fullscreen .fullscreen-shortcut {
+    position: fixed;
+    z-index: 9999;
+    right: 32px;
+    bottom: 16px;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.fullscreen-target.fullscreen .fullscreen-shortcut:hover {
+    opacity: inherit;
+    filter: alpha(opacity=100);
+}
+
+/* 印刷時に表示しない */
+@media print {
+.noprint {
+    display: none;
+}
+}
+
+.obj-form-display-name {
+  display: inline-block;
+}
+
+/* エクスポート/インポートフォームのチェックボックス位置修正 */
+.table-form input {
+  vertical-align: 0;
+}
+
+/*
+table.edit-table td.control-group.error {
+    background-color: #fcf8e3;
+}
+*/
+
+ul.errorlist {
+    margin: 0;
+}
+
+ul.errorlist>li {
+    list-style-type: none;
+    font-weight: bold;
+    color: rgb(185, 74, 72);
+    background-color: rgb(242, 222, 222);
+    border: 1px solid rgb(238, 211, 215);
+    border-radius: 4px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 2px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+ul.errorlist>li::before {
+    content: "\26A0";
+    margin-right: 0.4em;
+    margin-left: 0.2em;
+}
+
+table[id^=dynamic-form-] > tbody > tr {
+}
+
+table[id^=dynamic-form-] > tbody > tr.ui-sortable-helper {
+    background-color: #fcf8e3;
+}
+
+table[id^=dynamic-form-] > tbody > tr > td.sortable-handle {
+    cursor: n-resize;
+    padding: 0 2px 0 2px;
+    width: 19px;
+}
+
+table[id^=dynamic-form-] > tbody > tr > td.sortable-handle>* {
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+}
+
+table[id^=dynamic-form-] > tbody > tr.ui-sortable-helper > td.sortable-handle>*,
+table[id^=dynamic-form-] > tbody > tr > td.sortable-handle:hover>* {
+    opacity: inherit;
+    filter: alpha(opacity=100);
+}

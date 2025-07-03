@@ -1,0 +1,35 @@
+{% extends "nologin_base.html" %}
+{% load static i18n %}
+
+{% block header_title %}{% trans 'logged out'|capfirst %}{% endblock %}
+{% block extra_head %}
+<style type="text/css">
+html, body {
+  background-color: gray!important;
+}
+.card {
+  margin-top: 3rem;
+}
+.logout-logo {
+  width: 10rem;
+  height: 10rem;
+  background-color: white; padding: 1rem; border-radius: 0.25rem;
+}
+</style>
+{% endblock %}
+
+{% block article %}
+<div class="card border-secondary text-center">
+  {% if settings.KOMPIRA_LOGOUT_LOGO %}
+  <div class="card-body">
+    <img class="logout-logo" src="{% static settings.KOMPIRA_LOGOUT_LOGO %}">
+  </div>
+  {% endif %}
+  <div class="card-body">
+    <h4 class="card-title">{% trans 'logged out.'|capfirst %}</h4>
+  </div>
+  <div class="card-footer">
+    <a id="login-link" href="{% url 'login' %}">{% trans 'login'|capfirst %}</a>
+  </div>
+</div>
+{% endblock %}

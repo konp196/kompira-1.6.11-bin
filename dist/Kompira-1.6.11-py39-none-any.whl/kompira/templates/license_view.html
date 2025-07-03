@@ -1,0 +1,91 @@
+{% extends "obj_view.html" %}
+{% load i18n core_extras %}
+
+{% block section_contents %}
+<section>
+  <h4 class="section-title">{% trans 'license information'|capfirst %}</h4>
+  {% with linfo=object|getattr:'license_info' lmngr=object|getattr:'license_manager' %}
+  <table id="license-info" class="table table-striped table-sm table-label-left table-operation-right">
+    <tbody>
+      <tr>
+        <th>{% trans 'license ID'|capfirst %}</th>
+        <td id="license-id">{{ linfo.license_id }} </td>
+        <td></td>
+      </tr>
+      <tr>
+        <th>{% trans 'edition'|capfirst %}</th>
+        <td id="license-edition">{% trans linfo.edition|capfirst %} </td>
+        <td></td>
+      </tr>
+      <tr>
+        <th>{% trans 'hardware ID'|capfirst %} {% if hardware_id != linfo.hardware_id %}<span class="badge badge-warning">Warning</span>{% endif %}</th>
+        {% if hardware_id == linfo.hardware_id %}
+        <td id="license-hardware-id">{{ linfo.hardware_id }}</td>
+        {% else %}
+        <td id="license-hardware-id">{{ linfo.hardware_id }} <span class="badge badge-warning">({% blocktrans %}The hardware ID of this server is {{ hardware_id }}{% endblocktrans %})</span></td>
+        {% endif %}
+        <td></td>
+      </tr>
+      {% if linfo.expire_date %}
+      <tr>
+        <th>{% trans 'expire date'|capfirst %}</th>
+        <td id="license-expire-date">{{ linfo.expire_date }} </td>
+        <td></td>
+      </tr>
+      {% endif %}
+      <tr>
+        <th>{% trans 'The number of registered nodes' %}</th>
+        <td id="node-count">{{ lmngr.node_count|default_if_none:"-" }}{% if linfo.limits.node %} / {{ linfo.limits.node }}{% endif %}</td>
+        <td>
+          <a id="id_clear-btn" {% if object_ability.writable %}class="clear-btn btn btn-outline-secondary btn-sm action-modal"{% else %}class="clear-btn btn-outline-secondary btn-sm" disabled{% endif %} href="#"
+            data-action="{{ object_property.abspath }}.reset_node_count" data-operation="{% trans 'reset node count' %}">
+            <i class="fas fa-trash"></i> {% trans 'reset'|capfirst %}
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <th>{% trans 'The number of jobflows' %}</th>
+        <td id="jobflow-count">{{ lmngr.jobflow_count }}{% if linfo.limits.instance.Jobflow %} / {{ linfo.limits.instance.Jobflow }}{% endif %}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <th>{% trans 'The number of scripts' %}</th>
+        <td id="script-count">{{ lmngr.script_count }}{% if linfo.limits.instance.ScriptJob %} / {{ linfo.limits.instance.ScriptJob }}{% endif %}</td>
+        <td></td>
+      </tr>
+      {% if linfo.licensee %}
+      <tr>
+        <th>{% trans 'licensee'|capfirst %}</th>
+        <td id="license-licensee">{{ linfo.licensee }} </td>
+        <td></td>
+      </tr>
+      {% endif %}
+      {% if linfo.signature %}
+      <tr>
+        <th>{% trans 'signature'|capfirst %}</th>
+        <td><div id="license-signature" style="word-break: break-all;">{{ linfo.signature }}</div></td>
+        <td></td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  {% if linfo.signature %}
+  <hr>
+  <p>
+    <a {% if object_ability.writable %}class="clear-btn btn-outline-secondary btn btn-sm action-modal"{% else %}class="clear-btn btn-outline-secondary btn-sm" disabled{% endif %} href="#"
+      data-action="{{ object_property.abspath }}.remove_license_file" data-operation="{% trans 'remove license file' %}">
+      <i class="fas fa-trash"></i> {% trans 'Remove license file' %}
+    </a>
+  </p>
+  {% else %}
+  <h4 class="section-title">{% trans 'No license files' %}</h4>
+  <p>
+    {% trans 'Kompira is running with temporary license. Click edit button to import your Kompira license file.' %}
+  </p>
+  <p>
+    {% trans 'If you have no license files, please purchase Kompira license.' %}
+  </p>
+  {% endif %}
+  {% endwith %}
+</section>
+{% endblock %}

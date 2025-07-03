@@ -1,0 +1,1166 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>3. Kompira Tutorial &#8212; Kompira 1.6.11 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Kompira Jobflow Language Reference" href="reference.html" />
+    <link rel="prev" title="2. Operation Guide" href="usage.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="reference.html" title="4. Kompira Jobflow Language Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="2. Operation Guide"
+             accesskey="P">previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/tutorial.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">3. </span>Kompira Tutorial</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="kompira">
+<h1><span class="section-number">3. </span>Kompira Tutorial<a class="headerlink" href="#kompira" title="Permalink to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira development team</p>
+</dd>
+</dl>
+<section id="id1">
+<h2><span class="section-number">3.1. </span>Introduction<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>In this tutorial, the language used by Kompira to describe the job flow will be introduced.</p>
+<p>For specifications of the Kompira standard object, refer to <a class="reference internal" href="library.html"><span class="doc">Kompira Standard Library</span></a>. Alternatively, <a class="reference internal" href="reference.html"><span class="doc">Kompira Jobflow Language Reference</span></a> can also be used and contains more accurate definitions of the terminology.</p>
+<p>This tutorial is not an exhaustive guide describing all the functions of Kompira. However, if you have a simple job flow then by reading this tutorial you will likely be able to understand and learn about Kompira’s main functions, usage and special features.</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">3.2. </span>Initiate the job flow<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<section id="hello-world">
+<h3><span class="section-number">3.2.1. </span>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this heading">¶</a></h3>
+<p>The first job flow is simple. It is to display “Hello World” on the console.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(&quot;Hello World&quot;)
+</pre></div>
+</div>
+<p>When you run this job flow, you should see the following output in the console.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Hello World
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there is a syntax error in the job flow, you will not be able to run it even when you save it. If the Run button has not been pressed, correct the error in the job flow and save it again.</p>
+</div>
+<p>In Kompira’s job flow language, <strong>job</strong> represents a singular process in a typical execution.</p>
+<p>In the above example, <code class="docutils literal notranslate"><span class="pre">print()</span></code> is one of the <strong>built-in jobs</strong> of the job flow, and outputs the character string given as an argument in the parentheses to the console. For details, see <a class="reference internal" href="library.html#lib-print"><span class="std std-ref">print</span></a>.</p>
+</section>
+<section id="id3">
+<h3><span class="section-number">3.2.2. </span>How to write a comment<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p>In the job flow, anything written from a hash tag <code class="docutils literal notranslate"><span class="pre">#</span></code> until the end of the line becomes a comment. A comment can be written at the beginning of a line, or even after a job. However, hash tags appearing in the middle of character strings will be excluded.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># This would be recognised as a comment in a job flow
+print(&quot;# This would NOT be a comment.&quot;)  # This would be a comment
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><span class="section-number">3.2.3. </span>Execute the command<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>By writing the command you want to execute between <strong>[</strong>  <strong>]</strong> these parenthesis as a character string, it becomes an <strong>execution job</strong> that can be executed as a command.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If put inside <code class="docutils literal notranslate"><span class="pre">[]</span></code> parenthesis, the character string will be interpreted as a command. If the variable which is in the character string is substituted, it is possible to re-write what is in between those parenthesis to change the command. Variable substitution will be explained later in further detail.</p>
+</div>
+<p>The following is an example of how the command will be shown.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;whoami&#39;] -&gt;
+print($RESULT)
+</pre></div>
+</div>
+<p>If you run this job flow, the <code class="docutils literal notranslate"><span class="pre">whoami</span></code> command will be executed and as a result, the standard output will show in the console as a <code class="docutils literal notranslate"><span class="pre">print()</span></code> job. Usually it will show in the console as shown below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[localhost] local: whoami
+
+kompira
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unless otherwise specified, as a result of executing the <code class="docutils literal notranslate"><span class="pre">whoami</span></code> command, the command will be executed on a host run by the job manager on the <code class="docutils literal notranslate"><span class="pre">kompira</span></code> account and it will display as <code class="docutils literal notranslate"><span class="pre">kompira</span></code>.</p>
+<p>A character string beginning with <code class="docutils literal notranslate"><span class="pre">[localhost]</span> <span class="pre">local:</span></code> indicates which command was executed on which node. When the command is executed remotely, it will be displayed as <code class="docutils literal notranslate"><span class="pre">[&lt;Host</span> <span class="pre">name&gt;]</span> <span class="pre">run:</span> <span class="pre">&lt;command&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">[&lt;IP</span> <span class="pre">Address&gt;]</span> <span class="pre">run:</span> <span class="pre">&lt;command&gt;</span></code>.</p>
+</div>
+</section>
+<section id="result">
+<h3><span class="section-number">3.2.4. </span>$RESULT<a class="headerlink" href="#result" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">$RESULT</span></code> contains the execution result of the previous job. It is a special variable (status variable).
+The result of the command <code class="docutils literal notranslate"><span class="pre">whoami</span></code> will be stored in the character string “kompira”.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The format of the value stored in <code class="docutils literal notranslate"><span class="pre">$RESULT</span></code> depends on the type of job. For command jobs, the standard output is stored as a character string, but depending on the job it may be written numerically or alphabetically.</p>
+</div>
+</section>
+<section id="id5">
+<h3><span class="section-number">3.2.5. </span>Linking jobs together<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<p>The arrow <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> between jobs means that if the previous job was successful, subsequent jobs are to be executed. Therefore, you can run jobs in order by connecting jobs with a <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> command.</p>
+<p>If the job fails (even if the execution status of the command returns as anything other than 0), use the double arrow <code class="docutils literal notranslate"><span class="pre">=&gt;</span></code> to continue to the next process. The execution status of the previous command can be referred to by the <code class="docutils literal notranslate"><span class="pre">$STATUS</span></code> status variable.</p>
+<p>The arrow linking these jobs is called <a class="reference internal" href="reference.html#ref-connector"><span class="std std-ref">Connectors</span></a>, and there are 4 kinds in the job flow.</p>
+</section>
+</section>
+<section id="id6">
+<h2><span class="section-number">3.3. </span>Use a variable<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h2>
+<section id="id7">
+<h3><span class="section-number">3.3.1. </span>Variable definition<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<p>Variables can be defined using the syntax <code class="docutils literal notranslate"><span class="pre">{&lt;variable</span> <span class="pre">definition&gt;</span> <span class="pre">|</span> <span class="pre">&lt;job&gt;}</span></code>. <code class="docutils literal notranslate"><span class="pre">&lt;Variable</span> <span class="pre">definition&gt;</span></code> is written in the form <code class="docutils literal notranslate"><span class="pre">variable</span> <span class="pre">name</span> <span class="pre">=</span> <span class="pre">value</span> <span class="pre">(or</span> <span class="pre">expression)</span></code>. Multiple variable definitions can be described by separating them with a comma.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ x = &#39;what do you get if you multiply six by nine?&#39;, y = 6 * 9 |
+  print(x) -&gt; print(y) }
+</pre></div>
+</div>
+<p>In this case, the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> is initialized with the string <code class="docutils literal notranslate"><span class="pre">'what</span> <span class="pre">do</span> <span class="pre">you</span> <span class="pre">get</span> <span class="pre">if</span> <span class="pre">you</span> <span class="pre">multiply</span> <span class="pre">six</span> <span class="pre">by</span> <span class="pre">nine?'</span></code> And the variable <code class="docutils literal notranslate"><span class="pre">y</span></code> is replaced with <code class="docutils literal notranslate"><span class="pre">6</span> <span class="pre">*</span> <span class="pre">9</span></code> It is initialized with the calculation result of the expression. You can write a job that refers to that variable, separated by a vertical bar <code class="docutils literal notranslate"><span class="pre">|</span></code> after the variable definition.</p>
+<p>When you execute the above job flow, it will be displayed on the console as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>what do you get if you multiply six by nine?
+54
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3><span class="section-number">3.3.2. </span>Identifier<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
+<p>Characters written alphabetically as words or phrases in Unicode can be used for identifiers, variable names and so on. Japanese kanji, hiragana and English characters and underscores can be used (symbols other than underscores cannot be). However, you can not use the numbers <code class="docutils literal notranslate"><span class="pre">[0-9]</span></code> at the beginning of the identifier.</p>
+<p>Therefore, the following character strings can be used as identifiers.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x, foo123, RESULT, __reserved_variable__
+</pre></div>
+</div>
+<p>The following character strings can not be used as an identifier.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1st, foo-bar, @id, #hash
+</pre></div>
+</div>
+<p>In addition, the following words are used as keywords and therefore cannot be used as variable names.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>and             break           case            choice
+continue        elif            else            false
+for             fork            if              in
+not             null            or              pfor
+then            true            while
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3><span class="section-number">3.3.3. </span>Scope<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<p>The valid range (scope) of the variable is the range enclosed in <code class="docutils literal notranslate"><span class="pre">{</span></code>  <code class="docutils literal notranslate"><span class="pre">}</span></code> parenthesis. Variables that are not defined within the scope can not be referenced, so the following job flow will result in an error during execution.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ x = &#39;hello&#39; |      # Scope of variable x is ...
+    print(x) }       # ... up to here.
+-&gt; print(x)          # This is outside the scope.
+</pre></div>
+</div>
+<p>It is possible to nest scopes as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ x = &#39;outer&#39;, y = 999 |
+    print(x) -&gt; print(y)
+    -&gt; { x = &#39;inner&#39; |
+        print(x) -&gt; print(y) }
+    -&gt; print(x) -&gt; print(y)
+}
+</pre></div>
+</div>
+<p>Execution of this job flow leads to the following, the scopes of <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">'inner'</span></code> are the 3rd to 4th lines, and the 5th line reveals the outer scope.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>outer
+999
+inner
+999
+outer
+999
+</pre></div>
+</div>
+<p>That is, the scoping rules of variables in the job flow are the same as in C and Java.</p>
+</section>
+<section id="id10">
+<h3><span class="section-number">3.3.4. </span>Assigning Variables<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
+<p>To change the value of the defined variable, substitute the variable as follows <code class="docutils literal notranslate"><span class="pre">[variable</span> <span class="pre">=</span> <span class="pre">value</span> <span class="pre">(or</span> <span class="pre">equation)]</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ x = &#39;outer&#39;, y = &#39;foo&#39; |
+    print(x) -&gt; print(y) -&gt;
+    { x = &#39;1st&#39; |
+        print(x)
+        -&gt; [x = &#39;2nd&#39;] -&gt; print(x)
+        -&gt; [x = &#39;3rd&#39;] -&gt; print(x)
+        -&gt; [y = &#39;bar&#39;]
+        -&gt; [z = &#39;baz&#39;] }
+    -&gt; print(x) -&gt; print(y) }
+-&gt; print(z)
+</pre></div>
+</div>
+<p>When the scope is nested, the inner most scope is assigned to what was once the outer most scope, taking on its variable definition as well as its original location.</p>
+<p>If you assign a value to an undefined variable, the variable is newly defined as the <strong>outermost scope (job flow scope)</strong> and set to that value. In the above example, since the variable <code class="docutils literal notranslate"><span class="pre">z</span></code> which is assigned a value in line 8 is undefined at that point, it is newly defined in the outermost scope and is displayed in line 10.</p>
+<p>The outermost scope is not explicitly surrounded by <code class="docutils literal notranslate"><span class="pre">{}</span></code>, but you should imagine that there is a scope enclosing the entire job flow.</p>
+<p>The execution result of the above job flow is as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>outer
+foo
+1st
+2nd
+3rd
+outer
+bar
+baz
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Status variables such as <code class="docutils literal notranslate"><span class="pre">$RESULT</span></code> and <code class="docutils literal notranslate"><span class="pre">$STATUS</span></code> are internally set values by Kompira and as such, status variables cannot be assigned values in the job flow.</p>
+</div>
+</section>
+<section id="id11">
+<h3><span class="section-number">3.3.5. </span>Array and Dictionary<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
+<section id="id12">
+<h4><span class="section-number">3.3.5.1. </span>Array<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h4>
+<p>If you want to keep multiple values at once, use an array or dictionary. An array is described by separating multiple values or expressions with commas in square brackets as follows <code class="docutils literal notranslate"><span class="pre">[expression,</span> <span class="pre">...]</span></code>. To access array elements, you can define them using square brackets using an index that starts with 0. You can also rewrite array elements with <code class="docutils literal notranslate"><span class="pre">[value</span> <span class="pre">&gt;&gt;</span> <span class="pre">array</span> <span class="pre">element]</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[arr = [1, true, &#39;foo&#39; ,[&#39;nested&#39;, &#39;array&#39;]]] -&gt;
+print(arr[1]) -&gt;              # get array elements
+[false &gt;&gt; arr[1]] -&gt;          # set array elements
+[arr = arr + [&#39;added&#39;]] -&gt;    # add array elements
+print(arr[3][1]) -&gt;           # get nested array elements
+print(arr)                    # print() can print array
+</pre></div>
+</div>
+<p>When this job flow is executed, it executes as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>true
+array
+[1, false, &#39;foo&#39;, [&#39;nested&#39;, &#39;array&#39;], &#39;added&#39;]
+</pre></div>
+</div>
+<p>If a negative value is specified as an index, elements are accessed from the back of the array.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[arr = [1, true, &#39;foo&#39;]] -&gt; print(arr[-1])
+</pre></div>
+</div>
+<p>The execution result of this job flow is as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h4><span class="section-number">3.3.5.2. </span>Dictionary<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h4>
+<p>The dictionary describes <code class="docutils literal notranslate"><span class="pre">{identifier</span> <span class="pre">=</span> <span class="pre">expression,</span> <span class="pre">...}</span></code> with a comma in the brackets delimiting multiple <code class="docutils literal notranslate"><span class="pre">identifier</span> <span class="pre">=</span> <span class="pre">value</span></code>. Access to dictionary elements is possible by specifying dot notation or by placing an identifier in square brackets. Also, rewriting dictionary elements is possible by changing it to <code class="docutils literal notranslate"><span class="pre">[value</span> <span class="pre">&gt;&gt;</span> <span class="pre">dictionary</span> <span class="pre">element]</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[dic = {foo=1, bar=true, baz={a=123, b=456}}] -&gt;
+print(dic.foo) -&gt;             # get dictionary elements (dot notation)
+[false &gt;&gt; dic.bar] -&gt;         # set dictionary elements
+print(dic[&#39;bar&#39;]) -&gt;          # get dictionary elements (square bracket notation)
+[[1,2,3] &gt;&gt; dic.arr] -&gt;       # add dictionary elements
+print(dic.baz.a) -&gt;           # get nested dictionary elements
+[777 &gt;&gt; dic.baz.a] -&gt;         # set nested dictionary elements
+[999 &gt;&gt; dic[&#39;baz&#39;][&#39;b&#39;]] -&gt;   # set nested dictionary elements
+print(dic)                    # print() can print dictionary
+</pre></div>
+</div>
+<p>When this job flow is executed, it executes as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1
+false
+123
+{foo=1, bar=false, baz={a=777, b=999}, arr=[1, 2, 3]}
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id14">
+<h3><span class="section-number">3.3.6. </span>Template character string<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h3>
+<p>In the job flow, you can expand the value of a variable in a character string. If there is a placeholder consisting of <code class="docutils literal notranslate"><span class="pre">$</span></code> and an identifier in the string as shown below, that part can be replaced with the variable value indicated by the identifier.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[service = &#39;http&#39;, port = 80] -&gt;
+print(&#39;Port $port is used by $service&#39;)
+</pre></div>
+</div>
+<p>When this job flow is executed, it executes as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Port 80 is used by http
+</pre></div>
+</div>
+<p>In place of <code class="docutils literal notranslate"><span class="pre">$identifier</span></code>, placeholders can also be written with the notation <code class="docutils literal notranslate"><span class="pre">${identifier}</span></code>. So when identifiers are not delimited in strings, please use <code class="docutils literal notranslate"><span class="pre">${identifier}</span></code> instead.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[w=640, h=480] -&gt;
+print(&quot;width=${w}px, height=${h}px&quot;)
+</pre></div>
+</div>
+<p>You can also expand the value contained in the following dictionary by writing <code class="docutils literal notranslate"><span class="pre">%</span></code> after the string. In that case, write a placeholder of <code class="docutils literal notranslate"><span class="pre">%</span></code> and an identifier in the string.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(&#39;Port %port is used by %service&#39; % {service = &#39;http&#39;, port = 80})
+</pre></div>
+</div>
+<p>The dictionary that follows <code class="docutils literal notranslate"><span class="pre">%</span></code> is ok to be a variable, such as shown below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[ctx = {service = &#39;http&#39;, port = 80}] -&gt;
+print(&#39;Port %port is used by %service&#39; % ctx)
+</pre></div>
+</div>
+<p>In any of the notations, if the variable or dictionary element specified by the placeholder is undefined, it remains in the string as is, including <code class="docutils literal notranslate"><span class="pre">$</span></code> and <code class="docutils literal notranslate"><span class="pre">%</span></code>.</p>
+</section>
+<section id="id15">
+<h3><span class="section-number">3.3.7. </span>Parameters<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h3>
+<p>The job flow can receive parameters at the time of execution.</p>
+<p>You can define a variable as a parameter with the notation <code class="docutils literal notranslate"><span class="pre">|variable</span> <span class="pre">name|</span></code> enclosing the variable name at the beginning of the job flow with vertical bars. You can also define default values for parameters by writing <code class="docutils literal notranslate"><span class="pre">|variable</span> <span class="pre">name</span> <span class="pre">=</span> <span class="pre">value</span> <span class="pre">(or</span> <span class="pre">expression)</span> <span class="pre">|</span></code>. Please note that parameters that do not have default values need to specify values (can not be omitted) when executing the job flow.</p>
+<p>In the following job flow, we define two parameters <code class="docutils literal notranslate"><span class="pre">command</span></code> and <code class="docutils literal notranslate"><span class="pre">wait</span></code>, and <code class="docutils literal notranslate"><span class="pre">wait</span></code> has a default value of 10.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>| command |
+| wait = 10 |
+
+print(&#39;Execute the command &quot;$command&quot; after $wait seconds.&#39;) -&gt;
+[&quot;sleep $wait&quot;] -&gt;
+[command] -&gt;
+print($RESULT)
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Parameters are evaluated in order from top to bottom, at the start of the job flow’s execution. Therefore, you can also use expressions that refer to the values of the parameters that appeared earlier.</p>
+</div>
+</section>
+</section>
+<section id="id16">
+<h2><span class="section-number">3.4. </span>Remotely run commands<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h2>
+<p>The next step is to try executing the command on a different host, from the host where the job manager is running next.</p>
+<section id="id17">
+<h3><span class="section-number">3.4.1. </span>Specified by the control variable<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h3>
+<p>Firstly, this is how to designate hosts and accounts to execute commands with control variables.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[__host__ = &#39;&lt;Hostname or IP-Address&gt;&#39;,
+ __user__ = &#39;&lt;Username&gt;&#39;,
+ __password__ = &#39;&lt;Password&gt;&#39;]
+-&gt; [&#39;hostname&#39;] -&gt; print($RESULT)
+-&gt; [&#39;whoami&#39;] -&gt; print($RESULT)
+-&gt; [&#39;echo Hello World&#39;] -&gt; print($RESULT)
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please re-write your <code class="docutils literal notranslate"><span class="pre">&lt;host</span> <span class="pre">name&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;user</span> <span class="pre">name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;password&gt;</span></code>.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">__host__</span></code>, <code class="docutils literal notranslate"><span class="pre">__user__</span></code> and <code class="docutils literal notranslate"><span class="pre">__password__</span></code> are the <strong>reserved variables</strong> in Kompira and these variables are the host name (or IP address), user name, and password. After setting the password , you can execute it using the host and user name you want to process subsequent remotes on.</p>
+<p>If successful, the execution results should be displayed as follows</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Hostname&gt;
+&lt;Username&gt;
+Hello World
+</pre></div>
+</div>
+<p>If the host name is incorrect, or the user name or password are incorrect, the job flow fails and processing is aborted.</p>
+</section>
+<section id="id18">
+<h3><span class="section-number">3.4.2. </span>Node information and account information settings<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h3>
+<p>If you create a node information object and an account information object on the Kompira file system, you can designate them from the job flow as the target server for command execution.</p>
+<p>Suppose now that you create a node information object <code class="docutils literal notranslate"><span class="pre">test_node</span></code> and an account information object, <code class="docutils literal notranslate"><span class="pre">test_account</span></code> and that the host name, user name, and password information are set appropriately. Then, you can describe the command from the job flow in the same directory concisely as follows by using the control variable <code class="docutils literal notranslate"><span class="pre">__node__</span></code> for specifying the node information object, and <code class="docutils literal notranslate"><span class="pre">__account__</span></code> for specifying the account information object.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[__node__ = ./test_node, __account__ = ./test_account]
+-&gt; [&#39;hostname&#39;] -&gt; print($RESULT)
+-&gt; [&#39;whoami&#39;] -&gt; print($RESULT)
+-&gt; [&#39;echo Hello World&#39;] -&gt; print($RESULT)
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Referencing to a  Kompira object from the job flow can be done by describing it as relative path or absolute path. In the above example, we specify the objects in the same directory starting with <code class="docutils literal notranslate"><span class="pre">./</span></code>, but you can specify the path starting with <code class="docutils literal notranslate"><span class="pre">../</span></code> or <code class="docutils literal notranslate"><span class="pre">/</span></code> relative to the parent directory or root directory.</p>
+</div>
+<p>You can also omit the <code class="docutils literal notranslate"><span class="pre">__account__</span></code> specification if you have set a default account for <code class="docutils literal notranslate"><span class="pre">test_node</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[__node__ = ./test_node]
+-&gt; [&#39;hostname&#39;] -&gt; print($RESULT)
+-&gt; [&#39;whoami&#39;] -&gt; print($RESULT)
+</pre></div>
+</div>
+<p>In addition, you can specify the control variable as a parameter of the job flow, so you can also create a job flow that specifies the controlled node at run time.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|__node__ = ./test_node|
+-&gt; [&#39;hostname&#39;] -&gt; print($RESULT)
+</pre></div>
+</div>
+</section>
+<section id="sudo">
+<h3><span class="section-number">3.4.3. </span>Execution by sudo<a class="headerlink" href="#sudo" title="Permalink to this heading">¶</a></h3>
+<p>If root privilege is required for command execution, set the control variable <code class="docutils literal notranslate"><span class="pre">__sudo__</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> and set the settings to sudo mode.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|__node__ = ./test_node|
+-&gt; [&#39;whoami&#39;] -&gt; print($RESULT)
+-&gt; [__sudo__ = true]
+-&gt; [&#39;whoami&#39;] -&gt; print($RESULT)
+</pre></div>
+</div>
+<p>When this job flow is executed, it is displayed on the console as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Username&gt;
+root
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In order to execute the command correctly in sudo mode, the user must be registered in the sudoers file. Otherwise, processing will fail (abort) when executing the remote command in sudo mode. For details, refer to the manual sudoers(5).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When executing a command execution job that does not specify a host in sudo mode, you need to register the user of the server (usually the server on which Kompira is installed) that is running the job manager in the sudoers file. In addition, it is necessary to add a setting to invalidate the requiretty flag to the sudoers file as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Defaults:kompira    !requiretty
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="id19">
+<h2><span class="section-number">3.5. </span>Manipulating Jobs with Control Structures<a class="headerlink" href="#id19" title="Permalink to this heading">¶</a></h2>
+<section id="id20">
+<h3><span class="section-number">3.5.1. </span>Conditional branch<a class="headerlink" href="#id20" title="Permalink to this heading">¶</a></h3>
+<p>To branch processing according to the execution result of the previous job or the contents of the variable , use an <code class="docutils literal notranslate"><span class="pre">if</span></code> block or <code class="docutils literal notranslate"><span class="pre">case</span></code> block.</p>
+<section id="if">
+<h4><span class="section-number">3.5.1.1. </span>If block<a class="headerlink" href="#if" title="Permalink to this heading">¶</a></h4>
+<p>If you use an <code class="docutils literal notranslate"><span class="pre">if</span></code> block, you can branch the process according to the result of the conditional expression.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;echo $$RANDOM&#39;] -&gt;
+[x = int($RESULT)] -&gt;
+{ if x % 2 == 0 |
+    then: print(&#39;$x is an even number&#39;)
+    else: print(&#39;$x is an odd number&#39;)
+}
+</pre></div>
+</div>
+<p>In the above, the <code class="docutils literal notranslate"><span class="pre">then</span></code> clause is executed if the remainder of the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> divided by 2 equals 0, otherwise the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause is executed. <code class="docutils literal notranslate"><span class="pre">['Echo</span> <span class="pre">$$</span> <span class="pre">RANDOM']</span></code> shows the environment variable <code class="docutils literal notranslate"><span class="pre">RANDOM</span></code> that returns a random number and <code class="docutils literal notranslate"><span class="pre">[x</span> <span class="pre">=</span> <span class="pre">int($RESULT)]</span></code> converts the result string to an integer <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+<p>In addition to true / false, if you wish to further branch processing use the <code class="docutils literal notranslate"><span class="pre">elif</span></code> clause.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ if x % 3 == 0 and x % 5 == 0 |
+    then: print(&#39;FizzBuzz&#39;)
+    elif x % 3 == 0: print(&#39;Fizz&#39;)
+    elif x % 5 == 0: print(&#39;Buzz&#39;)
+    else: print(x)
+}
+</pre></div>
+</div>
+<p>Alternatively, you can omit the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause, or you can omit the <code class="docutils literal notranslate"><span class="pre">then</span></code> keyword.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[command] =&gt;
+{ if $STATUS != 0 | print(&#39;An error occurred: &#39; + $ERROR) }
+</pre></div>
+</div>
+<p>In the example above, if you execute the command indicated by the contents of the <code class="docutils literal notranslate"><span class="pre">command</span></code> variable and the value of the <code class="docutils literal notranslate"><span class="pre">$STATUS</span></code> status is not 0, the <code class="docutils literal notranslate"><span class="pre">print</span></code> job will print the standard error output (<code class="docutils literal notranslate"><span class="pre">$ERROR</span></code>).</p>
+</section>
+<section id="case">
+<h4><span class="section-number">3.5.1.2. </span>Case block<a class="headerlink" href="#case" title="Permalink to this heading">¶</a></h4>
+<p>A conditional branch with a <code class="docutils literal notranslate"><span class="pre">case</span></code> block can be written as</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;cat /etc/redhat-release&#39;] -&gt;
+{ case $RESULT |
+    &#39;CentOS*release 7.*&#39;: print(&quot;This is CentOS&quot;)
+    &#39;Red Hat*release 7.*&#39;: print(&quot;This is Red Hat&quot;)
+    else: print(&quot;CentOS/Red Hat 7.x is required&quot;)
+}
+</pre></div>
+</div>
+<p>In this example, a conditional branch is made to determine the type of the OS with the contents of the file <code class="docutils literal notranslate"><span class="pre">/etc/redhat-release</span></code>, and the pattern string may contain <code class="docutils literal notranslate"><span class="pre">*</span></code> or <code class="docutils literal notranslate"><span class="pre">?</span></code> for which Unix wired cards can be used.</p>
+<p>The mapping of strings in the <code class="docutils literal notranslate"><span class="pre">case</span></code> block is done sequentially from the first pattern and only the job flow series following the first matched pattern is executed.</p>
+<p>If none of the patterns match, the following will appear:</p>
+<ul class="simple">
+<li><p>If the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause is included, the job flow sequence is executed.</p></li>
+<li><p>If the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause is not included, the whole <code class="docutils literal notranslate"><span class="pre">case</span></code> block will fail(<code class="docutils literal notranslate"><span class="pre">$STATUS</span></code> is set to 1).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that unlike the <code class="docutils literal notranslate"><span class="pre">if</span></code> block, the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause is omitted in the <code class="docutils literal notranslate"><span class="pre">case</span></code> block, and the entire block fails if you do not match any of the conditions. If you do not do anything in the <code class="docutils literal notranslate"><span class="pre">case</span></code> block and not even an error occurs, try writing <code class="docutils literal notranslate"><span class="pre">else:</span> <span class="pre">[]</span></code> and a skip job in the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause.</p>
+</div>
+</section>
+</section>
+<section id="id21">
+<h3><span class="section-number">3.5.2. </span>Repetition<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h3>
+<p>Repetition uses the <code class="docutils literal notranslate"><span class="pre">for</span></code> block or the <code class="docutils literal notranslate"><span class="pre">while</span></code> block.</p>
+<section id="for">
+<h4><span class="section-number">3.5.2.1. </span>for blocking<a class="headerlink" href="#for" title="Permalink to this heading">¶</a></h4>
+<p>Some objects that Kompira can handle include complex data such as arrays and dictionaries or child elements such as directories. Use a <code class="docutils literal notranslate"><span class="pre">for</span></code> block if you want to perform the same processing on child elements (values and objects) contained in an object . The <code class="docutils literal notranslate"><span class="pre">for</span></code> block should be expressed as below</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ for &lt;loop variable&gt; in &lt;object containing child elements&gt; | job... }
+</pre></div>
+</div>
+<p>For example, in the <code class="docutils literal notranslate"><span class="pre">in</span></code> clause, you can refer to the list of objects in the directory by writing a &lt;directoryprefix&gt; ::.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ for t in /system/types | print(t) }
+</pre></div>
+</div>
+<p>In this example, all the objects in the /system/types directory are referenced one by one with the loop variable <code class="docutils literal notranslate"><span class="pre">t</span></code> and are output to the console by the <code class="docutils literal notranslate"><span class="pre">print()</span></code> job. If you pass a Kompira object to the <code class="docutils literal notranslate"><span class="pre">print()</span></code> job, its absolute path is output to the console and the result is as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/system/types/TypeObject
+/system/types/Directory
+/system/types/License
+/system/types/Virtual
+/system/types/Jobflow
+/system/types/Channel
+    :
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">in</span></code> clause it is also possible to write a direct array as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ sum = 0 |
+    { for i in [1,2,3,4,5,6,7,8,9,10] |
+        [sum = sum + i]
+    } -&gt;
+    print(&#39;The total of 1 to 10 is ${sum}.&#39;)
+}
+</pre></div>
+</div>
+<p>This job flow calculates and outputs the total value, from numbers 1 to 10.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The total of 1 to 10 is 55.
+</pre></div>
+</div>
+<p>Also, if you write a dictionary following the <code class="docutils literal notranslate"><span class="pre">in</span></code> clause, you can refer to the list of identifiers contained in that dictionary sequentially.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[dic = {a=10, b=20, c=30}] -&gt;
+{ for k in dic |
+    print(&quot;$k = %{$k}&quot; % dic)
+}
+</pre></div>
+</div>
+<p>When this job flow is executed, it is displayed on the console as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a = 10
+b = 20
+c = 30
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before template expansion with <code class="docutils literal notranslate"><span class="pre">%</span></code> , In <code class="docutils literal notranslate"><span class="pre">%{$k}</span></code>, The <code class="docutils literal notranslate"><span class="pre">$k</span></code> part is replaced by the identifier of the dictionary.
+Therefore, each time it repeats, it expands to <code class="docutils literal notranslate"><span class="pre">%a</span></code>, <code class="docutils literal notranslate"><span class="pre">%b</span></code>, <code class="docutils literal notranslate"><span class="pre">%c</span></code> and that is the value of each element of the dictionary <code class="docutils literal notranslate"><span class="pre">dic</span></code>.
+The template is expanded and displayed as <code class="docutils literal notranslate"><span class="pre">10</span></code>, <code class="docutils literal notranslate"><span class="pre">20</span></code>, <code class="docutils literal notranslate"><span class="pre">30</span></code>.</p>
+</div>
+</section>
+<section id="while">
+<h4><span class="section-number">3.5.2.2. </span>While block<a class="headerlink" href="#while" title="Permalink to this heading">¶</a></h4>
+<p>If you want to iterate through the job while satisfying certain conditions, use the <code class="docutils literal notranslate"><span class="pre">while</span></code> block instead. The syntax of the <code class="docutils literal notranslate"><span class="pre">while</span></code> block is as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ while &lt;expression&gt; | job... }
+</pre></div>
+</div>
+<p>For example, an “Euclidean algorithm” which finds the greatest common divisor of two given numbers, is an algorithm that iterates until the remainder becomes 0, but when it is described using a <code class="docutils literal notranslate"><span class="pre">while</span></code> block, shows as follows</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|x = 165|
+|y = 105|
+[m = x, n = y] -&gt;
+{ while n != 0 |
+    [r = m % n] -&gt;
+    print(&quot;The remainder of $m and $n is $r.&quot;) -&gt;
+    [m = n, n = r]
+} -&gt;
+print(&quot;The greatest common divisor of $x and $y is $m.&quot;)
+</pre></div>
+</div>
+<p>In this <code class="docutils literal notranslate"><span class="pre">while</span></code> block, <code class="docutils literal notranslate"><span class="pre">n</span></code> is <code class="docutils literal notranslate"><span class="pre">n</span></code> while <code class="docutils literal notranslate"><span class="pre">n</span></code> is not 0, <code class="docutils literal notranslate"><span class="pre">n</span></code> for <code class="docutils literal notranslate"><span class="pre">m</span></code>, <code class="docutils literal notranslate"><span class="pre">m</span></code> for <code class="docutils literal notranslate"><span class="pre">n</span></code> and the job of substituting (and displaying) the remainder of <code class="docutils literal notranslate"><span class="pre">n</span></code> is repeated. When executed, it displays as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The remainder of 165 and 105 is 60.
+The remainder of 105 and 60 is 45.
+The remainder of 60 and 45 is 15.
+The remainder of 45 and 15 is 0.
+The greatest common divisor of 165 and 105 is 15.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id22">
+<h3><span class="section-number">3.5.3. </span>Calling a job<a class="headerlink" href="#id22" title="Permalink to this heading">¶</a></h3>
+<section id="id23">
+<h4><span class="section-number">3.5.3.1. </span>Calling a job flow<a class="headerlink" href="#id23" title="Permalink to this heading">¶</a></h4>
+<p>To call another job flow from one job flow, use the following syntax.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;Jobflow object&gt;]
+</pre></div>
+</div>
+<p>Here is an example of creating a job called “sub job” and calling it. First, define the sub job as follows, under the appropriate directory.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(&quot;This is subjob.&quot;) -&gt;
+return(&quot;Succeeded.&quot;)
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">return</span></code> job terminates the sub job and returns the result to the calling job.</p>
+<p>Next, create a main job that calls this sub job under the same directory.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(&quot;Call the subjob.&quot;)
+-&gt; [./SubJob]                  # call the subjob
+-&gt; print($RESULT)              # return the result of subjob
+</pre></div>
+</div>
+<p>Note that “./” is added to the beginning of the string at the point of specifying the call of the “sub job”. This indicates that “sub job” is defined in the same directory as the directory in which the current job flow is defined.</p>
+<p>The execution result of the sub job can be received as <code class="docutils literal notranslate"><span class="pre">$RESULT</span></code>. When the above main job is executed, it is displayed as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Call the subjob.
+This is subjob.
+Succeeded.
+</pre></div>
+</div>
+</section>
+<section id="id24">
+<h4><span class="section-number">3.5.3.2. </span>Passing parameters to job flows<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h4>
+<p>When invoking a job flow, you can also pass parameters using the following syntax:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;Jobflow object&gt; : &lt;parameter list&gt; ... ]
+</pre></div>
+</div>
+<p>First, extend the sub job and add the parameters as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|parameter1 = &#39;Hello&#39;|
+|parameter2 = &#39;World&#39;|
+
+print(&quot;This is subjob.&quot;)
+-&gt; print(parameter1)
+-&gt; print(parameter2)
+-&gt; return(&quot;Succeeded.&quot;)
+</pre></div>
+</div>
+<p>In this state, if you execute the main job as it is, the following will be displayed. Since no parameters are specified at the time of invocation, you can see that the default parameters defined on the sub job side are used.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Call the subjob.
+This is subjob.
+Hello
+World
+Succeeded.
+</pre></div>
+</div>
+<p>To pass parameters to this sub job and call it, extend the main job as follows. When calling a sub job, you can write values following <code class="docutils literal notranslate"><span class="pre">:</span></code> so that you can pass them to the sub job as parameter values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(&quot;Call the subjob with parameter.&quot;)
+-&gt; [./SubJob: &#39;HELLO&#39;, &#39;WORLD&#39;]
+-&gt; print($RESULT)
+</pre></div>
+</div>
+<p>When you do this, the result is as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Call the subjob with parameter.
+This is subjob.
+HELLO
+WORLD
+Succeeded.
+</pre></div>
+</div>
+<p>It is also possible to specify the parameter name defined on the side of the called job flow and pass the parameter value. This is convenient when you want to specify only some parameters.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[./SubJob: parameter2=&#39;WORLD&#39;]
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please be aware that specifying a parameter name that is not defined on the called side, or trying to pass more parameter values than defined, will result in an error.</p>
+</div>
+</section>
+<section id="id25">
+<h4><span class="section-number">3.5.3.3. </span>Execution of a script job<a class="headerlink" href="#id25" title="Permalink to this heading">¶</a></h4>
+<p>If you want to create more complicated jobs, it would be better to combine existing scripting languages such as bash, perl, ruby, python, etc. than to use the Kompira job flow language. By creating a script job on the Kompira file system, it becomes possible to call these script language programs from the job flow.</p>
+<p>Let’s look at an example of writing a script job using a shell script and calling it from a job flow. First, save a simple shell script as shown below as a script job.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#! /bin/sh
+echo Hello world from shell script
+</pre></div>
+</div>
+<p>For scripts to be executed in a Unix environment, please describe the shebang line beginning with <code class="docutils literal notranslate"><span class="pre">#!</span></code> on the first line appropriately. For scripts running on a Windows environment, you will need to specify the extension (eg bat/vbs/ps1) appropriately.</p>
+<p>If you save this script job as “sample_script”, the job flow for executing this script job is as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(&#39;Execute the ScriptJob&#39;) -&gt;
+[./SampleScript] -&gt;
+print($RESULT)
+</pre></div>
+</div>
+<p>If you do not specify <code class="docutils literal notranslate"><span class="pre">__node__</span></code> or <code class="docutils literal notranslate"><span class="pre">__host__</span></code>, this script will be executed after being transferred to the machine on which the job manager is running. The output of the execution result is stored in <code class="docutils literal notranslate"><span class="pre">$RESULT</span></code> like the execution result of the remote command.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The script is transferred to the host specified at runtime as a temporary file and deleted after it is executed.</p>
+</div>
+<p>Parameters can also be passed to script jobs. The script job side receives parameters as command line arguments.</p>
+<p>On the caller side of the script, pass parameters as keyword-less arguments as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[./SampleScript: &#39;parameter1&#39;, &#39;parameter2&#39;]
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="id26">
+<h2><span class="section-number">3.6. </span>Manipulating objects<a class="headerlink" href="#id26" title="Permalink to this heading">¶</a></h2>
+<section id="id27">
+<h3><span class="section-number">3.6.1. </span>Referencing objects<a class="headerlink" href="#id27" title="Permalink to this heading">¶</a></h3>
+<p>Information handled by Kompira, such as job flow and environment variable definitions, are managed as a <strong>Kompira object</strong> in a unified manner on the Kompira file system. These objects can then be accessed from the job flow by specifying a path like a Unix file system.</p>
+<p>In previous examples, references to Kompira objects were specified by relative paths. In this case, the path of the object is specified based on the directory in which the job flow being executed is defined.</p>
+<p>For example, if the running job is <code class="docutils literal notranslate"><span class="pre">/some/path/jobflow</span></code>, referencing the object with the relative path <code class="docutils literal notranslate"><span class="pre">/subdir/object</span></code> will result in <code class="docutils literal notranslate"><span class="pre">/some/path/subdir/object</span></code> being accessed.</p>
+<p>Also, referring to the relative path <code class="docutils literal notranslate"><span class="pre">../object</span></code> will access <code class="docutils literal notranslate"><span class="pre">/some/object</span></code>.Relative paths starting with <code class="docutils literal notranslate"><span class="pre">../</span></code> refer to objects in parent directories.</p>
+<p>Of course you can also reference the object directly as an absolute path like <code class="docutils literal notranslate"><span class="pre">/some/path/object</span></code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not forget to add  <code class="docutils literal notranslate"><span class="pre">./</span></code>, <code class="docutils literal notranslate"><span class="pre">../</span></code> or  <code class="docutils literal notranslate"><span class="pre">/</span></code>  to the beginning of Kompira object references. Kompira recognizes a character string beginning with <code class="docutils literal notranslate"><span class="pre">./</span></code>, <code class="docutils literal notranslate"><span class="pre">../</span></code> or <code class="docutils literal notranslate"><span class="pre">/</span></code> as a <strong>path identification</strong>, otherwise it recognizes it as an identifier of a variable.</p>
+</div>
+<p>If you want to concatenate paths and reference objects, use the <code class="docutils literal notranslate"><span class="pre">path()</span></code> built-in function. For example, when preparing a job flow for “resource information acquisition” for each type of node, if you want to execute the job flow by designating the node and the node type, you can refer to the job flow by assembling the path.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|node|
+|node_type = &#39;Linux&#39;|
+|job_name = &#39;GetResourceInfo&#39;|
+[job = path(./DefinitionsByNodeType, node_type, job_name)] -&gt;
+[job: node]
+</pre></div>
+</div>
+<p>Here, if the default argument is passed to the <code class="docutils literal notranslate"><span class="pre">path()</span></code> function as it is, refer to the job flow named <code class="docutils literal notranslate"><span class="pre">./node</span> <span class="pre">definition/Linux/resource</span> <span class="pre">information</span> <span class="pre">acquisition</span></code> by using the variable <code class="docutils literal notranslate"><span class="pre">job</span></code> and <code class="docutils literal notranslate"><span class="pre">node</span></code> as a parameter.</p>
+</section>
+<section id="id28">
+<h3><span class="section-number">3.6.2. </span>Browse and update properties<a class="headerlink" href="#id28" title="Permalink to this heading">¶</a></h3>
+<p>Each Kompira object has a “property” defined in the system. For example, properties are the name and path of the object, creation date and time, and so on. For details on the properties of Kompira objects, see <a class="reference internal" href="library.html#lib-property"><span class="std std-ref">Properties</span></a>.</p>
+<p>To refer to the properties of a Kompira object, use the dot notation <code class="docutils literal notranslate"><span class="pre">object.property</span> <span class="pre">name</span></code>. In the following job flow, it lists the Kompira objects in the directory which was the parameter <code class="docutils literal notranslate"><span class="pre">dir</span></code> and its properties ‘Owner (owner)’, ‘Updated date (update)’, ‘Type name (type_name)’, ‘Display name (display_name)’ is displayed by dot notation.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>| dir = / |
+{ for obj in dir |
+    [attr = {
+        owner = obj.owner,
+        updated = obj.updated,
+        type = obj.type_name,
+        name = obj.display_name
+    }] -&gt;
+    print(&quot;%owner %updated &lt;%type&gt; %name&quot; % attr)
+}
+</pre></div>
+</div>
+<p>To update the property value of a Kompira object, use the output job <code class="docutils literal notranslate"><span class="pre">[value</span> <span class="pre">&gt;&gt;</span> <span class="pre">object.properties]</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[&quot;Description of the Object&quot; &gt;&gt; obj.description]
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>However, please note that some of the properties can not be updated from the job flow and some are not writable. See <a class="reference internal" href="library.html#lib-property"><span class="std std-ref">Properties</span></a> for details.</p>
+</div>
+</section>
+<section id="id29">
+<h3><span class="section-number">3.6.3. </span>Referencing and updating fields<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h3>
+<p>Each Kompira object has a “field” defined for each type. You can see what fields are defined for each type defined in the system by looking at the definition information of each type under <code class="docutils literal notranslate"><span class="pre">/system/types/</span></code>.</p>
+<p>Fields of Kompira objects can be referenced by <code class="docutils literal notranslate"><span class="pre">object['field_name']</span></code> or <code class="docutils literal notranslate"><span class="pre">object.field_name</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please note that the property of the object can also be accessed by dot notation. You can also define a field with the same name as the property, but dot notation refers to the property value in preference.</p>
+</div>
+<p>For example, in the node information object, fields such as “host name (hostname)” and “IP address (ipaddr)” are defined. To refer to these values in the job flow, you write as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|node = ./node|
+print(node[&#39;hostname&#39;], node.ipaddr)
+</pre></div>
+</div>
+<p>Since values of fields can be referenced like dictionaries, template expansion with <code class="docutils literal notranslate"><span class="pre">%</span></code> is also possible.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|node = ./node|
+print(&#39;%hostname: %ipaddr&#39; % node)
+</pre></div>
+</div>
+<p>Also, to update the field value of the Kompira object, use the notation <code class="docutils literal notranslate"><span class="pre">[value</span> <span class="pre">&gt;&gt;</span> <span class="pre">object['field_name']]</span></code> or <code class="docutils literal notranslate"><span class="pre">[value</span> <span class="pre">&gt;&gt;</span> <span class="pre">object.field_name]</span></code> in the output job. For example, to update the “Wiki text” field (‘wikitext’) of Wiki page type, write as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;= Sample Wiki\n&#39; &gt;&gt; ./wiki[&#39;wikitext&#39;]]
+</pre></div>
+</div>
+<p>You can also write the result of an expression in an output job, so you can modify the referenced field value and rewrite it as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|wiki = ./wiki|
+|types = /system/types|
+[&quot;= Type list\n&quot; &gt;&gt; wiki.wikitext] -&gt;
+{ for type in types |
+    [wiki.wikitext + &quot;* $type: (&quot; + type.description + &quot;)\n&quot; &gt;&gt; wiki.wikitext]
+}
+</pre></div>
+</div>
+<p>In the example above, we create a wiki page that lists the system standard type objects in <code class="docutils literal notranslate"><span class="pre">/system/types</span></code>, listing their paths and descriptions.</p>
+</section>
+<section id="id30">
+<h3><span class="section-number">3.6.4. </span>Calling methods<a class="headerlink" href="#id30" title="Permalink to this heading">¶</a></h3>
+<p>Some Kompira objects have methods. To invoke a method on an object we use the following syntax:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[ &lt;object&gt; . &lt;method name&gt; : &lt;parameter list&gt; ... ]
+</pre></div>
+</div>
+<p>For example, to add an object, the directory type object has a method called <code class="docutils literal notranslate"><span class="pre">add</span></code>. The <code class="docutils literal notranslate"><span class="pre">add</span></code> method is called by specifying three parameters <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">type_obj</span></code>, and <code class="docutils literal notranslate"><span class="pre">data</span></code>. In the following example, create an environment variable type (/system/types/Environment) object with the name ‘ENV’ in the same directory as the job flow and put the <code class="docutils literal notranslate"><span class="pre">{k1</span> <span class="pre">=</span> <span class="pre">'value1',</span> <span class="pre">k2</span> <span class="pre">=</span> <span class="pre">'value2'}</span></code> as given.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[./.add: &#39;ENV&#39;, /system/types/Environment, {
+    environment={k1=&#39;value1&#39;, k2=&#39;value2&#39;}
+}]
+</pre></div>
+</div>
+<p>Here, the relative path identification <code class="docutils literal notranslate"><span class="pre">./</span></code> refers to the Kompira object indicating the directory to where this job flow resides. You can also pass object references as variables, so you can write:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[dir = ./, type=/system/types/Environment] -&gt;
+[dir.add: &#39;ENV&#39;, type, {environment={k1=&#39;value1&#39;, k2=&#39;value2&#39;}}]
+</pre></div>
+</div>
+<p>In the parameter string, you can pass a value by specifying the parameter name.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[dir = ./, type=/system/types/Environment] -&gt;
+[dir.add: &#39;ENV&#39;, type_obj=type, data={environment={k1=&#39;value1&#39;, k2=&#39;value2&#39;}}]
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id31">
+<h2><span class="section-number">3.7. </span>Waiting for an event<a class="headerlink" href="#id31" title="Permalink to this heading">¶</a></h2>
+<p>Job synchronization and event waiting processing can be described in the job flow using the channel.</p>
+<section id="id32">
+<h3><span class="section-number">3.7.1. </span>Transmission of messages<a class="headerlink" href="#id32" title="Permalink to this heading">¶</a></h3>
+<p>To send a message to the created channel, use the <code class="docutils literal notranslate"><span class="pre">send</span></code> method. A new channel can be created as “/home/guest/test channel”.</p>
+<p>The job flow for sending a message to a channel is as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[/home/guest/TestChannel.send: &#39;Hello&#39;]
+-&gt; print(&#39;Sent a message.&#39;)
+</pre></div>
+</div>
+<p>Next, define the job flow to receive messages from the channel as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;/home/guest/TestChannel&gt;
+-&gt; [mesg = $RESULT]
+-&gt; print(&#39;Message &quot;$mesg&quot; was received.&#39;)
+</pre></div>
+</div>
+<p>Please execute the above job flow. It is deemed successful if a message is output to the process console of the job flow execution on the receiving side as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Message &quot;Hello&quot; was received.
+</pre></div>
+</div>
+<p>If you execute the sender job flow more than once, messages will be accumulated on that channel by that amount. Every time the receiver’s job flow is executed, it extracts one message from that channel and outputs it. If the message on the channel is empty, the receiving job flow waits until a new message arrives.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">kompira_sendevt</span></code> command you can send arbitrary information to the channel from an external system. For example, by transmitting alert information from the monitoring system to the channel, it is possible to process the procedure at the time of failure by the job flow. For information on how to use the <code class="docutils literal notranslate"><span class="pre">kompira_sendevt</span></code> command, see <a class="reference internal" href="coordination.html"><span class="doc">Coordination with other systems</span></a>.</p>
+</div>
+</section>
+<section id="id33">
+<h3><span class="section-number">3.7.2. </span>About event jobs<a class="headerlink" href="#id33" title="Permalink to this heading">¶</a></h3>
+<p>A job enclosed by &lt; and &gt; is called an event job. Event jobs can be used in combination in the job flow in the same way as other jobs.</p>
+<p>The format of an event job is as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt; &lt;object&gt; : &lt;parameter list&gt; ... &gt;
+</pre></div>
+</div>
+<p>For object names, specify objects of channel type (and similar type: mail channel type etc). Other events that specify an object that can not be queued, result in a runtime error.</p>
+</section>
+<section id="id34">
+<h3><span class="section-number">3.7.3. </span>Specify a timeout for message retreival<a class="headerlink" href="#id34" title="Permalink to this heading">¶</a></h3>
+<p>Wait for the arrival of the message from the channel, specify the parameter <code class="docutils literal notranslate"><span class="pre">timeout</span></code> for the event job to time out and continue the process if it does not arrive within the fixed time.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(&#39;Wait for a message from channel.&#39;)
+-&gt; &lt;./TestChannel: timeout=10&gt;
+=&gt; { if $STATUS==0 |
+    then: [mesg=$RESULT]
+          -&gt; print(&#39;Message &quot;$mesg&quot; was received.&#39;)
+    else: print(&#39;Timeout occurred.&#39;) }
+</pre></div>
+</div>
+<p>Note that if the message does not arrive within the number of seconds specified by <code class="docutils literal notranslate"><span class="pre">timeout</span></code>, the event job will fail, so be aware that <code class="docutils literal notranslate"><span class="pre">=&gt;</span></code> binds the next job.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a channel is deleted while awaiting arrival from a message, the event job fails and sets $STATUS to -1. The mail channel also sets $STATUS to -1 when the detect_error=true parameter is passed to the event job, if the mail fetch fails or if the disable flag is set.</p>
+</div>
+</section>
+<section id="id35">
+<h3><span class="section-number">3.7.4. </span>Selective reception from multiple channels<a class="headerlink" href="#id35" title="Permalink to this heading">¶</a></h3>
+<p>It is also possible to wait for the arrival of messages from multiple channels by using the <code class="docutils literal notranslate"><span class="pre">choice</span></code> block. In this case, the processing of the channel on which the message arrived earlier continues.</p>
+<p>Example of choice block usage:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(&#39;Wait for message from channel1 and channel2.&#39;)
+-&gt; { choice |
+    &lt;./Channel1&gt; -&gt; [mesg=$RESULT]
+        -&gt; print(&#39;Message &quot;$mesg&quot; was received from Channel1.&#39;)
+    &lt;./Channel2&gt; -&gt; [mesg=$RESULT]
+        -&gt; print(&#39;Message &quot;$mesg&quot; was received from Channel2.&#39;)
+}
+-&gt; print(&#39;OK&#39;)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id36">
+<h2><span class="section-number">3.8. </span>Access externally<a class="headerlink" href="#id36" title="Permalink to this heading">¶</a></h2>
+<section id="id37">
+<h3><span class="section-number">3.8.1. </span>Send mail<a class="headerlink" href="#id37" title="Permalink to this heading">¶</a></h3>
+<p>To send the mail, use the built-in <code class="docutils literal notranslate"><span class="pre">mailto</span></code> job.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[subject = &#39;Test mail&#39;,
+ body = &#39;Send a test mail.&#39;]
+-&gt; mailto(to=&#39;taro@example.com&#39;, from=&#39;hanako@example.com&#39;,
+          subject=subject, body=body)
+-&gt; print(&#39;Sent a mail.&#39;)
+</pre></div>
+</div>
+<p>Arguments of the <code class="docutils literal notranslate"><span class="pre">mailto</span></code> job include <code class="docutils literal notranslate"><span class="pre">to</span></code> (destination mail address), <code class="docutils literal notranslate"><span class="pre">from</span></code> (source mail address), <code class="docutils literal notranslate"><span class="pre">subject</span></code> (mail title), <code class="docutils literal notranslate"><span class="pre">body</span></code> (mail body text).</p>
+<p>When sending mail to multiple addresses, pass the list of mail address strings to the <code class="docutils literal notranslate"><span class="pre">to</span></code> argument as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mailto(to=[&#39;taro@example.com&#39;, &#39;jiro@example.com&#39;], from=&#39;hanako@example.com&#39;,
+       subject=subject, body=body)
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When sending mail, Kompira connects to the specified SMTP server to send the mail. If mail cannot be sent successfully, please check if the settings of the specified SmtpServer type object are correct, as well as the settings and logs on the SMTP server side.</p>
+</div>
+</section>
+<section id="http">
+<h3><span class="section-number">3.8.2. </span>HTTP Access<a class="headerlink" href="#http" title="Permalink to this heading">¶</a></h3>
+<p>For HTTP access to web servers etc., use the built-in <code class="docutils literal notranslate"><span class="pre">urlopen</span></code> job. Simply passing URL only to <code class="docutils literal notranslate"><span class="pre">urlopen()</span></code> will result in GET access.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|url = &#39;http://www.kompira.jp&#39;|
+urlopen(url)
+=&gt; [status = $STATUS, result = $RESULT]
+-&gt; { if status != 0 |
+then:
+    print(&#39;HTTP access failed.&#39;)
+elif result.code != 200:
+    print(&#39;HTTP status code is %code.&#39; % result)
+else:
+    print(result.body)
+}
+</pre></div>
+</div>
+<p>The result of successful access with <code class="docutils literal notranslate"><span class="pre">urlopen()</span></code> is returned in the dictionary. <code class="docutils literal notranslate"><span class="pre">code</span></code> contains the HTTP status code, and <code class="docutils literal notranslate"><span class="pre">body</span></code> contains the contents of the response.</p>
+<p>As Kompira at version 1.5.0 does not have the function to parse HTML, we create a simple script job like the following, <code class="docutils literal notranslate"><span class="pre">html_parse</span></code>. This script extracts the part specified by the parameter as text from the HTML passed to standard input.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#! /usr/bin/python
+import sys;
+from lxml import html;
+if __name__ == &#39;__main__&#39;:
+    doc = html.fromstring(sys.stdin.read().decode(&quot;utf-8&quot;))
+    for e in doc.xpath(sys.argv[1]):
+        print html.tostring(e, method=&quot;text&quot;, encoding=&quot;utf-8&quot;)
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">urlopen()</span></code> can also pass POST access by passing dictionary data to parameter <code class="docutils literal notranslate"><span class="pre">data</span></code>. As an example, consider a job flow of checking the product vendor from the first half (OUI) of the MAC address assigned to the network interface. OUI is managed by the organization called IEEE, (see weblink) <a class="reference external" href="http://standards.ieee.org/develop/regauth/oui/public.html">http://standards.ieee.org/develop/regauth/oui/public.html</a>. There is a form on this page, so that OUI is entered in the entry field named <code class="docutils literal notranslate"><span class="pre">x</span></code>. Also, since CGI called <code class="docutils literal notranslate"><span class="pre">/cgi-bin/ouisearch</span></code> is executed when searching, you need to POST access to pass OUI as data <code class="docutils literal notranslate"><span class="pre">x</span></code> to that CGI as data .</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|oui = &#39;00-00-00&#39;|
+urlopen(&#39;http://standards.ieee.org/cgi-bin/ouisearch&#39;, data={x=oui})
+-&gt; [./html_parse &lt;&lt; $RESULT.body: &#39;//pre&#39;]
+-&gt; print($RESULT)
+</pre></div>
+</div>
+<p>Since there is a result in the <code class="docutils literal notranslate"><span class="pre">&lt;pre&gt;</span></code> tag on the search result page, we pass the parameter <code class="docutils literal notranslate"><span class="pre">//pre</span></code> to the <code class="docutils literal notranslate"><span class="pre">html_parse</span></code> script to extract it. This parameter is specified by the syntax for specifying part of an XML document called XPath.</p>
+<p>By executing this job flow, you can see that vendor information can be acquired from an external web page as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[localhost] local: (/tmp/tmpxaL7DG //pre) &lt; /tmp/tmpktOTMU
+
+  OUI/MA-L                      Organization
+  company_id                    Organization
+                                    Address
+
+
+  00-00-00   (hex)              XEROX CORPORATION
+  000000     (base 16)          XEROX CORPORATION
+                                M/S 105-50C
+                                800 PHILLIPS ROAD
+                                WEBSTER NY 14580
+                                UNITED STATES
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id38">
+<h2><span class="section-number">3.9. </span>Controlling processes<a class="headerlink" href="#id38" title="Permalink to this heading">¶</a></h2>
+<p>When a job flow is executed, it is managed in Kompira as a process execution unit until the end of the job flow, and the process will sequentially execute the jobs described in the job flow sequentially.</p>
+<section id="id39">
+<h3><span class="section-number">3.9.1. </span>Process Termination<a class="headerlink" href="#id39" title="Permalink to this heading">¶</a></h3>
+<p>If there are no more jobs to continue, such as reaching the end of the job flow, or if you join the job using <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> when the executed command fails, the process will automatically finish.</p>
+<p>Otherwise, you can use an <code class="docutils literal notranslate"><span class="pre">exit</span></code> job or <code class="docutils literal notranslate"><span class="pre">abort</span></code> job to explicitly terminate a running process.</p>
+<section id="exit">
+<h4><span class="section-number">3.9.1.1. </span>exit<a class="headerlink" href="#exit" title="Permalink to this heading">¶</a></h4>
+<p>To terminate a running process, use the built-in <code class="docutils literal notranslate"><span class="pre">exit</span></code> job. If you call <code class="docutils literal notranslate"><span class="pre">exit()</span></code> without specifying arguments, the process terminates normally immediately.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>exit()
+</pre></div>
+</div>
+<p>You can also specify the exit status code with the argument of the <code class="docutils literal notranslate"><span class="pre">exit</span></code> job. In the following example, after executing the command specified by the parameter <code class="docutils literal notranslate"><span class="pre">command</span></code>, the standard error output and standard output are displayed regardless of the result (success / failure), and then the command execution result is processed as a status code.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|command|
+[command]
+=&gt; [status=$STATUS, stderr=$ERROR, stdout=$RESULT]
+-&gt; { if stderr | print(stderr) }
+-&gt; { if stdout | print(stdout) }
+-&gt; exit(status)
+</pre></div>
+</div>
+<p>Please note the difference between <code class="docutils literal notranslate"><span class="pre">exit</span></code> and <code class="docutils literal notranslate"><span class="pre">return</span></code>. For example, calling the <code class="docutils literal notranslate"><span class="pre">exit</span></code> job at a sub job called from the main job will terminate the running process (control will not be returned to the main job and will end immediately). On the other hand, if you call the <code class="docutils literal notranslate"><span class="pre">return</span></code> job at a sub job, control is returned to the main job rather than terminating the process, and processing continues immediately after the execution job that invoked the sub job.</p>
+<p>However, if the caller does not exist, for example, if you call the <code class="docutils literal notranslate"><span class="pre">return</span></code> job from the job flow you pressed by pressing the “execute button” directly, the job will be terminated at that point and the process will terminate.</p>
+</section>
+<section id="abort">
+<h4><span class="section-number">3.9.1.2. </span>abort<a class="headerlink" href="#abort" title="Permalink to this heading">¶</a></h4>
+<p>You can abnormally end a running process by calling the built-in <code class="docutils literal notranslate"><span class="pre">abort</span></code> job, for example, when the job can not be continued. In the example below, when accessing the URL specified by the parameter with <code class="docutils literal notranslate"><span class="pre">urlopen</span></code>, if the HTTP access fails or if the HTTP status code is not 200, abnormally terminate (abort) the process.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|url|
+urlopen(url)
+=&gt; [result = $RESULT, status = $STATUS]
+-&gt; { if status != 0 | abort(&#39;HTTP access failed.&#39;) }
+-&gt; { if result.code != 200 | abort(&#39;HTTP status code is %code.&#39; % result) }
+-&gt; return(result.body)
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">abort()</span></code> job is almost identical to <code class="docutils literal notranslate"><span class="pre">exit(status=1)</span></code> because it automatically terminates the process with an exit status code set to 1.</p>
+</section>
+</section>
+<section id="id40">
+<h3><span class="section-number">3.9.2. </span>Child Process Activation<a class="headerlink" href="#id40" title="Permalink to this heading">¶</a></h3>
+<p>Kompira’s concurrent behavior of multiple processes can be used in a job flow by starting a “child process”.</p>
+<p>A child process is a copy of a parent process (that is, a process that started a child process) at the time of activation, local variables and special variables have the same value, but since it can not share or reference between processes, Please note that it is not possible to rewrite the variables of the parent process from the process (the same is true for the reverse direction).</p>
+<section id="fork">
+<h4><span class="section-number">3.9.2.1. </span>fork<a class="headerlink" href="#fork" title="Permalink to this heading">¶</a></h4>
+<p>It is possible to start multiple child processes at once using the <code class="docutils literal notranslate"><span class="pre">fork</span></code> block. Below is an example of a job flow that causes the execution results of the sub job “processing A” to be processed in parallel with the sub jobs “processing B” and “processing C”, respectively.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[./ProcessA] -&gt; [result = $RESULT] -&gt;
+{ fork |
+    [./ProcessB: result] -&gt; print(&#39;ProcessB is finished.&#39;)
+    [./ProcessC: result] -&gt; print(&#39;ProcessC is finished.&#39;)
+} -&gt; print(&#39;All child processes have terminated.&#39;)
+</pre></div>
+</div>
+<p>There are places where jobs are not connected by connectors in the <code class="docutils literal notranslate"><span class="pre">fork</span></code> block, but this is a “job flow expression” delimiter, and in the above example they are two job flow expressions. When these two job flow expression parts operate in parallel as child processes and their execution is completed, the job of the parent process continues to be output to the console “all the child processes have ended” .</p>
+<p>When starting a child process in the job flow, the child process started is displayed on the “child process list” tab of the process details screen of that process. Conversely, please be aware that child processes are not displayed on the “process list” screen.</p>
+</section>
+<section id="pfor">
+<h4><span class="section-number">3.9.2.2. </span>pfor<a class="headerlink" href="#pfor" title="Permalink to this heading">¶</a></h4>
+<p>By using the <code class="docutils literal notranslate"><span class="pre">pfor</span></code> block instead of the <code class="docutils literal notranslate"><span class="pre">for</span></code> block, iterations can be executed as a parallel process all at once.</p>
+<p>For example, if you want to manage the managed nodes in the “node list” and want to execute the same job “configuration information collection” on all managed nodes, you can write as follows using the <code class="docutils literal notranslate"><span class="pre">for</span></code> block (Assume that the configuration information collection specifies the node to be processed with parameters).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|job = ./CollectConfigurationInformation|
+{ for node in ./NodeList |
+    [job: node]
+} -&gt; print(&quot;Processing of all nodes has ended.&quot;)
+</pre></div>
+</div>
+<p>If this “configuration information gathering” job is submitting a command which takes time to process to the remote node, this process is “waiting” more often. As a result, the load is low, but it will take a long time to finish processing for all nodes.</p>
+<p>If you use <code class="docutils literal notranslate"><span class="pre">pfor</span></code> instead of <code class="docutils literal notranslate"><span class="pre">for</span></code> then you will invoke the child process on each node and execute the ‘gather configuration information’ job for that child process. Then, processing can be executed in parallel by another node even if it is in the “waiting state” due to the processing on a certain node, so it is possible to shorten the processing time by increasing the job execution efficiency as a whole.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|job = ./CollectConfigurationInformation|
+{ pfor node in ./NodeList |
+    [job: node]
+} -&gt; print(&quot;Processing of all nodes has ended.&quot;)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id41">
+<h3><span class="section-number">3.9.3. </span>Detaching from the parent process<a class="headerlink" href="#id41" title="Permalink to this heading">¶</a></h3>
+<p>The parent process that started the child process using <code class="docutils literal notranslate"><span class="pre">fork</span></code> or <code class="docutils literal notranslate"><span class="pre">pfor</span></code> will wait for all child processes to finish, so the parent process will not be able to run the new job during that time. However, there are cases where you want to continue processing on the parent process side without waiting for the child process to finish. In that case we can deal with it by detaching it from the parent process using <code class="docutils literal notranslate"><span class="pre">detach()</span></code>.</p>
+<section id="detach">
+<h4><span class="section-number">3.9.3.1. </span>detach<a class="headerlink" href="#detach" title="Permalink to this heading">¶</a></h4>
+<p>For example, you often want to execute the same job flow each time you receive a message from a channel. In the following, every time a message is received, it is called by passing a message as a parameter to the job flow “message processing”.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|chan = /system/channels/Alert|
+|proc = ./MessageProcessing|
+{ while true |
+    &lt;chan&gt;
+    -&gt; [msg = $RESULT]
+    -&gt; [proc: msg]
+}
+</pre></div>
+</div>
+<p>If there is no relevance between multiple messages received from the channel, by simultaneously executing the message processing, when the messages arrive consecutively, the processing efficiency of the whole can be improved. To that end, it is necessary to operate the job flow that receives the message and “message processing” as a separate process. This is “message processing” in a child process using <cite>“fork`</cite>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|chan = /system/channels/Alert|
+|proc = ./MessageProcessing|
+{ while true |
+    &lt;chan&gt;
+    -&gt; [msg = $RESULT]
+    -&gt; { fork | [proc: msg] }
+}
+</pre></div>
+</div>
+<p>However, since the parent process waits until the “message processing” job is completed, even if a new message arrives during message processing, it can not be processed at the same time. So we use a <code class="docutils literal notranslate"><span class="pre">detach()</span></code> built-in job on the child process to separate the child process from the parent process.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|chan = /system/channels/Alert|
+|proc = ./MessageProcessing|
+{ while true |
+    &lt;chan&gt;
+    -&gt; [msg = $RESULT]
+    -&gt; { fork | detach() -&gt; [proc: msg] }
+}
+</pre></div>
+</div>
+<p>By detaching child process using <code class="docutils literal notranslate"><span class="pre">detach()</span></code>, the parent process will have no child processes to wait for processing completion, so the next job can be continued at that point. That is, the next message is received from the channel, and a new “message processing” can be activated even if “Message processing” started earlier is not completed yet.</p>
+<p>The child process becomes a normal process instead of a child process by using <code class="docutils literal notranslate"><span class="pre">detach()</span></code> and it will be displayed on the ‘Process List’ screen instead of the ‘Child Process List’ of the parent process.</p>
+<p>By combining <code class="docutils literal notranslate"><span class="pre">fork</span></code> and <code class="docutils literal notranslate"><span class="pre">pfor</span></code> with <code class="docutils literal notranslate"><span class="pre">detach()</span></code>, you can easily write somewhat complicated parallel processing in this way.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">3. Kompira Tutorial</a><ul>
+<li><a class="reference internal" href="#id1">3.1. Introduction</a></li>
+<li><a class="reference internal" href="#id2">3.2. Initiate the job flow</a><ul>
+<li><a class="reference internal" href="#hello-world">3.2.1. Hello World</a></li>
+<li><a class="reference internal" href="#id3">3.2.2. How to write a comment</a></li>
+<li><a class="reference internal" href="#id4">3.2.3. Execute the command</a></li>
+<li><a class="reference internal" href="#result">3.2.4. $RESULT</a></li>
+<li><a class="reference internal" href="#id5">3.2.5. Linking jobs together</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">3.3. Use a variable</a><ul>
+<li><a class="reference internal" href="#id7">3.3.1. Variable definition</a></li>
+<li><a class="reference internal" href="#id8">3.3.2. Identifier</a></li>
+<li><a class="reference internal" href="#id9">3.3.3. Scope</a></li>
+<li><a class="reference internal" href="#id10">3.3.4. Assigning Variables</a></li>
+<li><a class="reference internal" href="#id11">3.3.5. Array and Dictionary</a><ul>
+<li><a class="reference internal" href="#id12">3.3.5.1. Array</a></li>
+<li><a class="reference internal" href="#id13">3.3.5.2. Dictionary</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id14">3.3.6. Template character string</a></li>
+<li><a class="reference internal" href="#id15">3.3.7. Parameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16">3.4. Remotely run commands</a><ul>
+<li><a class="reference internal" href="#id17">3.4.1. Specified by the control variable</a></li>
+<li><a class="reference internal" href="#id18">3.4.2. Node information and account information settings</a></li>
+<li><a class="reference internal" href="#sudo">3.4.3. Execution by sudo</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id19">3.5. Manipulating Jobs with Control Structures</a><ul>
+<li><a class="reference internal" href="#id20">3.5.1. Conditional branch</a><ul>
+<li><a class="reference internal" href="#if">3.5.1.1. If block</a></li>
+<li><a class="reference internal" href="#case">3.5.1.2. Case block</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id21">3.5.2. Repetition</a><ul>
+<li><a class="reference internal" href="#for">3.5.2.1. for blocking</a></li>
+<li><a class="reference internal" href="#while">3.5.2.2. While block</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22">3.5.3. Calling a job</a><ul>
+<li><a class="reference internal" href="#id23">3.5.3.1. Calling a job flow</a></li>
+<li><a class="reference internal" href="#id24">3.5.3.2. Passing parameters to job flows</a></li>
+<li><a class="reference internal" href="#id25">3.5.3.3. Execution of a script job</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26">3.6. Manipulating objects</a><ul>
+<li><a class="reference internal" href="#id27">3.6.1. Referencing objects</a></li>
+<li><a class="reference internal" href="#id28">3.6.2. Browse and update properties</a></li>
+<li><a class="reference internal" href="#id29">3.6.3. Referencing and updating fields</a></li>
+<li><a class="reference internal" href="#id30">3.6.4. Calling methods</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id31">3.7. Waiting for an event</a><ul>
+<li><a class="reference internal" href="#id32">3.7.1. Transmission of messages</a></li>
+<li><a class="reference internal" href="#id33">3.7.2. About event jobs</a></li>
+<li><a class="reference internal" href="#id34">3.7.3. Specify a timeout for message retreival</a></li>
+<li><a class="reference internal" href="#id35">3.7.4. Selective reception from multiple channels</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id36">3.8. Access externally</a><ul>
+<li><a class="reference internal" href="#id37">3.8.1. Send mail</a></li>
+<li><a class="reference internal" href="#http">3.8.2. HTTP Access</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id38">3.9. Controlling processes</a><ul>
+<li><a class="reference internal" href="#id39">3.9.1. Process Termination</a><ul>
+<li><a class="reference internal" href="#exit">3.9.1.1. exit</a></li>
+<li><a class="reference internal" href="#abort">3.9.1.2. abort</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id40">3.9.2. Child Process Activation</a><ul>
+<li><a class="reference internal" href="#fork">3.9.2.1. fork</a></li>
+<li><a class="reference internal" href="#pfor">3.9.2.2. pfor</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id41">3.9.3. Detaching from the parent process</a><ul>
+<li><a class="reference internal" href="#detach">3.9.3.1. detach</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="usage.html"
+                          title="previous chapter"><span class="section-number">2. </span>Operation Guide</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="reference.html"
+                          title="next chapter"><span class="section-number">4. </span>Kompira Jobflow Language Reference</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tutorial.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="reference.html" title="4. Kompira Jobflow Language Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="2. Operation Guide"
+             >previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/tutorial.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">3. </span>Kompira Tutorial</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

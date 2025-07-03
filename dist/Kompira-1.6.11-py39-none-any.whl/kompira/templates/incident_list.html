@@ -1,0 +1,138 @@
+{% extends "selectable_list.html" %}
+{% load i18n static core_extras %}
+
+{% block extra_head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'jquery.tablesorter-2.31.3/css/bootstrap.tablesorter.css' %}">
+{% endblock extra_head %}
+
+{% block header_title %}{% trans 'incident list'|capfirst %}{% endblock %}
+{% block page_main_title %}{% trans 'incident list'|capfirst %}{% endblock %}
+
+{% block column_config %}
+<div class="float-right noprint">
+  <div class="incident-column-config btn-group column-config" data-columns-type="{{ columns.columns_type }}" style="margin-left: 4px;">
+    <a class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown"><i class="fas fa-th-list"></i></a>
+    <div class="dropdown-menu dropdown-menu-right pull-right">
+      {% for column in columns.configurable_columns %}
+      <a class="dropdown-item {{ column.hideable|yesno:',disabled' }} dropdown-link"><input type="checkbox" class="column-show-check ml-1 mr-2" name="{{ column.name }}" data-hidden="{{ column.hidden|yesno:'true,false' }}" {{ column.hidden|yesno:',checked=checked' }} {{ column.hideable|yesno:',disabled' }}>{{ column.label }}</a>
+      {% endfor %}
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item dropdown-link reset"><i class="fas fa-sync-alt fa-fw"></i> {% trans 'Reset to defaults' %}</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block display_select %}
+<div class="float-right no-print">
+  <form class="form-search">
+    <div class="input-group">
+      {{ query_form.query }}
+      {{ query_form.order_by }}
+      {{ query_form.page_size }}
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-outline-secondary" tabindex="-1"><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+  </form>
+</div>
+<div id="additional-operation">
+  <ul class="nav nav-pills page_filters">
+    {% block paginate_filters %}
+    <li id="display_select_active" class="nav-item"><a href="{{ object|getattr:'abspath' }}?is_active=True" class="nav-link" data-toggle="pill" data-filters='{"is_active": "True", "status": false}' data-deletable="false">{{ _("active incidents")|capfirst }}</a></li>
+    <li id="display_select_opened" class="nav-item"><a href="{{ object|getattr:'abspath' }}?status=OPENED" class="nav-link" data-toggle="pill" data-filters='{"is_active": false, "status": "OPENED"}' data-deletable="false">{{ _("opened incidents")|capfirst }}</a></li>
+    <li id="display_select_working" class="nav-item"><a href="{{ object|getattr:'abspath' }}?status=WORKING" class="nav-link" data-toggle="pill" data-filters='{"is_active": false, "status": "WORKING"}' data-deletable="false">{{ _("working incidents")|capfirst }}</a></li>
+    <li id="display_select_closed" class="nav-item"><a href="{{ object|getattr:'abspath' }}?status=CLOSED" class="nav-link" data-toggle="pill" data-filters='{"is_active": false, "status": "CLOSED"}' data-deletable="true">{{ _("closed incidents")|capfirst }}</a></li>
+    <li id="display_select_all" class="nav-item"><a href="{{ object|getattr:'abspath' }}" class="nav-link" data-toggle="pill" data-filters='{"is_active": false, "status": false}' data-deletable="true">{{ _("all incidents")|capfirst }}</a></li>
+    {% endblock %}
+  </ul>
+</div>
+{% endblock %}
+
+{% block selectable_list %}
+  <table class="table table-bordered table-sm tablesorter list-table column-hideable" style="display: none;">
+    <thead id="incident-header">
+      <tr>
+        <th class="column-selector {sorter: false}"><input type="checkbox" id="selectAll"></th>
+        <th class="header" data-column-name="id" data-order_by="id">{% trans 'ID' %}</th>
+        <th class="header" data-column-name="name" data-order_by="name">{% trans 'name'|capfirst %}</th>
+        <th class="header" data-column-name="device" data-order_by="device">{% trans 'Device name'|capfirst %}</th>
+        <th class="header" data-column-name="service" data-order_by="service">{% trans 'Service name'|capfirst %}</th>
+        <th class="header" data-column-name="status" data-order_by="status">{% trans 'Incident status' %}</th>
+        <th class="header" data-column-name="alert_status" data-order_by="alert_status">{% trans 'Alert status' %}</th>
+        <th class="header" data-column-name="alert_description" data-order_by="alert_description">{% trans 'Alert description' %}</th>
+        <th class="header" data-column-name="created_date" data-order_by="created_date">{% trans 'Created date' %}</th>
+        <th class="header" data-column-name="closed_date" data-order_by="closed_date">{% trans 'Closed date' %}</th>
+        <th class="header" data-column-name="duration" data-order_by="duration">{% trans 'duration'|capfirst %}</th>
+        <th class="header" data-column-name="owner" data-order_by="owner">{% trans 'owner'|capfirst %}</th>
+      </tr>
+    </thead>
+    <tbody id="incident-list" class="coloring">
+      {% for incident in object_list %}
+      <tr id="incident-row-{{ incident.id }}" data-status="{{ incident.status }}">
+        <td class="column-selector"><input class="delete-checkbox" type="checkbox"
+                   id="id_checkbox-{{ incident.id }}" name="delete_id" value="{{ incident.id }}"
+                   {% if incident.status != 'CLOSED' %}disabled{% endif %}></td>
+        <td data-column-name="id"><a href="{{ incident.abspath }}">{{ incident.id }}</a></td>
+        <td data-column-name="name"><a href="{{ incident.abspath }}">{{ incident.name }}</a></td>
+        <td data-column-name="device">{{ incident.device }}</td>
+        <td data-column-name="service">{{ incident.service }}</td>
+        <td data-column-name="status">{% trans incident.status %}</td>
+        <td data-column-name="alert_status">{{ incident.alert_status|default_if_none:"" }}</td>
+        <td data-column-name="alert_description">{{ incident.alert_description|default_if_none:"" }}</td>
+        <td data-column-name="created_date">{{ incident.created_date }}</td>
+        <td data-column-name="closed_date">{{ incident.closed_date|default_if_none:"" }}</td>
+        <td data-column-name="duration">{{ incident.duration|elapsed_datetime }}</td>
+        <td data-column-name="owner">{{ incident.owner }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot><tr class="no_applicable_data" style="{% if object_list|length > 0 %}display: none;{% endif %}"><th colspan="8">{% blocktrans %}No applicable {{ model_verbose_name }}{% endblocktrans %}</th></tr></tfoot>
+    <script id="incident-template" class="row-template" type="text/x-jsrender">
+      <tr id="incident-row-{% templatetag openvariable %}:id{% templatetag closevariable %}" data-status="{% templatetag openvariable %}:status{% templatetag closevariable %}">
+        <td class="column-selector">
+          <input class="delete-checkbox" type="checkbox" name="delete_id"
+                 id="id_checkbox-{% templatetag openvariable %}:id{% templatetag closevariable %}"
+                 value="{% templatetag openvariable %}:id{% templatetag closevariable %}"
+                 {% templatetag openvariable %}if !closed_date {% templatetag closevariable %}disabled{% templatetag openvariable %}/if{% templatetag closevariable %}>
+        </td>
+        <td data-column-name="id"><a class="incident-id" href="{% templatetag openvariable %}:abspath{% templatetag closevariable %}">{% templatetag openvariable %}:id{% templatetag closevariable %}</a></td>
+        <td data-column-name="name"><a class="incident-name" href="{% templatetag openvariable %}:abspath{% templatetag closevariable %}">{% templatetag openvariable %}:name{% templatetag closevariable %}</a></td>
+        <td data-column-name="device">{% templatetag openvariable %}:device{% templatetag closevariable %}</td>
+        <td data-column-name="service">{% templatetag openvariable %}:service{% templatetag closevariable %}</td>
+        <td data-column-name="status">{% templatetag openvariable %}:status_text{% templatetag closevariable %}</td>
+        <td data-column-name="alert_status">{% templatetag openvariable %}:alert_status{% templatetag closevariable %}</td>
+        <td data-column-name="alert_description">{% templatetag openvariable %}:alert_description{% templatetag closevariable %}</td>
+        <td data-column-name="created_date">{% templatetag openvariable %}:created_date{% templatetag closevariable %}</td>
+        <td data-column-name="closed_date">{% templatetag openvariable %}:closed_date{% templatetag closevariable %}</td>
+        <td data-column-name="duration">{% templatetag openvariable %}:duration{% templatetag closevariable %}</td>
+        <td data-column-name="owner">{% templatetag openvariable %}:owner{% templatetag closevariable %}</td>
+      </tr>
+    </script>
+  </table>
+{% endblock %}
+{% block selectable_ctrl %}
+<div class="submit-btn">
+  <a href="{{ object|getattr:'abspath' }}.add" class="btn btn-outline-secondary noprint" id="id_new_incident-btn">
+    <i class="fas fa-plus"></i> {% blocktrans %}Create {{ model_verbose_name }}{% endblocktrans %}
+  </a>
+</div>
+{{ block.super }}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'jsrender-1.0.6/js/jsrender.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'kompira/js/kompira.data_table.js' %}" type="text/javascript"></script>
+<script src="{% static 'kompira/js/kompira.incident_list.js' %}" type="text/javascript"></script>
+<script src="{% static 'kompira/js/kompira.column_config.js' %}" type="text/javascript"></script>
+<script type="text/javascript">
+(function(kompira) {
+    // var interval = {{ KOMPIRA_AJAX_POLLING_INTERVAL }};
+    kompira.incident_table = new kompira.PageableIncidentTable('section.main-list' /*, interval*/);
+    kompira.incident_table.init();
+    // kompira.incident_table.setPolling();
+})(kompira);
+</script>
+{% endblock %}

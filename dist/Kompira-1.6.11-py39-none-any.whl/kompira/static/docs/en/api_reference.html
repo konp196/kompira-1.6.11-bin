@@ -1,0 +1,1472 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>8. Kompira REST API Reference &#8212; Kompira 1.6.11 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="7. Monitoring Kompira" href="monitoring.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="monitoring.html" title="7. Monitoring Kompira"
+             accesskey="P">previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/api_reference.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">8. </span>Kompira REST API Reference</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="kompira-rest-api">
+<h1><span class="section-number">8. </span>Kompira REST API Reference<a class="headerlink" href="#kompira-rest-api" title="Permalink to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira development team</p>
+</dd>
+</dl>
+<section id="id1">
+<h2><span class="section-number">8.1. </span>Introduction<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>This document describes how to use REST API.</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">8.2. </span>Common Features<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<section id="id3">
+<h3><span class="section-number">8.2.1. </span>The end point<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p>The end point of REST API is similar to that of the resource path of a regular Kompira object. That is, the root end point is displayed</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>http[s]://&lt;hostname&gt;/
+</pre></div>
+</div>
+<p>as above.</p>
+<p>In order to distinguish access from the browser and an API request, in the Accept header of the HTTP Request</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Accept: application/json
+</pre></div>
+</div>
+<p>must be included.</p>
+<p>Alternatively, you could include: <code class="docutils literal notranslate"><span class="pre">format=json</span></code> in the request string.</p>
+</section>
+<section id="id4">
+<h3><span class="section-number">8.2.2. </span>User Authentification<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>The two types of authentication that are allowed are: 1. token and 2. session authentication methods.</p>
+<p>While using token authentication, include the token key in the Authorization header of the request as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Authorization: Token &lt;token key&gt;
+</pre></div>
+</div>
+<p>Alternatively, you can include the token key in the query string of the HTTP request as shown below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>token=&lt;token key&gt;
+</pre></div>
+</div>
+<p>When you enable the REST API of each user on the user setting page, an access token is generated. If you disable the REST API and re-enable it, the token is reinitialized.</p>
+</section>
+<section id="id5">
+<h3><span class="section-number">8.2.3. </span>Format<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<p>Only the JSON format of data is supported.</p>
+<section id="datetime">
+<h4><span class="section-number">8.2.3.1. </span>Datetime data<a class="headerlink" href="#datetime" title="Permalink to this heading">¶</a></h4>
+<p>The date and time data should be in UTC and the following format of (ISO8601) must be used.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%Y-%m-%dT%H:%M:%S.%fZ or %Y-%m-%dT%H:%M:%SZ
+</pre></div>
+</div>
+<p>It is acceptable to omit microseconds and seconds when entering the data. If Z (the last UTC directive) is omitted, it will be regarded as (JST) local time and will be internally converted to UTC.</p>
+</section>
+<section id="object">
+<h4><span class="section-number">8.2.3.2. </span>Object data<a class="headerlink" href="#object" title="Permalink to this heading">¶</a></h4>
+<p>Object data is represented by the absolute path of the object.</p>
+</section>
+<section id="file">
+<h4><span class="section-number">8.2.3.3. </span>File data<a class="headerlink" href="#file" title="Permalink to this heading">¶</a></h4>
+<p>When outputting file data, it becomes key holding dictionary data which displays the name and data, as shown below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ &quot;name&quot;: &quot;&lt;file name&gt;&quot;, &quot;data&quot;: &quot;&lt;BASE64 encoded file data&gt;&quot; }
+</pre></div>
+</div>
+<p>When entering the data, enter it as key holding dictionary data, showing name and data as shown below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ &quot;name&quot;: &quot;&lt;file name&gt;&quot;, &quot;data&quot;: &quot;&lt;BASE64 encoded file contents string&gt;&quot; }
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id6">
+<h3><span class="section-number">8.2.4. </span>Error<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<p>When an error occurs, A HTTP status code will appear indicating as such. When this happens, data indicating the reason for the error will be shown in the HTTP response’s content body.</p>
+<p>Most error data will be shown in dictionary type including the detail key as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ &quot;detail&quot;: &quot;&lt;reason of error&gt;&quot; }
+</pre></div>
+</div>
+<p>In the case of a validation error in which the required data is not included in the request data, the following dictionary data will appear:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ &quot;&lt;field name&gt;&quot;: [&quot;&lt;error message&gt;&quot;, ...],
+  &quot;&lt;field name&gt;&quot;: [&quot;&lt;error message&gt;&quot;, ...],
+... }
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><span class="section-number">8.2.5. </span>Paginate<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<p>When the list is retrieved, paginated data in the form shown, appears as below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;count&quot;: &lt;total number of objects&gt;,
+    &quot;next&quot;: &lt;next page URL&gt;,
+    &quot;previous&quot;: &lt;previous page URL&gt;,
+    &quot;results&quot;: &lt;objects data list&gt;
+}
+</pre></div>
+</div>
+<p>When specifying and acquiring a page, include page = &lt;page number&gt; in the query path. If you want to get the last page, specify last as the page number.</p>
+<p>The default page size is 25. If you want to change the page size, enter:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>page_size=&lt;page size&gt;
+</pre></div>
+</div>
+<p>into the query string.</p>
+</section>
+<section id="id8">
+<h3><span class="section-number">8.2.6. </span>Specifying attributes to retrieve<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
+<p>By specifying the attribute name to be retrieved as <code class="docutils literal notranslate"><span class="pre">attrs=&lt;attribute</span> <span class="pre">name&gt;</span></code> in the query path, it is possible to retrieve only some attribute values of the object data.</p>
+<p>For example, to get only the ID and display name of an object, specify <code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">display_name</span></code> as the attribute names, as shown in the example below</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/some/object?attrs=id&amp;attrs=display_name
+</pre></div>
+</div>
+<p>In the same way, it is possible to specify the attributes to be acquired in the list acquisition. For example, to get only the process ID and status in the process list, specify as follows</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/process?attrs=id&amp;attrs=status
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3><span class="section-number">8.2.7. </span>Filtering<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<p>To filter by attribute of the object, specify <code class="docutils literal notranslate"><span class="pre">&lt;attribute-name&gt;=&lt;value&gt;</span></code> in the query path.</p>
+<p>For example, if you want to get a list of only successfully completed processes, specified as shown below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/process?status=DONE
+</pre></div>
+</div>
+<p>If multiple attributes are specified in the query path as shown below, it is filtering by AND.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/app.descendant?display_name=test&amp;owner=root
+</pre></div>
+</div>
+<p>Although the above is filtering by exact matching, detailed filtering conditions can be specified by describing the attribute name followed by a lookup as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;attribute-name&gt;__&lt;lookup&gt;=&lt;value&gt;
+</pre></div>
+</div>
+<p>For example, you can filter objects that contain <code class="docutils literal notranslate"><span class="pre">test</span></code> in the display name.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/app.descendant?display_name__contains=test
+</pre></div>
+</div>
+<p>The lookup types and filtering method is as follows.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Lookup</p></th>
+<th class="head"><p>Filtering method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code></p></td>
+<td><p>The attribute exactly matches the specified value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code></p></td>
+<td><p>The attribute contains the specified value.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">startswith</span></code>, <code class="docutils literal notranslate"><span class="pre">istartswith</span></code></p></td>
+<td><p>The attribute starts with the specified value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code></p></td>
+<td><p>The attribute ends with the specified value.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code></p></td>
+<td><p>The attribute matches the specified regular expression.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code></p></td>
+<td><p>The attribute is greater than specified value (<code class="docutils literal notranslate"><span class="pre">gt</span></code>). The attribute is greater than or equal to the value specified (<code class="docutils literal notranslate"><span class="pre">gte</span></code>).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code></p></td>
+<td><p>The attribute is less than specified value (<code class="docutils literal notranslate"><span class="pre">lt</span></code>). The attribute is less than or equal to the specified value (<code class="docutils literal notranslate"><span class="pre">lte</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">in</span></code></p></td>
+<td><p>The attribute is included in the specified values.</p></td>
+</tr>
+</tbody>
+</table>
+<p>In filtering others than virtual objects by attribute value, the lookup that can be specified depends on attribute.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Specifiable Lookup</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>owner</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>abspath</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code>, <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code>, <code class="docutils literal notranslate"><span class="pre">startswith</span></code>,
+<code class="docutils literal notranslate"><span class="pre">istartswith</span></code>, <code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code>, <code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>display_name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code>, <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code>, <code class="docutils literal notranslate"><span class="pre">startswith</span></code>,
+<code class="docutils literal notranslate"><span class="pre">istartswith</span></code>, <code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code>, <code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>description</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code>, <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code>, <code class="docutils literal notranslate"><span class="pre">startswith</span></code>,
+<code class="docutils literal notranslate"><span class="pre">istartswith</span></code>, <code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code>, <code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>created</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>updated</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>type_object</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>parent_object</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>In filtering virtual objects by attribute value, the lookup that can be specified depends on the data type of the attribute.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type of the attribute</p></th>
+<th class="head"><p>Specifiable Lookup</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>String</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code>, <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code>, <code class="docutils literal notranslate"><span class="pre">startswith</span></code>,
+<code class="docutils literal notranslate"><span class="pre">istartswith</span></code>, <code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code>, <code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Integer</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Datetime</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Object</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>User</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Boolean</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>If lookup is not specified, <code class="docutils literal notranslate"><span class="pre">exact</span></code> is applied.</p>
+</section>
+<section id="id10">
+<h3><span class="section-number">8.2.8. </span>Specify sort order<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
+<p>To specify the order in retrieving a list of objects, specify <code class="docutils literal notranslate"><span class="pre">order_by=&lt;attribute</span> <span class="pre">name&gt;</span></code> in the query path. This will return a list of the results sorted in ascending order by the specified attribute. To sort in descending order, specify <code class="docutils literal notranslate"><span class="pre">order_by=-&lt;attribute</span> <span class="pre">name&gt;</span></code> in the query path.</p>
+<p>The following object attributes can be used to specify the order by order_by</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Order applied</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>id</p></td>
+<td><p>Order by object ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>owner</p></td>
+<td><p>Order by user ID of the object’s owner</p></td>
+</tr>
+<tr class="row-even"><td><p>abspath</p></td>
+<td><p>Order by absolute path of the object</p></td>
+</tr>
+<tr class="row-odd"><td><p>display_name</p></td>
+<td><p>Order by display name of the object</p></td>
+</tr>
+<tr class="row-even"><td><p>description</p></td>
+<td><p>Order by description of the object</p></td>
+</tr>
+<tr class="row-odd"><td><p>created</p></td>
+<td><p>Order by creation date and time of the object (oldest first)</p></td>
+</tr>
+<tr class="row-even"><td><p>updated</p></td>
+<td><p>Order by update date and time of the object (oldest first)</p></td>
+</tr>
+<tr class="row-odd"><td><p>type_object</p></td>
+<td><p>Order by type object’s ID</p></td>
+</tr>
+<tr class="row-even"><td><p>parent_object</p></td>
+<td><p>Order by parent object’s ID</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.6post1: </span>Description and parent_object have been added to the attributes that can be specified in order_by.</p>
+</div>
+<section id="id11">
+<h4><span class="section-number">8.2.8.1. </span>Object<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h4>
+<p>The attributes that can be used for filtering general objects (other than virtual objects) are as follows.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute name</p></th>
+<th class="head"><p>description (type of attribute) or [available lookup]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">owner</span></code></p></td>
+<td><p>Owner (User)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">display_name</span></code></p></td>
+<td><p>Display name (String)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">description</span></code></p></td>
+<td><p>Description (String)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">created</span></code></p></td>
+<td><p>Created date (Datetime)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">updated</span></code></p></td>
+<td><p>Updated date (Datetime)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">type_object</span></code></p></td>
+<td><p>Type object (Object)</p></td>
+</tr>
+</tbody>
+</table>
+<p>In addition, in situations where type objects are identified, you can also specify filtering by field values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>field:&lt;field-name&gt;__&lt;lookup&gt;=&lt;value&gt;
+</pre></div>
+</div>
+<p>For example, specify as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/.descendant?type_object=/system/types/Jobflow&amp;field:source__contains=urlopen&amp;field:defaultMonitoringMode=MAIL
+</pre></div>
+</div>
+<p>A situation in which a type object is specified means one of the following.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">type_object</span></code> attribute filter specifies a type object.</p></li>
+<li><p>The endpoint object is a table type, and the type object is set in the table.</p></li>
+</ul>
+<p>If type objects are not specified, specifying filtering by field value results in an error.</p>
+<p>In filtering by field value, the lookup that can be specified differs depending on the data type of the field.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type of field</p></th>
+<th class="head"><p>Specifiable Lookup</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>String</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code>, <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code>, <code class="docutils literal notranslate"><span class="pre">startswith</span></code>,
+<code class="docutils literal notranslate"><span class="pre">istartswith</span></code>, <code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code>, <code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code>, <code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Integer</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">isnull</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code>, <code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Boolean</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Datetime</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">isnull</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code>, <code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Object</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">isnull</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>File</p></td>
+<td><p>(same as string)</p></td>
+</tr>
+<tr class="row-even"><td><p>Array</p></td>
+<td><p>(same as string)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dictionary</p></td>
+<td><p>(same as string)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="process">
+<h4><span class="section-number">8.2.8.2. </span>Process Type (Process)<a class="headerlink" href="#process" title="Permalink to this heading">¶</a></h4>
+<p>The attributes that can be used for filtering process objects are as follows:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute name</p></th>
+<th class="head"><p>description (type of attribute) or [available lookup]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">job</span></code></p></td>
+<td><p>Job object (Object)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">user</span></code></p></td>
+<td><p>Execution user (User)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">started_time</span></code></p></td>
+<td><p>Start date and time (Datetime)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">finished_time</span></code></p></td>
+<td><p>End date and time (Datetime)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">status</span></code></p></td>
+<td><p>Status [exact]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">schedule</span></code></p></td>
+<td><p>Schedule object (Obejct)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">parent</span></code></p></td>
+<td><p>Parent process (Process)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">current_job</span></code></p></td>
+<td><p>Running job object (Object)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">suspended</span></code></p></td>
+<td><p>Pause flag (Boolean)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lineno</span></code></p></td>
+<td><p>Running line number (integer)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">console</span></code></p></td>
+<td><p>Console (String)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="scheduler">
+<h4><span class="section-number">8.2.8.3. </span>Schedule type Processes (Scheduler)<a class="headerlink" href="#scheduler" title="Permalink to this heading">¶</a></h4>
+<p>The attributes that can be used for filtering schedule objects are as follows:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute name</p></th>
+<th class="head"><p>description (type of attribute) or [available lookup]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>Schedule name (String)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">description</span></code></p></td>
+<td><p>Description (String)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">user</span></code></p></td>
+<td><p>User type (User)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">job</span></code></p></td>
+<td><p>Job object (Object)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">year</span></code></p></td>
+<td><p>Year [exact, contains]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">month</span></code></p></td>
+<td><p>Month [exact, contains]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">day</span></code></p></td>
+<td><p>Day [exact, contains]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">week</span></code></p></td>
+<td><p>Week [exact, contains]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">day_of_week</span></code></p></td>
+<td><p>Day of the week [exact, contains]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hour</span></code></p></td>
+<td><p>Hour [exact, contains]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">minute</span></code></p></td>
+<td><p>Minute [exact, contains]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disabled</span></code></p></td>
+<td><p>Disabled flag (Boolean)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="incident">
+<h4><span class="section-number">8.2.8.4. </span>Incident type processes (Incident)<a class="headerlink" href="#incident" title="Permalink to this heading">¶</a></h4>
+<p>The attributes that can be used for filtering incident objects are as follows:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute name</p></th>
+<th class="head"><p>description (type of attribute) or [available lookup]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>Incident name (String)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">device</span></code></p></td>
+<td><p>Device name (String)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">service</span></code></p></td>
+<td><p>Service name (String)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">created_date</span></code></p></td>
+<td><p>Created date (Datetime)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">closed_date</span></code></p></td>
+<td><p>Completed date and time (Datetime)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">status</span></code></p></td>
+<td><p>Status [exact]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">owner</span></code></p></td>
+<td><p>Owner (User)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="task">
+<h4><span class="section-number">8.2.8.5. </span>Task type (Task)<a class="headerlink" href="#task" title="Permalink to this heading">¶</a></h4>
+<p>The attributes that can be used for filtering task objects are as follows:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute name</p></th>
+<th class="head"><p>description (type of attribute) or [available lookup]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>Task name (String)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">title</span></code></p></td>
+<td><p>Title (String)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">message</span></code></p></td>
+<td><p>Message (String)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">status</span></code></p></td>
+<td><p>Status [exact]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">owner</span></code></p></td>
+<td><p>Owner (User)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">created_date</span></code></p></td>
+<td><p>Created date (Datetime)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">closed_date</span></code></p></td>
+<td><p>Completed date and time (Datetime)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="user">
+<h4><span class="section-number">8.2.8.6. </span>User type (User)<a class="headerlink" href="#user" title="Permalink to this heading">¶</a></h4>
+<p>The attribyte that can be used for filtering user objects are as follows:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute name</p></th>
+<th class="head"><p>description (type of attribute) or [available lookup]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">username</span></code></p></td>
+<td><p>User name (String)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">first_name</span></code></p></td>
+<td><p>First name (String)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">last_name</span></code></p></td>
+<td><p>Surname (String)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">email</span></code></p></td>
+<td><p>E-mail (String)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">last_login</span></code></p></td>
+<td><p>Last login date and time (Datetime)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">is_active</span></code></p></td>
+<td><p>Enabled (Boolean)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">is_ldap_user</span></code></p></td>
+<td><p>LDAP user or not (Boolean)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">home_directory</span></code></p></td>
+<td><p>Home directory (Object)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">environment</span></code></p></td>
+<td><p>Environment variable (Object)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="group">
+<h4><span class="section-number">8.2.8.7. </span>Group type (Group)<a class="headerlink" href="#group" title="Permalink to this heading">¶</a></h4>
+<p>The attributes that can be used for group object filtering are as follows:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute name</p></th>
+<th class="head"><p>description (type of attribute) or [available lookup]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>Group name (String)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">is_ldap_group</span></code></p></td>
+<td><p>LDAP group or not (Boolean)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="kompira">
+<h2><span class="section-number">8.3. </span>Accessing Kompira objects<a class="headerlink" href="#kompira" title="Permalink to this heading">¶</a></h2>
+<section id="id12">
+<h3><span class="section-number">8.3.1. </span>How to get object information<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET &lt;object path&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Response</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;object ID&gt;,
+    &quot;abspath&quot;: &lt;object path&gt;,
+    &quot;owner&quot;: &lt;username of object owner&gt;,
+    &quot;fields&quot;: &lt;field data dictionary&gt;,
+    &quot;extra_properties&quot;: &lt;extra properties&gt;,
+    &quot;user_permissions&quot;: &lt;user permissions dictionary&gt;,
+    &quot;group_permissions&quot;: &lt;group permissions dictionary&gt;,
+    &quot;display_name&quot;: &lt;display name&gt;,
+    &quot;description&quot;: &lt;desciption&gt;,
+    &quot;created&quot;: &lt;datetime of object created&gt;,
+    &quot;updated&quot;: &lt;datetime of object updated&gt;,
+    &quot;type_object&quot;: &lt;path of type obejct&gt;,
+    &quot;parent_object&quot;: &lt;path of parent object&gt;
+}
+</pre></div>
+</div>
+<p>Field data dictionary and object extended attributes are dictionary data containing keys that vary depending on the object type.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the case of a configuration type object, in addition to the above, it contains a data field with dictionary data containing the keys and values of the configuration items.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To retrieve password data for Password type fields, Array&lt;Password&gt; type fields, and Dictionary&lt;Password&gt; type fields, write permission to the object is required. If you do not have write permission, data replaced by a null value will be returned.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.8: </span>Object write permission is now required to retrieve password data.</p>
+</div>
+</section>
+<section id="id13">
+<h3><span class="section-number">8.3.2. </span>Object Information Updates<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h3>
+<dl>
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>PUT &lt;object path&gt;</p></li>
+<li><p>PATCH &lt;object path&gt;</p></li>
+</ul>
+<p>The PUT request replaces the entire data of the object. For a partial object update, use the PATCH request instead.</p>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;owner&quot;: &lt;username of object owner&gt;,
+    &quot;fields&quot;: &lt;field data dictionary&gt;,
+    &quot;user_permissions&quot;: &lt;user permissions dictionary&gt;,
+    &quot;group_permissions&quot;: &lt;group permissions dictionary&gt;,
+    &quot;display_name&quot;: &lt;display name&gt;,
+    &quot;description&quot;: &lt;desciption&gt;           # optional
+}
+</pre></div>
+</div>
+<p>In the case of a PATCH request, omitting an attribute does not change the value of the object corresponding to that key.</p>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>Updated Object Data</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h3><span class="section-number">8.3.3. </span>Adding a new object<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h3>
+<p>When a POST request is sent to a directory object or table object, an object is newly created.</p>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST &lt;directory or table’s object path&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;owner&quot;: &lt;username of object owner&gt;,  # optional
+    &quot;fields&quot;: &lt;field data dictionary&gt;,
+    &quot;name&quot;: &lt;object name&gt;,
+    &quot;user_permissions&quot;: &lt;user permissions dictionary&gt;,
+    &quot;group_permissions&quot;: &lt;group permissions dictionary&gt;,
+    &quot;display_name&quot;: &lt;display name&gt;,       # optional
+    &quot;description&quot;: &lt;desciption&gt;,          # optional
+    &quot;type_object&quot;: &lt;path of type obejct&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>HTTP 201 Created Response to the Newly Created Object’s Data</p>
+</dd>
+</dl>
+</section>
+<section id="id15">
+<h3><span class="section-number">8.3.4. </span>Deleting an object<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h3>
+<p>You can delete the object by sending a DELETE request to the object path.</p>
+<p>Processes, schedules, incidents, tasks, objects can also be deleted in this way, one by one.</p>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>DELETE &lt;object path&gt;</p></li>
+</ul>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>If successful, HTTP 204 No Content is returned.</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h3><span class="section-number">8.3.5. </span>Obtaining a list of children and descendants<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h3>
+<p>You can get a list of directory objects or children and descendant objects of table objects.</p>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET &lt;object path&gt;.children # child object list</p></li>
+<li><p>GET &lt;object path&gt;.descendant # descendant object list</p></li>
+</ul>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>A list of object data will be returned.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For objects other than directories and tables, an empty list is returned.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Of the retrieved listing data, objects without read permission do not contain the fields attribute (field data dictionary).</p>
+</div>
+</section>
+<section id="id17">
+<h3><span class="section-number">8.3.6. </span>Executing a job flow<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST &lt;job flow path&gt;.execute</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;step_mode&quot;: &lt;step mode&gt;,                    # true or false
+    &quot;checkpoint_mode&quot;: &lt;checkpoint mode&gt;,        # true or false
+    &quot;monitoring_mode&quot;: &lt;monitoring mode&gt;,        # NOTHING, MAIL, ABORT_MAIL
+    &quot;parameters&quot;: &lt;jobflow parameters dictionary&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>The path of the executed job flow process is returned.</p>
+</dd>
+</dl>
+</section>
+<section id="id18">
+<h3><span class="section-number">8.3.7. </span>Executing a script job<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST &lt;script job path&gt;.execute</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;node&quot;: &lt;path of node object&gt;,
+    &quot;account&quot;: &lt;path of account object&gt;,
+    &quot;command_line&quot;: &lt;command line string&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>The path of the executed job flow process is returned.</p>
+</dd>
+</dl>
+</section>
+<section id="id19">
+<h3><span class="section-number">8.3.8. </span>Sending Messages<a class="headerlink" href="#id19" title="Permalink to this heading">¶</a></h3>
+<p>Messages can be sent to Channel Objects.</p>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST &lt;channel object path&gt;.send</p></li>
+</ul>
+</dd>
+<dt><strong>Request Data</strong></dt><dd><p>Can be sent in any JSON data format</p>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>If it succeeds, HTTP 200 OK is returned.</p>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h3><span class="section-number">8.3.9. </span>Received Messages<a class="headerlink" href="#id20" title="Permalink to this heading">¶</a></h3>
+<p>Receiving a message from a channel object</p>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST &lt;channel object path&gt;.recv</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;timeout&quot;: &lt;timeout (seconds)&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>If it succeeds, the received data is returned. When the receive timeout expires, HTTP 408 Request Timeout is returned as the status code.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there is no data on the channel, wait for the specified number of seconds with timeout. The default value for timeout is 0 seconds.</p>
+</div>
+</section>
+</section>
+<section id="id21">
+<h2><span class="section-number">8.4. </span>Process<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h2>
+<section id="id22">
+<h3><span class="section-number">8.4.1. </span>Retreiving lists<a class="headerlink" href="#id22" title="Permalink to this heading">¶</a></h3>
+<dl>
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /process</p></li>
+</ul>
+<p>To retrieve the child process list, use the following request:</p>
+<ul class="simple">
+<li><p>GET /process/id_&lt;process ID&gt;.children</p></li>
+</ul>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>A list of process details data will be returned.</p>
+</dd>
+</dl>
+</section>
+<section id="id23">
+<h3><span class="section-number">8.4.2. </span>Obtaining process detail data<a class="headerlink" href="#id23" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /process/id_&lt;process ID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Response</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;process id&gt;,
+    &quot;abspath&quot;: &lt;path of process object&gt;,
+    &quot;user&quot;: &lt;username of execution user&gt;,
+    &quot;elapsed_time&quot;: &lt;elapsed time from process started&gt;,
+    &quot;started_time&quot;: &lt;datetime of process started&gt;,
+    &quot;finished_time&quot;: &lt;datetime of process finished&gt;,
+    &quot;status&quot;: &lt;process status&gt;,
+    &quot;exit_status&quot;: &lt;exit status&gt;,
+    &quot;result&quot;: &lt;result&gt;,
+    &quot;error&quot;: &lt;error&gt;,
+    &quot;suspended&quot;: &lt;suspended&gt;,
+    &quot;lineno&quot;: &lt;line number&gt;,
+    &quot;console&quot;: &lt;console string&gt;,
+    &quot;job&quot;: &lt;path of starting jobflow&gt;,
+    &quot;schedule&quot;: &lt;path of schedule&gt;,
+    &quot;parent&quot;: &lt;path of parent process&gt;,
+    &quot;current_job&quot;: &lt;path of executing jobflow&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id24">
+<h3><span class="section-number">8.4.3. </span>Process’ operation<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST /process/id_&lt;process ID&gt;.terminate  # Cancel process execution</p></li>
+<li><p>POST /process/id_&lt;process ID&gt;.suspend    # Pause process execution</p></li>
+<li><p>POST /process/id_&lt;process ID&gt;.resume     # Restart process execution</p></li>
+</ul>
+</dd>
+<dt><strong>Request Data</strong></dt><dd><p>You can</p>
+</dd>
+</dl>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;step_mode&quot;: &lt;step mode&gt;,                     # true/false
+    &quot;checkpoint_mode&quot;: &lt;checkpoint mode&gt;          # true/false
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>Returns “true” on success, “false” on failure.</p>
+</dd>
+</dl>
+</section>
+<section id="id25">
+<h3><span class="section-number">8.4.4. </span>Wait for the completion of execution of the process<a class="headerlink" href="#id25" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST /process/id_&lt;process ID&gt;.wait</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;timeout&quot;: &lt;timeout value&gt;                  # an integer value of 0 or more
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>On success, detailed information on the process is returned. When timeout occurs, HTTP 408 Request Timeout is returned as the status code.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="id26">
+<h2><span class="section-number">8.5. </span>Schedule<a class="headerlink" href="#id26" title="Permalink to this heading">¶</a></h2>
+<section id="id27">
+<h3><span class="section-number">8.5.1. </span>Obtaining the schedule<a class="headerlink" href="#id27" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /scheduler</p></li>
+</ul>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>A list of schedule detail data is returned.</p>
+</dd>
+</dl>
+</section>
+<section id="id28">
+<h3><span class="section-number">8.5.2. </span>Obtaining Schedule details<a class="headerlink" href="#id28" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /scheduler/id_&lt;schedule ID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Response</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  {
+      &quot;id&quot;: &lt;schedule id&gt;,
+      &quot;abspath&quot;: &lt;path of schedule object&gt;,
+      &quot;user&quot;: &lt;username&gt;,
+      &quot;scheduled_datetimes: &lt;datetimes of scheduled&gt;,
+      &quot;parameters&quot;: &lt;parameters list&gt;,
+      &quot;name&quot;: &lt;schedule name&gt;,
+      &quot;description&quot;: &lt;description&gt;,
+      &quot;year&quot;: &lt;year&gt;,
+      &quot;month&quot;: &lt;month&gt;,
+      &quot;day&quot;: &lt;day&gt;,
+      &quot;week&quot;: &lt;week&gt;,
+      &quot;day_of_week&quot;: &lt;day of week&gt;,
+      &quot;hour&quot;: &lt;houe&gt;,
+      &quot;minute&quot;: &lt;minute&gt;,
+      &quot;disabled&quot;: &lt;disabled&gt;,
+      &quot;job&quot;: &lt;path of execution jobflow&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id29">
+<h3><span class="section-number">8.5.3. </span>Schedule update<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>PUT /scheduler/id_&lt;schedule ID&gt;</p></li>
+<li><p>PATCH /scheduler/id_&lt;schedule ID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;user&quot;: &lt;username&gt;,
+    &quot;parameters&quot;: &lt;parameters list&gt;,
+    &quot;name&quot;: &lt;schedule name&gt;,             # mandatory
+    &quot;description&quot;: &lt;description&gt;,
+    &quot;year&quot;: &lt;year&gt;,
+    &quot;month&quot;: &lt;month&gt;,
+    &quot;day&quot;: &lt;day&gt;,
+    &quot;week&quot;: &lt;week&gt;,
+    &quot;day_of_week&quot;: &lt;day of week&gt;,
+    &quot;hour&quot;: &lt;houe&gt;,
+    &quot;minute&quot;: &lt;minute&gt;,
+    &quot;disabled&quot;: &lt;disabled&gt;,
+    &quot;job&quot;: &lt;path of execution jobflow&gt;   # mandatory
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>Updated Object Data</p>
+</dd>
+</dl>
+</section>
+<section id="id30">
+<h3><span class="section-number">8.5.4. </span>Creating a schedule<a class="headerlink" href="#id30" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST /scheduler</p></li>
+</ul>
+</dd>
+<dt><strong>Request Data</strong></dt><dd><p>Same as the update request</p>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>Data of the created object</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="id31">
+<h2><span class="section-number">8.6. </span>Incident<a class="headerlink" href="#id31" title="Permalink to this heading">¶</a></h2>
+<section id="id32">
+<h3><span class="section-number">8.6.1. </span>Obtaining the incident list<a class="headerlink" href="#id32" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /incident</p></li>
+</ul>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>A list of incident detail data is returned.</p>
+</dd>
+</dl>
+</section>
+<section id="id33">
+<h3><span class="section-number">8.6.2. </span>Obtaining incident details<a class="headerlink" href="#id33" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /incident/id_&lt;Incident ID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Response</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;incident id&gt;,
+    &quot;abspath&quot;: &lt;path of incident object&gt;,
+    &quot;owner&quot;: &lt;username of owner&gt;,
+    &quot;worklogs&quot;: &lt;worklogs&gt;,
+    &quot;alerts&quot;: &lt;alerts&gt;,
+    &quot;name&quot;: &lt;incident name&gt;,
+    &quot;device&quot;: &lt;device name&gt;,
+    &quot;service&quot;: &lt;service name&gt;,
+    &quot;created_date&quot;: &lt;datetime of incident created&gt;,
+    &quot;closed_date&quot;: &lt;datetime of incident closed&gt;,
+    &quot;status&quot;: &lt;incident status&gt;               # &quot;OPENED&quot;, &quot;WORKING&quot;, &quot;CLOSED&quot;
+}
+</pre></div>
+</div>
+</section>
+<section id="id34">
+<h3><span class="section-number">8.6.3. </span>Updating Incidents<a class="headerlink" href="#id34" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>PUT /incident/id_&lt;incident ID&gt;</p></li>
+<li><p>PATCH /incident/id_&lt;Incident ID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;owner&quot;: &lt;username of owner&gt;,
+    &quot;name&quot;: &lt;incident name&gt;,
+    &quot;device&quot;: &lt;device name&gt;,
+    &quot;service&quot;: &lt;service name&gt;,
+    &quot;status&quot;: &lt;incident status&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>Updated Object Data</p>
+</dd>
+</dl>
+</section>
+<section id="id35">
+<h3><span class="section-number">8.6.4. </span>Adding a work log<a class="headerlink" href="#id35" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST /incident/id_&lt;incident ID&gt;.worklogs</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;user&quot;: &lt;username&gt;,
+    &quot;description&quot;: &lt;description&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>Data of the added work log</p>
+</dd>
+</dl>
+</section>
+<section id="id36">
+<h3><span class="section-number">8.6.5. </span>Creating a incident<a class="headerlink" href="#id36" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST /incident</p></li>
+</ul>
+</dd>
+<dt><strong>Request Data</strong></dt><dd><p>Same as the update request</p>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>Data of the created object</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="id37">
+<h2><span class="section-number">8.7. </span>Task<a class="headerlink" href="#id37" title="Permalink to this heading">¶</a></h2>
+<section id="id38">
+<h3><span class="section-number">8.7.1. </span>Obtaining a list of tasks<a class="headerlink" href="#id38" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /task</p></li>
+</ul>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>List of task detail data</p>
+</dd>
+</dl>
+</section>
+<section id="id39">
+<h3><span class="section-number">8.7.2. </span>Obtaining task details<a class="headerlink" href="#id39" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /task/id_&lt;Task ID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Response</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;task id&gt;,
+    &quot;abspath&quot;: &lt;path of task object&gt;,
+    &quot;owner&quot;: &lt;username of owner&gt;,
+    &quot;assigned_users&quot;: &lt;assigned users&gt;,
+    &quot;assigned_groups&quot;: &lt;assigned groups&gt;,
+    &quot;name&quot;: &lt;task name&gt;,
+    &quot;title&quot;: &lt;task title&gt;,
+    &quot;message&quot;: &lt;message&gt;,
+    &quot;action_text&quot;: &lt;action text&gt;,
+    &quot;result&quot;: &lt;result&gt;,
+    &quot;status&quot;: &lt;status&gt;,          # &quot;WAITING&quot;, &quot;ONGOING&quot;, &quot;DONE&quot;, &quot;CANCELED&quot;
+    &quot;created_date&quot;: &lt;datetime of task created&gt;,
+    &quot;closed_date&quot;: &lt;datetime of task closed&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id40">
+<h3><span class="section-number">8.7.3. </span>Cancelling a task<a class="headerlink" href="#id40" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST /task/id_&lt;incident ID&gt;.cancel</p></li>
+</ul>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>If it succeeds, HTTP 200 OK is returned.</p>
+</dd>
+</dl>
+</section>
+<section id="id41">
+<h3><span class="section-number">8.7.4. </span>Submitting a task<a class="headerlink" href="#id41" title="Permalink to this heading">¶</a></h3>
+<p>Send a message to the task channel.</p>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST /task/id_&lt;incident ID&gt;.submit</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;result&quot;: &lt;result message&gt;
+}
+</pre></div>
+</div>
+<p>If request data is omitted, “OK” is transmitted to the task channel.</p>
+</section>
+</section>
+<section id="id42">
+<h2><span class="section-number">8.8. </span>User / Group Management<a class="headerlink" href="#id42" title="Permalink to this heading">¶</a></h2>
+<section id="id43">
+<h3><span class="section-number">8.8.1. </span>Obtaining a user list<a class="headerlink" href="#id43" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /config/user</p></li>
+</ul>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>List of user detail data</p>
+</dd>
+</dl>
+</section>
+<section id="id44">
+<h3><span class="section-number">8.8.2. </span>Obtaining User Details<a class="headerlink" href="#id44" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /config/user/id_&lt;user ID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Response</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;user id&gt;,
+    &quot;abspath&quot;: &lt;path of user object&gt;,
+    &quot;groups&quot;: &lt;groups&gt;,
+    &quot;last_login&quot;: &lt;datetime of last login&gt;,
+    &quot;username&quot;: &lt;username&gt;,
+    &quot;first_name&quot;: &lt;first name&gt;,
+    &quot;last_name&quot;: &lt;last name&gt;,
+    &quot;email&quot;: &lt;E-mail address&gt;,
+    &quot;is_active&quot;: &lt;active flag&gt;,
+    &quot;is_ldap_user&quot;: &lt;LDAP user flag&gt;,
+    &quot;home_directory&quot;: &lt;path of home directory&gt;,
+    &quot;environment&quot;: &lt;path of environment object&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id45">
+<h3><span class="section-number">8.8.3. </span>Updating Users<a class="headerlink" href="#id45" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>PUT /config/user/id_&lt;user ID&gt;</p></li>
+<li><p>PATCH /config/user/id_&lt;user ID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;groups&quot;: &lt;groups&gt;,
+    &quot;last_login&quot;: &lt;datetime of last login&gt;,
+    &quot;username&quot;: &lt;username&gt;,             # mandatory
+    &quot;password&quot;: &lt;password&gt;,             # mandatory
+    &quot;first_name&quot;: &lt;first name&gt;,
+    &quot;last_name&quot;: &lt;last name&gt;,
+    &quot;email&quot;: &lt;E-mail address&gt;,
+    &quot;is_active&quot;: &lt;active flag&gt;,
+    &quot;is_ldap_user&quot;: &lt;LDAP user flag&gt;,
+    &quot;home_directory&quot;: &lt;path of home directory&gt;,
+    &quot;environment&quot;: &lt;path of environment object&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>Updated Object Data</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The is_active field for the root user cannot be set to false. Built-in users (admin, root, guest) cannot have is_ldap_user set to true. Also, non-privileged users cannot modify the groups and is_active fields.</p>
+</div>
+</section>
+<section id="id46">
+<h3><span class="section-number">8.8.4. </span>Create new users<a class="headerlink" href="#id46" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST /config/user</p></li>
+</ul>
+</dd>
+<dt><strong>Request Data</strong></dt><dd><p>Same as for Updating Users</p>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>Data of the created object</p>
+</dd>
+</dl>
+</section>
+<section id="id47">
+<h3><span class="section-number">8.8.5. </span>Obtaining the group list<a class="headerlink" href="#id47" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /config/group</p></li>
+</ul>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>List of group detail data</p>
+</dd>
+</dl>
+</section>
+<section id="id48">
+<h3><span class="section-number">8.8.6. </span>Obtaining group details data<a class="headerlink" href="#id48" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>GET /config/group/id_&lt;group ID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Response</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;group id&gt;,
+    &quot;abspath&quot;: &lt;path of group object&gt;,
+    &quot;name&quot;: &lt;group name&gt;,
+    &quot;is_ldap_group&quot;: &lt;LDAP group flag&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id49">
+<h3><span class="section-number">8.8.7. </span>Updating Groups<a class="headerlink" href="#id49" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>PUT /config/group/id_&lt;group ID&gt;</p></li>
+<li><p>PATCH /config/group/id_&lt;group ID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Request Data</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;name&quot;: &lt;group name&gt;,
+    &quot;is_ldap_group&quot;: &lt;LDAP group flag&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>Response</strong></dt><dd><p>Updated Object Data</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cannot set is_ldap_group to true for built-in groups (other, wheel). Also, unprivileged users cannot update groups.</p>
+</div>
+</section>
+<section id="id50">
+<h3><span class="section-number">8.8.8. </span>Adding a new group<a class="headerlink" href="#id50" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><strong>Request</strong></dt><dd><ul class="simple">
+<li><p>POST /config/group</p></li>
+</ul>
+</dd>
+<dt><strong>Request Data</strong></dt><dd><p>Same as for updating groups</p>
+</dd>
+<dt><strong>Response</strong></dt><dd><p>Updated Object Data</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">8. Kompira REST API Reference</a><ul>
+<li><a class="reference internal" href="#id1">8.1. Introduction</a></li>
+<li><a class="reference internal" href="#id2">8.2. Common Features</a><ul>
+<li><a class="reference internal" href="#id3">8.2.1. The end point</a></li>
+<li><a class="reference internal" href="#id4">8.2.2. User Authentification</a></li>
+<li><a class="reference internal" href="#id5">8.2.3. Format</a><ul>
+<li><a class="reference internal" href="#datetime">8.2.3.1. Datetime data</a></li>
+<li><a class="reference internal" href="#object">8.2.3.2. Object data</a></li>
+<li><a class="reference internal" href="#file">8.2.3.3. File data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">8.2.4. Error</a></li>
+<li><a class="reference internal" href="#id7">8.2.5. Paginate</a></li>
+<li><a class="reference internal" href="#id8">8.2.6. Specifying attributes to retrieve</a></li>
+<li><a class="reference internal" href="#id9">8.2.7. Filtering</a></li>
+<li><a class="reference internal" href="#id10">8.2.8. Specify sort order</a><ul>
+<li><a class="reference internal" href="#id11">8.2.8.1. Object</a></li>
+<li><a class="reference internal" href="#process">8.2.8.2. Process Type (Process)</a></li>
+<li><a class="reference internal" href="#scheduler">8.2.8.3. Schedule type Processes (Scheduler)</a></li>
+<li><a class="reference internal" href="#incident">8.2.8.4. Incident type processes (Incident)</a></li>
+<li><a class="reference internal" href="#task">8.2.8.5. Task type (Task)</a></li>
+<li><a class="reference internal" href="#user">8.2.8.6. User type (User)</a></li>
+<li><a class="reference internal" href="#group">8.2.8.7. Group type (Group)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira">8.3. Accessing Kompira objects</a><ul>
+<li><a class="reference internal" href="#id12">8.3.1. How to get object information</a></li>
+<li><a class="reference internal" href="#id13">8.3.2. Object Information Updates</a></li>
+<li><a class="reference internal" href="#id14">8.3.3. Adding a new object</a></li>
+<li><a class="reference internal" href="#id15">8.3.4. Deleting an object</a></li>
+<li><a class="reference internal" href="#id16">8.3.5. Obtaining a list of children and descendants</a></li>
+<li><a class="reference internal" href="#id17">8.3.6. Executing a job flow</a></li>
+<li><a class="reference internal" href="#id18">8.3.7. Executing a script job</a></li>
+<li><a class="reference internal" href="#id19">8.3.8. Sending Messages</a></li>
+<li><a class="reference internal" href="#id20">8.3.9. Received Messages</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id21">8.4. Process</a><ul>
+<li><a class="reference internal" href="#id22">8.4.1. Retreiving lists</a></li>
+<li><a class="reference internal" href="#id23">8.4.2. Obtaining process detail data</a></li>
+<li><a class="reference internal" href="#id24">8.4.3. Process’ operation</a></li>
+<li><a class="reference internal" href="#id25">8.4.4. Wait for the completion of execution of the process</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26">8.5. Schedule</a><ul>
+<li><a class="reference internal" href="#id27">8.5.1. Obtaining the schedule</a></li>
+<li><a class="reference internal" href="#id28">8.5.2. Obtaining Schedule details</a></li>
+<li><a class="reference internal" href="#id29">8.5.3. Schedule update</a></li>
+<li><a class="reference internal" href="#id30">8.5.4. Creating a schedule</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id31">8.6. Incident</a><ul>
+<li><a class="reference internal" href="#id32">8.6.1. Obtaining the incident list</a></li>
+<li><a class="reference internal" href="#id33">8.6.2. Obtaining incident details</a></li>
+<li><a class="reference internal" href="#id34">8.6.3. Updating Incidents</a></li>
+<li><a class="reference internal" href="#id35">8.6.4. Adding a work log</a></li>
+<li><a class="reference internal" href="#id36">8.6.5. Creating a incident</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id37">8.7. Task</a><ul>
+<li><a class="reference internal" href="#id38">8.7.1. Obtaining a list of tasks</a></li>
+<li><a class="reference internal" href="#id39">8.7.2. Obtaining task details</a></li>
+<li><a class="reference internal" href="#id40">8.7.3. Cancelling a task</a></li>
+<li><a class="reference internal" href="#id41">8.7.4. Submitting a task</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id42">8.8. User / Group Management</a><ul>
+<li><a class="reference internal" href="#id43">8.8.1. Obtaining a user list</a></li>
+<li><a class="reference internal" href="#id44">8.8.2. Obtaining User Details</a></li>
+<li><a class="reference internal" href="#id45">8.8.3. Updating Users</a></li>
+<li><a class="reference internal" href="#id46">8.8.4. Create new users</a></li>
+<li><a class="reference internal" href="#id47">8.8.5. Obtaining the group list</a></li>
+<li><a class="reference internal" href="#id48">8.8.6. Obtaining group details data</a></li>
+<li><a class="reference internal" href="#id49">8.8.7. Updating Groups</a></li>
+<li><a class="reference internal" href="#id50">8.8.8. Adding a new group</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="monitoring.html"
+                          title="previous chapter"><span class="section-number">7. </span>Monitoring Kompira</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_reference.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="monitoring.html" title="7. Monitoring Kompira"
+             >previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/api_reference.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">8. </span>Kompira REST API Reference</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

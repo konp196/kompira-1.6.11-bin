@@ -1,0 +1,103 @@
+{% extends "main_view.html" %}
+{% load i18n %}
+
+{% block header_title %}{% trans 'task detail'|capfirst %}{% endblock %}
+{% block page_main_title %}{{ object.name }}{% endblock %}
+{% block page_sub_title %}{% trans 'task detail'|capfirst %}{% endblock %}
+
+{% block side_contents %}
+<section>
+  <h4>{% trans 'attribute'|capfirst %}</h4>
+  <table id="task-info" class="table table-striped table-sm">
+    <tbody>
+      <tr>
+        <th>{% trans 'status'|capfirst %}</th>
+        <td id="task-status">{% trans object.status %}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'owner'|capfirst %}</th>
+        <td id="task-owner">{{ object.owner }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'created date'|capfirst %}</th>
+        <td id="task-created-date">{{ object.created_date }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'closed date'|capfirst %}</th>
+        <td id="task-closed-date">{{ object.closed_date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+{% endblock side_contents %}
+
+{% block section_contents %}
+<section>
+  <h4>{% trans 'title'|capfirst %}</h4>
+  <p>{{ object.title }}</p>
+</section>
+<section>
+  <h4>{% trans 'to'|capfirst %}</h4>
+  <table class="table table-striped table-sm">
+    <tbody>
+      <tr>
+        <th>{% trans 'user'|capfirst %}</th>
+        <td>{% for user in object.assigned_users.all %}
+          {{ user }}{% if not forloop.last %},{% endif %}
+          {% endfor %}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'group'|capfirst %}</th>
+        <td>{% for group in object.assigned_groups.all %}
+          {{ group }}{% if not forloop.last %},{% endif %}
+          {% endfor %}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h4 class="section-title">{% trans 'message'|capfirst  %}</h4>
+  <pre>{{ object.message|urlize }}</pre>
+</section>
+
+<section>
+  <div id="bottom-buttons">
+    {% if object.status == 'ONGOING' %}
+    <form action="{{ object.abspath }}.cancel" method="post">
+      {% csrf_token %}
+      <input type="submit" name="cancel" class="input-btn btn btn-outline-secondary" id="id_task_cancel-btn" value="{% trans 'cancel'|capfirst %}" />
+    </form>
+    {% elif object.status == 'WAITING' %}
+    <form action="{{ object.abspath }}.submit" method="post">
+      {% csrf_token %}
+      {% if object.action|length == 0 %}
+        <input id="task_action" type="submit" class="task-action-btn btn btn-outline-secondary" name="result" value="OK">
+      {% elif object.action|length <= 2 %}
+        {% for choice in object.action %}
+          <input id="task_action-{{forloop.counter}}" type="submit" class="task-action-btn btn btn-outline-secondary" name="result" value="{{ choice }}">
+        {% endfor %}
+      {% else %}
+        <div class="input-group">
+          <select name="result" class="form-control col-3">
+            {% for choice in object.action %}
+            <option class="task-action-choice" value="{{ choice }}">{{ choice }}</option>
+            {% endfor %}
+          </select>
+          <div class="input-group-append">
+            <input id="task_action" type="submit" class="task-action-btn btn btn-outline-secondary" value="OK">
+          </div>
+        </div>
+      {% endif %}
+    </form>
+{% endif %}
+  </div>
+
+</section>
+{% endblock section_contents %}
+
+{% block bottom_buttons %}
+{% with object_deletable=object.is_closed object_path=object.abspath object_type=model_verbose_name object_name=object.name %}
+{% include "bottom_button.html" %}
+{% endwith %}
+{% endblock bottom_buttons %}

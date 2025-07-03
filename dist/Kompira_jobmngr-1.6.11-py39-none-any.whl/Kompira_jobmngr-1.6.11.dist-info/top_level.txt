@@ -1,0 +1,3 @@
+kompira_common
+kompira_jobmngr
+kompira_sendevt

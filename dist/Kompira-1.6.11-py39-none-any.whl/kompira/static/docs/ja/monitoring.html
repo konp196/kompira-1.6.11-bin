@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>7. Kompira の監視 &#8212; Kompira 1.6.11 ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="8. Kompira REST API リファレンス" href="api_reference.html" />
+    <link rel="prev" title="6. 他システムとの連携" href="coordination.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="api_reference.html" title="8. Kompira REST API リファレンス"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="coordination.html" title="6. 他システムとの連携"
+             accesskey="P">前へ</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/monitoring.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>Kompira の監視</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="kompira">
+<h1><span class="section-number">7. </span>Kompira の監視<a class="headerlink" href="#kompira" title="この見出しへのパーマリンク">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">著者<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira 開発チーム</p>
+</dd>
+</dl>
+<section id="id1">
+<h2><span class="section-number">7.1. </span>はじめに<a class="headerlink" href="#id1" title="この見出しへのパーマリンク">¶</a></h2>
+<p>このドキュメントでは、Zabbix などの監視システムを用いて Kompira の状態を監視する方法について説明します。</p>
+</section>
+<section id="zabbix">
+<h2><span class="section-number">7.2. </span>Zabbix での監視<a class="headerlink" href="#zabbix" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Zabbix で Kompira の動作中のプロセス数や対応中インシデントの数などを取得する方法について説明します。</p>
+<p>Zabbix の監視方法は様々なものがありますが、ここでは Zabbix Agent の「UserParameter」 機能を用いた監視と、
+「外部スクリプト」による監視の方法について説明します。</p>
+<p>※ このドキュメントでは Zabbix 2.4 を用いた監視方法について紹介します。</p>
+<section id="id2">
+<h3><span class="section-number">7.2.1. </span>準備<a class="headerlink" href="#id2" title="この見出しへのパーマリンク">¶</a></h3>
+<section id="kompira-jq-sh">
+<h4><span class="section-number">7.2.1.1. </span>kompira_jq.sh<a class="headerlink" href="#kompira-jq-sh" title="この見出しへのパーマリンク">¶</a></h4>
+<p>いずれの監視方法でも、Kompira が提供するスクリプト <code class="docutils literal notranslate"><span class="pre">kompira_jq.sh</span></code> を利用します。</p>
+<p>なお、「外部スクリプト」による監視の場合は Zabbix サーバ上で、「UserParameter」
+による監視の場合は Zabbix Agent をインストールした Kompira サーバ上で、
+<code class="docutils literal notranslate"><span class="pre">kompira_jq.sh</span></code> を実行します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">kompira_jq.sh</span></code> は内部で curl コマンドおよび jq コマンドを利用していますので、
+これらが利用できるよう監視方法に合わせて Zabbix サーバまたは Kompira サーバに、
+必要なパッケージをインストールしておいてください。</p>
+<p>※ CentOS 環境では jq は EPEL リポジトリから、AWS 環境では amzn-main リポジトリ
+からインストールできます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Kompira 1.4.6 以降に付属する kompira_jq.sh は REST-API 対応版になったため、
+旧バージョンに付属するものとオプション指定方法などで互換性がありません。</p>
+</div>
+</section>
+<section id="id3">
+<h4><span class="section-number">7.2.1.2. </span>Kompira サーバのホスト設定<a class="headerlink" href="#id3" title="この見出しへのパーマリンク">¶</a></h4>
+<p>いずれの監視方法でも Kompira サーバに対してアクセスを行なうため、Kompira サーバの
+URL と REST API トークンを Zabbix の「マクロ」として登録しておく必要があります。</p>
+<p>Zabbix 上で Kompira サーバの「ホスト設定」→「マクロ」設定画面で、
+以下のマクロ名で REST API トークンを設定してください。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Macro</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">{$KOMPIRA_URL}</span></code></p></td>
+<td><p>Kompira サーバの URL</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">{$KOMPIRA_TOKEN}</span></code></p></td>
+<td><p>REST API トークン</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="userparameter">
+<h3><span class="section-number">7.2.2. </span>UserParameter による監視<a class="headerlink" href="#userparameter" title="この見出しへのパーマリンク">¶</a></h3>
+<p>こちらは Zabbix Agent が Zabbix サーバから指定された項目に対して事前に設定された
+コマンドを実行することで、監視項目の値を収集する方法になります。</p>
+<section id="zabbix-agent">
+<h4><span class="section-number">7.2.2.1. </span>Zabbix Agent の設定<a class="headerlink" href="#zabbix-agent" title="この見出しへのパーマリンク">¶</a></h4>
+<p>Zabbix Agent をインストールした Kompira サーバ上に、UserParameter の設定ファイルを準備する必要があります。
+<code class="docutils literal notranslate"><span class="pre">/etc/zabbix/zabbix_agentd.d</span></code> に <a class="reference download internal" download="" href="_downloads/2f8cfcd645ac41de2d25d2bfd8cf7774/userparameter_kompira.conf"><code class="xref download docutils literal notranslate"><span class="pre">userparameter_kompira.conf</span></code></a> をコピーしてください。</p>
+<p>設定ファイルが準備できたら Zabbix Agent を再起動してください。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo service zabbix-agent restart
+Shutting down Zabbix agent:                                [  OK  ]
+Starting Zabbix agent:                                     [  OK  ]
+</pre></div>
+</div>
+</section>
+<section id="zabbix-server">
+<h4><span class="section-number">7.2.2.2. </span>Zabbix Server の設定<a class="headerlink" href="#zabbix-server" title="この見出しへのパーマリンク">¶</a></h4>
+<p>Zabbix Server には UserParameter を利用した監視項目を設定する必要がありますが、
+<a class="reference download internal" download="" href="_downloads/b2e1eb262450c98c30d9e54affcda448/zbx_kompira_basic_templates.xml"><code class="xref download docutils literal notranslate"><span class="pre">zbx_kompira_basic_templates.xml</span></code></a> をインポートすることで標準的な監視項目をすぐに利用できます。</p>
+<p><cite>Template Kompira Server</cite> という名前のテンプレートが作成されますので、
+監視したい Kompira サーバにこのテンプレートを適用してください。</p>
+</section>
+<section id="id4">
+<h4><span class="section-number">7.2.2.3. </span>監視項目<a class="headerlink" href="#id4" title="この見出しへのパーマリンク">¶</a></h4>
+<p>標準で以下の監視項目を利用可能です。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>概要</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Kompira active incidents</p></td>
+<td><p>アクティブなインシデント数</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kompira active processes</p></td>
+<td><p>アクティブなプロセス数</p></td>
+</tr>
+<tr class="row-even"><td><p>Kompira active schedulers</p></td>
+<td><p>アクティブなスケジュール数</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kompira active tasks</p></td>
+<td><p>アクティブなタスク数</p></td>
+</tr>
+<tr class="row-even"><td><p>Kompira jobflows</p></td>
+<td><p>ジョブフロー総数</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kompira license remain_days</p></td>
+<td><p>ライセンスの残り日数</p></td>
+</tr>
+<tr class="row-even"><td><p>Kompira objects</p></td>
+<td><p>Kompira オブジェクト総数</p></td>
+</tr>
+<tr class="row-odd"><td><p>Memory usage of kompirad process</p></td>
+<td><p>メモリ使用量(kompirad)</p></td>
+</tr>
+<tr class="row-even"><td><p>Memory usage of kompira_jobmngrd process</p></td>
+<td><p>メモリ使用量(kompira_jobmngrd)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Number of kompirad process</p></td>
+<td><p>プロセス数(kompirad)</p></td>
+</tr>
+<tr class="row-even"><td><p>Number of kompira_jobmngrd process</p></td>
+<td><p>プロセス数(kompira_jobmngrd)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id5">
+<h3><span class="section-number">7.2.3. </span>外部スクリプトによる監視<a class="headerlink" href="#id5" title="この見出しへのパーマリンク">¶</a></h3>
+<p>こちらは Zabbix サーバ上で外部のスクリプトを実行して、監視項目の値を収集する
+方法になります。</p>
+<p>まず、Kompira が提供するスクリプト <code class="docutils literal notranslate"><span class="pre">/opt/kompira/bin/kompira_jq.sh</span></code> を、
+Zabbix サーバ上の外部スクリプトを配置するディレクトリにコピーしておいてください。
+デフォルトでは <code class="docutils literal notranslate"><span class="pre">/usr/lib/zabbix/externalscripts</span></code> になります。</p>
+<section id="id6">
+<h4><span class="section-number">7.2.3.1. </span>プロセス数<a class="headerlink" href="#id6" title="この見出しへのパーマリンク">¶</a></h4>
+<p>外部スクリプト <code class="docutils literal notranslate"><span class="pre">kompira_jq.sh</span></code> を用いてプロセス数を監視する場合、以下のような設定で Item を作成してください。</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Kompira</span> <span class="pre">processes</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Type</p></td>
+<td><p>External check</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kompira_jq.sh[-s,{$KOMPIRA_URL},-t,{$KOMPIRA_TOKEN},-ac,/process]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Type of information</p></td>
+<td><p>Numeric (unsigned)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data type</p></td>
+<td><p>Decimal</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id7">
+<h4><span class="section-number">7.2.3.2. </span>インシデント数<a class="headerlink" href="#id7" title="この見出しへのパーマリンク">¶</a></h4>
+<p>外部スクリプト <code class="docutils literal notranslate"><span class="pre">kompira_jq.sh</span></code> を用いてインシデント数を監視する場合、以下のような設定で Item を作成してください。</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Kompira</span> <span class="pre">incidents</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Type</p></td>
+<td><p>External check</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kompira_jq.sh[-s,{$KOMPIRA_URL},-t,{$KOMPIRA_TOKEN},-ac,/incident]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Type of information</p></td>
+<td><p>Numeric (unsigned)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data type</p></td>
+<td><p>Decimal</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">7. Kompira の監視</a><ul>
+<li><a class="reference internal" href="#id1">7.1. はじめに</a></li>
+<li><a class="reference internal" href="#zabbix">7.2. Zabbix での監視</a><ul>
+<li><a class="reference internal" href="#id2">7.2.1. 準備</a><ul>
+<li><a class="reference internal" href="#kompira-jq-sh">7.2.1.1. kompira_jq.sh</a></li>
+<li><a class="reference internal" href="#id3">7.2.1.2. Kompira サーバのホスト設定</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#userparameter">7.2.2. UserParameter による監視</a><ul>
+<li><a class="reference internal" href="#zabbix-agent">7.2.2.1. Zabbix Agent の設定</a></li>
+<li><a class="reference internal" href="#zabbix-server">7.2.2.2. Zabbix Server の設定</a></li>
+<li><a class="reference internal" href="#id4">7.2.2.3. 監視項目</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">7.2.3. 外部スクリプトによる監視</a><ul>
+<li><a class="reference internal" href="#id6">7.2.3.1. プロセス数</a></li>
+<li><a class="reference internal" href="#id7">7.2.3.2. インシデント数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="coordination.html"
+                          title="前の章へ"><span class="section-number">6. </span>他システムとの連携</a></p>
+  </div>
+  <div>
+    <h4>次のトピックへ</h4>
+    <p class="topless"><a href="api_reference.html"
+                          title="次の章へ"><span class="section-number">8. </span>Kompira REST API リファレンス</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/monitoring.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="api_reference.html" title="8. Kompira REST API リファレンス"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="coordination.html" title="6. 他システムとの連携"
+             >前へ</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/monitoring.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>Kompira の監視</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

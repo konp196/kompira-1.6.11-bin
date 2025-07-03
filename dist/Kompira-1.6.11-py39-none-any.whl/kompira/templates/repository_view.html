@@ -1,0 +1,61 @@
+{% extends "obj_view.html" %}
+{% load i18n core_extras %}
+{% block section_contents %}
+<form id="control-form" action="{{ object_property.abspath }}" method="post">
+  {% csrf_token %}
+  <div class="form-row">
+    <div class="form-group col-4">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="control-label input-group-text" for="id_node">{% trans 'branch'|capfirst %}</label>
+        </div>
+        {{ form.branch.errors }}
+        {{ form.branch }}
+      </div>
+    </div>
+    <div class="form-group col-2">
+      <div class="btn-group">
+        <button class="initialize-btn btn btn-outline-secondary" id="initialize-btn" name="action" value="initialize"
+                {% if not object.directory or not object.URL %}disabled{% endif %}>
+          {% trans 'initialize'|capfirst %}
+        </button>
+        <button class="pull-btn btn btn-outline-secondary" id="pull-btn" name="action" value="pull"
+                {% if not object.is_inited or not object.directory or not object.URL %}disabled{% endif %}>
+          {% trans 'pull'|capfirst %}
+        </button>
+      </div>
+    </div>
+    <div class="form-group col-6">
+      <div class="input-group">
+        {{ form.message }}
+        <div class="input-group-append">
+          <button class="push-btn btn btn-outline-secondary" id="push-btn" name="action" value="push"
+                  {% if not object.is_inited or not object.directory or not object.URL %}disabled{% endif %}>
+            {% trans 'push'|capfirst %}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<hr>
+<section>
+<!-- タブメニュー定義 -->
+<ul class="nav nav-tabs" id="repository-tab">
+  <li class="nav-item"><a class="nav-link active" href="#config" data-toggle="tab" id="tab-config">{% trans 'configuration'|capfirst %}</a></li>
+  <li class="nav-item"><a class="nav-link" href="#log" data-toggle="tab" id="tab-log">{% trans 'log'|capfirst %}</a></li>
+</ul>
+<!-- タブコンテンツ定義 -->
+<div class="tab-content mt-3">
+  <!-- 設定タブ -->
+  <div class="tab-pane active" id="config">
+    {% include "field_table.html" %}
+  </div>
+  <!-- ログタブ -->
+  <div class="tab-pane" id="log">
+    <pre id="log-samp" class="pre-scrollable">{{ object.log }}</pre>
+  </div>
+</div>
+
+</section>
+{% endblock %}

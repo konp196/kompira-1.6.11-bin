@@ -1,0 +1,7 @@
+kompira
+kompira_common
+kompira_compiler
+kompira_engine
+kompira_jobmngr
+kompira_sendevt
+kompira_site

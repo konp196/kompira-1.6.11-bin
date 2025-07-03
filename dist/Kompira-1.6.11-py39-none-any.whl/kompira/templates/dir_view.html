@@ -1,0 +1,85 @@
+{% extends "login_base.html" %}
+{% load static i18n core_extras %}
+
+{% block extra_head %}
+{{ block.super }}
+<script type="text/javascript" src="{% static 'jstree-3.3.8/dist/jstree.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'jstree-3.3.8/dist/themes/default/style.min.css' %}">
+<link rel="stylesheet" href="{% static 'jquery.tablesorter-2.31.3/css/bootstrap.tablesorter.css' %}">
+{% endblock extra_head %}
+
+{% block extra_header %}
+{% make_breadcrumbs object %}
+{% endblock extra_header %}
+
+{% block page_main_title %}
+<div id="obj-name">{{ object_property.display_name|default:object_property.name }}</div>
+{% endblock %}
+{% block page_sub_title %}
+<span id="obj-display-name"><a href="{{ type_object_property.abspath }}" class="text-decoration-none">{{ type_object_property.display_name }}</a></span>
+{% endblock %}
+
+{% block page_header_prepend %}
+<div class="float-right noprint">
+{% block form_search %}
+<form action="{{ object_property.abspath }}.query" method="get" class="form-search">
+  <div class="input-group">
+    {{ query_form.query }}
+    {{ query_form.order_by }}
+    {{ query_form.page_size }}
+    <div class="input-group-append">
+      <button id="id_search-btn" type="submit" class="btn btn-outline-secondary" tabindex="-1"><i class="fas fa-search"></i></button>
+    </div>
+  </div>
+</form>
+{% endblock form_search %}
+</div>
+{% endblock page_header_prepend %}
+
+{% block article %}
+<div class="col-12 dir-contents" data-object="{{ object }}" data-order_by="{{ order_by }}" data-page_size="{{ page_size }}" data-focus_object="{{ page_obj.focus_object }}">
+<section class="dir-view">
+  <div class="contents-header clearfix">
+  <div class="float-right noprint">
+    {% include 'dir/dir_column_config.html' %}
+  </div>
+  {% include 'paginator_mini.html' %}
+  {% include 'dir/dir_context_operation.html' %}
+  </div>
+  {% include 'dir/dir_object_table.html' %}
+</section>
+</div>
+{% endblock %}
+
+{% block article_footer %}
+<div class="article-footer noprint" style="text-align: right;">
+<div class="keybind-help" id="keybind-help-show" style="display: inline-block; color: gray;">
+  <span class="keybind" ><span>?</span></span> <span>{% trans "show keyboard shotcuts" %}</span>
+</div>
+<script type="text/javascript">
+(function(){
+    $('#keybind-help-show').on('click', function(){
+        kompira.keybind.show_help();
+    });
+})();
+</script>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<!-- 添付ファイルアップロードチェック -->
+<script src="{% static 'jsrender-1.0.6/js/jsrender.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'kompira/js/check_upload.js' %}"></script>
+<script id="file_size_alert-tmpl" type="text/x-jsrender">
+  <span id="id_file_size_alert" class="badge badge-warning">
+    {% blocktrans with file_limit=settings.KOMPIRA_UPLOAD_FILE_LIMIT|filesizeformat %}The file size exceeds the maximum size ({{ file_limit }}).{% endblocktrans %}
+  </span>
+</script>
+
+{% include "dir/dir_action_form.html" %}
+{% include "dir/dir_context_menu.html" %}
+{% include "dir/dir_dialog.html" %}
+{% include "dir/dir_view.html" %}
+{% include "js_paginator.html" %}
+{% endblock %}

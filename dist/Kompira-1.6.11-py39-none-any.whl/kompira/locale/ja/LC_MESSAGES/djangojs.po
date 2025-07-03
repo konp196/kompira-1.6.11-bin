@@ -1,0 +1,382 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-23 08:30+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+
+#: kompira/static/kompira/directory/dir_navigate.js
+#: kompira/static/kompira/js/keybind.js
+msgid "search"
+msgstr "検索"
+
+#: kompira/static/kompira/directory/dir_navigate.js
+#: kompira/static/kompira/js/keybind.js
+msgid "goto home"
+msgstr "ホームに移動"
+
+#: kompira/static/kompira/directory/dir_navigate.js
+#: kompira/static/kompira/js/keybind.js
+msgid "goto parent directory"
+msgstr "親ディレクトリに移動"
+
+#: kompira/static/kompira/directory/dir_navigate.js
+#: kompira/static/kompira/js/keybind.js
+msgid "goto next page"
+msgstr "次のページに移動"
+
+#: kompira/static/kompira/directory/dir_navigate.js
+#: kompira/static/kompira/js/keybind.js
+msgid "goto prev page"
+msgstr "前のページに移動"
+
+#: kompira/static/kompira/directory/dir_object_create.js
+msgid "create object"
+msgstr "オブジェクトの新規作成"
+
+#: kompira/static/kompira/directory/dir_object_create.js
+msgid "select type object"
+msgstr "型オブジェクトの選択"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "an object \"%(name)s\""
+msgstr "オブジェクト \"%(name)s\""
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "%(count)s objects"
+msgstr "%(count)s 個のオブジェクト"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "Please select the location where you want to %(operation)s %(objects)s"
+msgstr "%(objects)s を%(operation)sする場所を指定してください"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "delete"
+msgstr "削除"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "Are you sure you want to %(operation)s %(objects)s?"
+msgstr "%(objects)s を%(operation)sしますか？"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "delete objects"
+msgstr "オブジェクトの削除"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "NOT EMPTY!"
+msgstr "空ではありません!"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "move"
+msgstr "移動"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "move objects"
+msgstr "オブジェクトの移動"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "copy"
+msgstr "コピー"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "copy objects"
+msgstr "オブジェクトのコピー"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "execute jobflow"
+msgstr "ジョブフロー実行"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "execute"
+msgstr "実行"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "export"
+msgstr "エクスポート"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "all objects under \"%(name)s\""
+msgstr "\"%(name)s\" 以下のすべてのオブジェクト"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "export objects"
+msgstr "オブジェクトのエクスポート"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "import"
+msgstr "インポート"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "Please select a file to %(operation)s into %(objects)s"
+msgstr "%(objects)s に%(operation)sするファイルを選択してください"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "import objects"
+msgstr "オブジェクトのインポート"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "edit property"
+msgstr "プロパティの編集"
+
+#: kompira/static/kompira/directory/dir_object_operation.js
+msgid "Edit properties of %(objects)s"
+msgstr "%(objects)sのプロパティを編集します"
+
+#: kompira/static/kompira/directory/dir_object_rename.js
+msgid "rename object"
+msgstr "名前を変更"
+
+#: kompira/static/kompira/directory/dir_object_selection.js
+msgid "move cursor to next object"
+msgstr "次のオブジェクト"
+
+#: kompira/static/kompira/directory/dir_object_selection.js
+msgid "move cursor to previous object"
+msgstr "前のオブジェクト"
+
+#: kompira/static/kompira/directory/dir_object_selection.js
+msgid "toggle the object selection"
+msgstr "オブジェクトの選択切り替え"
+
+#: kompira/static/kompira/directory/dir_object_selection.js
+#: kompira/static/kompira/js/selectable_action.js
+msgid "toggle the all objects selection"
+msgstr "すべてのオブジェクトの選択切り替え"
+
+#: kompira/static/kompira/directory/dir_object_selection.js
+msgid "context-menu"
+msgstr "コンテキストメニュー"
+
+#: kompira/static/kompira/directory/dir_object_selection.js
+msgid "select object"
+msgstr "オブジェクトの選択"
+
+#: kompira/static/kompira/directory/dir_object_selection.js
+msgid "select multiple objects"
+msgstr "複数オブジェクトの選択"
+
+#: kompira/static/kompira/js/action_script.js
+msgid "Testing connection ..."
+msgstr "接続確認中・・・"
+
+#: kompira/static/kompira/js/action_script.js
+msgid "Testing connection to [[hostname]] ..."
+msgstr "[[hostname]] に接続テストを行っています・・・"
+
+#: kompira/static/kompira/js/action_script.js
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: kompira/static/kompira/js/action_script.js
+msgid "Connection succeeds"
+msgstr "接続成功"
+
+#: kompira/static/kompira/js/action_script.js
+msgid "Connection to [[hostname]] has been successfully verified."
+msgstr "[[hostname]] への接続に成功しました"
+
+#: kompira/static/kompira/js/action_script.js
+msgid "Connection failure"
+msgstr "接続失敗"
+
+#: kompira/static/kompira/js/action_script.js
+msgid "Failed to connect to [[hostname]]."
+msgstr "[[hostname]] への接続に失敗しました"
+
+#: kompira/static/kompira/js/field_array.js
+#: kompira/static/kompira/js/kompira.property_formset.js
+msgid "add another"
+msgstr "追加"
+
+#: kompira/static/kompira/js/field_array.js
+#: kompira/static/kompira/js/kompira.property_formset.js
+msgid "remove"
+msgstr "削除"
+
+#: kompira/static/kompira/js/form_edit.js
+#: kompira/static/kompira/js/table_edit.js
+msgid "Add display field"
+msgstr "表示フィールドの追加"
+
+#: kompira/static/kompira/js/form_edit.js
+#: kompira/static/kompira/js/table_edit.js
+msgid "The displayList was reset!"
+msgstr "表示フィールド一覧をリセットしました！"
+
+#: kompira/static/kompira/js/form_edit.js
+#: kompira/static/kompira/js/table_edit.js
+msgid "Failed to reset the displayList!"
+msgstr "表示フィールド一覧をリセットできませんでした！"
+
+#: kompira/static/kompira/js/form_edit.js
+#: kompira/static/kompira/js/table_edit.js
+msgid "Reset to defaults"
+msgstr "デフォルトに戻す"
+
+#: kompira/static/kompira/js/keybind.js
+msgid "show this message"
+msgstr "このメッセージの表示"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "No authentication or authorization"
+msgstr "認証または認可がなされていません"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "Please try to re-login."
+msgstr "再ログインを試してみてください"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "Re-login"
+msgstr "再ログイン"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "No data on this page"
+msgstr "このページにはデータがありません"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "Please try reloading on the last page."
+msgstr "最終ページのリロードを試してみてください。"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "Reload on the last page"
+msgstr "最終ページをリロード"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "Client error detected"
+msgstr "クライアントエラーを検出しました"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "No response"
+msgstr "応答がありません"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "No response from server."
+msgstr "サーバから応答がありません。"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "Please make sure that the server is working properly."
+msgstr "サーバーが正常に動作していることを確認してください。"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "Server error detected"
+msgstr "サーバエラーを検出しました"
+
+#: kompira/static/kompira/js/kompira.data_table.js
+msgid "Retry"
+msgstr "リトライ"
+
+#: kompira/static/kompira/js/kompira.incident_list.js
+msgid "OPENED"
+msgstr "未対応"
+
+#: kompira/static/kompira/js/kompira.incident_list.js
+msgid "WORKING"
+msgstr "対応中"
+
+#: kompira/static/kompira/js/kompira.incident_list.js
+msgid "CLOSED"
+msgstr "完了"
+
+#: kompira/static/kompira/js/kompira.js
+msgid "Data has been changed but not yet saved!"
+msgstr "データが変更されていますが、まだ保存されていません！"
+
+#: kompira/static/kompira/js/kompira.popup_editor.js
+msgid "Invalid field qualifier!"
+msgstr "不正なフィールド修飾子です！"
+
+#: kompira/static/kompira/js/kompira.popup_editor.js
+msgid "Popup editor"
+msgstr "ポップアップエディタ"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+#: kompira/static/kompira/js/kompira.proc_list.js
+msgid "NEW"
+msgstr "新規"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+#: kompira/static/kompira/js/kompira.proc_list.js
+msgid "READY"
+msgstr "実行"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+#: kompira/static/kompira/js/kompira.proc_list.js
+msgid "RUNNING"
+msgstr "実行"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+#: kompira/static/kompira/js/kompira.proc_list.js
+msgid "WAITING"
+msgstr "待ち"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+#: kompira/static/kompira/js/kompira.proc_list.js
+msgid "ABORTED"
+msgstr "異常終了"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+#: kompira/static/kompira/js/kompira.proc_list.js
+msgid "DONE"
+msgstr "完了"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+msgid "terminate process"
+msgstr "プロセスを中止"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+msgid "suspend process"
+msgstr "プロセスを停止"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+msgid "resume process"
+msgstr "プロセスを続行"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+msgid "switch prev tab"
+msgstr "前のタブに切り替え"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+msgid "switch next tab"
+msgstr "次のタブに切り替え"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+msgid "toggle text selection on the console tab or the result tab"
+msgstr "コンソールタブまたは結果タブでのテキスト選択切り替え"
+
+#: kompira/static/kompira/js/kompira.proc_detail.js
+msgid "suspended"
+msgstr "停止中"
+
+#: kompira/static/kompira/js/type_edit.js
+msgid "The field qualifier must be a dictionary type!"
+msgstr "フィールド修飾子は辞書型でなければいけません！"
+
+#: kompira/static/kompira/js/type_edit.js
+msgid "The field qualifier can be JSONized, but it is too long!"
+msgstr "フィールド修飾子はJSON化できますが、長すぎます！"
+
+#: kompira/static/kompira/js/type_edit.js
+msgid "Edit field qualifier"
+msgstr "フィールド修飾子の編集"
+
+#: kompira/static/kompira/js/uploader.js
+msgid "Importing..."
+msgstr "インポート中・・・"
+
+#: kompira/static/kompira/js/utils.js
+#, javascript-format
+msgid "%s day, %s"
+msgid_plural "%s days, %s"
+msgstr[0] "%s 日, %s"

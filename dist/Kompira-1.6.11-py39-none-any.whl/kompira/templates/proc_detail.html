@@ -1,0 +1,204 @@
+{% extends "main_base.html" %}
+{% load static i18n core_extras %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include 'lib/prettify.html' %}
+<link rel="stylesheet" href="{% static 'jquery.tablesorter-2.31.3/css/bootstrap.tablesorter.css' %}">
+{% endblock extra_head %}
+
+{% block header_title %}{% trans 'process detail'|capfirst %}{% endblock %}
+{% block page_main_title %}{% trans 'process detail'|capfirst %}{% endblock %}
+
+{% block side_contents %}
+<section>
+  <h4>{% trans 'process information'|capfirst %}</h4>
+  <table id="process-info" class="table table-striped table-sm wordbreak">
+    <tbody>
+      <tr>
+        {% if object.is_script_job %}
+        <th>{% trans 'script path'|capfirst %}</th>
+        {% else %}
+        <th>{% trans 'jobflow path'|capfirst %}</th>
+        {% endif %}
+        <td><a id="proc-jobflow-path" href="{{ object.job|getattr:'abspath' }}">
+            {{ object.job|getattr:'abspath' }}</a></td>
+      </tr>
+      <tr>
+        <th>{% trans 'status'|capfirst %}</th>
+        <td id="proc-status" data-finished="{{ object.finished }}" data-isscript="{{ object.is_script_job }}">
+          {% trans object.status %}{% if object.suspended %} ({% trans 'suspended' %}){% endif %}
+        </td>
+      </tr>
+      <tr>
+        <th>{% trans 'process id'|capfirst %}</th>
+        <td id="proc-pid">{{ object.pid }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'parent process'|capfirst %}</th>
+        <td><a id="proc-parent" href="{{ object.parent.abspath }}">
+            {{ object.parent.pid }}</a></td>
+      </tr>
+      <tr>
+        <th>{% trans 'user'|capfirst %}</th>
+        <td id="proc-user">{{ object.user }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'started date'|capfirst %}</th>
+        <td id="proc-started-time">{{ object.started_time|default_if_none:"" }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'finished date'|capfirst %}</th>
+        <td id="proc-finished-time">{{ object.finished_time|default_if_none:"" }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'elapsed time'|capfirst %}</th>
+        <td id="proc-elapsed-time">{{ object.elapsed_time|elapsed_datetime|default_if_none:"" }}</td>
+      </tr>
+      {% if object.invoker %}
+      <tr>
+        <th>{% trans 'invoker object'|capfirst %}</th>
+        <td><a id="proc-invoker" href="{{ object.invoker|getattr:'abspath' }}">{{ object.invoker|getattr:'display_name' }}</a></td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</section>
+{% if not object.is_script_job %}
+<section>
+  <h4>{% trans 'config'|capfirst %}</h4>
+  <table id="process-info" class="table table-striped table-sm wordbreak">
+    <tbody>
+      <tr>
+        <th>{% trans 'step mode'|capfirst %}</th>
+        <td id="proc-config-step-mode">{{ object.step_mode|default_if_none:"" }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'checkpoint mode'|capfirst %}</th>
+        <td id="proc-config-checkpoint-mode">{{ object.checkpoint_mode|default_if_none:"" }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'monitoring mode'|capfirst %}</th>
+        <td id="proc-config-monitoring-mode">{{ object.monitoring_mode|default_if_none:"" }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+{% endif %}
+{% endblock side_contents %}
+
+{% block bottom_buttons %}
+{% with object_deletable=object.finished object_path=object.abspath object_type=model_verbose_name object_name=object.id %}
+{% include "bottom_button.html" %}
+{% endwith %}
+{% endblock bottom_buttons %}
+
+{% block contents %}
+<form id="process-control-form" method="post">
+  <!-- プロセスコントロールボタン -->
+  <div class="noprint">
+    {% csrf_token %}
+    <div class="btn-group">
+      <button class="control-btn btn btn-outline-secondary" id="id_terminate-btn" name="action" value="terminate" {% if object.finished %}disabled{% endif %}>
+        <i class="fas fa-stop"></i> {% trans 'terminate'|capfirst %}
+      </button>
+      {% if not object.is_script_job %}
+      <button class="control-btn btn btn-outline-secondary" id="id_suspend-btn" name="action" value="suspend" {% if object.suspended or object.finished %}disabled{% endif %}>
+        <i class="fas fa-pause"></i> {% trans 'stop'|capfirst %}
+      </button>
+      <button class="control-btn btn btn-outline-secondary" id="id_resume-btn" name="action" value="resume" {% if not object.suspended or object.finished %}disabled{% endif %}>
+        <i class="fas fa-play"></i> {% trans 'continue'|capfirst %}
+      </button>
+      {% endif %}
+    </div>
+  </div>
+</form>
+<hr>
+  <!-- タブメニュー定義 -->
+  <ul class="nav nav-tabs" id="proc-tab">
+    <li class="nav-item"><a class="nav-link active" href="#console" data-toggle="tab" id="tab-console">{% trans 'console'|capfirst %}</a></li>
+    <li class="nav-item"><a class="nav-link" href="#jobflow" data-toggle="tab" id="tab-jobflow">{% if object.is_script_job %}{% trans 'script'|capfirst %}{% else %}{% trans 'jobflow'|capfirst %}{% endif %}</a></li>
+    <li class="nav-item"><a class="nav-link" href="#result" data-toggle="tab" id="tab-result">{% trans 'result'|capfirst %}</a></li>
+    {% if not object.is_script_job %}
+    <li class="nav-item"><a class="nav-link" href="#processes" data-toggle="tab" id="tab-processes">{% trans 'child processes'|capfirst %}</a></li>
+    <li class="nav-item"><a class="nav-link" href="#config" data-toggle="tab" id="tab-config">{% trans 'config'|capfirst %}</a></li>
+    {% endif %}
+  </ul>
+  <!-- タブコンテンツ定義 -->
+  <div class="tab-content mt-3">
+    <!-- コンソールタブ -->
+    <div class="tab-pane active" id="console">
+      <div class="console-scrollable">
+        <pre id="console-samp">{{ object.console|urlize }}</pre>
+        <div class="console-mode">
+          <span class="console-loading"><img src="{% static 'kompira/img/console-loading.gif' %}" /></span>
+        </div>
+      </div>
+    </div>
+    <!-- ジョブフロータブ -->
+    <div class="tab-pane" id="jobflow">
+      {% if object.current_job %}
+      <a id="code-path" href="{{ object.current_job|getattr:'abspath' }}">
+        {{ object.current_job|getattr:'abspath' }}</a>:
+      <span id="source-lineno">{{ object.lineno|default_if_none:'' }}</span>
+      {% if object.current_job|readable:user %}
+      <pre id="source" class="prettyprint linenums">{{ object.current_job.source }}</pre>
+      {% else %}
+      <pre id="source" class="deadlink">{% blocktrans with object_path=object.current_job|getattr:'abspath' %}Permission denied: '{{ object_path }}' is not readable{% endblocktrans %}</pre>
+      {% endif %}
+      {% endif %}
+    </div>
+    <!-- 結果タブ -->
+    <div class="tab-pane" id="result">
+      <div class="result-scrollable">
+        <pre id="proc-result">{% if object.finished %}{{ object.result.data|json_dumps:4 }}{% endif %}</pre>
+        <div class="result-mode" {% if object.finished %}style="display: none"{% endif %}>
+          <span class="result-loading"><img src="{% static 'kompira/img/console-loading.gif' %}" /></span>
+        </div>
+      </div>
+    </div>
+    <!-- 子プロセス一覧タブ -->
+    {% if not object.is_script_job %}
+    <div class="tab-pane" id="processes">
+      {% with processes=object_list action_suffix=".delete_children" url_hash="#processes" %}
+      {% include 'processes.html' %}
+      {% endwith %}
+    </div>
+    {% endif %}
+    <!-- 設定 -->
+    {% if not object.is_script_job %}
+    <div class="tab-pane" id="config">
+      <ul class="nav nav-tabs" style="margin-bottom: 0;">
+        <li class="nav-item">
+          <a class="nav-link active"><label class="checkbox">{{ form.modify_form.modify_config }} {{ form.modify_form.modify_config.label|capfirst }}<label></a>
+        </li>
+      </ul>
+      <div class="tab-pane" style="padding: 8px; border-left: solid 1px rgb(221, 221, 221); border-right: solid 1px rgb(221, 221, 221); border-bottom: solid 1px rgb(221, 221, 221);">
+        <table class="table table-striped table-sm table-label-left" style="margin-bottom: 0;">
+          {{ form.config_form.as_table }}
+        </table>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+{% include "action_form.html" %}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+{% include "js_paginator.html" %}
+{% include "js_proc.html" %}
+<script type="text/javascript" src="{% static 'urlize-1.0.2/js/urlize.js' %}"></script>
+<script type="text/javascript" src="{% static 'js-cookie-2.2.0/js/js.cookie-2.2.0.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'kompira/js/kompira.proc_detail.js' %}"></script>
+<script type="text/javascript">
+$(function() {
+    var interval = {{ settings.KOMPIRA_AJAX_POLLING_INTERVAL }};
+    kompira.proc_detail = new kompira.ProcDetail();
+    kompira.proc_detail.config.update_interval_max = interval;
+    kompira.proc_detail.init();
+});
+</script>
+<script src="{% static 'kompira/js/action_script.js' %}" type="text/javascript"></script>
+<script src="{% static 'kompira/js/selectable_action.js' %}" type="text/javascript"></script>
+{% endblock %}

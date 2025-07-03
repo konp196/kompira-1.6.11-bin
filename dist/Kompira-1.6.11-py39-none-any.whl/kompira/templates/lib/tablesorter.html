@@ -1,0 +1,9 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'jquery.tablesorter-2.31.3/css/bootstrap.tablesorter.css' %}">
+<script type="text/javascript" src="{% static 'jquery.tablesorter-2.31.3/js/jquery.tablesorter.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery.metadata-unknown/js/jquery.metadata.js' %}"></script>
+<script type="text/javascript">
+$(function() {
+    $(".tablesorter").tablesorter();
+});
+</script>

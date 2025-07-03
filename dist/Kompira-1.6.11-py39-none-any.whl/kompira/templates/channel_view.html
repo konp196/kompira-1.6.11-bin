@@ -1,0 +1,49 @@
+{% extends "obj_view.html" %}
+{% load i18n core_extras %}
+
+{% block section_contents %}
+<section>
+<!-- タブメニュー定義 -->
+<ul class="nav nav-tabs" id="mail-channel-tab">
+  <li class="nav-item"><a class="nav-link active" href="#status" data-toggle="tab" id="tab-status">{% trans 'status'|capfirst %}</a></li>
+  {% if has_config %}
+  <li class="nav-item"><a class="nav-link" href="#config" data-toggle="tab" id="tab-config">{% trans 'configuration'|capfirst %}</a></li>
+  {% endif %}
+{% block extra_tab_menu %}{% endblock %}
+</ul>
+<!-- タブコンテンツ定義 -->
+<div class="tab-content mt-3">
+  <!-- ステータスタブ -->
+  <div class="tab-pane active" id="status">
+    <table class="table table-striped table-sm table-operation-right">
+      <tbody>
+        <tr>
+          <th>{% trans 'message count'|capfirst %}</th>
+          <td id="channel-message-count">{{ object|getattr:'message_count' }}</td>
+          <td class="table-operation">
+            <button id="id_clear-btn" {% if object_ability.writable %}class="btn btn-sm btn-outline-secondary action-modal"{% else %}class="btn btn-outline-secondary btn-sm" disabled{% endif %}
+              data-action="{{ object_property.abspath }}.clear_messages" data-operation="{% trans 'clear all messages' %}" data-warning="{% trans 'This operation cannot be undone!' %}">
+              <i class="fas fa-trash"></i> {% trans 'clear all'|capfirst %}
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <th>{% trans 'event count'|capfirst %}</th>
+          <td id="channel-event-count">{{ object|getattr:'event_count' }}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- 設定タブ -->
+  {% if has_config %}
+  <div class="tab-pane" id="config">
+  {% block config_tab_pane %}
+  {% include "field_table.html" %}
+  {% endblock config_tab_pane %}
+  </div>
+  {% endif %}
+{% block extra_tab_contents %}{% endblock %}
+</div>
+</section>
+{% endblock %}

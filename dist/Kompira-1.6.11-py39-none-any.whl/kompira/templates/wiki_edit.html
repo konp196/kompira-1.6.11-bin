@@ -1,0 +1,43 @@
+{% extends "obj_edit.html" %}
+{% load static i18n %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include "lib/codemirror.html" %}
+{% endblock %}
+
+{% block form_section %}
+<table class="table table-sm edit-table table-label-left">
+  {{ form.as_table }}
+</table>
+<div class="CodeMirror-usage">
+  <i class="fas fa-question-circle"></i>
+  Wikiページの編集方法については
+  <a href="{{ creole_help }}" target="_blank">CreoleWiki記法</a>、
+  <a href="{{ markdown_help }}" target="_blank">Markdown記法</a>、
+  <a href="{{ textile_help }}" target="_blank">Textile記法</a>
+  ページを参照してください。
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript">
+(function(){
+    var id_textarea = "id_wikitext";
+    var $style_input = $("#id_style");
+    kompira.editor.create(id_textarea);
+    function style_change_handler() {
+        var style = $style_input.val().toLowerCase();
+        var cm = kompira.editor.get(id_textarea);
+        if (cm) {
+            console.log("wiki-style:", style);
+            cm.setOption("mode", style);
+            cm.focus();
+        }
+    }
+    $style_input.on("change", style_change_handler);
+    style_change_handler();
+})();
+</script>
+{% endblock %}

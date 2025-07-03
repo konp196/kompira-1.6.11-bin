@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Creole Wiki 記法 &#8212; Kompira 1.6.11 ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/creole.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Creole Wiki 記法</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="creole-wiki">
+<h1>Creole Wiki 記法<a class="headerlink" href="#creole-wiki" title="この見出しへのパーマリンク">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">著者<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira開発チーム</p>
+</dd>
+</dl>
+<section id="id1">
+<h2>はじめに<a class="headerlink" href="#id1" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Kompiraオブジェクトとして作成できるウィキページでは、Creole記法を採用しています。</p>
+<p>本稿ではCreole記法の文法について説明します。</p>
+</section>
+<section id="id2">
+<h2>記法<a class="headerlink" href="#id2" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id3">
+<h3>イタリック<a class="headerlink" href="#id3" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>//italics//
+</pre></div>
+</div>
+<p><em>italics</em></p>
+</section>
+<section id="id4">
+<h3>太字<a class="headerlink" href="#id4" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>**bold**
+</pre></div>
+</div>
+<p><strong>bold</strong></p>
+</section>
+<section id="id5">
+<h3>リスト<a class="headerlink" href="#id5" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>* Bullet list
+* Second item
+** Sub item
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Bullet list</p></li>
+<li><p>Second item</p>
+<ul>
+<li><p>Sub item</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id6">
+<h3>番号付きリスト<a class="headerlink" href="#id6" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Numbered list
+# Second item
+## Sub item
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Numbered list</p></li>
+<li><p>Second item</p></li>
+</ol>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Sub item</p></li>
+</ol>
+</div></blockquote>
+</section>
+<section id="id7">
+<h3>リンク<a class="headerlink" href="#id7" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Link to [[/home]]
+[[http://www.wikicreole.org|wikicreole]]
+</pre></div>
+</div>
+<p>Link to  <a class="reference external" href="/home">/home</a></p>
+<p><a class="reference external" href="http://www.wikicreole.org">WikiCreole</a></p>
+</section>
+<section id="id8">
+<h3>見出し<a class="headerlink" href="#id8" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>== Large heading
+=== Medium heading
+==== Small heading
+</pre></div>
+</div>
+</section>
+</section>
+<section id="large-heading">
+<h2>Large heading<a class="headerlink" href="#large-heading" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="medium-heading">
+<h3>Medium heading<a class="headerlink" href="#medium-heading" title="この見出しへのパーマリンク">¶</a></h3>
+<section id="small-heading">
+<h4>Small heading<a class="headerlink" href="#small-heading" title="この見出しへのパーマリンク">¶</a></h4>
+</section>
+</section>
+<section id="id9">
+<h3>改行<a class="headerlink" href="#id9" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Force\\linebreak
+</pre></div>
+</div>
+<p>Force</p>
+<p>linebreak</p>
+</section>
+<section id="id10">
+<h3>水平線<a class="headerlink" href="#id10" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Horizontal line:
+----
+</pre></div>
+</div>
+<p>Horizontal line:</p>
+</section>
+<hr class="docutils" />
+<section id="id11">
+<h3>テーブル<a class="headerlink" href="#id11" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|=|=table|=header|
+|a|table|row|
+|b|table|row|
+</pre></div>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>table</p></th>
+<th class="head"><p>header</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>a</p></td>
+<td><p>table</p></td>
+<td><p>row</p></td>
+</tr>
+<tr class="row-odd"><td><p>b</p></td>
+<td><p>table</p></td>
+<td><p>row</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id12">
+<h3>引用<a class="headerlink" href="#id12" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{{{
+  == [[Nowiki]]:
+  //**don&#39;t format//
+}}}
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>== [[Nowiki]]:
+//**don&#39;t format//
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h3>その他<a class="headerlink" href="#id13" title="この見出しへのパーマリンク">¶</a></h3>
+<p><a class="reference external" href="http://www.wikicreole.org/wiki/Creole1.0">WikiCreole(外部サイト)</a></p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Creole Wiki 記法</a><ul>
+<li><a class="reference internal" href="#id1">はじめに</a></li>
+<li><a class="reference internal" href="#id2">記法</a><ul>
+<li><a class="reference internal" href="#id3">イタリック</a></li>
+<li><a class="reference internal" href="#id4">太字</a></li>
+<li><a class="reference internal" href="#id5">リスト</a></li>
+<li><a class="reference internal" href="#id6">番号付きリスト</a></li>
+<li><a class="reference internal" href="#id7">リンク</a></li>
+<li><a class="reference internal" href="#id8">見出し</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#large-heading">Large heading</a><ul>
+<li><a class="reference internal" href="#medium-heading">Medium heading</a><ul>
+<li><a class="reference internal" href="#small-heading">Small heading</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">改行</a></li>
+<li><a class="reference internal" href="#id10">水平線</a></li>
+<li><a class="reference internal" href="#id11">テーブル</a></li>
+<li><a class="reference internal" href="#id12">引用</a></li>
+<li><a class="reference internal" href="#id13">その他</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/creole.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/creole.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Creole Wiki 記法</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

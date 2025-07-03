@@ -1,0 +1,63 @@
+{% load i18n core_extras %}
+<div class="modal error-dialog" id="error-dialog" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header alert-danger">
+                <h4 class="modal-title"><i class="fas fa-exclamation-triangle" style="color: red;"></i> <span class="error-title">{% trans 'Error occurred' %}</span></h4>
+            </div>
+            <div class="modal-body">
+                <div class="error-date">{% trans 'Date:' %} <span class="error-text"></span></div>
+                <div class="error-status">{% trans 'Status code:' %} <span class="error-text"></span></div>
+                <div class="error-detail">{% trans 'Error detail:' %} <span class="error-text"></span></div>
+                <div class="error-message" style="margin-top: 20px;"><span class="error-text">Error message</span></div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary close-btn" data-dismiss="modal">{% trans 'Close' %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(function() {
+    function error_dialog(title, status, detail, message, actions, btn_class) {
+        var $dialog = $("#error-dialog");
+        if ($dialog.is(':visible')) {
+            throw 'Error dialog is already active';
+        }
+        var $modal_footer = $dialog.find('.modal-footer');
+        var error_date = moment().format('LLL');
+        var $deferred = $.Deferred();
+        $dialog.find('.error-title').text(title || "{% trans 'Error occurred' %}");
+        $dialog.find('.error-date').find('.error-text').text(error_date);
+        $dialog.find('.error-status').toggle(!!status).find('.error-text').text(status);
+        $dialog.find('.error-detail').toggle(!!detail).find('.error-text').text(detail);
+        $dialog.find('.error-message').toggle(!!message).find('.error-text').empty().append(message);
+        $modal_footer.find('.error-action').remove();
+        $close_btn = $modal_footer.find('.close-btn');
+        btn_class = btn_class || 'btn-danger';
+        for (var action in actions) {
+            var label = actions[action];
+            var $action_btn = $('<a class="btn error-action">').data('action', action).addClass(btn_class).text(label);
+            $action_btn.insertBefore($close_btn);
+        }
+        $modal_footer.one('click', 'a.btn', function(e){
+            var action = $(e.currentTarget).data('action');
+            $deferred.resolve(action);
+            $dialog.modal('hide');
+            return false;
+        });
+        $dialog.one('hidden.bs.modal', function(e){
+            $deferred.reject();
+            $modal_footer.off('click');
+        });
+        $dialog.modal('show');
+        return $deferred.promise();
+    }
+    function hide_error_dialog(){
+        var $dialog = $("#error-dialog");
+        $dialog.modal('hide');
+    }
+    kompira.error_dialog = error_dialog;
+    kompira.hide_error_dialog = hide_error_dialog;
+});
+</script>

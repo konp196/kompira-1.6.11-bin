@@ -1,0 +1,65 @@
+{% extends "obj_view.html" %}
+{% load static i18n core_extras %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include 'lib/prettify.html' %}
+{% endblock extra_head %}
+
+{% block section_contents %}
+<form id="execute-form" class="form-horizontal prevent-double-submit" action="{{ object_property.abspath }}.execute" method="post">
+  {% csrf_token %}
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" for="id_node">{% trans 'execution node'|capfirst %}</span>
+    </div>
+    {{ form.node }}
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" for="id_account">{% trans 'execution account'|capfirst %}</span>
+    </div>
+    {{ form.account }}
+  </div>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <button type="submit" class="btn btn-primary" id="id_execute-btn" accesskey="X"
+              {% if is_license_error or not request.engine_is_running or not object_ability.executable %}disabled data-disabled="disabled"{% endif %}>
+        <i class="fas fa-play"></i>
+        {% trans 'run'|capfirst %}</button>
+    </div>
+    {{ form.command_line }}
+  </div>
+  <hr>
+</form>
+
+<section>
+  <!-- タブメニュー定義 -->
+  <ul class="nav nav-tabs" id="script-tab">
+    <li class="nav-item">
+      <a class="nav-link active" href="#script" data-toggle="tab" id="tab-script">{% trans 'script'|capfirst %}</a>
+    </li>
+  </ul>
+  <!-- タブコンテンツ定義 -->
+  <div class="tab-content mt-3">
+    <!-- ジョブフロータブ -->
+    <div class="tab-pane active" id="script">
+      <pre id="script-source" class="prettyprint linenums">{{ object.source }}</pre>
+    </div>
+  </div>
+</section>
+<hr>
+<section>
+  <div align=right>
+    {% if object.ext %}<span class="badge badge-secondary">{{ object.ext }}</span>{% endif %}
+    {% if object.multiplicity > 0 %}<span class="text-muted" id="script-multiplicity">{% trans 'multiplicity' %}: {{ object.multiplicity }}</span>{% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript">
+$(function(){kompira.source.prettify(true);})
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "main_list.html" %}
+{% load static i18n core_extras %}
+
+{% block main_list_body %}
+{% block selectable_list %}
+{% endblock %}
+{% block selectable_ctrl %}
+<div class="selectable-action-modal" data-selected-selector=".delete-checkbox:checkbox:checked" data-target-selected="{% blocktrans %}selected [[count]] {{ model_verbose_name_plural }}{% endblocktrans %}" data-target-filtered="{% blocktrans %}[[count]] applicable {{ model_verbose_name_plural }}{% endblocktrans %}" style="margin-bottom: 10px;">
+  <button type="button" class="btn btn-outline-danger noprint selectable-action-anchor" id="id_selectable_delete-btn"
+    data-action="{{ object|getattr:'abspath' }}.delete_objects" data-operation="{% trans 'delete [[target]]' %}" data-target-filtered="{% blocktrans %}[[count]] applicable {{ model_verbose_name_plural }} (exclude active){% endblocktrans %}" data-warning="{% trans 'This operation cannot be undone!' %}">
+    <i class="fas fa-trash"></i> {% blocktrans %}Delete {{ model_verbose_name_plural }}{% endblocktrans %}
+  </button>
+</div>
+{% endblock %}
+{% include "action_form.html" %}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'kompira/js/selectable_action.js' %}" type="text/javascript"></script>
+{% endblock %}

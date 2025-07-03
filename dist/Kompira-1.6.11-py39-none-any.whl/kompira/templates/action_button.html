@@ -1,0 +1,22 @@
+{% load i18n core_extras %}
+
+<div class="btn-group">
+  <a class="action-menu btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="#">
+    {% trans 'action'|capfirst %}
+    <span class="caret"></span>
+  </a>
+  <div class="dropdown-menu">
+    <a class="dropdown-item action-menu-edit" href="{{ object_path }}.update">
+      <i class="fas fa-edit"></i> {% trans 'edit'|capfirst %}
+    </a>
+    {% if copyable %}
+    <a class="dropdown-item action-menu-copy" href="{{ object|getattr:'abspath' }}.copy?source={{ object_path }}">
+      <i class="fas fa-clone"></i> {% trans 'copy'|capfirst %}
+    </a>
+    {% endif %}
+    <a class="dropdown-item action-menu-delete action-modal" href="#"
+      data-action="{{ object_path }}.delete" data-operation="{% trans 'delete &quot;[[target]]&quot;' %}" data-target="{{ object_name }}" data-warning="{% trans 'This operation cannot be undone!' %}">
+      <i class="fas fa-trash"></i> {% trans 'delete'|capfirst %}
+    </a>
+  </div>
+</div>

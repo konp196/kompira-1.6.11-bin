@@ -1,0 +1,3803 @@
+************************
+ Kompira 標準ライブラリ
+************************
+
+:著者: Kompira 開発チーム
+
+.. highlight:: none
+
+このライブラリリファレンスマニュアルでは、Kompira に標準で付属している
+ライブラリについて説明します。
+
+組み込み関数/ジョブ
+===================
+
+Kompiraのジョブには組み込みジョブ、組み込み関数としてあらかじめ定義され
+ているものがあります。
+
+組み込みジョブは、ジョブマネージャを介さないローカルな組み込みジョブと、
+ジョブマネージャによって実行されるリモートの組み込みジョブの2種類に分け
+られます。
+
+ローカル組み込みジョブ
+----------------------
+
+ローカル組み込みジョブは、ジョブマネージャが動作していなくても実行可能
+なジョブです。
+
+.. local_job:: self()
+
+    自分自身のジョブフローを最初から再実行します。再実行のとき、そのジョ
+    ブフローのパラメータは変更しません。また、多重度指定されているジョブ
+    フローの場合、ロックを保持したまま再実行します。
+
+.. _lib-print:
+
+.. local_job:: print([message, [args, ...]])
+
+    コンソールに message 文字列を出力し、改行します。
+
+    複数の引数を与えた場合、複数のメッセージ文字列を空白文字で区切って出
+    力します。引数を全て省略すると、改行だけします。
+
+.. local_job:: sleep(timeout)
+
+    プロセスを timeout で指定した秒数だけスリープします。timeout が日時
+    型の場合は、その日時までスリープします。
+
+.. local_job:: exit([status=0, [result='', [error='']]])
+
+    プロセスを終了します。status で終了ステータスコードを指定することも
+    できます。result でプロセス終了時の実行結果を指定します。error で、
+    エラーメッセージを指定することもできます。
+
+.. local_job:: return([result='', [status=0, [error='']]])
+
+    ジョブフローの呼び出し元に制御を戻します。result で実行結果を指定し
+    ます。status で終了ステータスコードを指定することもできます。error
+    でエラーメッセージを指定することもできます。
+
+.. local_job:: abort([message])
+
+    コンソールにメッセージを出力し、ジョブを異常終了させます。終了ステー
+    タスコードは 1 にセットされます。
+
+.. local_job:: assert(value, [message])
+
+    value が真であることを確かめ、そうでない場合には、コンソールに
+    message を出力し異常終了します。
+
+.. local_job:: detach()
+
+    実行中の自身のプロセスを親プロセスから切り離します。これによって、
+    親プロセス側は子プロセスの終了を待たずに処理を先に進めることができ
+    ます。
+
+.. local_job:: suspend()
+
+    実行中のプロセスを一時停止状態にします。
+
+.. local_job:: urlopen(url, [...options])
+
+    options には、*user*, *password*, *data*, *params*, *files*,
+    *timeout*, *encode*, *http_method*, *verify*, *quiet*, *headers*,
+    *cookies*, *charset*, *binary*, *proxies* を指定することができます。
+
+    引数で指定した url に対して、HTTPリクエストを送信し、結果を取得します。
+
+    user, password を指定すると、Basic認証によるアクセスを行います。
+
+    data には POST リクエストで送信するデータを辞書型で指定することができます。
+    送信データは encode 引数で指定した方式でエンコードされます。
+
+    params に辞書を渡すと URL のクエリ文字列として展開されます。
+    例えば以下のように呼び出すと、実際にアクセスする URL は
+    ``http://example.com?key1=value1&key2=value2`` となります。::
+
+        urlopen(url='http://example.com', params={key1='value1', key2='value2'})
+
+    files には、アップロードするファイルを渡すことができます。ファイルは
+    nameとdataというフィールドを持つ辞書，ファイル名とコンテンツのリスト，
+    Kompiraサーバ上のファイル名，または添付ファイルフィールド，のいずれか
+    の形式で指定することができます。::
+
+        files={file={name='filename', data='content'}}
+        files={file=['filename', 'content']}
+        files={file="/tmp/filename.xls"}
+        files={file=./attached_file.attached1}
+
+    なお、ここで files に渡す辞書のキー（上では file）は送信先 form の
+    ファイルフィールドの名前に合わせて指定してください。
+    複数ファイルを受け付けるファイルフィールドに対しては、リスト形式で
+    フィールド名とファイルを並べて渡すこともできます。::
+
+        files=[['file', {name='filename1', data='content1'}],
+               ['file', {name='filename2', data='content2'}]]
+
+    この場合は、内側のフィールド名とファイルもリストで指定してください。
+    files が指定された場合は multipart/form-data 形式でエンコードされます。
+
+    timeout には、タイムアウトするまでの時間を秒単位で指定します。
+
+    encode には、エンコードタイプとして "json"を指定することができます。
+    data が指定され encode が "json" のとき、HTTP リクエストの
+    Content-Type: ヘッダには自動的に application/json が設定されます。
+    encode引数を省略した場合、送信データは
+    application/x-www-form-urlencoded 形式でエンコードされます。
+    files が指定されている時に encode に "json" を指定するとエラーになります。
+
+    http_method には、HTTPリクエストのメソッドを 'GET', 'POST', 'PUT',
+    'DELETE', 'HEAD' のいずれかから指定します。http_method を省略したとき、
+    data または files が指定されている場合は POST メソッド、
+    指定されていない場合は GET メソッドとなります。
+
+    verify に true を指定すると、指定した URL が https アクセスである時
+    に SSL 証明書のチェックを行います。不正な SSL 証明書を検出すると
+    urlopen ジョブはエラーになります。verify のデフォルト値は false で
+    す。
+
+    quiet に true を指定すると、verify オプションが true 時に、https ア
+    クセスした際に表示される警告メッセージを抑止します。
+
+    headers には、HTTPリクエストに設定するヘッダ情報を辞書型の値で渡す
+    ことができます。
+
+    cookies には、サーバに渡すクッキーを辞書型の値で渡します。
+
+    charset には、レスポンスとして期待する文字コードを指定することがで
+    きます。
+
+    プロキシサーバ経由で HTTP リクエストを送信する必要がある場合は、以
+    下の例の用にプロキシサーバの URL の辞書を proxies パラメータに渡し
+    ます。::
+
+        [proxies = {'http': 'http://10.10.1.10:3128', 'https': 'http://10.10.1.10:1080'}] ->
+        urlopen('http://www.kompira.jp', proxies=proxies)
+
+    取得したコンテンツがバイナリであるかどうかは Content-Type で判断し
+    ます。Content-Type が image|audio|video で始まるとき、または
+    octet|binary を含む時はバイナリと判断します。ただし binary に true
+    を指定すると、Content-Type によらずコンテンツをバイナリとして扱いま
+    す
+
+    この組み込みジョブは、以下の要素を持つ辞書型の値を返します。
+
+    ============= ====================================================================================
+    フィールド名  意味
+    ============= ====================================================================================
+    url           レスポンスのURL
+    code          結果ステータスコード
+    version       HTTPバージョン（HTTP 1.1 なら 11 という数値になります）
+    text          レスポンスの内容（エンコード情報をもとにレスポンス本文をテキストにデコードしたもの。
+                  ただし、バイナリコンテンツの場合は空文字になります）
+    content       レスポンスの内容（バイナリのままのレスポンスの本文）
+    body          レスポンスの内容（コンテンツがバイナリであると判断したとき content と同じ値になり、
+                  テキストであると判断したときは text と同じ値になります）
+    encoding      エンコード情報
+    headers       レスポンスに含まれるヘッダ情報（辞書型）
+    cookies       サーバから渡されたクッキー値（辞書型）
+    history       リダイレクトがあった場合にその履歴情報（リスト型）
+    binary        バイナリコンテンツであるかの真偽値
+    ============= ====================================================================================
+
+.. local_job:: mailto(to, from, subject, body, [...options])
+
+    options には、*cc*, *bcc*, *reply_to*, *html_content*,
+    *attach_files*, *parents*, *headers*, *charset*, *reply_to_all*,
+    *inline_content*, *placeholder*, *as_string*, *smtp_server* を指定することができ
+    ます。
+
+    メールを送信します。
+
+    to には、送信先メールアドレスを文字列で指定します。複数アドレスに送
+    信したい場合、送信先メールアドレスを要素に持つリストで指定します。
+    from には、送信元のメールアドレスを指定します。
+    subject には、メール表題の文字列を指定します。
+    body には、メール本文の文字列を指定します。
+    cc と bcc には、Cc/Bcc先メールアドレスをそれぞれ指定します。複数ア
+    ドレスを指定したい場合は、リストを渡します。
+    reply_to には、返信先のメールアドレスを指定します。
+
+    html_content を指定すると HTML 形式(text/html)のメールを送信します。
+    html_content を省略または null を指定した場合、body をテキスト形式
+    (text/plain)で持ったメールを送信します。body および html_content の
+    両方を null にすると、mailto ジョブはエラーになります。
+    attach_files には、メールに添付するファイルオブジェクト、もしくはファ
+    イルオブジェクトの一覧を渡すことができます。
+
+    parents に親メッセージ（mail_parseした結果の辞書）を渡すと、そのメッ
+    セージに対する返信としてのメールを送信します。このときメールヘッダ
+    In-Reply-To: および References: が適切に設定されます。また宛先とし
+    て親メッセージの（設定されていれば） Reply-To: または From: に設定
+    されたアドレスが設定されます。複数の親メッセージを参照する場合はリ
+    ストで渡してください。
+    parents でメールを返信する際に reply_to_all を true を指定すると、
+    「全員に返信」扱いとして親メッセージの To: と Cc: に指定された宛先
+    を引き継いで設定します。
+
+    headers に辞書を渡すと、辞書の各キーをヘッダ項目としてメールヘッダ
+    に追加します。
+
+    charset で送信時の文字コードを指定できます。省略時は UTF-8 です。
+
+    inline_content に true を指定すると添付ファイルをインライン展開しま
+    す。このときメール本体の MIME mixed サブタイプは "related" となり、
+    各添付ファイルの Content-Disposition ヘッダは "inline" となります。
+    また、メール本文(body, html_content)中に "%{Content-ID#num}"（num
+    部分は attache_files で指定した添付ファイルのインデックス）または
+    "%{Content-ID:filename}"（filename部分は添付ファイルのファイル名）
+    と指定されたプレースホルダがある場合、各添付ファイルに自動的に割り
+    当てられた Content-ID （両端の'<'と'>'を取り除いたもの）に置換され
+    ます。例えば、attach_files で画像ファイルを１つ添付し、
+    html_content に '<img src="cid:%{Content-ID#0}" />' という記述を含
+    んでおくと、対応したメールクライアントではその記述部分に添付した画
+    像ファイルがインラインで表示されるようになります。
+
+    as_string に true を指定するとメールを実際に送信するかわりに、メー
+    ルヘッダを含むメッセージ全体を文字列化します。結果の文字列は
+    $RESULT で参照できます。
+
+    smtp_server に SMTP サーバ型オブジェクトを渡すと、その SMTP サーバ
+    を利用してメール送信を行います。引数を省略した場合は、システム設定
+    で指定されている SMTP サーバが用いられます。null を渡した場合は、
+    システム設定によらず localhost (Kompiraがインストールされているサー
+    バ) 上で稼働している SMTP サーバを用いてメール送信します。
+
+    mailto ジョブで送信したメールの User-Agent ヘッダは "Kompira ver
+    X.XX" となります。"X.XX" の部分は Kompira のバージョンが入ります。
+
+    .. note::
+        from が省略された場合、次の優先順位で送信元のメールアドレスを決定します。
+
+        (1) プロセスオーナーのメールアドレス
+
+        (2) /system/config の管理者メールアドレス
+
+        (3) webmaster@localhost
+
+    .. versionchanged:: 1.6.10
+
+        mailto() に指定したアドレスリスト to, cc, bcc が不正な (RFC 2822 に準拠していない) 形式であった場合は、mailto() のエラーとなるようになりました。
+
+.. local_job:: download(from_file, to_path)
+
+    添付ファイルフィールド (File, Array<File>, Dictionary<File>型のフィールド) のファイルを指定したパスにダウンロードします。
+
+    from_file には、ダウンロード元の添付ファイルフィールドオブジェクトを指定します。
+    to_path には、ダウンロード先のファイルパスを指定します。ダウンロー
+    ド先はジョブマネージャの動作しているサーバ上のファイルシステムにな
+    ります。ダウンロード先のファイルパスがディレクトリを指している場合、
+    ファイル名は添付ファイルのファイル名となります。
+
+    以下はKompiraオブジェクト/root/Packageのattachedフィールドに添付さ
+    れたファイルをローカルの/tmpディレクトリにダウンロードします。::
+
+        download(from_file=/root/Package.attached, to_path='/tmp/')
+
+.. local_job:: upload(from_path, to_object, to_field, [to_subscript])
+
+    添付ファイルフィールド (File, Array<File>, Dictionary<File>型のフィールド) に指定したファイルをアップロードします。
+    実行結果として添付ファイルのファイル名を返します。
+
+    from_path には、ダウンロード元のファイルパスを指定します。
+    to_object には、添付先のKompiraオブジェクトを指定し、to_field で添付先Kompiraオブジェクトの添付ファイルフィールド名を指定します。
+    添付ファイルフィールドが配列 (Array<File>) や 辞書 (Dictionary<File>) の場合は、to_subscript に配列のインデックスや辞書のキーを指定できます。
+    to_subscript を省略すると、配列ではファイルを追加し、辞書ではファイル名をキーとして扱います。
+
+    以下はローカルに置かれたファイル/tmp/foo.tar.gzを/root/Packageオブジェクトのattachedフィールドにアップロードします。::
+
+        upload(from_path='/tmp/foo.tar.gz', to_object=/root/Package, to_field='attached')
+
+
+リモート組み込みジョブ
+----------------------
+
+リモート組み込みジョブは、ジョブマネージャを介して動作する組み込みのジョ
+ブです。ジョブマネージャが動作していない場合は、ジョブマネージャが起動
+するまで実行が待ち状態となります。
+
+また、リモート組み込みジョブでは、制御変数からリモートホストの接続情報
+を参照します。
+
+.. remote_job:: put(local_path, remote_path) : Array<String>
+
+    ジョブマネージャが動作しているホストからリモートホストにファイルを
+    転送します。結果は転送先のファイルパスのリストを返します。
+
+    local_path には、転送元のファイルパスを指定します。ワイルドカードを
+    用いて複数ファイルを転送することも可能です。local_pathを相対パス指
+    定した場合、ジョブマネージャが動作しているディレクトリ(通常はルート
+    ディレクトリ)からの相対パスとなります。
+
+    remote_path には、転送先のディレクトリパスもしくはファイルパスを指
+    定します。remote_pathを相対パス指定した場合、ログインユーザーのホー
+    ムディレクトリからの相対パス、もしくは、__dir__制御変数で指定したパ
+    スからの相対パスとなります。
+
+    .. note::
+
+        転送するファイルのファイル名に転送先で利用できない文字が含まれる場合は、転送処理全体を失敗としてユーザにエラーを返します。
+        転送先が Windows の場合 ``/:*?"<>|`` がファイル名に利用できないため、これらの文字を含む場合はエラーになります。
+        ディレクトリ単位など複数ファイルを転送している途中で一部のファイルの転送に失敗した場合も、転送処理全体が失敗となりますが、先行して転送できたファイルについては転送先に残ることに注意してください。
+
+.. remote_job:: get(remote_path, local_path) : Array<String>
+
+    リモートホストからジョブマネージャが動作しているホストにファイルを
+    転送します。結果は転送先のファイルパスのリストを返します。
+
+    remote_path には、転送元のファイルパスを指定します。ワイルドカード
+    を用いて複数ファイルを転送することも可能です。
+
+    local_path には、転送先(ジョブマネージャ側)のファイルパスか、ディレ
+    クトリパスを指定します。
+
+    .. warning::
+
+        Windows とのファイル転送においてファイル名にキャレット文字 ``^`` を含んでいると転送に失敗する場合があります。
+
+.. remote_job:: reboot([wait=120])
+
+    リモートホストを再起動します。
+
+    wait には、リモートホストが再起動するまで待つ最大時間を指定(単位は
+    秒)します。
+
+    rebootジョブは、sudoジョブが実行できるユーザでなければ実行できませ
+    ん。
+
+.. _library_functions:
+
+組み込み関数
+------------
+
+組み込み関数は、Kompiraの式として使用できる関数です。
+
+式の中に記述する他に、組み込みジョブと同じように単独で使用することもできます。
+単独で使用した場合、結果は$RESULTに挿入されます。
+
+なお、コロン（:）の右側は、関数が返す結果の型を示しています。
+
+.. function:: now() : Datetime
+
+    現在のローカルな日時を返します。
+
+.. function:: current() : Process
+
+    現在実行している自身のプロセスオブジェクトを取得します。
+
+.. function:: channel() : Channel
+
+    データを複数プロセス間で送受信するためのオンメモリのチャネルオブジェ
+    クトを作成します。
+
+.. function:: datetime(dt_str_or_date, [dt_fmt_or_time, zone]) : Datetime
+
+    dt_str_or_date で指定された文字列から日時型データに変換します。
+    dt_fmt_or_time で、フォーマット文字列を指定することも可能です。
+    dt_str_or_date に日付型データを渡し、dt_fmt_or_time に時刻型データを渡すことで、
+    これらを合わせた日時型データを構成することができます。
+    zone で、タイムゾーンIDを指定することが可能です。
+
+    フォーマットの書式指定は、C言語のstrftime()関数に準じています。
+    以下に例を示します。
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            [dt = datetime('2015年1月1日10時30分05秒', '%Y年%m月%d日%H時%M分%S秒', 'Asia/Tokyo')] ->
+            print(dt) ->
+            [dt2 = datetime(dt.date, dt.time)] ->
+            print(dt2)
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            [dt = datetime('2015-1-1 10:30:05', '%Y-%m-%d %H:%M:%S', 'Asia/Tokyo')] ->
+            print(dt) ->
+            [dt2 = datetime(dt.date, dt.time)] ->
+            print(dt2)
+
+    .. note::
+        dt_fmt を省略した場合、日付文字列のフォーマットは以下のような ISO 8601 形式として変換を試みます。
+
+        YYYY-MM-DD[T ]hh:mm(:ss(.mmmmmm)?)?([Z]|[+-]hh(:)?mm)?
+
+        日付けと時刻のセパレータは、Tまたは空白が使えます。秒、マイクロ秒、タイムゾーンの指定は省略可能です。
+
+	zone を省略した場合、ローカルのタイムゾーンが指定されたとみなされます。
+
+.. function:: date(date_str, [dt_fmt]) : Date
+
+    date_str で指定された文字列から日付データに変換します。
+    dt_fmtで、フォーマット文字列を指定することも可能です。
+
+    フォーマットの書式指定は、C言語のstrftime()関数に準じています。
+
+.. function:: time(time_str, [dt_fmt]) : Time
+
+    time_str で指定された文字列から時刻データに変換します。
+    dt_fmtで、フォーマット文字列を指定することも可能です。
+
+    フォーマットの書式指定は、C言語のstrftime()関数に準じています。
+
+.. function:: timedelta(days=0, hours=0, minutes=0, seconds=0, microseconds=0) : Timedelta
+
+    経過時間を表すデータを作成します。timedelta型の値とdatetime型の値は
+    加算や減算が可能です。
+
+.. function:: int(x=0) : Integer
+
+    引数 x で与えられた文字列を整数型に変換します。
+
+.. function:: float(x=0.0) : Float
+
+    数または文字列 x から生成された浮動小数点数を返します。
+
+.. function:: pattern(pattern, typ='r', mode='') : Pattern
+
+    文字列 pattern で与えられるパターンオブジェクトを生成します。
+    typ はパターンの種別を表し、'r' (正規表現パターン)、'g' (glob パターン)、'e' (完全一致パターン) のいずれかを指定することができます。
+    mode に 'i' を指定すると大小文字を区別しないパターン照合となります。
+
+.. function:: path(str_or_obj, [args, ...]) : Object
+
+    パス名を表す文字列 str_or_obj から実際のKompiraオブジェクトを返します。
+    str_or_obj には文字列の配列を指定することができます。配列、もしくは複数の
+    引数を与えた場合、各要素を結合しパス名として解釈します。
+
+    以下の例はルートディレクトリ直下のオブジェクトを列挙します。
+    使用例 ::
+
+        { for p in path('/') | print(p) }
+
+    str_or_obj に相対パスを指定した場合は、このジョブフローがあるディレクトリ
+    から相対位置にあるKompira オブジェクトを参照します。以下の例は、こ
+    のジョブフローがあるディレクトリのパスを表示します。
+
+    使用例 ::
+
+        print(path('.'))
+
+    また、str_or_obj には Kompira オブジェクトを指定することもできます。以下
+    の例では、パラメータ 'dir' で指定された Kompira オブジェクトの親ディ
+    レクトリに含まれるオブジェクト、すなわち 'dir' で指定されたオブジェ
+    クトと同一階層にある Kompira オブジェクトを列挙します。
+
+    使用例 ::
+
+        |dir = /home/guest|
+        { for sibling in path(dir, '..') | print(sibling) }
+
+.. function:: user(user) : User
+
+    ユーザー名 user を持つ User オブジェクトを返します。user に整数値を
+    与えると、その値をユーザ ID として持つ User オブジェクトを返します。
+    User オブジェクトを与えると、それをそのまま返します。
+
+.. function:: group(group) : Group
+
+    グループ名 group を持つ Group オブジェクトを返します。group に整数
+    値を与えると、その値をグループ ID として持つ Group オブジェクトを返
+    します。Group オブジェクトを与えると、それをそのまま返します。
+
+.. function:: string(obj) : String
+
+    オブジェクト obj を文字列に変換します。
+
+.. function:: bytes([b, [encoding='utf-8']]) : Binary
+
+    bが整数値の場合、各バイト値が0で長さbのバイナリ(バイト列)を生成します。
+    bが文字列の場合、encodingで指定されたエンコーディングで符号化されたバイナリを生成します。
+    bが0-255までの整数を各要素とする配列の場合、対応するバイナリを生成します。
+    bがバイナリの場合、その値をそのまま返します。
+
+.. function:: type(obj) : String
+
+    オブジェクト obj の型名を返します。
+
+.. function:: decode(data, [encoding='utf-8']) : String
+
+    バイナリデータ data を encoding で指定された文字コード系で文字列に
+    デコードします。
+
+.. function:: encode(message, [encoding='utf-8']) : Binary
+
+    文字列 message を encoding で指定された文字コード系でバイナリデータ
+    にエンコードします。
+
+.. function:: length(obj) : Integer
+
+    obj で渡された配列の長さを取得します。
+
+.. function:: has_key(obj, key) : Boolean
+
+    obj で渡された辞書データやオブジェクトに、指定されたキー key でフィー
+    ルドアクセス可能かどうかをチェックします。
+
+.. function:: json_parse(data, [strict=false]) : any
+
+    JSON形式で直列化された文字列を Kompira のオブジェクトに変換します。
+
+    使用例 ::
+
+        [str = '[1,2,3,true,"foo","bar"]']
+        -> [obj = json_parse(str)]
+        -> { for elem in obj | print(elem) }
+
+    strict が true の場合、制御文字が文字列に含まれているとエラーになります。
+    strict が false の場合、制御文字を文字列に含めることができます。
+    ここで言う制御文字とは、'\\t', '\\n', '\\r', '\\0' を含む 0-31 の範囲のコードを持つ文字のことです。
+
+.. versionadded:: 1.6.2.post3
+    パラメータ strict が追加されました。
+
+.. function:: json_dump(obj, [ensure_ascii=true, indent=null]) : String
+
+    Kompira のオブジェクトをJSON形式で直列化された文字列に変換します。
+
+    ensure_ascii が true の場合、出力では入力された全ての非 ASCII 文字はエスケープされます。
+    ensure_ascii が false の場合、これらの文字はそのまま出力されます。
+
+    indent が非負の整数または文字列であれば、JSON の配列要素と辞書要素はそのインデントレベルで見やすく変換されます。
+    インデントレベルが 0 か負数または "" であれば改行だけが挿入されます。
+
+.. versionadded:: 1.6.2.post3
+    パラメータ ensure_ascii, indent が追加されました。
+
+.. function:: mail_parse(data) : Dictionary
+
+    MIME形式の文字列をKompiraの辞書オブジェクトに変換します。
+
+    メールのヘッダ情報に加え、'Body'キーでメールの本文に、'Filename'キー
+    でファイル名にアクセスすることができます。(添付ファイルが存在しない
+    場合は'Filename'キーはnullとなります)
+
+    メールの本文は、Content-TypeがText/plainで、かつ添付ファイルでない
+    場合に限りutf-8形式のエンコードされます。
+
+    Content-Typeがmultipartである場合は、'Is-Multipart'キーがtrueにな
+    り、'Body'キーの要素がKompira辞書オブジェクトの配列となります。
+
+.. function:: iprange(address) : Array<String>
+
+    CIDR表記のネットワークアドレスをIPネットワークオブジェクトに変換します。
+
+    使用例 ::
+
+        { for ip in iprange('192.168.0.1/24') |
+            [__host__ = ip] ->
+            ['hostname'] ->> []
+        }
+
+    .. warning::
+        組み込みジョブ iprange() は近い将来廃止される予定です。
+
+
+.. base_object:: Object
+
+Kompiraオブジェクト
+===================
+
+Kompira が扱う様々なデータは、ディレクトリ構造を備えた Kompira のファイ
+ルシステム上に Kompira オブジェクトとして格納されます。Kompira オブジェ
+クトは、その型毎に固有のフィールドやメソッドを備えており、ジョブフロー
+上から操作することが可能です。
+
+.. _fields-types:
+
+フィールド型
+------------
+
+Kompira オブジェクトのフィールドで使用できる型は以下のとおりです。なお、
+コロン（:）の右側は、当該フィールドをジョブフローから参照した場合のデー
+タの型を示しています。
+
+.. field_type:: String: String
+
+    文字列のフィールドを表します。
+
+.. field_type:: Binary: Binary
+
+    バイナリのフィールドを表します。16進表記で入力します。
+
+.. field_type:: Integer : Integer
+
+    整数のフィールドを表します。整数以外の値は入力できません。未入力の
+    場合は、null 値となります。
+
+.. field_type:: Float : Float
+
+    浮動小数点数のフィールドを表します。整数を入力すると浮動小数点に変換されます。
+    未入力の場合は、null 値となります。
+
+.. field_type:: Boolean : Boolean
+
+    真偽値のフィールドを表します。フォーム上ではチェックボックスとして
+    表示され、チェック時が true、未チェック時が false に対応します。
+
+.. field_type:: Enum : String
+
+    選択肢フィールドを表します。選択肢の一覧はフィールド修飾子によって
+    規定します。
+
+.. field_type:: Text : String
+
+    テキストフィールドを表します。
+
+.. field_type:: LargeText : String
+
+    大きめのテキストフィールドを表します。
+
+.. field_type:: Password : String
+
+    パスワードフィールドを表します。フィールド表示時に文字列は隠されます。
+
+.. field_type:: File : File
+
+    添付ファイルフィールドを表します。添付ファイルのアップロードやダウ
+    ンロードができるようになります。
+
+.. field_type:: Object : Object
+
+    Kompira オブジェクトフィールドを表します。Kompira オブジェクトを選
+    択肢の中から選べるようになります。フィールド修飾子を指定することで、
+    特定の型を持つオブジェクトや、特定のディレクトリ下にあるオブジェク
+    トに選択肢を制限することも可能です。
+
+.. field_type:: Datetime : Datetime
+
+    日時フィールドを表します。入力する日時情報の形式は以下のとおりです。
+
+    ================= ===================
+    フォーマット      例
+    ================= ===================
+    %Y-%m-%d %H:%M:%S 2006-10-25 14:30:59
+    %Y-%m-%d %H:%M    2006-10-25 14:30
+    %Y-%m-%d          2006-10-25
+    %m/%d/%Y %H:%M:%S 10/25/2006 14:30:59
+    %m/%d/%Y %H:%M    10/25/2006 14:30
+    %m/%d/%Y          10/25/2006
+    %m/%d/%y %H:%M:%S 10/25/06 14:30:59
+    %m/%d/%y %H:%M    10/25/06 14:30
+    %m/%d/%y          10/25/06
+    ================= ===================
+
+.. field_type:: Date : Date
+
+    日付フィールドを表します。
+
+.. field_type:: Time : Time
+
+    時刻フィールドを表します。
+
+.. field_type:: IPAddress : String
+
+    IPアドレスフィールドを表します。IPv4アドレス形式の入力に対応しています。
+
+.. field_type:: EMail : String
+
+    メールアドレスフィールドを表します。
+
+.. field_type:: URL : String
+
+    URLフィールドを表します。
+
+.. field_type:: Array<T> : Array
+
+    各要素の型がTの配列フィールドを表します。複数のT型の要素を入力できます。
+    (ArrayはArray<Strring>フィールドと同義です)
+
+    型変数Tに指定できる型は、String、Binary、Integer、Float、Boolean、Enum、Password、
+    Object、Datetime、Date、Time、IPAddress、EMail、URLのみとなります。
+
+.. field_type:: Dictionary<T> : Dictionary
+
+    辞書フィールドを表します。複数のキーと値を入力できます。値の型はTとなります。
+    (DictionaryはDictionary<String>フィールドと同義です)
+
+.. versionadded:: 1.6.0
+    Binary、Float、Array<T>、Dictionary<T>フィールドが新たに追加されました。
+
+
+.. _lib-qualifier:
+
+フィールド修飾子
+----------------
+
+フィールド修飾子は、フィールド型に対してさらに細かいフィールド表示の制
+御や制約を加えます。フィールド修飾子は以下に示すようなJSONオブジェクト
+の形式で記述します。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        { "<フィールド修飾子名1>" : <値1>, "<フィールド修飾子名2>" : <値2>, ... }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        { "<qualifier1>" : <value1>, "<qualifier2>" : <value2>, ... }
+
+フィールド修飾子は以下の種類があります。
+
+なお、コロン（:）の右側は、各フィールド修飾子で記述する型を示しています。
+
+
+.. field_qualifier:: default: any
+    :target_fields: any
+
+    フィールドのデフォルト値を指定します。
+
+    デフォルト値は :ref:`フィールドの型 <fields-types>` に応じた形式で記述する必要があります。
+
+    たとえば、String 型であれば文字列で、Integer 型であれば整数で記述します。
+
+    例 ::
+
+        { "default": "string data" }
+        { "default": 123456 }
+
+    DateTime 型、Date 型、Time 型については、それぞれ Kompira が datetime(), date(), time() 関数で解析できる形式で文字列で記述します。
+
+    例 ::
+
+        { "default": "2023-05-12 23:21:45" }
+        { "default": "2023-09-26" }
+        { "default": "17:43:01" }
+
+    Array<T> 型および Dictionary<T> 型でもデフォルト値を指定することができます。
+    Array<T> 型では配列で、Dictionary<T> 型では辞書でデフォルト値を指定します。
+
+    例 ::
+
+        { "default": [value1, value2, ...] }
+        { "default": {"key1": value1, "key2": value2, ...} }
+
+    このとき、配列や辞書の各要素のデフォルト値については、要素の :ref:`型 T <fields-types>` に応じた形式で記述する必要があります。
+    デフォルト値の記述がフィールドの型と合っていない場合は、デフォルト値の指定は無効となり適用されません。
+
+    .. note::
+        File 型、Array<File> 型、Dictionary<File> 型ではデフォルト値の指定に対応していません。
+
+
+.. field_qualifier:: invisible: Boolean
+    :target_fields: any
+
+    フォームやビューからフィールドを隠します。
+
+.. field_qualifier:: help_text: String
+    :target_fields: any
+
+    フィールドについての説明を記述します。
+    この修飾子を指定した場合、オブジェクトの編集時に指定したテキストが表示されます。
+
+
+.. field_qualifier:: object: String | Array | Dictionary
+                     directory: String | Array | Dictionary
+    :target_fields: Object
+
+    オブジェクト型フィールドにおいて、選択肢を絞り込みます。
+
+    修飾子 "object" では、型オブジェクトのパスを記述するとその型を持つオブジェクトが選択肢として表示されます。また、ディレクトリやテーブルのパスを指定すると、そのオブジェクトの子オブジェクトが選択肢として表示されます。以下にジョブフロー型のオブジェクトを選択肢とする例を示します。 ::
+
+        { "object" : "/system/types/Jobflow" }
+
+    修飾子 "directory" では、ディレクトリやテーブルのパスを記述すると、その子孫オブジェクトが選択肢として表示されます。以下に /user 配下にある全てのオブジェクトを選択肢とする例を示します。 ::
+
+        { "directory" : "/user" }
+
+    先頭に "~" または "~(ユーザ名)" と記述したパスを指定すると、その部分がユーザのホームディレクトリに展開されます。ユーザ名を省略した場合はログイン中のユーザが対象になります。 ::
+
+        { "object" : "~" }
+        { "directory" : "~" }
+
+    これらの修飾子では、配列形式で複数のオブジェクトを指定することができます。 ::
+
+        { "object" : ["~", "/user"] }
+        { "directory" : ["~", "/user"] }
+
+    複数のディレクトリや型オブジェクトが指定されている場合は、それぞれで OR 条件となります。
+    ディレクトリと型オブジェクトが指定されている場合は、AND 条件となります。
+
+    修飾子 "object" と修飾子 "directory" を合わせて指定することで、あるディレクトリ配下にある特定の型のオブジェクトを選択させる、といったことが可能になります。
+
+    例 ::
+
+        { "object" : "/system/types/NodeInfo", "directory" : "~" }
+
+    存在しないまたは読み込み権限のないオブジェクトを指定した場合は無効になります。有効なパスを1つも記述していない場合は、選択肢が空になります。これは、いずれにも合致しない条件で絞り込まれた、という意味となります。
+
+    例 ::
+
+        { "object" : "/invalid_path" }
+        { "directory" : "/invalid_path" }
+
+    null が指定されている場合は、絞り込みをしないことになります。これは修飾子を指定していないことと同じ意味となります。
+
+    例 ::
+
+        { "object" : null }
+        { "directory" : null }
+
+    このフィールドにおける選択肢の絞り込み条件を固定ではなく、他のオブジェクトの状態によって切り替えたい場合、以下に示すいくつかの方法があります。
+
+    .. _lib-qualifier-reference-field:
+
+    別のオブジェクトが持つ Object 型フィールドに記録されたオブジェクトをもとに、このフィールドの選択肢の絞り込み条件を切り替えたい場合は、以下のようにパス表記に続けて ``[reference_field]`` とフィールド名を指定することができます。
+
+    例 ::
+
+        { "object" : "/foo/bar/SomeObject[reference_field]" }
+        { "directory" : "/foo/bar/SomeObject[reference_field]" }
+
+    この場合、reference_field という名前のフィールドを「参照フィールド」と言います。
+
+    参照フィールドに記録されたオブジェクトが、この修飾子 "object" または "directory" として適用されることになります。ただし、参照フィールドにディレクトリやテーブルまたは型オブジェクトが記録されていないと、修飾子として指定するオブジェクトとしては有効ではないことに注意してください。
+
+    なお、Config 型オブジェクトの設定項目としての Object 型フィールドを参照したい場合は、Config 型オブジェクトのパス指定に ``.data`` という属性名を付与する必要があります。
+
+    例 ::
+
+        { "object" : "/foo/bar/SomeConfig.data[reference_field]" }
+        { "directory" : "/foo/bar/SomeConfig.data[reference_field]" }
+
+    .. _lib-qualifier-depend-field:
+
+    同じオブジェクト内の別の Object 型フィールドの選択に応じて、このフィールドで絞り込む選択肢を切り替えたい場合は、以下のようにパス表記の代わりに ``$[depend_field]`` とフィールド名を指定することができます。
+
+    例 ::
+
+        { "object" : "$[depend_field]" }
+        { "directory" : "$[depend_field]" }
+
+    この場合、depend_field という名前のフィールドを「依存フィールド」と言います。
+
+    依存フィールドで選択されたオブジェクトが、この修飾子 "object" または "directory" として適用されることになります。編集画面においては、依存フィールドを選択すると、このフィールドの選択肢が切り替わるためにその時点の選択は一旦リセットされます。
+
+    ただし依存フィールドで選択されたオブジェクトがディレクトリやテーブルまたは型オブジェクトでない場合、修飾子として指定するオブジェクトとしては有効でないことに注意してください。依存フィールド側にも、型を限定するフィールド修飾子を指定しておくことを推奨します。
+
+    また、依存フィールドで選択したオブジェクトが Object 型フィールドを持っているとき、そのフィールドに記録されているオブジェクトを参照フィールドとして指定することもできます。
+
+    例 ::
+
+        { "object" : "$[depend_field][reference_field]" }
+        { "directory" : "$[depend_field][reference_field]" }
+
+    依存フィールドで選択された別のオブジェクトが持つ参照フィールドに記録されたオブジェクトが、この修飾子 "object" または "directory" として適用されることになります。ただし、上記と同様に参照フィールドにディレクトリやテーブルまたは型オブジェクトが記録されていないと、修飾子として指定するオブジェクトとしては有効ではないことに注意してください。
+
+    .. _lib-qualifier-switch-case:
+
+    別の Enum 型または Object 型フィールドの選択に応じて、このフィールドで絞り込む選択肢を切り替える別の方法を選ぶこともできます。
+
+    例 ::
+
+        {
+          "object" : {
+            "switch" : "$[depend_field]",
+            "case" : {
+              "Directory": ["/system/types/Directory", "/system/types/Table"],
+              "Jobflow": "/system/types/Jobflow",
+              "*": null
+            }
+          }
+        }
+
+    この形式では "switch" 部と "case" 部が必要になります。"switch" 部は前述の依存フィールドまたは参照フィールドと同様に記述します。"case" 部は辞書形式で、パターンをキーに、マッチした場合に適用する修飾子を値として、複数の組を記述することができます。この場合、"switch" 部に記述された依存フィールドまたは参照フィールドの値を参照して、"case" 部のキーに記述されたパターンにマッチするか上から順番に評価されます。いずれかのパターンにマッチした場合、対応する値がこの修飾子として適用されます。
+
+    いずれのパターンにもマッチしなかった場合はこの修飾子としては無効になり、別の修飾子で有効な絞り込みが指定されていない限り、このフィールドの選択肢は空となります。上の例では、"case" 部の最後に任意にマッチするパターン "*" を指定することで、無効にならないようにしています。
+
+    .. _lib-qualifier-switch-case-pattern-type:
+
+    デフォルトでは、パターン部は glob パターンで記述することができ、大文字小文字を区別します。パターンの種類は "case_pattern_type" で "exact", "glob", "regex" のいずれかを指定することができます。また "case_ignorecase" に true を指定すると、大文字小文字を区別しないようになります。
+
+    例 ::
+
+        {
+          "object" : {
+            "switch" : "$[depend_field]",
+            "case" : {
+              "[0-9a-f]+\\.bin": ...
+            },
+            "case_pattern_type": "regex",
+            "case_ignorecase": true
+          }
+        }
+
+    JSON 形式でフィールド修飾子として regex パターンを記述する場合は、エスケープ文字 ``\\`` を ``\\\\`` とする必要があることに注意してください。
+
+.. field_qualifier:: filter: Dictionary
+    :target_fields: Object
+
+    オブジェクト型フィールドにおいて、選択肢を絞り込みます。
+    修飾子 "object" および "directory" による絞り込みに加えて、ここで指定した絞り込み条件が適用されます。
+    絞り込み条件は :ref:`Directory.find() <directory-find>` メソッドのパラメータを辞書形式で指定できます。
+
+    例 ::
+
+        {
+          "directory" : "/user",
+          "filter" : {
+            "type_object" : "/system/types/TypeObject",
+            "abspath__contains" : "kompira"
+          }
+        }
+
+    なお、修飾子 "object" で型オブジェクトを指定していて、かつ、修飾子 "filter" でも "type_object" 
+    で型オブジェクトを指定している場合は、OR 条件として適用されます。
+
+    ただし、修飾子 "filter" の "type_object" による型オブジェクト指定では、
+    "~" または "~(ユーザ名)" によるホームディレクトリの展開は行なわれないので注意してください。
+
+.. field_qualifier:: order_by: String
+    :target_fields: Object
+
+    オブジェクト型フィールドにおいて、ソート順を指定します。
+    ソート順には一般オブジェクトに共通の属性名 (abspath, display_name など) を指定することができます。
+    また、"-abspath" などと先頭に "-" を記述するとソート結果が逆順となります。
+
+    例 ::
+
+        { "object" : "/system/types/NodeInfo", "order_by" : "abspath" }
+
+    省略した場合は、修飾子 "object" または "directory" で指定されたディレクトリに設定されたソート順が適用されます。
+    ただし、複数のディレクトリが指定されている場合の動作は未定義となりますので、修飾子 "order_by" で明示的に指定してください。
+
+    フィールド値による並び順の指定には対応していません。
+    また、不正なソート順を指定した場合は無視されます。
+
+.. field_qualifier:: no_empty: Boolean
+    :target_fields: Object
+
+    Object型フィールドの入力フォームにおいて、空の選択肢を許さないよう
+    にします。
+
+    例 ::
+
+        { "object" : "/system/types/TypeObject", "no_empty" : true }
+
+.. field_qualifier:: enum: Array | String | Dictionary
+    :target_fields: Enum
+
+    Enum型フィールドにおいて、選択肢となる文字列の一覧を指定します。
+
+    例
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            { "enum" : ["サーバー", "スイッチ", "ルーター"] }
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            { "enum" : ["Server", "Switch", "Router"] }
+
+    格納されるデータと表示名を別にする場合は、["<データ>", "<表示名>"]
+    のペアを用いて、以下のように指定することもできます。
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            { "enum" : [["SV", "サーバー"], ["SW", "スイッチ"], ["RT", "ルーター"]] }
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            { "enum" : [["SV", "Server"], ["SW", "Switch"], ["RT", "Router"]] }
+
+
+    このフィールドにおける選択肢を固定ではなく、他のオブジェクトの状態によって切り替えたい場合、以下に示すいくつかの方法があります。
+
+    別のオブジェクトが持つ Array または Dictionary 型フィールドに記録された値を、このフィールドの選択肢として切り替えたい場合は、以下のように :ref:`参照フィールド<lib-qualifier-reference-field>` として指定することができます。
+
+    例 ::
+
+        { "enum" : "/foo/bar/SomeObject[reference_field]" }
+
+    参照フィールドに記録された値が、この修飾子 "enum" として適用されることになります。参照フィールドが配列の場合はそのまま選択肢となります。参照フィールドが辞書の場合、その各要素のキーがデータとして値が表示名として、選択肢となります。
+
+    ただし、存在しないオブジェクトまたは読み込み権限の無いオブジェクトを指定した場合、およびオブジェクトが指定した参照フィールドを持っていない場合は、選択肢は空になります。
+
+    なお、Config 型オブジェクトの設定項目としての Array または Dictionary 型フィールドを参照したい場合は、Config 型オブジェクトのパス指定に ``.data`` という属性名を付与する必要があります。
+
+    例 ::
+
+        { "enum" : "/foo/bar/SomeConfig.data[reference_field]" }
+
+    同じオブジェクト内の別の Object 型フィールドで選択したオブジェクトが Array または Dictionary 型フィールドを持っている場合は、以下のように :ref:`依存フィールド<lib-qualifier-depend-field>` とともに参照フィールドを指定することができます。
+
+    例 ::
+
+        { "enum" : "$[depend_field][reference_field]" }
+
+    依存フィールドで選択された別のオブジェクトが持つ参照フィールドに記録された値をもとに、このフィールドの選択肢が切り替わります。編集画面においては、依存フィールドを選択すると、このフィールドの選択肢が切り替わるためにその時点の選択は一旦リセットされます。
+
+    別の Enum 型または Object 型フィールドの選択に応じて、このフィールドの選択肢を切り替える別の方法を選ぶこともできます。
+
+    例 ::
+
+        {
+          "enum" : {
+            "switch" : "$[depend_field]",
+            "case" : {
+              "Server": ["Server-A", "Server-B", "Server-C"],
+              "Switch": ["Switch-A", "Switch-B", "Switch-C"],
+              "Router": ["Router-A", "Router-B", "Router-C"],
+              "*": ["Unknown"]
+            }
+          }
+        }
+
+    この形式では "switch" 部と "case" 部が必要になります。"switch" 部は前述の依存フィールドまたは参照フィールドと同様に記述します。"case" 部は辞書形式で、パターンをキーに、マッチした場合に適用する修飾子を値として、複数の組を記述することができます。この場合、"switch" 部に記述された依存フィールドまたは参照フィールドの値を参照して、"case" 部のキーに記述されたパターンにマッチするか上から順番に評価されます。いずれかのパターンにマッチした場合、対応する値がこの修飾子として適用されます。
+
+    いずれのパターンにもマッチしなかった場合はこの修飾子としては無効になり、このフィールドの選択肢は空となります。上の例では、"case" 部の最後に任意にマッチするパターン "*" を指定することで、無効にならないようにしています。
+
+    デフォルトでは、パターン部は glob パターンで記述することができます。object フィールド修飾子と同様に :ref:`case_pattern_type<lib-qualifier-switch-case-pattern-type>` でパターン種別を指定することもできます。
+
+.. field_qualifier:: pattern: String
+    :target_fields: String
+
+    文字列型フィールドの入力フォームにおいて、入力可能なパターンを正規表現で指定します。
+
+.. field_qualifier:: min_length: Integer
+    :target_fields: String
+
+    文字列型フィールドの入力フォームにおいて、最小長および最大長を指定します。
+
+.. field_qualifier:: max_length: Integer
+    :target_fields: String
+
+    文字列型フィールドの入力フォームにおいて、最小長および最大長を指定します。
+
+.. field_qualifier:: strip: Boolean
+    :target_fields: String, Text, LargeText, Password
+
+    入力された文字列の両端の空白文字を削除します。デフォルトは false です。
+
+.. field_qualifier:: key_strip: Boolean
+    :target_fields: Dictionary<T>
+
+    辞書型フィールドにおいて、入力されたキー文字列の両端の空白文字を削除します。デフォルトは false です。
+
+.. field_qualifier:: min_value: Integer
+    :target_fields: Integer, Float
+
+    整数型、および、浮動小数型フィールドの入力フォームにおいて、最小値を指定します。
+
+.. field_qualifier:: max_value: Integer
+    :target_fields: Integer, Float
+
+    整数型、および、浮動小数型フィールドの入力フォームにおいて、最大値を指定します。
+
+.. field_qualifier:: file_accept: String | Array
+    :target_fields: File
+
+    ファイル型フィールドにおいて、選択可能なファイル種別を指定します。
+
+    例 ::
+
+        { "file_accept" : ".xls" }
+
+    複数のファイル種別を指定する場合は、リストで指定します。
+
+    例 ::
+
+        { "file_accept" : [".png", ".jpg"] }
+
+.. field_qualifier:: schemes: String | Array
+    :target_fields: URL
+
+    URL型フィールドの入力フォームにおいて、許容するスキームを文字列、または、文字列のリストで指定します。
+    デフォルトは、http, https, ftp, ftps です。
+
+    例 ::
+
+        { "schemes": "https" }
+
+        { "schemes": ["ldap", "ldaps"] }
+
+    なお、URL型フィールドに入力したURLに含まれるスキーム文字列は自動的に小文字に変換して保存されるため、
+    schemes 修飾子で指定するスキーム文字列は小文字で指定するようにしてください。
+
+.. note::
+    Array<T> や Dictionary<T> フィールドでは、要素である :ref:`T 型 <fields-types>` に対する修飾子を指定することが可能です。
+    ただし default 修飾子のみは配列や辞書全体に適用されます。
+
+.. versionadded:: 1.5.1
+    新しいフィールド修飾子: pattern, min_length, max_length, min_value, max_value, file_accept が追加されました。
+
+.. versionadded:: 1.6.2.post5
+    新しいフィールド修飾子: strip, key_strip が追加されました。
+
+.. versionadded:: 1.6.4
+    新しいフィールド修飾子: filter, order_by が追加されました。
+
+.. versionadded:: 1.6.4
+    object, directory または enum 修飾子で、依存フィールドおよび参照フィールドの指定ができるようになりました。
+
+.. versionadded:: 1.6.4
+    object, directory または enum 修飾子で、"switch" および "case" によってパターンに応じて適用する修飾子を指定できるようになりました。
+
+.. versionchanged:: 1.6.4
+    object または directory 修飾子で指定されたオブジェクトに設定されたソート順が適用されるようになりました。
+
+.. versionadded:: 1.6.8
+    新しいフィールド修飾子: schemes が追加されました。
+
+.. versionadded:: 1.6.9
+    Array<T> 型および Dictionary<T> 型でもデフォルト値を指定できるようになりました。
+
+.. _lib-property:
+
+プロパティ
+----------
+
+Kompira オブジェクトは、以下のプロパティを提供しています。
+
+.. property:: Object.id : Integer
+
+    オブジェクトの ID の値です。オブジェクト IDは、オブジェクト生成時
+    に自動で割り当てられる一意な整数値です。更新はできません。
+
+.. property:: Object.abspath : String
+
+    オブジェクトの絶対パスの値です。更新はできません。
+
+.. property:: Object.name : String
+
+    オブジェクト名の値です。オブジェクト名に使用できる文字列の形式は、
+    Kompira ジョブフロー言語における識別子と同じです。同じディレクト
+    リ中に同名のオブジェクトを作成することはできません。
+
+.. property:: Object.description : String
+
+    オブジェクトを説明する文字列となります。
+
+.. property:: Object.display_name : String
+
+    オブジェクトの表示名です。表示名の文字列にはオブジェクト名のよう
+    な形式の制限はありません。
+
+.. property:: Object.field_names : Array<String>
+
+    オブジェクトが備えるフィールド名の一覧です。リスト型の値となりま
+    す。更新はできません。
+
+.. property:: Object.owner : User
+
+    オブジェクトの所有ユーザーです。ユーザーオブジェクトとなります。
+
+.. property:: Object.created : Datetime
+
+    オブジェクトの作成日時です。日時型の値となります。更新はできません。
+
+.. property:: Object.updated : Datetime
+
+    オブジェクトの更新日時です。日時型の値となります。更新はできません。
+    フィールド修飾子で invisible=true と設定されたフィールドだけが更新される場面では、Object.updated は更新されません。
+
+.. property:: Object.parent_object : Object
+
+    オブジェクトの親オブジェクト、すなわちディレクトリ（もしくはテー
+    ブル）オブジェクトです。更新はできません。
+
+.. property:: Object.children : LazyArray<Object>
+
+    オブジェクトの子オブジェクト一覧となる検索結果を返します。
+    オブジェクトが、テーブルかディレクトリ以外の場合など、子オブジェクトを持たない場合は、空の結果となります。
+    更新はできません。
+
+.. property:: Object.type_object : TypeObject
+
+    オブジェクトの型オブジェクトです。更新はできません。
+
+.. property:: Object.type_name : String
+
+    オブジェクトの型名です。更新はできません。
+
+.. property:: Object.user_permissions : Dictionary<Permission>
+
+    ユーザパーミッション情報です。writable, readable, executable をキー
+    に持つ辞書型のオブジェクトとなります。
+
+.. property:: Object.group_permissions : Dictionary<Permission>
+
+    グループパーミッション情報です。writable, readable, executable,
+    priority をキーに持つ辞書型のオブジェクトとなります。
+
+.. versionchanged:: 1.6.8
+
+    プロパティ children を LazyArray 型に変更しました。
+
+.. versionchanged:: 1.6.9
+
+    invisible なフィールドだけが更新される場面では、Object.updated を更新しないようになりました。
+
+.. _lib-method:
+
+メソッド
+--------
+
+Kompira オブジェクトは、以下のメソッドを提供しています。
+
+.. method:: Object.delete()
+
+       オブジェクトを削除します。
+
+.. method:: Object.update([key1=val1, key2=val2, ...])
+
+       オブジェクトのフィールド key1, key2, ... の値を val1, val2, ... に更新します。
+
+.. method:: Object.rename(name)
+
+       オブジェクトの名前を name に変更します。
+
+.. _builtin_type_object:
+
+組み込み型オブジェクト
+======================
+
+このセクションでは、Kompira にあらかじめ組み込まれている標準の型オブジェ
+クトについて説明します。
+
+Kompiraのオブジェクトは、型オブジェクトで示される型を持ちます。例えば、
+ジョブフローオブジェクトは、ジョブフロー型を持ちますし、ディレクトリオ
+ブジェクトはディレクトリ型を持ちます。Kompiraでは、ジョブフロー型やディ
+レクトリ型といった型もオブジェクトとして定義されているので、これらも型
+オブジェクトという型を持っています。ちなみに、型オブジェクトの型は型オ
+ブジェクトです。
+
+Kompira のオブジェクトは、その型に特有のフィールドやメソッドを備えてい
+ます。
+
+.. type_object:: TypeObject
+
+型オブジェクト (TypeObject)
+---------------------------
+
+`型オブジェクト型 </system/types/TypeObject>`_ はその型に属するKompira
+オブジェクトのフィールドやメソッドを定義します。新しく型オブジェクトを
+定義することで、ユーザーは Kompira オブジェクトの型を自由に追加すること
+ができます。
+
+.. note::
+
+   既存の型にフィールドを追加したり、不要なフィールドを削除したりなど、
+   型オブジェクトを変更する場合、Kompiraでは、以下のような規則にしたがっ
+   て処理されます。
+
+   - 変更後の型オブジェクトで削除されたフィールドは無視され、アクセス不
+     可能となる。
+   - 変更後の型オブジェクトで新たに追加されたフィールドは自動的にnull値
+     で初期化される。
+
+フィールド
+''''''''''
+
+型オブジェクト型では、以下のフィールドを定義しています。
+
+.. type_field:: TypeObject.extend
+
+    型オブジェクトが参照する Python の拡張モジュールパスを指定します。
+    デフォルトは、kompira.extends となります。
+
+    型オブジェクトの振る舞いやビューを拡張する場合、拡張モデルモジュー
+    ル models.py と拡張ビューモジュール views.py を Python モジュールと
+    して作成し、ここで指定したパスの下に配置します。
+
+.. type_field:: TypeObject.fieldNames
+
+    この型のオブジェクトが持つフィールド名の一覧を配列として指定します。
+    フィールド名で使用できる文字列の規則は、ジョブフロー言語の識別子と
+    同じです。
+
+.. type_field:: TypeObject.fieldDisplayNames
+
+    この型のオブジェクトが持つフィールド表示名の一覧を配列として指定し
+    ます。フィールド表示名には任意の文字列を使用することができます。配
+    列要素の順序は、フィールド名の列と対応させる必要があります。
+
+.. type_field:: TypeObject.fieldTypes
+
+    この型のオブジェクトが持つフィールド型の一覧を配列として指定します。
+    配列要素の順序は、フィールド名の列と対応させる必要があります。
+
+メソッド
+''''''''
+
+型オブジェクト型に特有のメソッドは特に定義されていません。
+
+.. type_object:: Directory
+
+ディレクトリ (Directory)
+------------------------
+
+`ディレクトリ型 </system/types/Directory>`_ は、ディレクトリオブジェク
+トの型を規定します。ディレクトリオブジェクトの下に複数の異なる型の
+Kompiraオブジェクトを持つことができます。これによって、Unix のファイル
+システムと同様に Kompira オブジェクトも階層構造を持つことができます。
+
+フィールド
+''''''''''
+
+ディレクトリ型では、以下のフィールドを定義しています。
+
+.. type_field:: Directory.orderBy
+
+    このディレクトリの一覧画面で表示するオブジェクトの並び順を指定します。
+
+.. type_field:: Directory.pageSize
+
+    このディレクトリの一覧画面で表示するオブジェクトの個数を指定します。
+
+.. _dir-method:
+
+メソッド
+''''''''
+
+ディレクトリ型には以下のメソッドが定義されています。
+
+.. method:: Directory.add(name, type_obj, [data, overwrite]) : Object
+
+    ディレクトリの下に、name で指定された名前を持つ type_obj 型の
+    Kompiraオブジェクトを追加します。data には辞書型のデータを渡すこと
+    ができ、これによって、オブジェクトのフィールド値を初期化することができます。
+    data に渡した辞書に含まれるフィールドは与えられた値でフィールドデータが作成されますが、
+    辞書に含まれないフィールドについてはフィールドデータが作成されません。
+    data パラメータを省略する、または data=null を指定すると、すべてのフィールドデータが作成されません。
+    これは、省略されたフィールドはデータベース上にレコードが作成されないことを意味します。
+
+    レコードが存在しないフィールドについて、オブジェクトの詳細画面やジョブフローでのフィールド値の参照では、
+    そのフィールドのデフォルト値が参照されます。しかし、:ref:`Directory.find() <directory-find>` などではフィールド値による絞り込み
+    が出来ないことに注意してください。
+    
+    $RESULT には新規追加されたオブジェクトが格納されます。overwrite 引数に true を渡した場合、同名のオブジェクトがディレクト
+    リの下に存在している場合でも、エラーにはならずオブジェクトを更新します。
+
+.. versionadded:: 1.6.9
+    Array<T> 型および Dictionary<T> 型オブジェクトに対するデフォルト値の挙動が追加されました。
+
+.. method:: Directory.move(obj, [name])
+
+    ディレクトリの下に obj で指定されたオブジェクトを移動します。name
+    が指定された場合、移動対象のオブジェクトの名前が name に変更されま
+    す。
+
+.. method:: Directory.copy(obj, [name]) : Object
+
+    ディレクトリの下に obj で指定されたオブジェクトを複製します。name
+    が指定された場合、複製されたオブブジェクトの名前は name に変更され
+    ます。obj がディレクトリやテーブルの場合、子オブジェクトは再帰的に
+    複製されます。$RESULT には新規作成されたオブジェクトが格納されます。
+
+.. method:: Directory.has_child(name) : Boolean
+
+    ディレクトリの下に name で指定された子オブジェクトが存在すれば
+    true を返し、存在しなければ、false を返します。
+
+.. _directory-find:
+
+.. method:: Directory.find(params) : LazyArray<Object>
+
+    ディレクトリの配下で params で指定したフィルタリング条件に該当するオブジェクトの検索結果を返します。
+    オブジェクトの属性でフィルタリングする場合は、 params に ``<属性名>=<値>`` を指定します。
+
+    例えば型オブジェクトの一覧を取得する場合は、以下のように指定します。 ::
+
+      [result = /.find(type_object=/system/types/TypeObject)]
+
+    また、属性名にルックアップを付与することでより細かなフィルタリング条件を指定できます。
+    ルックアップを付与する場合は params に ``<属性名>__<ルックアップ>=<値>`` を指定します。
+
+    例えばパスに kompira を含むオブジェクトを指定する場合は、以下のように指定します。 ::
+
+      [result = /.find(abspath__contains='kompira')]
+
+    指定できるルックアップとフィルタリング方法は以下のとおりです。
+
+    +---------------------------------+-----------------------------------------------------------------------------------------------+
+    | ルックアップ                    | フィルタリング方式                                                                            |
+    +=================================+===============================================================================================+
+    | ``exact``, ``iexact``           | 属性が指定した値に一致する。``iexact`` では大小文字を区別しない。                             |
+    +---------------------------------+-----------------------------------------------------------------------------------------------+
+    | ``contains``, ``icontains``     | 属性が指定した値を含む。``icontains`` では大小文字を区別しない。                              |
+    +---------------------------------+-----------------------------------------------------------------------------------------------+
+    | ``startswith``, ``istartswith`` | 属性が指定した値で始まる。``istartswith`` では大小文字を区別しない。                          |
+    +---------------------------------+-----------------------------------------------------------------------------------------------+
+    | ``endswith``, ``iendswith``     | 属性が指定した値で終わる。``iendswith`` では大小文字を区別しない。                            |
+    +---------------------------------+-----------------------------------------------------------------------------------------------+
+    | ``regex``, ``iregex``           | 属性が指定した正規表現にマッチする。``iregex`` では大文字小文字区別しない。                   |
+    +---------------------------------+-----------------------------------------------------------------------------------------------+
+    | ``gt``, ``gte``                 | 属性が指定した値より大きい(``gt``)、または、属性が指定した値以上である(``gte``)。             |
+    +---------------------------------+-----------------------------------------------------------------------------------------------+
+    | ``lt``, ``lte``                 | 属性が指定した値より小さい(``lt``)、または、属性が指定した値以下である(``lte``)。             |
+    +---------------------------------+-----------------------------------------------------------------------------------------------+
+    | ``in``                          | 属性が指定した値に含まれる。                                                                  |
+    +---------------------------------+-----------------------------------------------------------------------------------------------+
+
+    仮想オブジェクト以外の一般のオブジェクトにおける属性値によるフィルタリングでは、属性によって指定できるルックアップが異なります。
+    属性の一覧と指定できるルックアップは以下のとおりです。
+
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | 属性                 | 指定できるルックアップ                                                                           |
+    +======================+==================================================================================================+
+    | owner                | ``exact``, ``in``                                                                                |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | abspath              | ``exact``, ``iexact``, ``contains``, ``icontains``, ``startswith``,                              |
+    |                      | ``istartswith``, ``endswith``, ``iendswith``, ``regex``, ``iregex``                              |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | display_name         | ``exact``, ``iexact``, ``contains``, ``icontains``, ``startswith``,                              |
+    |                      | ``istartswith``, ``endswith``, ``iendswith``, ``regex``, ``iregex``                              |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | description          | ``exact``, ``iexact``, ``contains``, ``icontains``, ``startswith``,                              |
+    |                      | ``istartswith``, ``endswith``, ``iendswith``, ``regex``, ``iregex``                              |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | created              | ``exact``, ``gt``, ``gte``, ``lt``, ``lte``                                                      |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | updated              | ``exact``, ``gt``, ``gte``, ``lt``, ``lte``                                                      |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | type_object          | ``exact``, ``in``                                                                                |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | parent_object        | ``exact``, ``in``                                                                                |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+
+    また、仮想オブジェクトでは、属性のデータ型によって指定できるルックアップが異なります。
+
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | 属性の型             | 指定できるルックアップ                                                                           |
+    +======================+==================================================================================================+
+    | 文字列型             | ``exact``, ``iexact``, ``contains``, ``icontains``, ``startswith``,                              |
+    |                      | ``istartswith``, ``endswith``, ``iendswith``, ``regex``, ``iregex``                              |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | 整数型               | ``exact``, ``gt``, ``gte``, ``lt``, ``lte``                                                      |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | 日時型               | ``exact``, ``gt``, ``gte``, ``lt``, ``lte``                                                      |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | オブジェクト型       | ``exact``                                                                                        |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | ユーザ型             | ``exact``                                                                                        |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+    | 真偽型               | ``exact``                                                                                        |
+    +----------------------+--------------------------------------------------------------------------------------------------+
+
+
+    なお、ルックアップを指定していないときは ``exact`` が適用されます。属性は複数指定することができます。
+
+    また、 ``type_object`` 属性フィルタリングによって型オブジェクトが指定されている場合、フィールド値によるフィルタリング条件も指定できます。フィールド値でフィルタリングする場合は、params に ``fields={<フィールド名>=<値>}`` 、もしくは ``fields={<フィールド名>__<ルックアップ>=<値>}`` で指定します。
+
+    型オブジェクトが指定されていない状況でフィールド値によるフィルタリングを指定するとエラーとなります。
+
+    例えばソースコードに urlopen を含むジョブフローを指定する場合は、以下のように指定します。 ::
+
+      [result = /.find(type_object=/system/types/Jobflow, fields={source__contains='urlopen'})]
+
+    フィールド値によるフィルタリングで使用できるルックアップは以下のようになります。
+
+
+    +----------------------+-------------------------------------------------------------------------------------------------------------+
+    | フィールドの型       | 指定できるルックアップ                                                                                      |
+    +======================+=============================================================================================================+
+    | 文字列型             | ``exact``, ``iexact``, ``contains``, ``icontains``, ``startswith``,                                         |
+    |                      | ``istartswith``, ``endswith``, ``iendswith``, ``regex``, ``iregex``, ``in``, ``range``                      |
+    +----------------------+-------------------------------------------------------------------------------------------------------------+
+    | 整数型               | ``exact``, ``isnull``, ``gt``, ``gte``, ``lt``, ``lte``, ``in``, ``range``                                  |
+    +----------------------+-------------------------------------------------------------------------------------------------------------+
+    | 真偽値型             | ``exact``                                                                                                   |
+    +----------------------+-------------------------------------------------------------------------------------------------------------+
+    | 日時型               | ``exact``, ``isnull``, ``gt``, ``gte``, ``lt``, ``lte``, ``range``                                          |
+    +----------------------+-------------------------------------------------------------------------------------------------------------+
+    | オブジェクト型       | ``exact``, ``isnull``                                                                                       |
+    +----------------------+-------------------------------------------------------------------------------------------------------------+
+    | 添付ファイル型       | (文字列型と同じ、ファイル名がフィルタ対象になります)                                                        |
+    +----------------------+-------------------------------------------------------------------------------------------------------------+
+    | 配列型               | (文字列型と同じ、配列の値がフィルタ対象になります)                                                          |
+    +----------------------+-------------------------------------------------------------------------------------------------------------+
+    | 辞書型               | (文字列型と同じ、辞書の値がフィルタ対象になります)                                                          |
+    +----------------------+-------------------------------------------------------------------------------------------------------------+
+
+    フィールド値においても、ルックアップを指定していないときは ``exact`` が適用されます。またフィールド値のフィルタリングも複数指定することができます。
+
+    find メソッドは標準では結果のオブジェクト一覧は当該ディレクトリに設定された並び順で得られます。明示的に並び順を指定したい場合は params に ``order_by=<属性名>`` と指定することができます。以下の例では作成日時の古い順になります。 ::
+
+      [result = /.find(order_by='created')]
+
+    order_by で並び順を指定できる属性は以下の通りです。
+
+    +----------------------+---------------------------+
+    | 属性                 | 適用される並び順          |
+    +======================+===========================+
+    | id                   | オブジェクトの ID 順      |
+    +----------------------+---------------------------+
+    | owner                | 所有者の ID 順            |
+    +----------------------+---------------------------+
+    | abspath              | 絶対パス順                |
+    +----------------------+---------------------------+
+    | display_name         | 表示名順                  |
+    +----------------------+---------------------------+
+    | description          | 説明順                    |
+    +----------------------+---------------------------+
+    | created              | 作成日時順 (古い順)       |
+    +----------------------+---------------------------+
+    | updated              | 更新日時順 (古い順)       |
+    +----------------------+---------------------------+
+    | type_object          | 型オブジェクトの ID 順    |
+    +----------------------+---------------------------+
+    | parent_object        | 親オブジェクトの ID 順    |
+    +----------------------+---------------------------+
+
+    並び順を逆にしたい場合は先頭に ``-`` を付けて指定します。以下の例では更新日時の新しい順になります。 ::
+
+      [result = /.find(order_by='-updated')]
+
+    カンマで区切って複数の並び順を指定することができます。先に指定した属性の値が同じ場合に、後で指定した属性の値の順に並びます。 ::
+
+      [result = /.find(order_by='type_object,created')]
+
+    また、``type_object`` 属性フィルタリングによって型オブジェクトが指定されている場合は、フィールド値による並び順を指定することもできます。フィールド値で並び替えする場合は、params に ``order_by=field:<フィールド名>`` で指定します。フィールド値による並び順を逆にしたい場合は ``order_by=-field:<フィールド名>`` のように指定してください。 ::
+
+      [result = /.find(type_object=/system/types/Wiki, order_by='field:wikitext')]
+
+    フィールド値による並び順を指定すると基本的にはそのフィールドの型が示す値、すなわち数値や文字列で並び替えられます。
+    ただし、ファイル型フィールドについてはファイル名で並び替えられます。
+
+    order_by で並び順を指定できるフィールドは、``Password`` / ``Array<T>`` / ``Dictionary<T>`` 以外の型のフィールドです。
+    並び替えに対応していない ``Password`` / ``Array<T>`` / ``Dictionary<T>`` 型のフィールドを order_by に指定した場合はエラーになります。
+
+    カンマで区切って複数のフィールドによる並び順を指定することができます。先に指定したフィールドの値が同じ場合に、後で指定したフィールドの値の順に並びます。 ::
+
+      [result = /.find(type_object=/system/types/Wiki, order_by='field:style,field:wikitext')]
+
+    フィールドと属性を組み合わせて並び順を指定することもできます。 ::
+
+      [result = /.find(type_object=/system/types/Wiki, order_by='field:style,created')]
+
+    find メソッドは標準では条件と一致するすべてのオブジェクトの一覧を返しますが、場合によっては多数のオブジェクトが該当して扱いにくい場合もあります。取得するオブジェクトの最大の個数を制限したい場合は params に ``limit=<個数>`` を指定することができます。以下の例では最大で最初の 10 個のオブジェクトを返します。 ::
+
+      [result = /.find(limit=10)]
+
+    取得するオブジェクトの先頭位置を指定したい場合は params に ``offset=<先頭位置>`` で指定することができます。先頭位置は 0 始まりで指定します。以下の例では 11 番目から最大で 10 個のオブジェクトを返します。 ::
+
+      [result = /.find(offset=10, limit=10)]
+
+    なお、指定した先頭位置が該当するオブジェクトの実際の個数より大きくてもエラーにはならず、空の一覧が結果として得られます。
+
+.. versionadded:: 1.6.6post1
+    オブジェクト属性のフィルタリングで parent_object が指定できるようになりました。
+    order_by に description と parent_object 属性が指定できるようになりました。
+
+.. versionchanged:: 1.6.8
+
+    find() メソッドの結果を LazyArray 型に変更しました。
+
+.. versionchanged:: 1.6.9.post4
+
+    find() メソッドでフィールド値による並び順を複数指定できるようになりました。
+
+.. versionchanged:: 1.6.10
+
+    find() メソッドで並び替えに対応していない ``Password`` / ``Array<T>`` / ``Dictionary<T>`` 型のフィールドを order_by に指定した場合にエラーになるようになりました。
+
+.. method:: Directory.glob(pattern) : LazyArray<Object>
+
+    ディレクトリの配下で pattern で指定したフィルタリング条件に該当するオブジェクトの検索結果を返します。
+    パターンは次の形式で記述します。 
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            "<オブジェクト名>"
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            "<object name>"
+
+    オブジェクト名は glob パターンで指定します。例えば名前が kompira で始まるオブジェクトを指定する場合は以下のようになります。 ::
+
+      [result = /.glob("kompira*")]
+
+    また、オブジェクト名に加えて次の要素を指定することが可能です。
+
+    - パス
+    - 型オブジェクト
+    - 所有者
+    - 属性値フィルタリング
+    - フィールド値フィルタリング
+
+    パスを指定した場合そのパスの下のオブジェクトを返します。パターンは次の形式で記述します。
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            "<パス>/<オブジェクト名>"
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            "<path>/<object name>"
+
+    パスには /\* と /\*\* を指定できます。それぞれ任意の１段のディレクトリと任意の深さのディレクトリにマッチします。
+
+    例えば、パスに user が含まれ、名前が kompira で始まるオブジェクトを指定する場合は以下のようになります。 ::
+
+      [result = /.glob("/**/user/**/kompira*")]
+
+    型オブジェクトを指定した場合その型オブジェクトを持つオブジェクトを返します。パターンは次の形式で記述します。
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            "<オブジェクト名>.<型オブジェクト名>"
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            "<object name>.<type object>"
+
+    例えば、ジョブフロー型のすべてのオブジェクトを指定する場合は以下のようになります。 ::
+
+      [result = /.glob("*.Jobflow")]
+
+    所有者を指定した場合所有するオブジェクトを返します。パターンは次の形式で記述します。
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            "<オブジェクト名>@<所有者>"
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            "<object name>@<owner>"
+
+    例えば、rootが所有するすべてのオブジェクトを指定する場合は以下のようになります。 ::
+
+      [result = /.glob("*@root")]
+
+    属性値フィルタリングを指定した場合、マッチするオブジェクトを返します。パターンは次の形式で記述します。
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            "<オブジェクト名>(<属性値>=<値>)" もしくは "<オブジェクト名>(<属性値>_<ルックアップ>=<値>)"
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            "<object name>(<attirubute name>=<value>)" or "<object name>(<attibute name>_<lookup>=<value>)"
+
+
+    属性値に指定できるルックアップの一覧はfindメソッドをご参照下さい。
+
+    例えば、表示名に kompira が含まれるオブジェクトを指定する場合は以下のようになります。 ::
+
+      [result = /.glob("*(diplay_name__contains='kompira')")]
+
+    フィールド値フィルタリングを指定した場合、マッチするオブジェクトを返します。パターンは次の形式で記述します。
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            "<オブジェクト名>[<フィールド値>=<値>]" もしくは "<オブジェクト名>[<フィールド値>_<ルックアップ>=<値>]"
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            "<object name>[<field name>=<value>]" or "<object name>[<field name>_<lookup>=<value>]"
+
+    フィールド値に指定できるルックアップの一覧ははfindメソッドをご参照下さい。
+
+    例えば、ソースコードに urlopen が含まれるオブジェクトを指定する場合は以下のようになります。 ::
+
+      [result = /.glob("*[source__contains='urlopen']")]
+
+    またこれらは組み合わせて指定することができます。すべて指定した場合のパターンは次のようになります。
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            "<パス>/<オブジェクト名>.<型オブジェクト名>@<所有者>(<属性フィルタリング>)[<フィールドフィルタリング>]"
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            "<path>/<object name>.<type object>@<owner>(<attirubute filtering>)[<field value filtering>]"
+
+    例えば、下のようなオブジェクトを指定する場合は次のようになります。
+      - /user/appの下にあるオブジェクト
+      - rootが所持
+      - 名前がkompiraから始まる
+      - ジョブフロー
+      - 表示名にこんぴらが含まれる
+      - 多重度が1以下
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            [result =
+            /.glob("/user/app/**/kompira*.Jobflow
+            @root(display_name__contains='こんぴら')[multiplicity__lt=1]")]
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+           [result =
+           /.glob("/user/app/**/kompira*.Jobflow
+           @root(display_name__contains='kompira')[multiplicity__lt=1]")]
+
+
+.. versionchanged:: 1.6.8
+
+    glob() メソッドの結果を LazyArray 型に変更しました。
+
+
+.. type_object:: License
+
+ライセンス (License)
+--------------------
+
+`ライセンス型 </system/types/License>`_ は Kompira のライセンスファイル
+を管理するオブジェクトを定義します。
+
+フィールド
+''''''''''
+
+ライセンス型には固有のフィールドは定義されていません。
+
+メソッド
+''''''''
+
+ライセンス型には固有のメソッドは定義されていません。
+
+プロパティ
+''''''''''
+
+ライセンス型オブジェクトは、以下のプロパティを提供しています。
+
+.. property:: License.node_count : Integer
+
+    現在使用中のノード数を取得します。
+
+
+.. type_object:: Virtual
+
+仮想オブジェクト (Virtual)
+--------------------------
+
+`仮想オブジェクト型 </system/types/Virtual>`_ のオブジェクトは、プロセ
+スやインシデントなど、Kompiraの特殊オブジェクトを定義するための実装モ
+ジュールを指定します。
+
+フィールド
+''''''''''
+
+仮想オブジェクト型では、以下のフィールドを定義しています。
+
+.. type_field:: Virtual.virtual
+
+    特殊オブジェクトのPythonの実装モジュールのパスを指定します。
+
+メソッド
+''''''''
+
+仮想オブジェクト型に特有のメソッドは特に定義されていません。
+
+.. type_object:: Jobflow
+
+ジョブフロー(Jobflow)
+---------------------
+
+`ジョブフロー型 </system/types/Jobflow>`_ はジョブフローオブジェクトの
+型を規定します。
+
+フィールド
+''''''''''
+
+ジョブフロー型では、以下のフィールドを定義しています。
+
+.. type_field:: Jobflow.source
+
+    ジョブフローのソースコード文字列です。
+
+.. type_field:: Jobflow.code
+
+    ジョブフローのソースをコンパイルした結果の中間コード文字列が格納さ
+    れます。ブラウザ上から編集することはできません。
+
+.. type_field:: Jobflow.parameters
+
+    ジョブフローのパラメータのデフォルト値をコンパイルした結果の中間コー
+    ド文字列が、パラメータの辞書として格納されます。不可視設定されてい
+    るため、ブラウザ上から編集することはできません。
+
+.. type_field:: Jobflow.executable
+
+    ジョブフローが実行可能な場合は true となります。コンパイルエラーな
+    どで、ジョブフローが実行できない場合には false が格納されます。ブラ
+    ウザ上から編集することはできません。
+
+.. type_field:: Jobflow.errors
+
+    コンパイル時のエラーメッセージが、対応するソースコードの行番号をキー
+    とした辞書に格納されます。ブラウザ上から編集することはできません。
+
+.. type_field:: Jobflow.compilerVersion
+
+    ジョブフローのコンパイルに用いられたコンパイラのバージョン文字列が
+    格納されます。ブラウザ上から編集することはできません。
+
+.. type_field:: Jobflow.multiplicity
+
+    ジョブフローの多重度を設定します。多重度の数を超えるジョブフロープ
+    ロセスが同時にこのジョブフローを呼び出した場合、そのプロセスは他の
+    プロセスがこのジョブフロー呼び出しを完了するまで待たされます。
+    多重度を 0 以下の値に設定した場合、多重度は無制限と解釈されます。
+
+.. type_field:: Jobflow.defaultCheckpointMode
+
+    ジョブフローのデフォルトのチェックポイントモードを指定します。
+
+.. type_field:: Jobflow.defaultMonitoringMode
+
+    ジョブフローのデフォルトの監視モードを指定します。
+
+.. type_field:: Jobflow.compiledDatetime
+
+    ジョブフローのコンパイル日時が格納されます。ブラウザ上から編集することはできません。
+
+.. note::
+
+   多重度が指定されているジョブフローを呼び出すと、ジョブフロープロセス
+   はロックを獲得します。ジョブフロー呼び出しから戻るか、もしくはジョブ
+   フローが終了すると、ロックが解放されます。ロックは再帰的に獲得可能で
+   す。したがって、多重度指定されているジョブフローを再帰的に呼び出した
+   場合でも、そのプロセスの実行がブロックすることはありません。
+
+   多重度指定されたジョブフローの中で別のジョブフローを末尾で呼び出した
+   場合、獲得したロックは解放されます。
+
+メソッド
+''''''''
+
+ジョブフロー型に特有のメソッドは特に定義されていません。
+
+.. type_object:: Channel
+
+チャネル (Channel)
+------------------
+
+`チャネル型 </system/types/Channel>`_ は、チャネルオブジェクトの型を規
+定します。チャネルオブジェクトを用いて、異なるジョブフロープロセス同士
+でメッセージの送受信を同期的に行うことができます。
+
+アクションを指定することで、メッセージを受信したときの動作を指定することができます。
+
+フィールド
+''''''''''
+
+チャネル型では、以下のフィールドを定義しています。
+
+.. type_field:: Channel.message_queue
+
+    チャネルに送信されたメッセージが格納されるキューです。
+    ブラウザ上から編集することはできません。
+
+.. type_field:: Channel.event_queue
+
+    チャネルでメッセージの受信を待っているイベントが格納されるキューです。
+    ブラウザ上から編集することはできません。
+
+.. type_field:: Channel.action_type
+
+    チャネルがメッセージを受信したときに動作するアクションの種別を指定します。
+
+    =============== ======================================================
+    アクション種別  アクションの動作
+    =============== ======================================================
+    NoAction        何もしない
+    ExecuteJobflow  アクションターゲットで指定したジョブフローを実行する
+    =============== ======================================================
+
+.. type_field:: Channel.action_target
+
+    アクション種別に応じて、処理対象となるアクションターゲットを指定します。
+    アクション種別が ExecuteJobflow の場合、実行するジョブフローを指定します。
+    そのジョブフローは第一パラメータに受信したメッセージを渡して、チャネルオブジェクトの所有者をユーザとして実行されます。
+
+    .. warning::
+
+        アクション種別が ExecuteJobflow のときに指定するジョブフローは、
+        パラメータが少なくとも1つは必要で、2つめ以降のパラメータがある場合はデフォルト値定義が必要です。
+
+.. versionchanged:: 1.6.6
+    新しいフィールド action_type, action_target が追加されました。
+
+メソッド
+''''''''
+
+チャネル型には以下のメソッドが定義されています。
+
+.. method:: Channel.send(message)
+
+    チャネルにメッセージ message を送信します。
+
+.. method:: Channel.pop_message(index=0) : any
+
+    チャネルのメッセージキューから指定したインデックス（省略時は先頭）のメッセージを取得します。
+    取得したメッセージはメッセージキューから削除されます。
+
+    インデックスに負の値を指定すると、末尾からの位置を指定することになります。
+    メッセージが存在しないインデックスを指定した場合は実行時エラーになります（イベントジョブと異なりメッセージの受信を待ちません）。
+
+.. method:: Channel.peek_message(index=0) : Array
+
+    チャネルのメッセージキューから指定したインデックス（省略時は先頭）のメッセージを参照します。
+    参照したメッセージはメッセージキューから削除されずに残ります。
+
+    結果はリストで、1つめの要素には参照したメッセージの ID が格納され、2つめの要素は参照したメッセージ自体が格納されます。
+    これは、:ref:`job-eventjob` で peek_mode=true を指定したときの結果と同じ構造になります。
+
+    インデックスに負の値を指定すると、末尾からの位置を指定することになります。
+    メッセージが存在しないインデックスを指定した場合は実行時エラーになります（イベントジョブと異なりメッセージの受信を待ちません）。
+
+    メッセージ ID はチャネルごとに個別のメッセージを識別する ID で、後述する delete_message() メソッドで利用します。
+    別のチャネルオブジェクトでは同じメッセージ ID が使われることがありますので、メッセージ ID がシステムユニークではないことに注意してください。
+
+.. _channel-delete_message:
+
+.. method:: Channel.delete_message(*msgid)
+
+    チャネルのメッセージキューから指定したメッセージ ID に対応するメッセージを削除します。
+    メッセージ ID は複数指定することが出来ます。
+
+    存在しないメッセージ ID を指定した場合は実行時エラーになります。
+
+.. method:: Channel.clear_messages()
+
+    チャネルのメッセージキューを空にします。
+
+.. versionchanged:: 1.6.7
+    新しいメソッド pop_message, peek_message, delete_message, clear_messages が追加されました。
+
+
+プロパティ
+''''''''''
+
+チャネル型オブジェクトは、以下のプロパティを提供しています。
+
+.. property:: Channel.message_count : Integer
+
+    メッセージキューに溜まっているメッセージの数を示します。
+
+.. property:: Channel.event_count : Integer
+
+    イベントキューに溜まっているイベントの数を示します。
+
+
+.. type_object:: Wiki
+
+Wikiページ (Wiki)
+-----------------
+
+`Wikiページ型 </system/types/Wiki>`_ は、Wikiページオブジェクトの型を規
+定します。Kompira の Wikiページオブジェクトは、Wiki
+Creole/Markdown/Textile 記法をサポートしています。
+
+フィールド
+''''''''''
+
+Wikiページ型では、以下のフィールドを定義しています。
+
+.. type_field:: Wiki.wikitext
+
+    wikiページのテキストを格納します。
+
+.. type_field:: Wiki.style
+
+    wikiページの記法を Creole, Markdown, Textile の中から選択します。
+
+メソッド
+''''''''
+
+Wikiページ型に特有のメソッドは特に定義されていません。
+
+.. type_object:: ScriptJob
+
+スクリプトジョブ (ScriptJob)
+----------------------------
+
+`スクリプトジョブ型 </system/types/ScriptJob>`_ は、スクリプトジョブオ
+ブジェクトの型を規定します。
+
+フィールド
+''''''''''
+
+スクリプトジョブ型では、以下のフィールドを定義しています。
+
+.. type_field:: ScriptJob.source
+
+    スクリプトのソーステキストを格納します。
+
+.. type_field:: ScriptJob.ext
+
+    スクリプトの拡張子を設定します。Windowsサーバ上でスクリプトを実行す
+    る場合、スクリプトの拡張子を適切に設定する必要があります。
+
+.. type_field:: ScriptJob.multiplicity
+
+    スクリプトジョブの多重度を設定します。多重度の数を超えるジョブフロー
+    プロセスが同時にこのスクリプトジョブを呼び出した場合、そのプロセス
+    は他のプロセスがこのスクリプトジョブ呼び出しを完了するまで待たされ
+    ます。多重度を 0 以下の値に設定した場合、多重度は無制限と解釈されま
+    す。
+
+メソッド
+''''''''
+
+スクリプトジョブ型に特有のメソッドは特に定義されていません。
+
+.. type_object:: Environment
+
+環境変数 (Environment)
+----------------------
+
+`環境変数型 </system/types/Environment>`_ は、環境変数オブジェクトの型
+を規定します。ユーザー設定の環境変数の項目に、環境変数オブジェクトを設
+定すると、そのユーザーがジョブフローを実行した場合、環境変数辞書が$ENV
+に格納され、辞書のに格納されている各値をジョブフローから参照することが
+できるようになります。
+
+フィールド
+''''''''''
+
+環境変数型では、以下のフィールドを定義しています。
+
+.. type_field:: Environment.environment
+
+    環境変数辞書を格納します。
+
+メソッド
+''''''''
+
+環境変数型に特有のメソッドは特に定義されていません。
+
+.. type_object:: Template
+
+テンプレート (Template)
+-----------------------
+
+`テンプレート型 </system/types/Template>`_ は、テンプレートオブジェクト
+の型を規定します。
+
+フィールド
+''''''''''
+
+テンプレート型では、以下のフィールドを定義しています。
+
+.. type_field:: Template.template
+
+    テンプレート文字列を格納します。
+
+メソッド
+''''''''
+
+テンプレート型に特有のメソッドは特に定義されていません。
+
+.. deprecated:: 1.4.7
+    替わりにテキスト型オブジェクトを使用してください。
+
+
+.. type_object:: Table
+
+テーブル (Table)
+-----------------
+
+`テーブル型 </system/types/Table>`_ は、テーブルオブジェクトの型を規定
+します。テーブルオブジェクトは、ディレクトリオブジェクトのように、複数
+の子オブジェクトを持つことができます。ただし、子オブジェクトの型は固定
+されます。
+
+フィールド
+''''''''''
+
+テーブル型では、以下のフィールドを定義しています。
+
+.. type_field:: Table.typeObject
+
+    このテーブルに格納する子オブジェクトの型を指定します。
+
+.. type_field:: Table.relatedObject
+
+    このテーブルのメニューから実行できるジョブフローやフォームを指定し
+    ます。テーブル一覧から選択したオブジェクトに対して、ジョブフローや
+    フォームを実行できるようになります。
+    ジョブフロー実行の場合は、ジョブフローの最初のパラメータに選択され
+    たオブジェクトリストが渡されます。フォーム実行の場合、objects パラ
+    メータに選択されたオブジェクトリストが渡されます。
+
+.. type_field:: Table.displayList
+
+    テーブルのビューで表示させる子オブジェクトのフィールド名を配列で指
+    定します。
+
+.. type_field:: Table.orderBy
+
+    このテーブルの一覧画面で表示するオブジェクトの並び順を指定します。
+
+.. type_field:: Table.pageSize
+
+    このテーブルの一覧画面で表示するオブジェクトの個数を指定します。
+
+メソッド
+''''''''
+
+テーブル型のメソッドはディレクトリ型が提供する\ :ref:`dir-method`\ と同じですが、
+add メソッドでは type_obj パラメータは省略可能となり、find メソッドでは型オブジェクトの特定が不要になります。
+
+.. method:: Table.add(name, [type_obj, data, overwrite]) : Object
+
+    テーブルの下に、name で指定された名前を持つ テーブルのオブジェクト
+    型フィールドで指定された型のKompiraオブジェクトを追加します。dataに
+    は辞書型のデータを渡すことができ、これによって、オブジェクトのフィー
+    ルド値を初期化することができます。overwrite 引数に true を渡した場
+    合、同名のオブジェクトがテーブルの下に存在している場合でも、エラー
+    にはならずオブジェクトを更新します。
+
+.. method:: Table.find(params) : LazyArray<Object>
+
+    テーブルの配下で params で指定したフィルタリング条件に該当するオブジェクトの検索結果を返します。
+    基本的には :ref:`Directory.find() <directory-find>` メソッドと同じですが、フィールド値によるフィルタリングまたはフィールド値による並び替えの指定する場合でも、``type_object`` 属性フィルタリングによる型オブジェクトの特定は不要になります。
+
+.. versionchanged:: 1.6.8
+
+    find() メソッドの結果を LazyArray 型に変更しました。
+
+
+.. type_object:: Realm
+
+管理領域 (Realm)
+----------------
+
+`管理領域型 </system/types/Realm>`_ は、管理領域オブジェクトの型を規定
+します。管理領域オブジェクトを定義することにより、ジョブマネージャごと
+に、管理対象のネットワークを分割して管理できるようになります。
+
+フィールド
+''''''''''
+
+管理領域型では、以下のフィールドを定義しています。
+
+.. type_field:: Realm.range
+
+    この管理領域が管轄するネットワークアドレスの対象範囲を指定します。
+
+.. type_field:: Realm.disabled
+
+    この値を true に設定すると、管理領域の設定が無効化されます。
+
+メソッド
+''''''''
+
+管理領域型に特有のメソッドは特に定義されていません。
+
+.. type_object:: AttachedFile
+
+添付ファイル (AttachedFile)
+---------------------------
+
+`添付ファイル型 </system/types/AttachedFile>`_ は、添付ファイルオブジェ
+クトの型を規定します。
+
+フィールド
+''''''''''
+
+添付ファイル型では、以下のフィールドを定義しています。
+
+.. type_field:: AttachedFile.attached1
+
+    1番目の添付ファイルオブジェクトが格納されるフィールドです。
+
+.. type_field:: AttachedFile.attached2
+
+    2番目の添付ファイルオブジェクトが格納されるフィールドです。
+
+.. type_field:: AttachedFile.attached3
+
+    3番目の添付ファイルオブジェクトが格納されるフィールドです。
+
+メソッド
+''''''''
+
+添付ファイル型に特有のメソッドは特に定義されていません。
+
+
+.. type_object:: NodeInfo
+
+ノード情報 (NodeInfo)
+---------------------
+
+`ノード情報型 </system/types/NodeInfo>`_ は、ノード情報オブジェクトの型
+を規定します。ノード情報オブジェクトをジョブフロー中の __node__ 制御変
+数に指定することで、コマンドを実行する対象ノードを指定することができま
+す。
+
+フィールド
+''''''''''
+
+ノード情報型では、以下のフィールドを定義しています。
+
+.. type_field:: NodeInfo.nodetype
+
+    Kompira で定義されているノード種別を選択します。
+
+.. type_field:: NodeInfo.conntype
+
+    ノードの接続種別を選択します。指定できる接続種別は上で選択したノード種別ごとに切り替わります。詳細は :ref:`node` を参照してください。
+
+.. type_field:: NodeInfo.hostname
+
+    ノードのホスト名を指定します。
+
+.. type_field:: NodeInfo.ipaddr
+
+    ノードのIPアドレスを指定します。
+
+.. type_field:: NodeInfo.port
+
+    ノードのポート番号を指定します。指定しない場合、接続種別に応じたデ
+    フォルトのポート番号が使用されます。
+
+.. type_field:: NodeInfo.shell
+
+    リモート接続時に使用するシェルを指定します。指定しない場合、デフォ
+    ルトとして '/bin/bash' が使用されます。
+
+.. type_field:: NodeInfo.use_shell
+
+    リモート接続時にシェルを使用しない場合、false に設定します。ネット
+    ワーク機器など、シェルを備えていない機器への接続時には、false を設
+    定すると良いでしょう。 デフォルトは false です。
+
+.. type_field:: NodeInfo.proxy
+
+    踏み台サーバ経由で SSH 接続する場合、踏み台サーバとなるノード情報オ
+    ブジェクトを指定します。SSH 接続時のみ使用されます。
+
+.. type_field:: NodeInfo.account
+
+    リモート接続時に使用するアカウント情報を指定します。ジョブフローの
+    __account__ 制御変数を明示的に指定した場合は、そちらが優先されます。
+
+.. versionadded:: 1.6.4
+    ノード種別フィールドが追加されました。
+
+.. versionchanged:: 1.6.4
+    接続種別フィールドの選択肢がノード種別によって切り替わるようになりました。
+
+メソッド
+''''''''
+
+ノード情報型に特有のメソッドは特に定義されていません。
+
+.. type_object:: AccountInfo
+
+アカウント情報 (AccountInfo)
+----------------------------
+
+`アカウント情報型 </system/types/AccountInfo>`_ は、アカウント情報オブ
+ジェクトの型を規定します。アカウント情報オブジェクトをジョブフロー中の
+__account__ 制御変数にセットすることで、リモート接続時に使用するアカウ
+ント情報を指定することができます。
+
+フィールド
+''''''''''
+
+アカウント情報型では、以下のフィールドを定義しています。
+
+.. type_field:: AccountInfo.user
+
+    アカウントのユーザ名を設定します。
+
+.. type_field:: AccountInfo.password
+
+    アカウントのパスワードを設定します。パスフレーズ付きのSSH鍵ファイル
+    が設定されている場合、パスフレーズとしても使用されます。
+
+.. type_field:: AccountInfo.keyfile
+
+    SSH鍵ファイルを使ってログインする場合、鍵ファイルを添付します。
+
+.. type_field:: AccountInfo.passphrase
+
+    パスフレーズ付きのSSH鍵の場合に指定するパスフレーズです。パスフレー
+    ズ無しの場合やパスワードと同じ場合には指定を省略することができます。
+
+メソッド
+''''''''
+
+アカウント情報型に特有のメソッドは特に定義されていません。
+
+.. type_object:: Repository
+
+リポジトリ (Repository)
+-----------------------
+
+`リポジトリ型 </system/types/Repository>`_ は、リポジトリオブジェクトの
+型を規定します。リポジトリオブジェクトを用いて、外部のVCSリポジトリと連
+携することができ、Kompiraのディレクトリのデータをリポジトリにプッシュし
+たり、逆にリポジトリ上のデータをKompiraディレクトリにプルしたりといった、
+データの同期が可能となります。
+
+フィールド
+''''''''''
+
+リポジトリ型では、以下のフィールドを定義しています。
+
+.. type_field:: Repository.URL
+
+    同期対象リポジトリのURLを設定します。
+
+.. type_field:: Repository.repositoryType
+
+    リポジトリ種別を指定します。現バージョンでは、'git'と'mercurial' のみサポー
+    トしています。デフォルトは'git'です。
+
+.. type_field:: Repository.port
+
+    外部リポジトリに接続するポート番号を指定します。未指定の場合、デフォ
+    ルトのポート番号が使用されます。
+
+.. type_field:: Repository.username
+
+    リポジトリ接続時のユーザー名を指定します。
+
+.. type_field:: Repository.password
+
+    リポジトリ接続時のパスワードを指定します。
+
+.. type_field:: Repository.directory
+
+    同期対象のKompiraディレクトリを指定します。
+
+.. type_field:: Repository.updateConfig
+
+    外部リポジトリからオブジェクトデータをプルする際に Config型オブジェクトの設定データも上書きします。
+
+.. type_field:: Repository.log
+
+    同期実行時のログが格納されます。
+
+.. versionadded:: 1.6.7
+    フィールド updateConfig が追加されました。
+
+メソッド
+''''''''
+
+リポジトリ型に特有のメソッドは特に定義されていません。
+
+.. _lib-mailchannel:
+
+.. type_object:: MailChannel
+
+メールチャネル (MailChannel)
+----------------------------
+
+`メールチャネル型 </system/types/MailChannel>`_ は、IMAP4/POP3 サーバからメールをチャネルに取り込むメールチャネルオブジェクトの型を規定します。
+
+ジョブフローがメールチャネルからメール受信待ち状態になる、あるいはメールチャネルに何らかの動作を伴うアクションが設定されているとき、メールチャネルは設定されている IMAP4/POP3 サーバからメールを受信するポーリングを開始します。
+
+ポーリングにおいて IMAP4/POP3 サーバからメールを受信できたとき、以下のように動作します。
+
+* メールチャネルを待つジョブフローが1つ以上ある場合は、最も長く待っているジョブフローに受信したメールが渡され、そのジョブフローは処理を継続します。
+* 上記に該当せず、メールチャネルにアクションが設定されている場合は、受信したメールをもとにアクションが開始されます。
+* メールを受信したときに上記のいずれにも該当しない場合は、受信したメールはメールチャネルのメッセージキューに蓄積されます。
+
+受信する対象のメール（全てのメールまたは未読メール）、および、受信したメールを削除するかについては、受信モードで指定できます。
+
+メールボックスに受信する対象のメールがなかった場合は、checkInterval で設定された時間が経過した後に再度、IMAP4/POP3 サーバからメールを取り込みます。ただし、メールチャネルを待つジョブフローが存在しない、かつメールチャネルにアクションが設定されていない場合は、メール受信のポーリング処理は休止します。
+
+フィールド
+''''''''''
+
+メールチャネル型では、以下のフィールドを定義しています。
+
+.. type_field:: MailChannel.message_queue
+
+    メールチャネルに送信されたメッセージが格納されるキューです。
+    ブラウザ上から編集することはできません。
+
+.. type_field:: MailChannel.event_queue
+
+    メールチャネルでメッセージの受信を待っているイベントが格納されるキューです。
+    ブラウザ上から編集することはできません。
+
+.. type_field:: MailChannel.serverName
+
+    接続する IMAP4/POP3 サーバのホスト名かIPアドレスを設定します。
+    空にした場合は localhost に接続します。
+
+.. type_field:: MailChannel.protocol
+
+    メール受信のプロトコルとして、IMAP4 もしくは POP3 のいずれかを設定します。
+
+.. type_field:: MailChannel.SSL
+
+    SSL による通信を行う場合 true にセットします。
+
+.. type_field:: MailChannel.port
+
+    IMAP サーバのポート番号を設定します。指定しない場合デフォルトのポー
+    ト番号が使用されます。
+
+.. type_field:: MailChannel.username
+
+    IMAP4/POP3 サーバに接続するユーザー名を設定します。
+
+.. type_field:: MailChannel.password
+
+    IMAP4/POP3 サーバに接続する際のパスワードを設定します。
+
+.. type_field:: MailChannel.timeout
+
+    IMAP4/POP3 サーバに対する接続タイムアウトを秒単位で指定します。
+    空、もしくは、0を設定すると、TCP/IP接続におけるシステムのデフォルトのタイムアウトとなります。
+    デフォルトは 60 秒です。負の値を設定することはできません。
+
+.. type_field:: MailChannel.use_oauth2
+
+    OAuth2 を用いて認証する場合はチェックします。この場合、パスワードの設定は不要となります。
+
+.. type_field:: MailChannel.oauth2_provider
+
+    OAuth2 のサービスプロバイダを選択します。OAuth2 認証を利用する場合には必須です。
+
+.. type_field:: MailChannel.refresh_token
+
+    OAuth2 認証によって取得したリフレッシュトークンが格納されます。
+    隠しフィールドとなっており、ブラウザ上から編集することはできません。
+
+.. type_field:: MailChannel.access_token
+
+    OAuth2 認証によって取得したアクセストークンが格納されます。
+    隠しフィールドとなっており、ブラウザ上から編集することはできません。
+
+.. type_field:: MailChannel.token_expires_at
+
+    アクセストークンの有効期限が格納されます。
+    隠しフィールドとなっており、ブラウザ上から編集することはできません。
+
+.. type_field:: MailChannel.mailbox
+
+    受信するメールボックスを設定します。デフォルトは "INBOX" です。
+    POP3 プロトコルの場合、メールボックスの設定は無視されます。
+
+    .. warning::
+
+        日本語のメールボックス名を設定することはできません。
+
+.. type_field:: MailChannel.receive_mode
+
+    メールチャネルがメールを受信するときの動作を指定します。
+
+    ======================== ====================================
+    受信モード               メール受信時の動作
+    ======================== ====================================
+    ReceiveAllAndDelete      全てのメールを受信して削除する
+    ReceiveUnseenAndSetSeen  未読のメールを受信して既読にする
+    ======================== ====================================
+
+    デフォルトの受信モードは ReceiveAllAndDelete となります。
+
+    .. warning::
+
+        ReceiveUnseenAndSetSeen はプロトコルが POP3 のときは指定できません。
+
+.. type_field:: MailChannel.checkInterval
+
+    IMAP4/POP3 サーバに対して新着メッセージを確認する間隔を分単位で指定します。
+    デフォルトは10分です。0 を指定するとデフォルトの値となります。
+    負の値を設定することはできません。
+
+.. type_field:: MailChannel.action_type
+
+    メールチャネルがメッセージを受信したときに動作するアクションの種別を指定します。
+
+    =============== ======================================================
+    アクション種別  アクションの動作
+    =============== ======================================================
+    NoAction        何もしない
+    ExecuteJobflow  アクションターゲットで指定したジョブフローを実行する
+    =============== ======================================================
+
+.. type_field:: MailChannel.action_target
+
+    アクション種別に応じて、処理対象となるアクションターゲットを指定します。
+    アクション種別が ExecuteJobflow の場合、実行するジョブフローを指定します。
+    そのジョブフローは第一パラメータに受信したメッセージを渡して、メールチャネルオブジェクトの所有者をユーザとして実行されます。
+
+    .. warning::
+
+        アクション種別が ExecuteJobflow のときに指定するジョブフローは、
+        パラメータが少なくとも1つは必要で、2つめ以降のパラメータがある場合はデフォルト値定義が必要です。
+
+.. type_field:: MailChannel.log
+
+    IMAP4/POP3 サーバの接続ログが格納されます。
+
+.. type_field:: MailChannel.logSize
+
+    ログの最大サイズを指定します。最大サイズを超えた場合、古いログメッ
+    セージから削除されます。
+
+.. type_field:: MailChannel.disabled
+
+    IMAP4/POP3 サーバへの接続を無効化します。
+
+.. versionchanged:: 1.6.6
+    timeout (受信タイムアウト) の表示名を接続タイムアウトに変更しました。
+    timeout と checkInterval に負の値を設定できないようにしました。
+    use_oauth2, oauth2_provider, refresh_token, access_token, token_expires_at の各フィールドが追加されました。
+    新しいフィールド receive_mode が追加されました。
+    新しいフィールド action_type, action_target が追加されました。
+    いくつかのフィールドの並び順が変更されました。
+
+メソッド
+''''''''
+
+メールチャネル型には以下のメソッドが定義されています。
+
+.. method:: MailChannel.conn_check()
+
+   設定されているIMAP4/POP3サーバに対して接続テスト(ユーザ名とパスワードによる認証、および、メールボックスの確認も含む)を行います。
+   接続に成功した場合は、``$STATUS`` に 0 がセットされます。
+   失敗した場合には、``$STATUS`` に 1 がセットされ、失敗の理由を示す文字列が ``$ERROR`` にセットされます。
+   disabled (無効) フラグがセットされている状態でも接続テストは実行されます。
+
+.. versionadded:: 1.6.6
+    新規に conn_check メソッドが追加されました。
+
+
+.. type_object:: Form
+
+フォーム (Form)
+---------------
+
+`フォーム型 </system/types/Form>`_ は、ユーザ入力フォームのビューを提供
+するフォームオブジェクトの型を規定します。入力フォームの項目は、ユーザー
+が自由に定義することができます。
+
+ユーザがフォームを提出するとフォームに入力された情報は、辞書型のデータ
+として、指定した提出オブジェクトに提出されます。提出オブジェクトがチャ
+ネル型の場合、データはそのチャネルオブジェクトのメッセージキューに置か
+れます。提出オブジェクトがジョブフローの場合、辞書データはそのジョブフ
+ローのパラメータに展開され、実行を開始します。
+
+フィールド
+''''''''''
+
+.. type_field:: Form.submitObject
+
+    フォームに入力されたデータの提出先オブジェクトを指定します。
+
+.. type_field:: Form.fieldNames
+
+    入力フォームが持つフィールド名の一覧を配列として指定します。フィー
+    ルド名で使用できる文字列の規則は、ジョブフロー言語の識別子と同じで
+    す。
+
+.. type_field:: Form.fieldDisplayNames
+
+    入力フォームが持つフィールド表示名の一覧を配列として指定します。
+    フィールド表示名には任意の文字列を使用することができます。配列要素
+    の順序は、フィールド名の列と対応させる必要があります。
+
+.. type_field:: Form.fieldTypes
+
+    入力フォームが持つフィールド型の一覧を配列として指定します。配列要
+    素の順序は、フィールド名の列と対応させる必要があります。
+
+メソッド
+''''''''
+
+フォーム型に特有のメソッドは特に定義されていません。
+
+.. _lib-config:
+
+.. type_object:: Config
+
+設定 (Config)
+-------------
+
+`設定型 </system/types/Config>`_ は、設定フォームのビューを提供する設定
+オブジェクトの型を規定します。設定フォームの項目は、ユーザーが自由に定
+義することができます。
+
+ユーザが設定フォームを保存するとフォームに入力された情報は、辞書型のデー
+タとして、設定オブジェクトの data プロパティに保存されます。
+
+    .. note::
+
+        設定オブジェクトの設定情報(dataプロパティ)の変更には、当該オブ
+        ジェクトに対する実行可能(executable)権限が必要です。
+
+フィールド
+''''''''''
+
+.. type_field:: Config.fieldNames
+
+    設定フォームが持つフィールド名の一覧を配列として指定します。フィー
+    ルド名で使用できる文字列の規則は、ジョブフロー言語の識別子と同じで
+    す。
+
+.. type_field:: Config.fieldDisplayNames
+
+    設定フォームが持つフィールド表示名の一覧を配列として指定します。
+    フィールド表示名には任意の文字列を使用することができます。配列要素
+    の順序は、フィールド名の列と対応させる必要があります。
+
+.. type_field:: Config.fieldTypes
+
+    設定フォームが持つフィールド型の一覧を配列として指定します。配列要
+    素の順序は、フィールド名の列と対応させる必要があります。
+
+プロパティ
+''''''''''
+
+設定型オブジェクトは、以下のプロパティを提供しています。
+
+.. property:: Config.data : Dictionary
+
+      設定フォームに入力されたデータ辞書の値です。
+
+
+メソッド
+''''''''
+
+設定型に特有のメソッドは特に定義されていません。
+
+
+.. type_object:: Library
+
+ライブラリ (Library)
+--------------------
+
+`ライブラリ型 </system/types/Library>`_ は、ジョブフローから呼び出し可
+能な Python で実装されたライブラリを定義します。
+
+フィールド
+''''''''''
+
+.. type_field:: Library.libraryType
+
+    ライブラリの定義方法を指定します。
+    'source' を選択すると、ソーステキストに格納された文字列が Python の
+    モジュールプログラムとしてロードされます。
+    'safe_source' を選択すると、ソーステキストに格納された文字列が安全
+    な Python のモジュールプログラムとしてロードされます。
+    'module' を選択すると、モジュールパスに指定された文字列が、Kompira
+    パッケージ内の kompira.library 以下のモジュールとしてロードされます。
+    デフォルト値は 'source' です。このフィールドはブラウザ上から編集す
+    ることはできません。
+
+.. type_field:: Library.modulePath
+
+    ロードする Python ライブラリのモジュールパスを指定します。
+    libraryType が 'module' の時に使用されるフィールドです。
+    このフィールドはブラウザ上から編集することはできません。
+
+.. type_field:: Library.sourceText
+
+    Python のソースコードを記述します。
+
+.. type_field:: Library.document
+
+    Python モジュールのドキュメント文字列が格納されます。ロードエラー時
+    にはエラーメッセージが格納されます。
+    このフィールドはブラウザ上から編集することはできません。
+
+.. type_field:: Library.executable
+
+    Python モジュールが正しくロードされ、ジョブフローから呼び出し可能な
+    場合は true となります。ロードに失敗した場合は、false となります。
+    このフィールドはブラウザ上から編集することはできません。
+
+メソッド
+''''''''
+
+設定型に特有のメソッドは特に定義されていません。
+
+呼び出し例
+''''''''''
+
+ライブラリオブジェクトでは、定義した Python の関数をジョブフローから呼
+び出すことができます。たとえば、以下のような Python のプログラムをソー
+ステキストとして test_lib オブジェクトを定義します。
+
+Pythonプログラム ::
+
+    def split(s):
+        return s.split():
+
+    def hello():
+        print('Hello, world!')
+
+このライブラリで定義された関数を呼び出すジョブフローは以下のようになります。::
+
+    [str = 'foo bar baz']
+    -> [result = ./test_lib.split(s)]
+    -> [./test_lib.hello]
+
+上記のジョブフローを実行すると、result 変数にはsplitの結果のリスト
+['foo', 'bar', 'baz']が格納されます。また、ジョブフロープロセスのコンソー
+ルには、"Hello, world!" が出力されます。
+
+.. warning::
+
+    ライブラリオブジェクトで定義する Python の関数名に、display_name や
+    update や delete といった、 Kompira オブジェクトにあらかじめ組み込
+    まれているプロパティ名 (:ref:`lib-property`) やメソッド名
+    (:ref:`lib-method`) を使った場合、名前が衝突するため、その関数は呼
+    び出すことができません。
+
+
+.. type_object:: MailTemplate
+
+メールテンプレート (MailTemplate)
+---------------------------------
+
+`メールテンプレート型 </system/types/MailTemplate>`_ は、メールテンプレー
+トオブジェクトの型を規定します。
+
+フィールド
+''''''''''
+
+メールテンプレート型では、以下のフィールドを定義しています。
+
+.. type_field:: MailTemplate.subject
+
+    メールの件名となるテンプレート文字列を格納します。
+
+.. type_field:: MailTemplate.body
+
+    メールの本文となるテンプレート文字列を格納します。
+
+メソッド
+''''''''
+
+メールテンプレート型に特有のメソッドは特に定義されていません。
+
+.. type_object:: Text
+
+テキスト (Text)
+---------------
+
+`テキスト型 </system/types/Text>`_ は、プレインテキストや HTML テキスト
+を保持するテキストオブジェクトの型を規定します。
+
+テキストオブジェクトは、\http://<Kompiraサーバ>/<テキストオブジェクト
+>.render にブラウザからアクセスすることで、テンプレートエンジンによって
+レンダリングされたレンダービューを表示させることができます。
+
+.. note::
+
+    テンプレートエンジンには、Jinja2 を使用しています。
+    テンプレートの記法については `Jinja2 のドキュメント <https://jinja.palletsprojects.com/en/latest/templates/>`_ を参照してください。
+
+    include や extends タグで、別のテキストオブジェクトのパス指定することで、テンプレートの取り込みや継承も可能です。
+
+フィールド
+''''''''''
+
+テキスト型では、以下のフィールドを定義しています。
+
+.. type_field:: Text.text
+
+    テキスト文字列を格納します。
+
+.. type_field:: Text.ext
+
+    レンダービューを表示するブラウザアクセス用の拡張子を指定します。た
+    とえば、拡張子として "html" を指定すると、\http://<Kompiraサーバ>/<
+    テキストオブジェクトパス>.html にアクセスするとレンダービューが表示
+    され、\http://<Kompiraサーバ>/<テキストオブジェクトパス> にアクセス
+    すると通常のビューが表示されます。
+
+.. note::
+    ``update``, ``delete``, ``rename``, ``property`` は拡張子として設定することはできません。
+
+.. type_field:: Text.contentType
+
+    テキストのコンテントタイプを指定します。コンテントタイプの指定を省
+    略した場合は、拡張子からコンテントタイプが推測されます。また、拡張
+    子の指定を省略し、コンテントタイプのみ指定した場合は、拡張子なしで
+    ブラウザアクセスした場合でも、通常ビューではなくレンダービューが表
+    示されます。
+
+.. type_field:: Text.context
+
+    テンプレートに渡すコンテキストとして環境変数オブジェクトを指定しま
+    す。テンプレート中から環境変数のキー値を変数として参照することがで
+    きます。
+
+メソッド
+''''''''
+テキスト型には以下のメソッドが定義されています。
+
+.. method:: Text.render() : String
+
+    テンプレートエンジンによってレンダリングされたテキストを取得します。
+
+プロパティ
+''''''''''
+
+テキスト型オブジェクトは、以下のプロパティを提供しています。
+
+.. property:: Text.content_type : String
+
+    推測されたコンテントタイプを示します。
+
+.. versionadded:: 1.4.7
+    新規にテキスト型が追加されました。
+
+
+.. type_object:: SystemInfo
+
+システム情報型 (SystemInfo)
+----------------------------
+
+`システム情報型 </system/types/SystemInfo>`_ は Kompira のシステム情報を提供するオブジェクトを定義します。
+
+フィールド
+''''''''''
+
+システム情報型には固有のフィールドは定義されていません。
+
+メソッド
+''''''''
+
+システム情報型には固有のメソッドは定義されていません。
+
+プロパティ
+''''''''''
+
+システム情報型オブジェクトは、以下のプロパティを提供しています。
+
+.. property:: SystemInfo.engine_started : Datetime
+
+    Kompira エンジンの起動日時を示します。
+
+.. property:: SystemInfo.server_datetime : Datetime
+
+    Kompira サーバの現在日時を示します。
+
+.. property:: SystemInfo.version : String
+
+    Kompira のバージョン番号を示します。
+
+
+.. versionadded:: 1.4.8.post2
+    新規にシステム情報型が追加されました。
+
+
+.. type_object:: NodeType
+
+ノード種別型 (NodeType)
+------------------------
+
+`ノード種別型 </system/types/NodeType>`_ は Kompira がリモートジョブで利用できる接続相手の情報を定義するものです。作成したノード種別型のオブジェクトは、ノード情報型オブジェクトの編集画面において、ノード種別フィールドの選択肢の一つとして表示されます。Kompira がサポートするノード種別オブジェクトは /system/nodetypes に定義されています。
+
+フィールド
+''''''''''
+
+.. type_field:: NodeType.conntypes
+
+    このノード種別が対応する接続種別を定義します。ノード情報オブジェクトの接続種別フィールドはこのフィールドをもとに選択肢を表示します。
+
+メソッド
+''''''''
+
+ノード種別型には固有のメソッドは定義されていません。
+
+.. versionadded:: 1.6.4
+    新規にノード種別型が追加されました。
+
+
+.. type_object:: CustomStyle
+
+カスタムスタイル型 (CustomStyle)
+---------------------------------
+
+`カスタムスタイル型 </system/types/CustomStyle>`_ はブラウザで表示される画面の配色などを設定するカスタムスタイルオブジェクトの型を規定します。
+
+フィールド
+''''''''''
+
+.. type_field:: CustomStyle.mainBackColor
+    :noqualifier:
+
+    メニューバー以外の領域の背景色を設定します。
+
+.. type_field:: CustomStyle.menubarBackColor
+    :noqualifier:
+
+    メニューバーの領域の背景色を設定します。
+
+.. type_field:: CustomStyle.menubarTextColor
+    :noqualifier:
+
+    メニューバーの領域の文字色を設定します。マウスオーバーしていないときは少し暗くなります。
+
+.. type_field:: CustomStyle.invertMode
+
+    チェックするとメニューバーを含む画面全体を反転されます。
+
+.. note::
+
+    背景色や文字色などの色情報については Web Colors を文字列で指定することが出来ます。``#000000``, ``rgb(255,255,255)``, ``blue`` などが指定できます。
+
+メソッド
+''''''''
+
+カスタムスタイル型には固有のメソッドは定義されていません。
+
+.. versionadded:: 1.6.6
+
+    新規にカスタムスタイル型が追加されました。
+
+
+.. type_object:: OAuth2Provider
+
+OAuth2プロバイダ型 (OAuth2Provider)
+------------------------------------
+
+`OAuth2プロバイダ型 </system/types/OAuth2Provider>`_ は OAuth2 認証で使用するサービスプロバイダの設定情報を定義するものです。
+OAuth2 認証を利用する場合、サービスプロバイダへ Kompira をアプリケーションとして事前に登録しておき、登録情報にもとづいて OAuth2プロバイダ型オブジェクトを作成する必要があります。
+
+フィールド
+''''''''''
+
+.. type_field:: OAuth2Provider.client_id
+
+    サービスプロバイダに登録したアプリケーションのクライアントIDを格納します。
+
+.. type_field:: OAuth2Provider.client_secret
+
+    サービスプロバイダに登録したアプリケーションのクライアントシークレットを格納します。
+
+.. type_field:: OAuth2Provider.auth_endpoint
+
+    サービスプロバイダの認証エンドポイントを指定します。
+
+.. type_field:: OAuth2Provider.token_endpoint
+
+    サービスプロバイダのトークンエンドポイントを指定します。
+
+.. type_field:: OAuth2Provider.scope
+
+    Kompira からのアクセスを許可するメール送受信のスコープを指定します。
+    スコープ名はサービスプロバイダ毎に固有に定義されているため、サービスプロバイダ側のドキュメントを参照して、メール送受信に必要なスコープ名を指定してください。
+
+.. type_field:: OAuth2Provider.redirect_url
+
+    承認フロー完了後のリダイレクト先の URL を指定します。空の場合は自Kompiraサーバにリダイレクトします。
+
+
+メソッド
+''''''''
+
+OAuth2プロバイダ型には固有のメソッドは定義されていません。
+
+.. versionadded:: 1.6.6
+    新規に OAuth2プロバイダ型が追加されました。
+
+
+.. type_object:: SmtpServer
+
+SMTPサーバ型 (SmtpServer)
+--------------------------
+
+`SMTPサーバ型 </system/types/SmtpServer>`_ は Kompira からメール送信時に利用できる SMTP サーバの設定情報を定義するものです。
+作成した SMTP サーバ型オブジェクトは、mailto 組み込みジョブの smtp_server パラメータに渡すことで、ジョブフローからのメール送信時に利用する SMTP サーバを指定できます。
+
+フィールド
+''''''''''
+
+.. type_field:: SmtpServer.hostname
+
+    SMTP サーバのホスト名を指定します。空に設定した場合は localhost として扱われます。
+
+.. type_field:: SmtpServer.port
+
+    SMTP サーバの接続ポート番号を指定します。空に設定した場合、通常は 25 番ポート、TLS接続の場合は 587 番ポート、SSL (SMTPS) 接続の場合は 465 番ポートで接続します。
+
+.. type_field:: SmtpServer.username
+
+    SMTP サーバの接続に認証が必要な場合、ユーザー名を設定します。
+
+.. type_field:: SmtpServer.password
+
+    SMTP サーバの接続に認証が必要な場合、パスワードを設定します。
+
+.. type_field:: SmtpServer.timeout
+
+    SMTP サーバに対する接続タイムアウトを秒単位で指定します。
+    空、もしくは、0を設定すると、TCP/IP接続におけるシステムのデフォルトのタイムアウトとなります。
+    デフォルトは 60 秒です。負の値を設定することはできません。
+
+.. type_field:: SmtpServer.use_tls
+
+    SMTP サーバへ TLS を用いて接続する場合はチェックします。
+
+.. type_field:: SmtpServer.use_ssl
+
+    SMTP サーバへ SSL (SMTPS) を用いて接続する場合はチェックします。
+    TLS と同時に使用することはできません。
+
+.. type_field:: SmtpServer.use_oauth2
+
+    OAuth2 を用いて認証する場合はチェックします。この場合、パスワードの設定は不要となります。
+
+.. type_field:: SmtpServer.oauth2_provider
+
+    OAuth2 のサービスプロバイダを選択します。OAuth2 認証を利用する場合には必須です。
+
+.. type_field:: SmtpServer.refresh_token
+
+    OAuth2 認証によって取得したリフレッシュトークンが格納されます。
+    隠しフィールドとなっており、ブラウザ上から編集することはできません。
+
+.. type_field:: SmtpServer.access_token
+
+    OAuth2 認証によって取得したアクセストークンが格納されます。
+    隠しフィールドとなっており、ブラウザ上から編集することはできません。
+
+.. type_field:: SmtpServer.token_expires_at
+
+    アクセストークンの有効期限が格納されます。
+    隠しフィールドとなっており、ブラウザ上から編集することはできません。
+
+メソッド
+''''''''
+
+.. method:: SmtpServer.conn_check()
+
+   設定されているSMTPサーバに対して接続テストを行います。
+   接続に成功した場合は、``$STATUS`` に 0 がセットされます。
+   失敗した場合には、``$STATUS`` に 1 がセットされ、失敗の理由を示す文字列が ``$ERROR`` にセットされます。
+   ユーザー名とパスワードのいずれかの設定が空の場合、SMTPサーバに対する接続確認は行いますが、ユーザー認証の確認までは行わないません。
+   このため、ログインが必要なSMTPサーバではメール送信時にエラーとなることがあります。
+
+.. versionadded:: 1.6.6
+    新規に SMTP サーバ型が追加されました。
+
+
+.. type_object:: LdapServer
+
+LDAPサーバ型 (LdapServer)
+--------------------------
+
+`LDAPサーバ型 </system/types/LdapServer>`_ は Kompira ログインアカウントを LDAP 連携するために利用する LDAP サーバの設定情報を定義するものです。
+
+フィールド
+''''''''''
+
+.. type_field:: LdapServer.server_url
+
+    LDAP サーバの接続URLを指定します。URLスキームとして ldap もしくは ldaps のいずれかを指定することができます。
+
+.. type_field:: LdapServer.timeout
+
+    LDAP サーバに対する接続タイムアウトを秒単位で指定します。空、もしくは、負の値に設定した場合、システムのTCP接続タイムアウトが用いられます。
+
+.. type_field:: LdapServer.use_starttls
+
+    LDAP サーバへの接続に STARTTLS を用いる場合にセットします。ldaps で接続する場合には、この設定は無視されます。
+
+.. type_field:: LdapServer.fallback_login
+
+    LDAPログイン失敗時に、直近にログインした際のパスワードによるログインを許可する場合にセットします。
+    この場合、LDAP側でユーザが削除された場合でも、過去に一度でもLDAPユーザでログインしていれば、
+    引き続きログインできることに注意してください。
+
+.. type_field:: LdapServer.session_expiration
+
+    LDAPユーザでログインした場合のセッションの有効期間を時間単位で指定します。
+    0 をセットするとブラウザを閉じたときにセッションが破棄されます。
+    空にした場合は、有効期間はシステムのデフォルト(2週間=336時間)となります。
+    デフォルトは 0 です。
+
+.. type_field:: LdapServer.bind_dn
+
+    LDAP サーバへのバインド DN を指定します。空にした場合、匿名バインドを用います。
+
+.. type_field:: LdapServer.bind_password
+
+    LDAP サーバへのバインド時のパスワードを指定します。
+
+.. type_field:: LdapServer.user_search_dn
+
+    ユーザ検索の基点となる DN を指定します。
+
+.. type_field:: LdapServer.user_search_scope
+
+    ユーザ検索の基点からのスコープを BASE, ONELEVEL, SUBTREE の中から指定します。BASEはユーザ検索DNが示すオブジェクト自身が対象、
+    ONELEVELはオブジェクトの直下の子オブジェクトが対象、SUBTREEはオブジェクト自身とその子孫オブジェクト全てが対象となります。
+
+.. type_field:: LdapServer.user_search_attribute
+
+    ユーザ検索の対象となるオブジェクトの属性中からユーザ名が格納されているものを指定します。
+    ログイン時に入力したユーザ名でオブジェクトを検索する際に、ここで指定した属性が用いられます。
+    デフォルトは "name" です。
+
+.. type_field:: LdapServer.target_users
+
+    LDAP連携するユーザ名のリストを指定します。空の場合、検索対象に含まれる全てのユーザが対象となります。
+
+.. type_field:: LdapServer.required_group_dn
+
+    LDAP連携するユーザが所属するグループのDNを指定します。複数指定した場合、ユーザはいずれかのグループに所属している必要があります。
+    空の場合、検索対象に含まれる全てのユーザが対象となります。
+
+.. type_field:: LdapServer.group_search_dn
+
+    グループ検索の基点となる DN を指定します。
+    空の場合、LDAPのグループはKompiraのグループに反映されません。
+
+.. type_field:: LdapServer.group_search_scope
+
+    グループ検索の基点からの検索対象のスコープを BASE, ONELEVEL, SUBTREE の中から指定します。BASEはユーザ検索DNが示すオブジェクト自身が対象、
+    ONELEVELはオブジェクトの直下の子オブジェクトが対象、SUBTREEはオブジェクト自身とその子孫オブジェクト全てが対象となります。
+
+.. type_field:: LdapServer.group_search_class
+
+    グループ検索の対象となるオブジェクト中からフィルタするクラス (objectClass) を指定します。デフォルトは "group" です。
+    空にした場合は、すべてのオブジェクトが対象となります。
+
+.. type_field:: LdapServer.group_type
+
+    グループ検索の対象となるグループの種類を指定します。種類によってグループに所属するメンバーの判定に使用する属性名が異なります。
+    `Nested` で始まる種類を選択すると、グループが他のグループを含むような場合も対象となります。
+
+.. type_field:: LdapServer.mirror_groups
+
+    LDAPユーザが所属するLDAPのグループをKompiraのグループに反映させるグループ名を指定します。
+    空の場合は、すべてのグループが反映されます。
+    Kompiraにグループオブジェクトが登録されていない場合は自動的に作成されます。
+
+.. type_field:: LdapServer.user_data_first_name
+
+    LDAPユーザの名 (first name) をKompiraのユーザオブジェクトに反映させる場合に、名が格納されているLDAPユーザの属性を指定します。
+    デフォルトは "givenName" です。
+
+.. type_field:: LdapServer.user_data_last_name
+
+    LDAPユーザの姓 (last name) をKompiraのユーザオブジェクトに反映させる場合に、姓が格納されているLDAPユーザの属性を指定します。
+    デフォルトは "sn" です。
+
+.. type_field:: LdapServer.user_data_email
+
+    LDAPユーザのEメールアドレスをKompiraのユーザオブジェクトに反映させる場合に、Eメールアドレスが格納されているLDAPユーザの属性を指定します。
+    デフォルトは "mail" です。
+
+メソッド
+''''''''
+
+LDAPサーバ型には固有のメソッドは定義されていません。
+
+
+.. versionadded:: 1.6.8
+    新規に LDAP サーバ型が追加されました。
+
+
+特殊オブジェクト
+================
+
+特殊オブジェクトは、通常のオブジェクトとは異なり、Kompiraの型オブジェク
+トによって規定されていない組み込みのオブジェクトです。その種類毎に固有
+のプロパティとメソッドを備えています。フィールドは持ちません。
+
+.. virtual_model:: Process
+
+プロセス (Process)
+------------------
+
+ジョブフローの実行時のプロセス情報を表すオブジェクトです。
+
+プロパティ
+''''''''''
+
+プロセスオブジェクトで定義されているフィールドは以下のとおりです。
+
+.. property:: Process.checkpoint_mode : Boolean
+
+    プロセスがチェックポイントモードで実行している場合は true、そうでな
+    い場合は false が設定されます。書き込み可能なプロパティです。
+
+.. property:: Process.children : LazyArray<Process>
+
+    子プロセスの一覧となる検索結果を返します。
+
+.. property:: Process.console : String
+
+    コンソールに表示されている文字列です。
+
+.. property:: Process.current_job : Object
+
+    プロセスの現在実行しているジョブフローオブジェクト、もしくはスクリ
+    プトジョブオブジェクトが格納されます。ジョブフローの中から別のジョ
+    ブフローを呼び出すと、current_job の値が変更されます。
+
+.. property:: Process.elapsed_time : Timedelta
+
+    プロセスの実行経過時間を表します。
+
+.. property:: Process.error : any
+
+    プロセス終了時の $ERROR の値が格納されます。
+
+.. property:: Process.exit_status : Integer
+
+    プロセス終了時のステータスコードが格納されます。
+
+.. property:: Process.finished_time : Datetime
+
+    プロセスの実行終了した日時です。
+
+.. property:: Process.invoker : Object
+
+    プロセスがオブジェクトから起動された場合、該当するオブジェクトが格納されます。
+
+    ================================================= ===================================
+    プロセスの起動方法                                invoker に記録されるオブジェクト
+    ================================================= ===================================
+    スタートアップジョブフロー                        スタートアップディレクトリ
+    フォームからジョブフロー実行                      フォームオブジェクト
+    テーブルからジョブフロー実行                      テーブルオブジェクト
+    チャネルのアクションによるジョブフロー実行        チャネルオブジェクト
+    メールチャネルのアクションによるジョブフロー実行  メールチャネルオブジェクト
+    ================================================= ===================================
+
+    上記以外の、ジョブフローを直接実行した場合やスケジューラから起動された場合などは null が格納されます。
+
+.. property:: Process.job : Object
+
+    プロセスを開始したジョブフロー、もしくは、スクリプトジョブオブジェ
+    クトを表します。
+
+.. property:: Process.monitoring_mode : String
+
+    プロセスの監視モードを表す文字列です。書き込み可能なプロパティです。
+
+    =========== ===================================
+    文字列      監視モード
+    =========== ===================================
+    NOTHING     メール通知しない
+    MAIL        プロセス終了時にメール通知する
+    ABORT_MAIL  プロセス異常終了時にメール通知する
+    =========== ===================================
+
+.. property:: Process.pid : Integer
+
+    プロセス IDです。
+
+.. property:: Process.parent : Object
+
+    親プロセスのジョブフローオブジェクトです。
+
+.. property:: Process.result : any
+
+    プロセス終了時の $RESULT の値が格納されます。
+
+.. property:: Process.schedule : Schedule
+
+    プロセスがスケジューラから起動された場合、該当するスケジュールオブジェクトが格納されます。
+
+.. property:: Process.started_time : Datetime
+
+    プロセスを実行開始した日時です。
+
+.. property:: Process.status : String
+
+    プロセスの実行状態を表す文字列です。
+
+    ======== =====================
+    文字列   実行状態
+    ======== =====================
+    NEW      新規（開始待ち）
+    READY    実行可能
+    RUNNING  実行中
+    WAITING  入力/コマンド完了待ち
+    ABORTED  異常終了
+    DONE     実行完了
+    ======== =====================
+
+.. property:: Process.step_mode : Boolean
+
+    プロセスがステップ実行モードで実行している場合は true、そうでない場
+    合は false が設定されます。書き込み可能なプロパティです。
+
+.. property:: Process.suspended : Boolean
+
+    プロセスが一時停止状態の場合は true、そうでない場合はfalseとなります。
+
+.. property:: Process.user : User
+
+    プロセスの実行ユーザーです。特権ユーザーに限り、実行ユーザーを変更することができます。
+
+.. versionadded:: 1.5.0.post1
+    monitoring_mode が追加されました。
+
+.. versionadded:: 1.6.6
+    プロパティ invoker が追加されました。
+
+.. versionchanged:: 1.6.8
+
+    プロパティ children を LazyArray 型に変更しました。
+
+
+メソッド
+''''''''
+
+.. method:: Process.delete()
+
+    プロセスオブジェクトを削除します。
+
+.. virtual_object:: ProcessRoot
+
+プロセス一覧 (/process)
+-----------------------
+
+プロセス一覧 (/process) は、プロセスオブジェクトのリストを保持するオブ
+ジェクトであり、仮想オブジェクト (Virtual) として実装されています。
+
+以下のように for や pfor ブロックにおいて、各プロセスオブジェクトに対し
+て繰り返し処理を行うことが可能です。 ::
+
+    { for p in /process |
+        print(p)
+    }
+
+メソッド
+''''''''
+
+プロセス一覧 には以下のメソッドが定義されています。
+
+.. method:: ProcessRoot.find([...params]) : LazyArray<Process>
+
+    プロセス一覧の中から params で指定したフィルタリング条件に該当するプロセスの検索結果を返します。
+    params には :ref:`Directory.find() <directory-find>` メソッドと同様にフィルタリングを指定することができます。
+
+    指定可能な属性とルックアップは以下のとおりです。
+
+    .. tabularcolumns:: |\Y{0.2}|\Y{0.8}|
+    .. table::
+        :class: longtable
+
+        +-------------------+----------------------------------------------------------------------------------------+
+        | 属性名            | 指定できるルックアップ                                                                 |
+        +===================+========================================================================================+
+        | ``job``           | ``exact``                                                                              |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``user``          | ``exact``                                                                              |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``started_time``  | ``exact``, ``gt``, ``gte``, ``lt``, ``lte``                                            |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``finished_time`` | 同上                                                                                   |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``status``        | ``exact``                                                                              |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``schedule``      | ``exact``                                                                              |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``invoker``       | ``exact``, ``isnull``                                                                  |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``parent``        | ``exact``                                                                              |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``current_job``   | ``exact``                                                                              |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``suspended``     | ``exact``                                                                              |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``lineno``        | ``exact``, ``gt``, ``gte``, ``lt``, ``lte``                                            |
+        +-------------------+----------------------------------------------------------------------------------------+
+        | ``console``       | ``exact``, ``iexact``, ``contains``, ``icontains``, ``startswith``, ``istartswith``,   |
+        |                   | ``endswith``, ``iendswith``, ``regex``, ``iregex``                                     |
+        +-------------------+----------------------------------------------------------------------------------------+
+
+.. versionadded:: 1.6.3
+    find メソッドが追加されました。
+
+.. versionadded:: 1.6.6
+    指定可能な属性に invoker が追加されました。
+
+.. versionchanged:: 1.6.8
+
+    find() メソッドの結果を LazyArray 型に変更しました。
+
+
+.. virtual_model:: Schedule
+
+スケジュール (Schedule)
+-----------------------
+
+スケジュールオブジェクトは、Kompira のスケジューラに登録されたスケジュー
+ルを表します。
+
+プロパティ
+''''''''''
+
+.. property:: Schedule.day : String
+
+    スケジュールを実行する日(1 ～ 31)を表します。
+
+.. property:: Schedule.day_of_week : String
+
+    スケジュールを実行する曜日名、もしくは、曜日番号を表します。0(月曜日)-6(日曜日)、または mon,tue,wed,thu,fri,sat,sunを指定します。
+
+.. property:: Schedule.description : String
+
+    スケジュールの内容を説明する文字列が格納されます。
+
+.. property:: Schedule.disabled : Boolean
+
+    スケジュールの無効化を示すフィールドです。スケジュールが無効な場合はtrue、有効な場合はfalseとなります。
+
+.. property:: Schedule.hour : String
+
+    スケジュールを実行する時(0 ～ 23)を表します。
+
+.. property:: Schedule.job : Object
+
+    スケジュールによって実行されるジョブフロー、もしくは、スクリプトジョブが格納されます。
+
+.. property:: Schedule.minute : String
+
+    スケジュールを実行する分(0 ～ 59)を表します。
+
+.. property:: Schedule.month : String
+
+    スケジュールを実行する月(1 ～ 12)を表します。
+
+.. property:: Schedule.name : String
+
+    スケジュールの名称を表す文字列です。
+
+.. property:: Schedule.next_run_time : Datetime
+
+    スケジュールが有効な場合、次に実行される日時が格納されます。(読み取り専用)
+
+.. property:: Schedule.parameters : Array<String>
+
+    ジョブフローやスクリプトに渡すパラメータの文字列が可能されます。
+
+.. property:: Schedule.user : User
+
+    スケジュールのユーザーです。
+
+.. property:: Schedule.week : String
+
+    スケジュールを実行するISO週番号(1 ～ 53)を表します。
+
+.. property:: Schedule.year : String
+
+    スケジュールを実行する年(4桁の数字)を表します。
+
+.. note::
+
+    上記、プロパティのうち、実行日時を指定するフィールドについては、:ref:`scheduler_format`
+    が使用できます。
+
+メソッド
+''''''''
+
+.. method:: Schedule.delete()
+
+    スケジュールオブジェクトを削除します。
+
+
+.. virtual_object:: SchedulerRoot
+
+スケジュール一覧 (/scheduler)
+-----------------------------
+
+スケジュール一覧 (/scheduler) は、スケジュールオブジェクトのリストを保
+持するオブジェクトであり、仮想オブジェクト (Virtual) として実装されてい
+ます。スケジュール一覧は、for や pfor ブロックで用いることで、各スケ
+ジュールオブジェクトを繰り返し処理することが可能です。
+
+メソッド
+''''''''
+
+スケジュール一覧 には以下のメソッドが定義されています。
+
+.. method:: SchedulerRoot.add(name, job, [parameters, datetime]) : Schedule
+
+    スケジュール一覧に、name で指定された名前を持ち、job で指定されたジョ
+    ブフローまたはスクリプトジョブを実行するスケジュールを追加します。
+    parameters 引数にジョブフローやスクリプトジョブの実行時に与えるパラ
+    メータリストをオプションとして指定することができます。オプショナル
+    な datetime 引数にジョブの実行日時を表す日時型の値を指定することが
+    できます。
+
+.. method:: SchedulerRoot.find([...params]) : LazyArray<Schedule>
+
+    スケジュール一覧の中から params で指定したフィルタリング条件に該当するスケジュールの検索結果を返します。
+    params には :ref:`Directory.find() <directory-find>` メソッドと同様にフィルタリングを指定することができます。
+
+    指定可能な属性とルックアップは以下のとおりです。
+
+    +-----------------+----------------------------------------------------------------------------------------+
+    | 属性名          | 指定できるルックアップ                                                                 |
+    +=================+========================================================================================+
+    | ``name``        | ``exact``, ``iexact``, ``contains``, ``icontains``, ``startswith``, ``istartswith``,   |
+    |                 | ``endswith``, ``iendswith``, ``regex``, ``iregex``                                     |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``description`` | 同上                                                                                   |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``user``        | ``exact``                                                                              |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``job``         | ``exact``                                                                              |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``year``        | ``exact``, ``contains``                                                                |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``month``       | ``exact``, ``contains``                                                                |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``day``         | ``exact``, ``contains``                                                                |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``week``        | ``exact``, ``contains``                                                                |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``day_of_week`` | ``exact``, ``contains``                                                                |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``hour``        | ``exact``, ``contains``                                                                |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``minute``      | ``exact``, ``contains``                                                                |
+    +-----------------+----------------------------------------------------------------------------------------+
+    | ``disabled``    | ``exact``, ``contains``                                                                |
+    +-----------------+----------------------------------------------------------------------------------------+
+
+.. versionadded:: 1.6.3
+    find メソッドが追加されました。
+
+.. versionchanged:: 1.6.8
+
+    find() メソッドの結果を LazyArray 型に変更しました。
+
+
+.. virtual_model:: User
+
+ユーザー (User)
+---------------
+
+Kompiraのユーザーを表すオブジェクトです。
+
+プロパティ
+''''''''''
+
+ユーザーオブジェクトで定義されているプロパティは以下のとおりです。
+
+.. property:: User.username : String
+
+    ユーザー名です。
+
+.. property:: User.first_name : String
+
+    ユーザーの姓名の名の部分を表します。
+
+.. property:: User.last_name : String
+
+    ユーザーの姓名の姓の部分を表します。
+
+.. property:: User.full_name : String
+
+    ユーザーの姓名を表します。
+
+.. property:: User.mailbox : String
+
+    以下の形式のアドレスを表します。
+
+    .. ifconfig:: language == 'ja'
+
+        .. code::
+
+            ユーザー名 <メールアドレス>
+
+    .. ifconfig:: language != 'ja'
+
+        .. code::
+
+            username <email address>
+
+.. property:: User.email : String
+
+    ユーザーのメールアドレスです。書き込み可能なプロパティです。
+
+.. property:: User.environment : Object (Environment)
+
+    環境変数オブジェクトです。書き込み可能なプロパティです。
+
+.. property:: User.home_directory : Object (Directory)
+
+    ユーザーのホームです。書き込み可能なプロパティです。
+
+.. property:: User.groups : Array<Group>
+
+    ユーザーが所属するグループ一覧です。
+
+.. property:: User.is_active: Boolean
+
+    有効なユーザかどうかを示します。
+
+.. property:: User.is_ldap_user: Boolean
+
+    LDAPユーザかどうかを示します。
+
+.. property:: User.enable_restapi : Boolean
+
+    REST API を有効化するかどうかを示します。書き込み可能なプロパティです。
+
+.. property:: User.auth_token : String
+
+    ユーザーの認証トークンです。読み込み専用のプロパティです。REST API が無効の時は null となります。
+
+.. property:: User.last_login : Datetime
+
+    ユーザーの最終ログイン日時です。
+
+.. versionadded:: 1.6.3
+    last_login プロパティが追加されました。
+
+.. versionadded:: 1.6.8
+
+    is_active と is_ldap_user プロパティが追加されました。
+
+メソッド
+''''''''
+
+公開されているメソッドはありません。
+
+
+.. virtual_object:: UserRoot
+
+ユーザー一覧 (/config/user)
+-----------------------------
+
+ユーザー一覧 (/config/user) は、ユーザーの一覧を保持するオブジェクトで
+あり、仮想オブジェクト (Virtual) として実装されています。
+
+メソッド
+''''''''
+
+ユーザー一覧 には以下のメソッドが定義されています。
+
+.. method:: UserRoot.find([...params]) : LazyArray<User>
+
+    ユーザ一覧の中から params で指定したフィルタリング条件に該当するユーザーの検索結果を返します。
+    params には :ref:`Directory.find() <directory-find>` メソッドと同様にフィルタリングを指定することができます。
+
+    指定可能な属性とルックアップは以下のとおりです。
+
+    +--------------------+----------------------------------------------------------------------------------------+
+    | 属性名             | 指定できるルックアップ                                                                 |
+    +====================+========================================================================================+
+    | ``username``       | ``exact``, ``iexact``, ``contains``, ``icontains``, ``startswith``, ``istartswith``,   |
+    |                    | ``endswith``, ``iendswith``, ``regex``, ``iregex``                                     |
+    +--------------------+----------------------------------------------------------------------------------------+
+    | ``first_name``     | 同上                                                                                   |
+    +--------------------+----------------------------------------------------------------------------------------+
+    | ``last_name``      | 同上                                                                                   |
+    +--------------------+----------------------------------------------------------------------------------------+
+    | ``email``          | 同上                                                                                   |
+    +--------------------+----------------------------------------------------------------------------------------+
+    | ``last_login``     | ``exact``, ``gt``, ``gte``, ``lt``, ``lte``                                            |
+    +--------------------+----------------------------------------------------------------------------------------+
+    | ``is_active``      | ``exact``                                                                              |
+    +--------------------+----------------------------------------------------------------------------------------+
+    | ``is_ldap_user``   | ``exact``                                                                              |
+    +--------------------+----------------------------------------------------------------------------------------+
+    | ``home_directory`` | ``exact``                                                                              |
+    +--------------------+----------------------------------------------------------------------------------------+
+    | ``environment``    | ``exact``                                                                              |
+    +--------------------+----------------------------------------------------------------------------------------+
+
+.. versionadded:: 1.6.3
+    find メソッドが追加されました。
+
+.. versionchanged:: 1.6.8
+
+    find() メソッドの結果を LazyArray 型に変更しました。
+
+
+.. virtual_model:: Group
+
+グループ (Group)
+----------------
+
+Kompiraのグループを表すオブジェクトです。
+
+プロパティ
+''''''''''
+
+グループオブジェクトで定義されているプロパティは以下のとおりです。
+
+.. property:: Group.name : String
+
+    グループ名です。
+
+.. property:: Group.users : Array<User>
+
+    このグループに所属するユーザー一覧です。
+
+.. property:: Group.is_ldap_group : Boolean
+
+    LDAPグループかどうかを示します。
+
+.. versionadded:: 1.6.3
+    name と users プロパティが追加されました。
+
+.. versionadded:: 1.6.8
+
+    is_ldap_group プロパティが追加されました。
+
+メソッド
+''''''''
+
+公開されているメソッドはありません。
+
+
+.. virtual_object:: GroupRoot
+
+グループ一覧 (/config/group)
+-----------------------------
+
+グループ一覧 (/config/group) は、グループの一覧を保持するオブジェクトで
+あり、仮想オブジェクト (Virtual) として実装されています。
+
+メソッド
+''''''''
+
+グループ一覧 には以下のメソッドが定義されています。
+
+.. method:: GroupRoot.find([...params]) : LazyArray<Group>
+
+    グループ一覧の中から params で指定したフィルタリング条件に該当するグループの検索結果を返します。
+    params には :ref:`Directory.find() <directory-find>` メソッドと同様にフィルタリングを指定することができます。
+
+    指定可能な属性とルックアップは以下のとおりです。
+
+    +-------------------+----------------------------------------------------------------------------------------+
+    | 属性名            | 指定できるルックアップ                                                                 |
+    +===================+========================================================================================+
+    | ``name``          | ``exact``, ``iexact``, ``contains``, ``icontains``, ``startswith``, ``istartswith``,   |
+    |                   | ``endswith``, ``iendswith``, ``regex``, ``iregex``                                     |
+    +-------------------+----------------------------------------------------------------------------------------+
+    | ``is_ldap_group`` | ``exact``                                                                              |
+    +-------------------+----------------------------------------------------------------------------------------+
+
+.. versionadded:: 1.6.3
+    find メソッドが追加されました。
+
+.. versionchanged:: 1.6.8
+
+    find() メソッドの結果を LazyArray 型に変更しました。

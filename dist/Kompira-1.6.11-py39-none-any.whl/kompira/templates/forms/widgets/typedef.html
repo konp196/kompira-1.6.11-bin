@@ -1,0 +1,13 @@
+{% spaceless %}
+<td>{% with widget=widget.subwidgets.0 %}{% include widget.template_name %}{% endwith %}</td>
+<td>{% with widget=widget.subwidgets.1 %}{% include widget.template_name %}{% endwith %}</td>
+<td>{% with widget=widget.subwidgets.2 %}{% include widget.template_name %}{% endwith %}</td>
+<td>
+  <div class="input-group">
+    {% with widget=widget.subwidgets.3 %}{% include widget.template_name %}{% endwith %}
+    <div class="input-group-append">
+      <button class="btn btn-sm btn-outline-secondary popup-editor" type="button"><i class="fas fa-edit"></i></button>
+    </div>
+  </div>
+</td>
+{% endspaceless %}

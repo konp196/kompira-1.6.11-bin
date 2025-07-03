@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>6. Coordination with other systems &#8212; Kompira 1.6.11 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="7. Monitoring Kompira" href="monitoring.html" />
+    <link rel="prev" title="5. Kompira Standard Library" href="library.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="monitoring.html" title="7. Monitoring Kompira"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="library.html" title="5. Kompira Standard Library"
+             accesskey="P">previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/coordination.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">6. </span>Coordination with other systems</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1><span class="section-number">6. </span>Coordination with other systems<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira development team</p>
+</dd>
+</dl>
+<section id="id2">
+<h2><span class="section-number">6.1. </span>Introduction<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>This document will explain how to transfer data to other systems with Kompira, how to receive data from other systems and the required settings etc.</p>
+</section>
+<section id="kompira">
+<span id="sendevt"></span><h2><span class="section-number">6.2. </span>Sending events to Kompira<a class="headerlink" href="#kompira" title="Permalink to this heading">¶</a></h2>
+<p>Event information can be sent to Kompira by using the kompira_sendevt command included in <a class="reference internal" href="admin.html#package-jobmngr"><span class="std std-ref">Job manager package</span></a> and <a class="reference internal" href="admin.html#package-sendevt"><span class="std std-ref">Send-Event package</span></a>. This section explains the event transmission to Kompira using kompira_sendevt.</p>
+<p>The kompira_sendevt script packs the <code class="docutils literal notranslate"><span class="pre">&lt;keyword&gt;=&lt;value&gt;</span></code> pair specified by the argument into a message and sends it to the Kompira server.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/kompira/bin/kompira_sendevt [options] [&lt;key1&gt;=&lt;value1&gt; ...]
+</pre></div>
+</div>
+<p>Be careful not to put a space on both sides of ‘=’ connecting key1 and value1. The job flow can refer to the received message as dictionary type data.</p>
+<p>If no argument is specified, the standard input is sent as one key to the Kompira server.</p>
+<p>To send a message with kompira_sendevt to a Kompira server that has SSL certificate verification enabled, such as by adding the –amqps-verify option during installation, you need an SSL certificate issued by that Kompira server. In this case, please note the following.</p>
+<ul class="simple">
+<li><p>You must have obtained an SSL certificate from the Kompira server in advance. See <a class="reference internal" href="admin.html#ssl-certs"><span class="std std-ref">SSL Certificate Management</span></a>.</p></li>
+<li><p>The user executing the kompira_sendevt command must be able to read the SSL certificate. Either run the kompira_sendevt command as a user with access to the certificate file, or adjust the permissions on the certificate file.</p></li>
+</ul>
+<section id="windows">
+<h3><span class="section-number">6.2.1. </span>Sending events from Windows<a class="headerlink" href="#windows" title="Permalink to this heading">¶</a></h3>
+<p>By installing <a class="reference internal" href="admin.html#package-sendevt-install-windows"><span class="std std-ref">Installation on Windows</span></a>, you can send events from Windows using the kompira_sendevt command, similar to as in Linux.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Procedure: When installing <a class="reference internal" href="admin.html#package-sendevt-install-windows"><span class="std std-ref">Installation on Windows</span></a>, the kompira_sendevt command will be installed in <code class="docutils literal notranslate"><span class="pre">C:\Kompira\Scripts\kompira_sendevt.exe</span></code>.</p>
+<p>Also, the default log directory in Windows environment is <code class="docutils literal notranslate"><span class="pre">C:\Kompira\\Log</span></code>, so please create it beforehand. If the log directory does not exist, a warning will be displayed when executing the kompira_sendevt command, and the log will be output on standard output.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.8: </span>The default log directory under Windows is now <code class="docutils literal notranslate"><span class="pre">C:\Kompira\\Log</span></code>.</p>
+</div>
+</section>
+<section id="kompira-sendevt">
+<span id="sendevt-option"></span><h3><span class="section-number">6.2.2. </span>kompira_sendevt options<a class="headerlink" href="#kompira-sendevt" title="Permalink to this heading">¶</a></h3>
+<p>The kompira_sendevt command has the following options. Options specified on the command line take precedence over those specified in the configuration file.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-c,</span> <span class="pre">--config=CONF</span></code></p></td>
+<td><p>Specify the configuration file(CONF is the configuration file path). By default, <code class="docutils literal notranslate"><span class="pre">/opt/kompira/kompira.conf</span></code> (<code class="docutils literal notranslate"><span class="pre">C:\Kompira\kompira.conf</span></code> in Windows environment) is loaded.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-s,</span> <span class="pre">--server=SERVER</span></code></p></td>
+<td><p>Specify the IP address or server name of the Kompira server as the destination.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-p,</span> <span class="pre">--port=PORT</span></code></p></td>
+<td><p>Specify the port number of the message queue of the destination Kompira server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--user=USER</span></code></p></td>
+<td><p>Destination Kompira specifies the user name of the message queue.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--password=PASSWORD</span></code></p></td>
+<td><p>Destination Kompira specifies the user name of the message queue.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--test-connection</span></code></p></td>
+<td><p>Tests the connection to the AMQP server. No data is sent.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ssl</span></code></p></td>
+<td><p>SSL is used to connect the message queue.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--ssl-verify</span></code></p></td>
+<td><p>Validate the server certificate with SSL.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ssl-cacertfile=SSL_CACERTFILE</span></code></p></td>
+<td><p>Specify the CA certificate to be used to verify the server certificate with SSL.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--ssl-certfile=SSL_CERTFILE</span></code></p></td>
+<td><p>Specify the certificate file for SSL connection.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ssl-keyfile=SSL_KEYFILE</span></code></p></td>
+<td><p>Specify the private key file for SSL connection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--channel=CHANNEL</span></code></p></td>
+<td><p>Specify the path on the Kompira file system of the channel to send the message.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--site-id=SITE_ID</span></code></p></td>
+<td><p>Specify Kompira site ID.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--max-retry=MAX_RETRY</span></code></p></td>
+<td><p>Specify the maximum number of times to send an event.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--retry-interval=RETRY_INTERVAL</span></code></p></td>
+<td><p>Specify the interval between events (in seconds).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--dry-run</span></code></p></td>
+<td><p>Does not actually transmit data but displays the transmission contents on the standard output.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Parameters related to AMQP connections that are not specified in the command line options are subject to the default values in the configuration file. For example, the user name and password will be guest/guest if the server name is localhost, and kompira/kompira otherwise. See <a class="reference internal" href="admin.html#file-settings"><span class="std std-ref">Kompira configuration files</span></a> for details.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.8: </span>When no configuration file is specified, <code class="docutils literal notranslate"><span class="pre">C:\Kompira\kompira.conf</span></code> is now applied in Windows environments.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.8: </span>New options –test-connection, –ssl-verify, –ssl-cacertfile, –ssl-certfile, and –ssl-keyfile have been added.</p>
+</div>
+</section>
+</section>
+<section id="receive-mail">
+<span id="id3"></span><h2><span class="section-number">6.3. </span>Receive e-mails on Kompira<a class="headerlink" href="#receive-mail" title="Permalink to this heading">¶</a></h2>
+<p>How to use Kompira_sendevt to handle email contents received by the Kompira server in the job flow.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using an IMAP server, you can handle the contents of the email in the job flow by using the mail channel in alternative to the method described below. For details, see <a class="reference internal" href="library.html#type_object-MailChannel"><code class="xref kompira kompira-type_object docutils literal notranslate"><span class="pre">MailChannel</span></code></a>.</p>
+</div>
+<section id="linux">
+<h3><span class="section-number">6.3.1. </span>Setting up Linux<a class="headerlink" href="#linux" title="Permalink to this heading">¶</a></h3>
+<p>By writing the settings in the/etc/aliases file which is an alias for Sendmail, it is possible to specify execution of an arbitrary command for emails addressed to a specific account on the Kompira server.</p>
+<p>The following is a setting for sending mail to kompira_sendevt when an email is sent to the kompira account on the kompira server.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>kompira:    &quot;|LANG=ja_JP.UTF-8 /opt/kompira/bin/kompira_sendevt --channel=/system/channels/Mail&quot;
+</pre></div>
+</div>
+<p>After writing the above in /etc/aliases, the setting is reflected by executing the following command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% newaliases
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Depending on your system you may need to use smrsh. In that case, create a symbolic link of the kompira_sendevt command in the smrsh directory.</p>
+</div>
+</section>
+<section id="id4">
+<h3><span class="section-number">6.3.2. </span>Kompira settings<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>kompira_sendevt can send values to arbitrary channels. Here is how to create a dedicated channel to receive mail called /system/channels/Mail.</p>
+<p>The following is an example of a job flow in which mail contents are received and the contents are displayed.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;/system/channels/Mail&gt;
+-&gt; [mail = $RESULT]
+-&gt; mail_parse(mail)
+-&gt; [parsed_mail = $RESULT]
+-&gt; print(parsed_mail[&#39;Subject&#39;])
+-&gt; print(parsed_mail[&#39;Body&#39;])
+</pre></div>
+</div>
+<p>By using Kompira’s built-in job mail_parse, you can parse mail text in MIME format and handle values in dictionary format.</p>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">6.4. </span>Coordinating with monitoring systems<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h2>
+<p>Kompira can coordinate with external monitoring servers such as Zabbix and Nagios. By sending event information to the Kompira message queue (RabbitMQ) from the external system you want to link, you can receive the event from the job flow.</p>
+<p>In this section, we will explain how to notify Kompira of occurrence of failure by using Zabbix as an example.</p>
+<section id="id6">
+<h3><span class="section-number">6.4.1. </span>Confirming event transmission and receipt<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<p>How to prepare a script for sending event information to Kompira on the server running Zabbix. This section explains how to use kompira_sendevt.</p>
+<ol class="arabic simple">
+<li><p><strong>Install the Kompira agent on the Zabbix server</strong></p></li>
+</ol>
+<p>According to the Kompira manual (<a class="reference internal" href="admin.html#package-sendevt"><span class="std std-ref">Send-Event package</span></a>), install Kompira’s event sending package on the server on which Zabbix is running. (If you do not operate the job manager, startup settings of the job manager are unnecessary.)</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Change of Configuration File</strong></p></li>
+</ol>
+<p>Rewrite the /opt/kompira/kompira.conf file on the Zabbix server side.</p>
+<p>Specifically, set the IP address of the Kompira server or the host name in the server field of the [amqp-connection] section. Also make sure that the channel item in the [event] section is set to /system/channels/Alert.</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Message notification confirmation</strong></p></li>
+</ol>
+<p>At this point, run kompira_sendevt to check that the event can be notified correctly to the Kompira server. On the Zabbix server side, execute the following command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ /opt/kompira/bin/kompira_sendevt test=hello
+</pre></div>
+</div>
+<p>Next, log in to Kompira, refer to the page of /system/channels/Alert and check that the number of messages is increasing.</p>
+<ol class="arabic simple" start="4">
+<li><p><strong>How to receive messages</strong></p></li>
+</ol>
+<p>Next, read the message that arrived at /system/channels/Alert from the job flow. Please define the following job flow and execute it.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;/system/channels/Alert&gt; -&gt; [message = $RESULT] -&gt; print(message.test)
+</pre></div>
+</div>
+<p>If “hello” is displayed on the console, it was successful.</p>
+</section>
+<section id="zabbix">
+<h3><span class="section-number">6.4.2. </span>Zabbix Settings<a class="headerlink" href="#zabbix" title="Permalink to this heading">¶</a></h3>
+<p>Next, configure Zabbix.</p>
+<p>Log in to Zabbix, create a new action from the “Set Action” menu and create a new operation of the action in it. The type of operation is a remote command.</p>
+<p>For example, the contents of the remote command are as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Zabbix server:python /opt/kompira/bin/kompira_sendevt status=&quot;{TRIGGER.STATUS}&quot;
+  severity=&quot;{TRIGGER.NSEVERITY}&quot; hostname=&quot;{HOSTNAME}&quot;
+  trigger_name=&quot;{TRIGGER.NAME}&quot; trigger_key=&quot;{TRIGGER.KEY}&quot;
+  detail=&quot;{TRIGGER.KEY}: {ITEM.LASTVALUE}&quot;
+</pre></div>
+</div>
+<p>Here, we have set up to send dictionary data including the following key to Kompira.</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key name</p></th>
+<th class="head"><p>Content (Value)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>status</p></td>
+<td><p>Trigger status</p></td>
+</tr>
+<tr class="row-odd"><td><p>severity</p></td>
+<td><p>Severity</p></td>
+</tr>
+<tr class="row-even"><td><p>hostname</p></td>
+<td><p>Name of the host where the failure occured</p></td>
+</tr>
+<tr class="row-odd"><td><p>trigger_name</p></td>
+<td><p>Trigger name</p></td>
+</tr>
+<tr class="row-even"><td><p>trigger_key</p></td>
+<td><p>Trigger Key</p></td>
+</tr>
+<tr class="row-odd"><td><p>detail</p></td>
+<td><p>Event detailed information (combination of trigger key and event value)</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>After that, we will make settings so that the action registered here will be kicked, with the fault event as a trigger. For details, please refer to the Zabbix manual etc.</p>
+</section>
+</section>
+<section id="redmine">
+<h2><span class="section-number">6.5. </span>Coordinating with Redmine<a class="headerlink" href="#redmine" title="Permalink to this heading">¶</a></h2>
+<p>As an example of coordination with an external ticketing system, we will explain how to issue tickets to Redmine from Kompira’s job flow.</p>
+<section id="id7">
+<h3><span class="section-number">6.5.1. </span>Redmine settings<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Enable REST API</strong></p></li>
+</ol>
+<p>From “Administration” -&gt; “Settings” -&gt; “Authentication”, save with “Enable Web service by REST” checked.</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Create project</strong></p></li>
+</ol>
+<p>Select “New Project” from “Administration” -&gt; “Project” and create the project “test”.</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Setting Priorities</strong></p></li>
+</ol>
+<p>Set the value to the priority of the ticket in “Administration” -&gt; “Enumeration item”. (Eg “high” “medium” “low”)</p>
+<p>Also, set one as the “default value”.</p>
+<p>(*) If you do not set the default value, the priority_id value is required when calling the API.</p>
+<ol class="arabic simple" start="4">
+<li><p><strong>Create new user</strong></p></li>
+</ol>
+<p>Select “New User” from “Administration” -&gt; “User” and create an arbitrary user.</p>
+<p>Log in as the user you created and note the API access key on the “Personal Settings” page.</p>
+</section>
+<section id="id8">
+<h3><span class="section-number">6.5.2. </span>Issuing a ticket<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
+<p>In order to issue Redmine tickets, we convert the necessary information into json format data and send a POST request to the Redmine URL.</p>
+<p>To do that, call dictionary type data to urlopen which is a built-in job of Kompira.</p>
+<p>Specifically, you can issue a ticket to Redmine by describing the following job flow.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|redmine_server = &#39;192.168.0.1&#39;|
+|redmine_key = &#39;1234567890abcdef1234567890abcdef12345678&#39;|
+|ticket_title = &#39;Task from Kompira&#39;|
+|project_name = &#39;test&#39;|
+
+[url = &#39;http://$redmine_server/issues.json?format=json&amp;key=$redmine_key&#39;]
+-&gt; [ticket = {issue = {subject = ticket_title, project_id = project_name}}]
+-&gt; urlopen(url=url, data=ticket, timeout=60, encode=&#39;json&#39;)
+</pre></div>
+</div>
+<p>For “redmine_key”, set the API access key confirmed in “4. Creating a user”.</p>
+<p>In addition to the above, you can also include information such as ticket priority, description, person in charge and category.</p>
+<p>You can also update / delete tickets, get list of ticket information, etc. For details, refer to the Redmine API specifications.</p>
+</section>
+</section>
+<section id="snmp">
+<h2><span class="section-number">6.6. </span>Receiving SNMP Traps<a class="headerlink" href="#snmp" title="Permalink to this heading">¶</a></h2>
+<p>How to receive SNMP traps in Kompira’s job flow using Linux commands snmptrapd (8) and snmptrap (1).</p>
+<section id="id9">
+<h3><span class="section-number">6.6.1. </span>Environment<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>IP Address</p></td>
+<td><p>OS</p></td>
+</tr>
+<tr class="row-even"><td><p>Kompira Server</p></td>
+<td><p>192.168.213.100</p></td>
+<td><p>CentOS 6.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>SNMP Agent Server</p></td>
+<td><p>192.168.213.101</p></td>
+<td><p>CentOS 6.5</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id10">
+<h3><span class="section-number">6.6.2. </span>Kompira Server Settings<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
+<p>Assume Kompira is installed on the Kompira server.</p>
+<ol class="arabic simple">
+<li><p><strong>Install snmptrapd</strong></p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ yum install net-snmp
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>Edit /etc/snmp/snmptrapd.conf</strong></p></li>
+</ol>
+<p>Edit snmptrapd.conf to handle SNMP traps.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>authCommunity     log,execute,net default
+traphandle default    /opt/kompira/bin/kompira_sendevt --channel=/system/channels/snmptrap
+</pre></div>
+</div>
+<p>Here default represents “all OIDs”.</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Add job flow to Kompira</strong></p></li>
+</ol>
+<p>Create a “/system/channels/snmptrap” channel and create and execute a job flow that waits for data to this channel.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;/system/channels/snmptrap&gt; -&gt;
+print($RESULT)
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>Start snmptrapd</strong></p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ service snmptrapd start
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3><span class="section-number">6.6.3. </span>Setting up the SNMP agent server<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
+<p>Install snmptrap command</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ yum install net-snmp-utils
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3><span class="section-number">6.6.4. </span>Transmission of SNMP trap<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
+<p>Execute the snmptrap command on the SNMP agent server.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ snmptrap -v 2c -c default 192.168.213.100 &#39;&#39; netSnmp.99999 netSnmp.99999.1 s &quot;hello world&quot;
+</pre></div>
+</div>
+<p>If the Kompira server can receive it correctly, the following log is displayed in /var/log/messages.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tail -f /var/log/messages
+Dec 13 16:29:30 kompira-server snmptrapd[6110]: 2012-12-13 16:29:30 &lt;UNKNOWN&gt;
+[UDP: [192.168.213.101]:56313-&gt;[192.168.213.100]]:#012DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (590254) 1:38:22.54
+#011SNMPv2-MIB::snmpTrapOID.0 = OID: NET-SNMP-MIB::netSnmp.99999#011NET-SNMP-MIN::netSnmp.99999.1 = STRING: &quot;hello world&quot;
+</pre></div>
+</div>
+<p>In addition, the following received results are displayed on the console of the job flow process that was running on Kompira.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;UNKNOWN&gt;
+UDP: [192.168.213.101]:56313-&gt;[192.168.213.100]
+DISMAN-EVENT-MIB::sysUpTimeInstance 0:0:18:39.04
+SNMPv2-MIB::snmpTrapOID.0 NET-SNMP-MIB::netSnmp.99999
+NET-SNMP-MIB::netSnmp.99999.1 &quot;hello world&quot;
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">6. Coordination with other systems</a><ul>
+<li><a class="reference internal" href="#id2">6.1. Introduction</a></li>
+<li><a class="reference internal" href="#kompira">6.2. Sending events to Kompira</a><ul>
+<li><a class="reference internal" href="#windows">6.2.1. Sending events from Windows</a></li>
+<li><a class="reference internal" href="#kompira-sendevt">6.2.2. kompira_sendevt options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#receive-mail">6.3. Receive e-mails on Kompira</a><ul>
+<li><a class="reference internal" href="#linux">6.3.1. Setting up Linux</a></li>
+<li><a class="reference internal" href="#id4">6.3.2. Kompira settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">6.4. Coordinating with monitoring systems</a><ul>
+<li><a class="reference internal" href="#id6">6.4.1. Confirming event transmission and receipt</a></li>
+<li><a class="reference internal" href="#zabbix">6.4.2. Zabbix Settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redmine">6.5. Coordinating with Redmine</a><ul>
+<li><a class="reference internal" href="#id7">6.5.1. Redmine settings</a></li>
+<li><a class="reference internal" href="#id8">6.5.2. Issuing a ticket</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#snmp">6.6. Receiving SNMP Traps</a><ul>
+<li><a class="reference internal" href="#id9">6.6.1. Environment</a></li>
+<li><a class="reference internal" href="#id10">6.6.2. Kompira Server Settings</a></li>
+<li><a class="reference internal" href="#id11">6.6.3. Setting up the SNMP agent server</a></li>
+<li><a class="reference internal" href="#id12">6.6.4. Transmission of SNMP trap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="library.html"
+                          title="previous chapter"><span class="section-number">5. </span>Kompira Standard Library</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="monitoring.html"
+                          title="next chapter"><span class="section-number">7. </span>Monitoring Kompira</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/coordination.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="monitoring.html" title="7. Monitoring Kompira"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="library.html" title="5. Kompira Standard Library"
+             >previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/coordination.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">6. </span>Coordination with other systems</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

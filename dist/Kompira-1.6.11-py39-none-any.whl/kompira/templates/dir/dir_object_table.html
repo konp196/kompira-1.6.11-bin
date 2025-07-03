@@ -1,0 +1,82 @@
+{% load i18n core_extras %}
+{{ create_form.media.css }}
+<div style="width: 100%; overflow-x: auto; margin-bottom: 20px">
+  <table class="table table-bordered table-sm view-table column-hideable" style="margin-bottom: 0; display: none;">
+    <thead>
+      <tr>
+        <th style="width: 1px; padding: 1px; border-right: none;"></th>
+        <th class="column-selector" style="border-left: nonel"><input class="obj-selectall" type="checkbox" tabindex="-1" value="" accesskey="A"></th>
+        {% for column in columns %}
+        <th class="{{ column.orderable|yesno:'header,' }}" data-column-name="{{ column.name }}" data-order_by="{{ column.order_by }}">{{ column.label }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in object_list %}
+      {% with item_ability=item|get_ability:user %}
+      <tr class="obj-row"
+          data-id="{{ item|getattr:'id' }}"
+          data-name="{{ item|getattr:'name' }}"
+          data-display_name="{{ item|getattr:'display_name' }}"
+          data-abspath="{{ item|getattr:'abspath' }}"
+          data-type="{{ item|getattr:'type_name' }}"
+          data-type_display_name="{{ item|getattr:'type_display_name' }}"
+          data-owner="{{ item|getattr:'owner' }}"
+          data-editable="{{ item|getattr:'editable'|yesno:'true,false' }}"
+          data-writable="{{ item_ability|getattr:'writable'|yesno:'true,false' }}"
+          data-readable="{{ item_ability|getattr:'readable'|yesno:'true,false' }}"
+          data-property_editable="{{ item_ability|getattr:'property_editable'|yesno:'true,false' }}"
+          {% if item|hasattr:'has_children' %}
+          data-has_child="{{ item.has_children|yesno:'true,false' }}"
+          {% elif item|hasattr:'num_children' %}
+          data-has_child="{{ item.num_children|yesno:'true,false' }}"
+          {% endif %}
+          data-is_dir="{{ item|getattr:'is_dir'|yesno:'true,false' }}">
+        <td class="cursor-mark" style="width: 1px; padding: 1px;"></td>
+        <td class="column-selector"><input class="obj-selector" type="checkbox" tabindex="-1" value="{{ item|getattr:'id' }}"></td>
+        {% for column in columns %}
+        <td data-column-name="{{ column.name }}">
+          {% table_cell item column %}
+        </td>
+        {% endfor %}
+      </tr>
+      {% endwith %}
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      {% if not create_form %}
+      <tr class="no_applicable_data" style="{% if object_list|length > 0 %}display: none;{% endif %}"><td style="width: 1px; padding: 1px;"></td><th colspan="{{ columns.columns|length }}">{% blocktrans %}No applicable object{% endblocktrans %}</th></tr>
+      {% elif object_ability.writable %}
+      <form name="create" action="{{ object_property.abspath }}.add" method="get" style="margin: 0px;">
+        <tr class="obj-create noprint">
+          <td style="width: 1px; padding: 1px;"></td>
+          <td class="column-selector"></td>
+          {% for column in columns %}
+          <td data-column-name="{{ column.name }}">
+            {% if column.property_name == 'name' and create_form.name %}
+            <div class="obj-create-outer">
+              <div class="obj-create-inner">
+                <div class="obj-create-form">
+                  {{ create_form.name }}
+                  <div class="obj-create-option">
+                    <button id="id_create-btn" class="btn create-btn"><i class="fas fa-plus"></i></button>
+                  </div>
+                  {{ create_form.order_by }}
+                  {{ create_form.page_size }}
+                </div>
+              </div>
+            </div>
+            {% elif column.property_name == 'type_display_name' and create_form.type_id %}
+            <div class="obj-create-option">
+              {{ create_form.type_id }}
+            </div>
+            {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+        {{ create_form.media.js }}
+      </form>
+      {% endif %}
+    </tfoot>
+  </table>
+</div>

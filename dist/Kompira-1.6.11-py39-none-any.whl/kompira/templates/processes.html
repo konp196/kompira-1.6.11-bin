@@ -1,0 +1,111 @@
+{% load static i18n core_extras %}
+<div class="contents-header clearfix">
+  {% include 'paginator_mini.html' %}
+  {% block display_select %}
+  {% if query_form %}
+  <div class="float-right" style="width: 560px;">
+    <form class="form-search form-row" id="process-search-form" style="margin-right: 6px;">
+      <div class="input-group timeline-control col-8">
+        <div class="input-group-prepend page-item"><a class="page-link timeline-link timeline-prev"><i class="fas fa-angle-left"></i></a></div>
+        {{ query_form.timeline_sta }}
+        {{ query_form.timeline_end }}
+        <div class="page-item"><a class="page-link timeline-link timeline-next"><i class="fas fa-angle-right"></i></a></div>
+        <div class="input-group-append page-item">
+          <a class="page-link dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"></a>
+          <div class="dropdown-menu dropdown-menu-right timeline-menu">
+            <a class="dropdown-item" data-action="reset">{% trans 'reset'|capfirst %}</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a class="dropdown-item" data-action="set-sta" data-add-days="-7">{% blocktrans with days=7 %}{{ days }} days ago or later{% endblocktrans %}</a>
+            <a class="dropdown-item" data-action="set-sta" data-add-days="-30">{% blocktrans with days=30 %}{{ days }} days ago or later{% endblocktrans %}</a>
+            <a class="dropdown-item" data-action="set-sta" data-add-days="-365">{% blocktrans with days=365 %}{{ days }} days ago or later{% endblocktrans %}</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a class="dropdown-item" data-action="set-end" data-add-days="-7">{% blocktrans with days=7 %}{{ days }} days ago or earlier{% endblocktrans %}</a>
+            <a class="dropdown-item" data-action="set-end" data-add-days="-30">{% blocktrans with days=30 %}{{ days }} days ago or earlier{% endblocktrans %}</a>
+            <a class="dropdown-item" data-action="set-end" data-add-days="-365">{% blocktrans with days=365 %}{{ days }} days ago or earlier{% endblocktrans %}</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a class="dropdown-item" data-action="set-months" data-add-months="0">{% trans 'this month'|capfirst %}</a>
+            <a class="dropdown-item" data-action="set-months" data-add-months="-1">{% trans 'last month'|capfirst %}</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a class="dropdown-item" data-action="set-years" data-add-years="0">{% trans 'this year'|capfirst %}</a>
+            <a class="dropdown-item" data-action="set-years" data-add-years="-1">{% trans 'last year'|capfirst %}</a>
+          </div>
+        </div>
+      </div>
+      <div class="input-group col-4">
+        {{ query_form.query }}
+        {{ query_form.order_by }}
+        {{ query_form.page_size }}
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-outline-secondary" tabindex="-1"><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+  <div id="additional-operation">
+    <ul class="nav nav-pills page_filters">
+      {% block paginate_filters %}
+      <li class="nav-item" id="display_select_active"><a class="nav-link active" href="{{ object|getattr:'abspath' }}?is_active=True" data-filters='{"is_active": "True", "status": false}' data-deletable="false">{{ _("active processes")|capfirst }}</a></li>
+      <li class="nav-item" id="display_select_done"><a class="nav-link" href="{{ object|getattr:'abspath' }}?status=DONE" data-filters='{"is_active": false, "status": "DONE"}' data-deletable="true">{{ _("done processes")|capfirst }}</a></li>
+      <li class="nav-item" id="display_select_aborted"><a class="nav-link" href="{{ object|getattr:'abspath' }}?status=ABORTED" data-filters='{"is_active": false, "status": "ABORTED"}' data-deletable="true">{{ _("aborted processes")|capfirst }}</a></li>
+      <li class="nav-item" id="display_select_all"><a class="nav-link" href="{{ object|getattr:'abspath' }}" data-filters='{"is_active": false, "status": false}' data-deletable="true">{{ _("all processes")|capfirst }}</a></li>
+      {% endblock %}
+    </ul>
+  </div>
+  {% endblock %}
+</div>
+  <table class="table table-bordered -table-striped table-sm tablesorter list-table">
+    <thead id="proc-header">
+      <tr>
+        <th class="column-selector {sorter: false}"><input type="checkbox" id="selectAll"></th>
+        <th class="header" data-order_by="id">{% trans 'ID' %}</th>
+        <th class="header" data-order_by="current_job">{% trans 'name'|capfirst %}</th>
+        <th class="header" data-order_by="status">{% trans 'status'|capfirst %}</th>
+        <th class="header" data-order_by="started_time">{% trans 'start time'|capfirst %}</th>
+        <th class="header" data-order_by="finished_time">{% trans 'finish time'|capfirst %}</th>
+        <th class="header" data-order_by="elapsed_time">{% trans 'elapsed time'|capfirst %}</th>
+        <th class="header" data-order_by="user">{% trans 'user'|capfirst %}</th>
+      </tr>
+    </thead>
+    <tbody id="proc-list" class="coloring">
+      {% for proc in processes %}
+      <tr id="proc-row-{{ proc.pid }}" data-status="{% if proc.suspended %}SUSPENDED-{% endif %}{{ proc.status }}">
+        <td class="column-selector"><input class="delete-checkbox" type="checkbox" name="delete_id"
+                   id="id_checkbox-{{ proc.pid }}" value="{{ proc.pid }}"
+                   {% if not proc.finished %}disabled{% endif %}></td>
+        <td><a class="proc-pid" href="{{ proc.abspath }}">{{ proc.pid }}</a></td>
+        <td><a class="proc-current-job" href="{{ proc.abspath }}">{{ proc.current_job|getattr:'abspath' }}</a></td>
+        <td class="proc-status">{% trans proc.status %}{% if proc.suspended %} ({% trans 'suspended' %}){% endif %}</td>
+        <td class="proc-started-time">{{ proc.started_time|default_if_none:"" }}</td>
+        <td class="proc-finished-time">{{ proc.finished_time|default_if_none:"" }}</td>
+        <td class="proc-elapsed-time">{{ proc.elapsed_time|elapsed_datetime|default_if_none:"" }}</td>
+        <td>{{ proc.user }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot><tr class="no_applicable_data" style="{% if object_list|length > 0 %}display: none;{% endif %}"><th colspan="8">{% blocktrans %}No applicable process{% endblocktrans %}</th></tr></tfoot>
+    <script id="proc-template" class="row-template" type="text/x-jsrender">
+      <tr id="proc-row-{% templatetag openvariable %}:id{% templatetag closevariable %}" data-status="{% templatetag openvariable %}if suspended {% templatetag closevariable %}SUSPENDED-{% templatetag openvariable %}/if{% templatetag closevariable %}{% templatetag openvariable %}:status{% templatetag closevariable %}">
+        <td class="column-selector">
+          <input class="delete-checkbox" type="checkbox" name="delete_id"
+                 id="id_checkbox-{% templatetag openvariable %}:id{% templatetag closevariable %}"
+                 value="{% templatetag openvariable %}:id{% templatetag closevariable %}"
+                 {% templatetag openvariable %}if !finished_time {% templatetag closevariable %}disabled{% templatetag openvariable %}/if{% templatetag closevariable %}>
+        </td>
+        <td><a class="proc-pid" href="{% templatetag openvariable %}:abspath{% templatetag closevariable %}">{% templatetag openvariable %}:id{% templatetag closevariable %}</a></td>
+        <td><a class="proc-current-job" href="{% templatetag openvariable %}:abspath{% templatetag closevariable %}">{% templatetag openvariable %}:current_job{% templatetag closevariable %}</a></td>
+        <td class="proc-status">{% templatetag openvariable %}:status_text{% templatetag closevariable %}{% templatetag openvariable %}if suspended{% templatetag closevariable %} ({% trans 'suspended' %}){% templatetag openvariable %}/if{% templatetag closevariable %}
+        </td>
+        <td class="proc-started-time">{% templatetag openvariable %}:started_time{% templatetag closevariable %}</td>
+        <td class="proc-finished-time">{% templatetag openvariable %}:finished_time{% templatetag closevariable %}</td>
+        <td class="proc-elapsed-time">{% templatetag openvariable %}:elapsed_time{% templatetag closevariable %}</td>
+        <td>{% templatetag openvariable %}:user{% templatetag closevariable %}</td>
+      </tr>
+    </script>
+  </table>
+  <div class="selectable-action-modal" data-selected-selector=".delete-checkbox:checkbox:checked" data-target-selected="{% blocktrans %}selected [[count]] processes and their child processes{% endblocktrans %}" style="margin-bottom: 10px;">
+    <button type="button" class="btn btn-outline-danger noprint selectable-action-anchor" id="id_selectable_delete-btn"
+      data-action="{{ object|getattr:'abspath' }}{{ action_suffix }}" data-operation="{% trans 'delete [[target]]' %}" data-target-filtered="{% trans '[[count]] applicable processes and their child processes (exclude active)' %}" data-warning="{% trans 'This operation cannot be undone!' %}">
+      <i class="fas fa-trash"></i> {% blocktrans %}Delete processes{% endblocktrans %}
+    </button>
+  </div>

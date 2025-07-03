@@ -1,0 +1,61 @@
+{% extends "obj_base.html" %}
+{% load i18n core_extras %}
+
+{% block extra_head %}
+{{ block.super }}
+{{ form.media.css }}
+{% endblock extra_head %}
+
+{% block contents %}
+
+{% if object_property.id %}
+<form enctype="multipart/form-data" id="id_edit_form"
+      class="prevent-double-submit dirty-check fullscreen-target include-unchecked-checkbox uploader"
+      action="{{ object_property.abspath }}.update"
+      method="post">
+  {% csrf_token %}
+  <section>
+    <h4 class="section-title">{% trans 'edit'|capfirst %}</h4>
+{% else %}
+<form enctype="multipart/form-data" id="id_edit_form"
+      class="prevent-double-submit dirty-check fullscreen-target include-unchecked-checkbox uploader"
+      action="{{ parent_object|getattr:'abspath' }}.add?type_id={{ type_object_property.id }}&name={{ object_property.name|urlencode }}"
+      method="post">
+  {% csrf_token %}
+  <section>
+    <h4 class="section-title">{% trans 'create'|capfirst %}</h4>
+{% endif %}
+  {% block form_section %}{% endblock %}
+  </section>
+  <section>
+    <div class="fullscreen-shortcut">
+      <button type="submit" id="id_submit-btn" class="submit-btn btn btn-secondary" accesskey="S"><i class="fas fa-hdd"></i> {% trans 'save'|capfirst %}</button>
+    </div>
+  </section>
+</form>
+{% include "uploader.html" %}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript">
+(function(kompira){
+    function change_handler(event) {
+        console.log("change_handler", event);
+        kompira.navigator.setDirty();
+        $("form.dirty-check").off("change", "input,select,textarea", change_handler);
+    }
+    function submit_handler(event) {
+        console.log("submit_handler", event);
+        kompira.navigator.clearDirty();
+    }
+    $("form.dirty-check")
+        .on("change", "input,select,textarea", change_handler)
+        .on("click", "button[type='submit']", submit_handler);
+    if (kompira.uploader) {
+        kompira.uploader();
+    }
+})(kompira);
+</script>
+{{ form.media.js }}
+{% endblock %}

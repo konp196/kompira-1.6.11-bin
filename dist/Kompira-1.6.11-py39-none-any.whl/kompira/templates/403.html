@@ -1,0 +1,16 @@
+{% extends "error_base.html" %}
+{% load i18n %}
+
+{% block header_title %}
+403 Forbidden
+{% endblock header_title %}
+
+{% block brand %}
+{% with home_url=user.home_directory %}
+{% include "brand.html" %}
+{% endwith %}
+{% endblock %}
+
+{% block error_message %}
+{% trans "You do not have permission to view this page." %}
+{% endblock error_message %}

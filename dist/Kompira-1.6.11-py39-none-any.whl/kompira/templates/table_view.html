@@ -1,0 +1,82 @@
+{% extends "dir_view.html" %}
+{% load i18n core_extras %}
+
+{% block extra_head %}
+{{ block.super }}
+{{ related_form.media.css }}
+{% endblock extra_head %}
+
+{% block page_obj_name %}{{ object_property.display_name|default:object_property.name }}{% endblock %}
+{% block page_sub_title %}
+{{ block.super }}
+<span id="table-type-display-name">
+  {% if object.typeObject %}
+  (<a id="table-type-link" href="{{ object.typeObject|getattr:'abspath' }}" class="text-decoration-none"><span id="table-type-name">{{ object.typeObject|getattr:'display_name' }}</span></a>)
+  {% else %}
+  ({% trans "Warning: no type object" %})
+  {% endif %}
+</span>
+{% endblock %}
+
+{% block form_search %}
+<form action="{{ object_property.abspath }}" method="get" class="form-inline form-search">
+  <div class="input-group">
+    {{ filter.form.query_target }}
+    {{ filter.form.query }}
+    <div class="input-group-append">
+      <button id="id_search-btn" type="submit" class="btn btn-outline-secondary" tabindex="-1"><i class="fas fa-search"></i></button>
+    </div>
+  </div>
+</form>
+{% endblock form_search %}
+
+{% block article_footer %}
+{% if related_object %}
+<div class="pull-left"><span style="color: gray;">{% trans 'related object'|capfirst %}: </span><a href="{{ related_object|getattr:'abspath' }}">{{ related_object|getattr:'display_name' }}</a></div>
+{% endif %}
+{{ block.super }}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+{% include "js_field_form.html" %}
+<script type="text/javascript">
+//
+// Select2 を Bootstrap Modal の中で使った場合のバグに対処する
+// http://stackoverflow.com/questions/18487056/select2-doesnt-work-when-embedded-in-a-bootstrap-modal
+//
+$.fn.modal.Constructor.prototype.enforceFocus = function () {};
+</script>
+<div class="modal hide" id="dir-execute-form-dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="title">{% trans 'execute form'|capfirst %}</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form enctype="multipart/form-data" action="{{ object|getattr:'abspath' }}.execute_objects" method="post">
+        <div class="modal-body" style="">
+          <span id="id_dialog-message"></span>
+          {% csrf_token %}
+          {% if related_form %}
+          <table class="table table-striped table-sm edit-table table-label-left">
+            {{ related_form.as_table }}
+          </table>
+          <hr>
+          {% endif %}
+          <div class="object-table"></div>
+        </div>
+        <div class="modal-footer">
+          <div class="form-inline">
+            <input type="hidden" id="confirm-objects" name="objects" value="">
+            <span id="id_confirm-options"></span>
+            <button type="submit" class="btn btn-primary">{% trans 'execute'|capfirst %}</button>
+            <button type="button" class="btn btn-outline-secondary ml-3" data-dismiss="modal">{% trans 'cancel'|capfirst %}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{ related_form.media.js }}
+{% endblock %}

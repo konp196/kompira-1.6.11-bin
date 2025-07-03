@@ -1,0 +1,21 @@
+{% extends "obj_base.html" %}
+{% load static i18n core_extras %}
+
+{% block bottom_buttons %}
+{% with object_editable=object_property.editable object_writable=object_ability.writable object_deletable=parent_object_ability.writable object_path=object_property.abspath object_type=_("object") object_name=object_property.name %}
+{% include "bottom_button.html" %}
+{% endwith %}
+{% endblock %}
+
+{% block contents %}
+{% block section_contents %}
+{% include "field_table.html" %}
+{% include "extra_prop_table.html" %}
+{% endblock %}
+{% include "action_form.html" %}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'kompira/js/action_script.js' %}" type="text/javascript"></script>
+{% endblock %}

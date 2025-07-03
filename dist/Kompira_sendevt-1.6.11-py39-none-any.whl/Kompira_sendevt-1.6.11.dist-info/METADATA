@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: Kompira-sendevt
+Version: 1.6.11
+Summary: UNKNOWN
+Home-page: UNKNOWN
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Dist: amqp (~=2.6.1)
+Requires-Dist: packaging (>=21.0)
+
+Kompira sendevtパッケージ
+

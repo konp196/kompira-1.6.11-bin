@@ -1,0 +1,2139 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>4. Kompira ジョブフロー言語リファレンス &#8212; Kompira 1.6.11 ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="5. Kompira 標準ライブラリ" href="library.html" />
+    <link rel="prev" title="3. Kompiraチュートリアル" href="tutorial.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="library.html" title="5. Kompira 標準ライブラリ"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="3. Kompiraチュートリアル"
+             accesskey="P">前へ</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/reference.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>Kompira ジョブフロー言語リファレンス</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="kompira">
+<h1><span class="section-number">4. </span>Kompira ジョブフロー言語リファレンス<a class="headerlink" href="#kompira" title="この見出しへのパーマリンク">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">著者<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira 開発チーム</p>
+</dd>
+</dl>
+<section id="id1">
+<h2><span class="section-number">4.1. </span>イントロダクション<a class="headerlink" href="#id1" title="この見出しへのパーマリンク">¶</a></h2>
+<p>本ドキュメントは、ジョブフロー言語の字句と構文、および、意味について説
+明します。組み込み関数、組み込みジョブについての記述は <a class="reference internal" href="library.html"><span class="doc">Kompira 標準ライブラリ</span></a>
+にあります。</p>
+<section id="id2">
+<h3><span class="section-number">4.1.1. </span>構文の表記法<a class="headerlink" href="#id2" title="この見出しへのパーマリンク">¶</a></h3>
+<p>本ドキュメントでは、拡張BNFを用いて構文を示します。拡張BNFは通常のBNFに
+加えて、0回以上の繰り返しを表す「*」、1回以上の繰り返しを表す「+」、省
+略可能な要素を表す「?」といった記号を用います。また、複数の要素をまとめ
+るために丸カッコ「(」と「)」も使用します。</p>
+</section>
+</section>
+<section id="id3">
+<h2><span class="section-number">4.2. </span>字句構造<a class="headerlink" href="#id3" title="この見出しへのパーマリンク">¶</a></h2>
+<p>この章では、ジョブフロー言語の字句構造について規定します。ジョブフロー
+言語のプログラムテキストは Unicode で記述します。テキストは、Kompiraの
+字句解析器によって、トークンと呼ばれる語彙の単位に区切られます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ジョブフローのプログラムテキストとして記述できるのは最大 65536 文字です。</p>
+</div>
+<section id="id4">
+<h3><span class="section-number">4.2.1. </span>コメント<a class="headerlink" href="#id4" title="この見出しへのパーマリンク">¶</a></h3>
+<p>コメントは文字列リテラル内に含まれないハッシュ文字(#)から始まり、行末ま
+でになります。コメントは字句解析器によって読み飛ばされます。</p>
+</section>
+<section id="id5">
+<h3><span class="section-number">4.2.2. </span>空白<a class="headerlink" href="#id5" title="この見出しへのパーマリンク">¶</a></h3>
+<p>改行文字、スペース、タブ、フォームフィードは空白として扱われます。空白
+は字句解析器によって読み飛ばされます。</p>
+</section>
+<section id="id6">
+<h3><span class="section-number">4.2.3. </span>識別子<a class="headerlink" href="#id6" title="この見出しへのパーマリンク">¶</a></h3>
+<p>識別子(IDENTIFIER)は、以下の正規表現によって定義されます。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>IDENTIFIER = [^\W0-9]\w*
+</pre></div>
+</div>
+<p>\wは任意の Unicode 単語文字にマッチします。これにはあらゆる言語で単語
+の一部になりうる文字、数字、およびアンダースコアが含まれます。\Wは
+[^w]を意味します。識別子の長さに制限はありません。大小文字は区別されま
+す。</p>
+<section id="id7">
+<h4><span class="section-number">4.2.3.1. </span>キーワード<a class="headerlink" href="#id7" title="この見出しへのパーマリンク">¶</a></h4>
+<p>以下の文字の並びは、キーワードとして予約されているため識別子として用い
+ることはできません。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>and             break           case            choice
+continue        elif            else            false
+for             fork            if              in
+not             null            or              pfor
+session         then            true            try
+while
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h4><span class="section-number">4.2.3.2. </span>予約済みの識別子クラス<a class="headerlink" href="#id8" title="この見出しへのパーマリンク">¶</a></h4>
+<p>__*__ の形式の識別子は制御変数用にシステムで予約されていて特別な意味が
+あります。ジョブフローの予期せぬ動作を引き起こす可能性があるため、ユー
+ザーが識別子としてこれらの名前を用いることは避けた方が良いでしょう。</p>
+</section>
+<section id="id9">
+<h4><span class="section-number">4.2.3.3. </span>特殊識別子<a class="headerlink" href="#id9" title="この見出しへのパーマリンク">¶</a></h4>
+<p>以下で定義されるように $ で始まる識別子は特殊変数に用いられる特殊識別子
+です。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SPECIAL_IDENTIFIER = &quot;$&quot; IDENTIFIER
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id10">
+<h3><span class="section-number">4.2.4. </span>オブジェクトパス<a class="headerlink" href="#id10" title="この見出しへのパーマリンク">¶</a></h3>
+<p>オブジェクトパスは、Kompiraファイルシステム上のオブジェクトの位置を指し
+示します。以下のように定義されています。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>      OBJECT_PATH = RELATIVE_PATH
+                  | (&quot;/&quot; | RELATIVE_PATH) PATH_ELEMENT* LAST_PATH_ELEMENT
+    RELATIVE_PATH = &quot;./&quot; | &quot;../&quot;
+     PATH_ELEMENT = RELATIVE_PATH | IDENTIFIER &quot;/&quot;
+LAST_PATH_ELEMENT = RELATIVE_PATH | IDENTIFIER
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>単独の &quot;/&quot; もオブジェクトパスとして扱われますが、除算演算子&quot;/&quot; と字
+句解析上は区別がつかないため、字句としてのOBJECT_PATHには含まれませ
+ん。</p>
+</div>
+</section>
+<section id="id11">
+<h3><span class="section-number">4.2.5. </span>リテラル<a class="headerlink" href="#id11" title="この見出しへのパーマリンク">¶</a></h3>
+<p>リテラルは、文字列(String)型、バイナリ(Binary)型、整数(Integer)型、浮
+動小数型(Float)型、ブール(Boolean)型、ヌル(Null)型、パターン(Pattern)
+型の値のソースコード上の表記です。</p>
+<section id="string">
+<h4><span class="section-number">4.2.5.1. </span>文字列リテラル(STRING)<a class="headerlink" href="#string" title="この見出しへのパーマリンク">¶</a></h4>
+<p>文字列リテラルは、一重引用符(')、もしくは、二重引用符(&quot;)で囲まれた0個以
+上の文字から構成されます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;&quot;                   # 空文字列
+&#39;&quot;&#39;                  # &quot;を保持した文字列
+&#39;\&#39;&#39;                 # &#39;を保持した文字列
+&quot;This is a string&quot;   # 16文字を保有した文字列
+&#39;これは文字列です&#39;    # 8文字を保有した文字列
+</pre></div>
+</div>
+<p>また、対応する3連の一重引用符や二重引用符で囲むこともできます。この場合
+には、エスケープされていない改行や引用符を書くことができます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;&#39;&#39;&#39;&#39;&#39;&#39;              # &#39;を保持した文字列
+&quot;&quot;&quot;改行を含む
+文字列&quot;&quot;&quot;            # 改行コードを含む文字列
+</pre></div>
+</div>
+<p>文字列リテラル中では、エスケープシーケンスを使用することによって、改行
+文字やタブ文字など、ある種の表現できない文字を表現することができるよう
+になります。</p>
+<p>エスケープシーケンスの一覧を以下に示します。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>エスケープシーケンス</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>\</p></td>
+<td><p>バックスラッシュ()</p></td>
+</tr>
+<tr class="row-odd"><td><p>'</p></td>
+<td><p>一重引用符(')</p></td>
+</tr>
+<tr class="row-even"><td><p>&quot;</p></td>
+<td><p>二重引用符(&quot;)</p></td>
+</tr>
+<tr class="row-odd"><td><p>a</p></td>
+<td><p>ASCII端末ベル(BEL)</p></td>
+</tr>
+<tr class="row-even"><td><p>b</p></td>
+<td><p>ASCIIバックスペース(BS)</p></td>
+</tr>
+<tr class="row-odd"><td><p>f</p></td>
+<td><p>ASCIIフォームフィード(FF)</p></td>
+</tr>
+<tr class="row-even"><td><p>n</p></td>
+<td><p>ASCII行送り(LF)</p></td>
+</tr>
+<tr class="row-odd"><td><p>r</p></td>
+<td><p>ASCII復帰(CR)</p></td>
+</tr>
+<tr class="row-even"><td><p>t</p></td>
+<td><p>ASCII水平タブ(TAB)</p></td>
+</tr>
+<tr class="row-odd"><td><p>v</p></td>
+<td><p>ASCII垂直タブ(VT)</p></td>
+</tr>
+<tr class="row-even"><td><p>ooo</p></td>
+<td><p>8進数値 <em>ooo</em> を持つ文字</p></td>
+</tr>
+<tr class="row-odd"><td><p>xhh</p></td>
+<td><p>16進数値 <em>hh</em> を持つ文字</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="binary">
+<h4><span class="section-number">4.2.5.2. </span>バイナリリテラル(BINARY)<a class="headerlink" href="#binary" title="この見出しへのパーマリンク">¶</a></h4>
+<p>バイナリリテラルは、プレフィックス記号bの後に一重引用符(')、もしくは、
+二重引用符(&quot;)で囲まれた0個以上の文字から構成されます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>b&quot;&quot;                   # 空バイナリ
+b&#39;&quot;&#39;                  # &quot;を保持したバイナリ
+b&#39;\&#39;&#39;                 # &#39;を保持したバイナリ
+b&quot;This is a string&quot;   # 16bytesを保有したバイナリ
+</pre></div>
+</div>
+<p>文字列リテラルとは異なり、対応する3連の引用符による複数行の記述は使え
+ません。また、日本語などの非ASCII文字を含めることもできません。エスケー
+プシーケンスは、文字列リテラルと同様に使用することができます。</p>
+</section>
+<section id="integer">
+<h4><span class="section-number">4.2.5.3. </span>整数リテラル(INTEGER)<a class="headerlink" href="#integer" title="この見出しへのパーマリンク">¶</a></h4>
+<p>整数リテラルは10進数で表現することができます。以下の字句定義で記述され
+ます。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>INTEGER       = NONZERO_DIGIT DIGIT* | &quot;0&quot;
+DIGIT         = [0-9]
+NONZERO_DIGIT = [1-9]
+</pre></div>
+</div>
+</section>
+<section id="float">
+<h4><span class="section-number">4.2.5.4. </span>浮動小数リテラル(FLOAT)<a class="headerlink" href="#float" title="この見出しへのパーマリンク">¶</a></h4>
+<p>浮動小数リテラルは整数部と小数部からなる仮数部と指数部から構成される浮
+動小数点方式の数の表現です。字句定義で記述されます。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FLOAT         = DIGIT+ &quot;.&quot; DIGIT* ( [eE] [+-]? DIGIT+ )?
+DIGIT         = [0-9]
+</pre></div>
+</div>
+<p>以下に例を示します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>3.1415926
+0.5e-3          # 0.0005
+12.3e+2         # 1230.0
+9.E5            # 900000.0
+</pre></div>
+</div>
+</section>
+<section id="boolean">
+<h4><span class="section-number">4.2.5.5. </span>真偽リテラル(BOOLEAN)<a class="headerlink" href="#boolean" title="この見出しへのパーマリンク">¶</a></h4>
+<p>真偽リテラルはブール型の真(true)と偽(false)の2つの値の表記があります。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>BOOLEAN = &quot;true&quot; | &quot;false&quot;
+</pre></div>
+</div>
+</section>
+<section id="null">
+<h4><span class="section-number">4.2.5.6. </span>ヌルリテラル(NULL)<a class="headerlink" href="#null" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ヌルリテラルは値が無いことを示す値で、null と表記されます。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>NULL = &quot;null&quot;
+</pre></div>
+</div>
+</section>
+<section id="pattern">
+<h4><span class="section-number">4.2.5.7. </span>パターンリテラル(PATTERN)<a class="headerlink" href="#pattern" title="この見出しへのパーマリンク">¶</a></h4>
+<p>パターンリテラルは、パターンの種別を表す 'e', 'g', 'r' のいずれかの文字
+に引き続き、一重引用符(')、もしくは、二重引用符(&quot;)で囲まれた0個以上の文
+字（パターン文字列）からなります。最後にモードを示す 'i' がオプションと
+して付加される場合もあります。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>r&quot;(From|Subject): &quot;      # 正規表現パターン
+g&#39;*.txt&#39;                 # glob パターン
+e&#39;kompira&#39;i              # 大文字小文字を区別しない完全一致パターン
+r&quot;windows(95|nt|2000)&quot;i  # 大文字小文字を区別しない正規表現パターン
+</pre></div>
+</div>
+<p>パターン文字列内ではエスケープシーケンスは無効となり、そのままの文字と
+して扱われます。${identifier} による文字列置換は有効です。</p>
+</section>
+</section>
+<section id="id12">
+<h3><span class="section-number">4.2.6. </span>記号<a class="headerlink" href="#id12" title="この見出しへのパーマリンク">¶</a></h3>
+<p>記号は、演算子記号(OPERATOR)、結合子記号(COMBINATOR)、デリミタに分類されます。</p>
+<section id="id13">
+<h4><span class="section-number">4.2.6.1. </span>演算子<a class="headerlink" href="#id13" title="この見出しへのパーマリンク">¶</a></h4>
+<p>以下のトークンは演算子です。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+       -       *       /       %
+&lt;       &gt;       &lt;=      &gt;=      ==      !=      =~      !~
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h4><span class="section-number">4.2.6.2. </span>結合子<a class="headerlink" href="#id14" title="この見出しへのパーマリンク">¶</a></h4>
+<p>以下のトークンは結合子です。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-&gt;      =&gt;      -&gt;&gt;     =&gt;&gt;
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h4><span class="section-number">4.2.6.3. </span>デリミタ<a class="headerlink" href="#id15" title="この見出しへのパーマリンク">¶</a></h4>
+<p>以下のトークンはデリミタです。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(   )   {   }   [   ]   |   ,   .   =   &gt;&gt;   &lt;&lt;   ?   ??
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="id16">
+<h2><span class="section-number">4.3. </span>値と型<a class="headerlink" href="#id16" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Kompira のジョブフロー言語では、整数や文字列、日付など様々な値（データ）
+を扱うことができます。値はその種類毎にいくつかの型に分類されます。ある
+型の値は暗黙的に別の型に変換される場合があります。たとえば、整数型の値
+を文字列型のフィールドに書き込む場合、対応する文字列型の値に暗黙的に変
+換されてから書き込まれます。</p>
+<section id="id17">
+<h3><span class="section-number">4.3.1. </span>プリミティブ型<a class="headerlink" href="#id17" title="この見出しへのパーマリンク">¶</a></h3>
+<p>プリミティブ型は、Kompira のジョブフロー言語が提供する基本的なデータの
+型の総称で、整数型、文字列型、ブール型、ヌル型の4つがあります。プリミティ
+ブ型の値は、他のプリミティブ型の値と状態が共有されることはありません。</p>
+<section id="data_type-Integer">
+<span id="id18"></span><h4><span class="section-number">4.3.1.1. </span>整数型(Integer)<a class="headerlink" href="#data_type-Integer" title="この見出しへのパーマリンク">¶</a></h4>
+<p>整数型は 0 や 1, 1000, -9999 など、整数を表す値の型を取り扱います。
+Kompira の整数型は、（メモリの許す限り）範囲に限りはありません。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>KompiraオブジェクトのInteger型フィールドは範囲が制限されているため、
+ジョブフローから範囲外のデータをInteger型フィールドに書き込むと実行
+時エラーとなります。</p>
+</div>
+</section>
+<section id="data_type-String">
+<span id="id19"></span><h4><span class="section-number">4.3.1.2. </span>文字列型(String)<a class="headerlink" href="#data_type-String" title="この見出しへのパーマリンク">¶</a></h4>
+<p>文字列型は、&quot;kompira&quot; や &quot;本日は晴天なり&quot; のような文字列の値のための型
+です。文字列の各要素は文字です。Kompira のジョブフロー言語では文字型は
+存在しません。単一の文字は、要素が1つだけの文字列として表現されます。各
+文字は内部的には Unicode で表現されています。</p>
+<p>&quot;123&quot; や &quot;-999&quot; など、整数を表す文字列の値を、整数型のフィールドに書き
+込む場合、対応する整数型の値に暗黙的に変換されます。</p>
+<p>文字列型の値が、ブール型に変換される場合、空文字列(&quot;&quot;)が false、それ以
+外の文字列が true と対応します。したがって、文字列 &quot;false&quot; は ブール型
+の true に対応するので注意が必要です。</p>
+<p>文字列型のデータは、以下のメソッドを備えています。</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.format">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.format" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列の書式化操作を行います。このメソッドを呼び出す文字列は通常の文字、または、{} で区切られた置換フィールドを含みます。
+それぞれの置換フィールドは位置引数のインデックスナンバー、または、キーワード引数の名前を含みます。
+返り値は、それぞれの置換フィールドが対応する引数の文字列値で置換された文字列のコピーです。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.join">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.join" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リスト中の文字列を結合した文字列オブジェクトを返します。要素間の区切り文字列は、このメソッドを提供する文字列です。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.find">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#method-String.find" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列のスライス s[start:end] に部分文字列 sub が含まれる場合、その最小のインデックスを返します。
+オプション引数 start および end はスライス表記と同様に解釈されます。
+sub が見つからなかった場合 -1 を返します。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.rfind">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#method-String.rfind" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列中の領域 s[start:end] に sub が含まれる場合、その最大のインデクスを返します。
+オプション引数 start および end はスライス表記と同様に解釈されます。
+sub が見つからなかった場合 -1 を返します。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.startswith">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Boolean"><span class="pre">Boolean</span></a></em><a class="headerlink" href="#method-String.startswith" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列が指定された prefix で始まるなら true を、そうでなければ false を返します。
+prefix は見つけたい複数の接頭語のリストでも構いません。
+オプションの start があれば、その位置から判定を始めます。
+オプションの end があれば、その位置で比較を止めます。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.encode">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">encoding</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Binary"><span class="pre">Binary</span></a></em><a class="headerlink" href="#method-String.encode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列を指定したencodingで指定されたエンコーディングで符号化したバイト列に変換します。
+encodingの指定を省略した場合は、'utf-8'として符号化されます。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.endswith">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Boolean"><span class="pre">Boolean</span></a></em><a class="headerlink" href="#method-String.endswith" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列が指定された suffix で終わるなら true を、そうでなければ false を返します。
+suffix は見つけたい複数の接尾語のタプルでも構いません。
+オプションの start があれば、その位置から判定を始めます。
+オプションの end があれば、その位置で比較を止めます。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.lower">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">lower</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.lower" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>全ての大小文字の区別のある文字が小文字に変換された、文字列のコピーを返します。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.upper">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">upper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.upper" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>全ての大小文字の区別のある文字が大文字に変換された、文字列のコピーを返します。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.replace">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.replace" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列をコピーし、現れる部分文字列 old 全てを new に置換して返します。
+オプション引数 count が与えられている場合、先頭から count 個の old だけを置換します。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.split">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Array"><span class="pre">Array</span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a><span class="p"><span class="pre">&gt;</span></span></em><a class="headerlink" href="#method-String.split" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列を sep をデリミタ文字列として区切った単語のリストを返します。
+maxsplit が与えられていれば、最大で maxsplit 回分割されます。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.rsplit">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Array"><span class="pre">Array</span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a><span class="p"><span class="pre">&gt;</span></span></em><a class="headerlink" href="#method-String.rsplit" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>sep を区切り文字とした、文字列中の単語のリストを返します。
+maxsplit が与えられた場合、文字列の 右端 から最大 maxsplit 回分割を行います。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.splitlines">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">splitlines</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">keepends</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Array"><span class="pre">Array</span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a><span class="p"><span class="pre">&gt;</span></span></em><a class="headerlink" href="#method-String.splitlines" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列を改行部分で分解し、各行からなるリストを返します。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.strip">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">strip</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">chars</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.strip" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列の先頭および末尾部分を除去したコピーを返します。
+引数 chars は除去される文字集合を指定する文字列です。</p>
+</dd></dl>
+
+</section>
+<section id="data_type-Binary">
+<span id="id20"></span><h4><span class="section-number">4.3.1.3. </span>バイナリ型(Binary)<a class="headerlink" href="#data_type-Binary" title="この見出しへのパーマリンク">¶</a></h4>
+<p>バイナリ型は、バイト列を値とする型です。バイト列は文字列と似ていますが、
+バイト列を構成する単位は文字ではなくバイト値(0～255の8bit整数値)となり
+ます。</p>
+<p>バイナリ型のデータは、以下のメソッドを備えています。</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Binary.decode">
+<span class="sig-prename descclassname"><span class="pre">Binary.</span></span><span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">encoding</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Binary.decode" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>バイト列を指定したencodingで指定されたエンコーディングで解釈して文字列に変換します。
+encodingの指定を省略した場合は、'utf-8'として解釈されます。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Binary.hex">
+<span class="sig-prename descclassname"><span class="pre">Binary.</span></span><span class="sig-name descname"><span class="pre">hex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Binary.hex" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>バイト列の各バイト値を2桁の16進表記で表した文字列に変換します。</p>
+</dd></dl>
+
+</section>
+<section id="data_type-Float">
+<span id="id21"></span><h4><span class="section-number">4.3.1.4. </span>浮動小数型(Float)<a class="headerlink" href="#data_type-Float" title="この見出しへのパーマリンク">¶</a></h4>
+<p>浮動小数型は、浮動小数点数を値にとる型です。</p>
+</section>
+<section id="data_type-Boolean">
+<span id="id22"></span><h4><span class="section-number">4.3.1.5. </span>ブール型(Boolean)<a class="headerlink" href="#data_type-Boolean" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ブール型は、真理値の真(true)と偽(false)という2つの値をとる型です。</p>
+</section>
+<section id="data_type-Null">
+<span id="id23"></span><h4><span class="section-number">4.3.1.6. </span>ヌル型(Null)<a class="headerlink" href="#data_type-Null" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ヌル型は、null 値のみを持つ型です。</p>
+</section>
+<section id="data_type-Pattern">
+<span id="id24"></span><h4><span class="section-number">4.3.1.7. </span>パターン型(Pattern)<a class="headerlink" href="#data_type-Pattern" title="この見出しへのパーマリンク">¶</a></h4>
+<p>パターン型は、文字列とマッチングを行うためのパターンを表す値の型です。
+パターンの種別は、'r' (正規表現パターン)、'g' (glob パターン)、'e' (完
+全一致パターン) の 3 種類あります。また、パターンマッチングのモードとし
+て、大文字、小文字を区別しないモード ('i') を組み合わせることもできます。</p>
+<p>正規表現パターンは、プログラミング言語 Python の re モジュールの正規表
+現に準じています。</p>
+<p>glob パターン では、Unix のシェル形式のワイルドカードを用いることができ、
+以下の特別な文字に対応しています。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>パターン</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>*</p></td>
+<td><p>すべてにマッチします</p></td>
+</tr>
+<tr class="row-odd"><td><p>?</p></td>
+<td><p>任意の一文字にマッチします</p></td>
+</tr>
+<tr class="row-even"><td><p>[seq]</p></td>
+<td><p>seq にある任意の文字にマッチします</p></td>
+</tr>
+<tr class="row-odd"><td><p>[!seq]</p></td>
+<td><p>seq にない任意の文字にマッチします</p></td>
+</tr>
+</tbody>
+</table>
+<p>完全一致パターンでは文字列以外の値で一致比較することもできます。</p>
+<p>パターン型のデータは、以下のメソッドを備えています。</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Pattern.match">
+<span class="sig-prename descclassname"><span class="pre">Pattern.</span></span><span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Boolean"><span class="pre">Boolean</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Dictionary"><span class="pre">Dictionary</span></a></em><a class="headerlink" href="#method-Pattern.match" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>文字列 s とパターンとのマッチングを試みます。マッチした場合は true、
+もしくはパターンが正規表現パターンの場合はマッチした情報を格納した
+辞書を返します。マッチしなかった場合は、false を返します。
+正規表現パターンまたは glob パターンで、s に文字列以外を渡した場合は false を返します。</p>
+</dd></dl>
+
+<p>正規表現パターンがマッチした際に返す辞書データには、以下のエントリが含まれます。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>キー</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>group</p></td>
+<td><p>正規表現にマッチした文字列</p></td>
+</tr>
+<tr class="row-odd"><td><p>groups</p></td>
+<td><p>すべてのサブグループの文字列を含むリスト</p></td>
+</tr>
+<tr class="row-even"><td><p>groupdict</p></td>
+<td><p>名前付きグループの辞書</p></td>
+</tr>
+<tr class="row-odd"><td><p>start</p></td>
+<td><p>マッチの開始位置</p></td>
+</tr>
+<tr class="row-even"><td><p>end</p></td>
+<td><p>マッチの終了位置</p></td>
+</tr>
+</tbody>
+</table>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.6.8.post1 で変更: </span>正規表現パターンまたは glob パターンで、match(s) メソッドに文字列以外を渡した場合は false を返すようになりました。</p>
+</div>
+</section>
+</section>
+<section id="id25">
+<h3><span class="section-number">4.3.2. </span>複合データ型<a class="headerlink" href="#id25" title="この見出しへのパーマリンク">¶</a></h3>
+<p>複合データ型は、他の型の複数の要素を保持することができるデータの型の総称で、配列型と辞書型および遅延評価配列型の3種類があります。</p>
+<section id="array">
+<span id="data_type-Array"></span><h4><span class="section-number">4.3.2.1. </span>配列型(Array)<a class="headerlink" href="#array" title="この見出しへのパーマリンク">¶</a></h4>
+<p>配列型のデータは、要素を1次元に並べたデータ構造で、整数のインデックスで
+要素にアクセスすることができます。配列の長さが n の場合、インデックスは
+0, 1, ..., n - 1 となります。配列 a の要素 i は a[i] で参照することがで
+きます。インデックス i が負の場合、 a[i] は 要素 n+i を参照します。</p>
+<p>配列の範囲外の要素にアクセスした場合、実行時エラーとなります。また、配
+列は拡張することはできません。</p>
+<p>配列型のデータは、以下のメソッドを備えています。</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Array.add_item">
+<span class="sig-prename descclassname"><span class="pre">Array.</span></span><span class="sig-name descname"><span class="pre">add_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#method-Array.add_item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>配列 a の最後にデータ value を追加します。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Array.del_item">
+<span class="sig-prename descclassname"><span class="pre">Array.</span></span><span class="sig-name descname"><span class="pre">del_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#method-Array.del_item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>配列 a の要素 a[index] を削除します。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Array.pop_item">
+<span class="sig-prename descclassname"><span class="pre">Array.</span></span><span class="sig-name descname"><span class="pre">pop_item</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#method-Array.pop_item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>配列 a の要素 a[index] を削除します。indexが指定されなければ最後の要素を削除します。</p>
+</dd></dl>
+
+</section>
+<section id="dictionary">
+<span id="data_type-Dictionary"></span><h4><span class="section-number">4.3.2.2. </span>辞書型(Dictionary)<a class="headerlink" href="#dictionary" title="この見出しへのパーマリンク">¶</a></h4>
+<p>辞書型のデータは、要素を複合データ型を除く任意の型のキーで関連づけられ
+た要素にアクセスすることができるデータ構造です。辞書 d のキー k で関連
+づけられた要素は、d[k] で参照することができます。キー k が文字列型の値
+で、かつ、識別子(IDENTIFIER)の字句要件を満たす文字列の場合、d.k で参照
+することもできます。</p>
+<p>辞書に含まれていないキーで要素を参照しようとした場合、実行時のエラーに
+なります。書き込みジョブ（後述）によって新しいキーと要素を追加すること
+ができます。</p>
+<p>辞書型のデータは、以下のメソッドを備えています。</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Dictionary.del_item">
+<span class="sig-prename descclassname"><span class="pre">Dictionary.</span></span><span class="sig-name descname"><span class="pre">del_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#method-Dictionary.del_item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>辞書 d の要素 d[key] を削除します。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Dictionary.get_item">
+<span class="sig-prename descclassname"><span class="pre">Dictionary.</span></span><span class="sig-name descname"><span class="pre">get_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#method-Dictionary.get_item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>辞書 d の要素 d[key] を取得します。要素 d[key] が存在しない場合、default を返します。default のデフォルト値は null です。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Dictionary.pop_item">
+<span class="sig-prename descclassname"><span class="pre">Dictionary.</span></span><span class="sig-name descname"><span class="pre">pop_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#method-Dictionary.pop_item" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>辞書 d の要素 d[key] を削除します。要素 d[key] が存在しない場合、default を返します。default が与えられず、かつ、要素 d[key] が存在しない場合は、エラーとなります。</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Dictionary.get_keys">
+<span class="sig-prename descclassname"><span class="pre">Dictionary.</span></span><span class="sig-name descname"><span class="pre">get_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#method-Dictionary.get_keys" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>辞書 d のキーのリストを返します。</p>
+</dd></dl>
+
+</section>
+<section id="lazyarray">
+<span id="data_type-LazyArray"></span><h4><span class="section-number">4.3.2.3. </span>遅延評価配列型(LazyArray)<a class="headerlink" href="#lazyarray" title="この見出しへのパーマリンク">¶</a></h4>
+<p>遅延評価配列型のデータは配列型と似たデータ構造で、整数インデックスで要素にアクセスすることができます。
+ただし、名前が示すようにデータの内容は実際にアクセスしたときにはじめて決まるという特徴があります。</p>
+<p>遅延評価配列型はオブジェクトの検索結果などを示す結果として返される型として利用されます。
+そのためジョブフローで遅延評価配列型のデータを直接記述することは出来ません。</p>
+<p>オブジェクトの検索結果を示す結果として遅延評価配列型が返されたとしても、その時点では指定した検索条件などを内部に持っているだけです。
+実際にアクセスしたときにその検索条件でデータベースに問い合わせる、という動きをすることから遅延評価と呼ばれます。
+このことから、遅延評価配列型はそのデータにアクセスするタイミングで結果が異なる場合があることに注意してください。</p>
+<p>以下では、通常の配列型とは内部的な振る舞いが異なる点について簡単に説明します。</p>
+<p>length() 組み込み関数に遅延評価配列型を渡した場合は、その時点での検索条件に該当するオブジェクトの個数をデータベースに問い合わせて返します。
+また、遅延評価配列型に整数インデックスで要素にアクセスする場合、アクセスのたびに1件づつデータベースに問い合わせてオブジェクトを返します。</p>
+<p>こうした特徴から length() で件数を取得して、その個数によるループ処理で整数インデックスでアクセスすると、個数に応じてデータベースへの問い合わせ回数が増えることになります。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[found = /root.find()] -&gt;
+{ for i in length(found) |
+    [obj = found[i]] -&gt;
+    ...
+}
+</pre></div>
+</div>
+<p>遅延評価配列型は for ブロック（または pfor ブロック）で反復処理することもできます。
+この場合は、ブロック開始時に検索条件に該当するオブジェクトをデータベースに問い合わせて、1件づつメモリに展開されてブロック内部の処理に渡されます。</p>
+<p>整数インデックスによる繰り返しアクセスではなく、for ブロックでの反復処理にすることでデータベースへの問い合わせ回数を減らすことができます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[found = /root.find()] -&gt;
+{ for obj in found |
+    ...
+}
+</pre></div>
+</div>
+<p>for ブロック内部では、当該オブジェクトのフィールド値を更新したり、オブジェクトを削除することもできます。</p>
+<p>遅延評価配列型は + 演算子で配列型（または遅延評価配列型）と結合することができます。
+この場合は、その時点での検索条件に該当するオブジェクトをデータベースに全件を問い合わせます。
+また、結合された値は通常の配列型となり、すべての要素をメモリ上に持つことになります。
+このような全件問い合わせを伴う処理では、該当するオブジェクトの個数が多いほど、処理時間とメモリ使用量が増加することに注意してください。</p>
+<p>遅延評価配列型はその特徴から、add_item, del_item, pop_item メソッドなどで要素を追加したり削除したりすることは出来ません。</p>
+<p>遅延評価配列型のデータは、以下のメソッドを備えています。</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-LazyArray.delete">
+<span class="sig-prename descclassname"><span class="pre">LazyArray.</span></span><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#method-LazyArray.delete" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このメソッドを呼び出した時点で該当するオブジェクトをすべて削除します。
+このメソッドは削除したオブジェクトの個数を返します。</p>
+</dd></dl>
+
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.8 で追加: </span>新たに遅延評価配列型が追加されました。</p>
+</div>
+</section>
+</section>
+<section id="id26">
+<h3><span class="section-number">4.3.3. </span>不透明データ型<a class="headerlink" href="#id26" title="この見出しへのパーマリンク">¶</a></h3>
+<p>不透明データ型は、データの内部構造が隠ぺいされたデータ型の総称です。ま
+た、対応するデータコンストラクタを持たないため、複合データ型のようにジョ
+ブフロープログラムのソースコード中の表記によって直接データを生成するこ
+とはできません。</p>
+<section id="object">
+<span id="data_type-Object"></span><h4><span class="section-number">4.3.3.1. </span>オブジェクト型(Object)<a class="headerlink" href="#object" title="この見出しへのパーマリンク">¶</a></h4>
+<p>オブジェクト型の値は、Kompira ファイルシステム上のオブジェクトの参照を
+表現します。オブジェクト型の値の文字列表現はそのオブジェクトの絶対パス
+となります。オブジェクト o のプロパティ p は、o.p で、フィールド f は
+o[f] という表記でアクセスすることができます。フィールド f と同名のプロ
+パティ名やメソッド名が無ければ、o.f という表記でフィールドを参照できま
+す。</p>
+<p>Kompiraのオブジェクトは、型オブジェクト(TypeObject) によって定義される
+フィールドとメソッドを備えています。詳細はKompiraオブジェクトリファレン
+ス（<a class="reference internal" href="library.html"><span class="doc">Kompira 標準ライブラリ</span></a>）を参照してください。</p>
+</section>
+<section id="file">
+<span id="data_type-File"></span><h4><span class="section-number">4.3.3.2. </span>ファイル型(File)<a class="headerlink" href="#file" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ファイル型の値は、ファイル型フィールドを持つオブジェクトに添付されるファ
+イルデータを表します。</p>
+<p>ファイル型の値には以下のフィールドが定義されています。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>フィールド名</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>添付ファイル名</p></td>
+</tr>
+<tr class="row-odd"><td><p>data</p></td>
+<td><p>添付ファイルデータ</p></td>
+</tr>
+<tr class="row-even"><td><p>size</p></td>
+<td><p>データサイズ (読み取り専用)</p></td>
+</tr>
+<tr class="row-odd"><td><p>url</p></td>
+<td><p>ダウンロードURL (読み取り専用)</p></td>
+</tr>
+</tbody>
+</table>
+<p>name と data をキーとする辞書データを以下のように更新ジョブに渡すこと
+で、ファイル型フィールドに値を書き込む (すなわちジョブフローからファイ
+ルを作成する) ことが可能です。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[{&#39;name&#39;: &#39;binary.txt&#39;, &#39;data&#39;: b&#39;\xde\xad\xbe\xef \xca\xfe&#39;} &gt;&gt; ./some_obj[&#39;attached1&#39;]]
+</pre></div>
+</div>
+<p>基本的に data にはバイナリデータを渡しますが、以下のように文字列を渡す
+こともできます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[{&#39;name&#39;: &#39;some.txt&#39;, &#39;data&#39;: &#39;こんにちは&#39;} &gt;&gt; ./some_obj[&#39;attached1&#39;]]
+</pre></div>
+</div>
+<p>この場合は、UTF-8 でエンコードされ、バイナリデータとしてファイルに書き
+込まれます。</p>
+<p>以下のように既存ファイルの名称やデータのみを更新することも可能です。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;update.txt&#39; &gt;&gt; ./some_obj[&#39;attached1&#39;][&#39;name&#39;]] -&gt;    # ファイル名を &quot;update.txt&quot; に更新
+[&#39;new text&#39; &gt;&gt; ./some_obj[&#39;attached1&#39;][&#39;data&#39;]]         # ファイルデータを &quot;new text&quot; に更新
+</pre></div>
+</div>
+<p>ジョブフローによってファイルを削除する場合は、以下のように null 値を更
+新ジョブに渡します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[null &gt;&gt; ./some_obj[&#39;attached1&#39;]]
+</pre></div>
+</div>
+</section>
+<section id="datetime">
+<span id="data_type-Datetime"></span><h4><span class="section-number">4.3.3.3. </span>日時型(Datetime)<a class="headerlink" href="#datetime" title="この見出しへのパーマリンク">¶</a></h4>
+<p>日時型の値は、日付と時刻の両方を含むデータを表します。</p>
+<p>日時型の値は以下の読み取り専用のプロパティを備えています。</p>
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.year">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">year</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.year" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>年を示す値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.month">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">month</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.month" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>月を示す 1 から 12 までの値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.day">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">day</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.day" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>1 から与えられた月と年における日数までの値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.hour">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">hour</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.hour" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>時を示す 0 から 23 までの値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.minute">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">minute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.minute" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>分を示す 0 から 59 までの値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.second">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">second</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.second" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>秒を示す 0 から 59 までの値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.weekday">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">weekday</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.weekday" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>月曜日を 0、日曜日を 6 として、曜日を整数で表した値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.date">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Date"><span class="pre">Date</span></a></em><a class="headerlink" href="#property-Datetime.date" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>日時型データのうち日付部分</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.time">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Time"><span class="pre">Time</span></a></em><a class="headerlink" href="#property-Datetime.time" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>日時型データのうち時刻部分</p>
+</dd></dl>
+
+<p>日時型のデータは、以下のメソッドを備えています。</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Datetime.format">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt_fmt</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Datetime.format" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>dt_fmt で指定されたフォーマットで日時データを文字列に変換します。フォー
+マットの書式指定は、C言語のstrftime()関数に準じています。</p>
+<p>以下に例を示します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[dt = now()] -&gt; print(dt.format(&#39;%Y年%m月%d日 %H時%M分%S秒&#39;))
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Datetime.isoformat">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">isoformat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Datetime.isoformat" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><cite>YYYY-MM-DDTHH:mm:ssZ</cite> の形式（ISO 8601 フォーマット）の文字列を返します。
+タイムゾーンは常に UTC となり、<cite>Z</cite> の接尾辞がつきます。</p>
+</dd></dl>
+
+</section>
+<section id="date">
+<span id="data_type-Date"></span><h4><span class="section-number">4.3.3.4. </span>日付型(Date)<a class="headerlink" href="#date" title="この見出しへのパーマリンク">¶</a></h4>
+<p>日付型の値は、日付のデータを表します。</p>
+<p>日付型の値は以下の読み取り専用のプロパティを備えています。</p>
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Date.year">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">year</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Date.year" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>年を示す値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Date.month">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">month</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Date.month" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>月を示す 1 から 12 までの値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Date.day">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">day</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Date.day" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>日を示す、1 から与えられた月と年における日数までの値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Date.weekday">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">weekday</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Date.weekday" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>月曜日を 0、日曜日を 6 として、曜日を整数で表した値</p>
+</dd></dl>
+
+<p>日付型のデータは、以下のメソッドを備えています。</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Date.format">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt_fmt</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Date.format" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>dt_fmt で指定されたフォーマットで日付データを文字列に変換します。フォー
+マットの書式指定は、C言語のstrftime()関数に準じています。</p>
+</dd></dl>
+
+</section>
+<section id="time">
+<span id="data_type-Time"></span><h4><span class="section-number">4.3.3.5. </span>時刻型(Time)<a class="headerlink" href="#time" title="この見出しへのパーマリンク">¶</a></h4>
+<p>時刻型の値は、時刻のデータを表します。</p>
+<p>時刻型の値は以下の読み取り専用のプロパティを備えています。</p>
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Time.hour">
+<span class="sig-prename descclassname"><span class="pre">Time.</span></span><span class="sig-name descname"><span class="pre">hour</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Time.hour" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>時を示す 0 から 23 までの値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Time.minute">
+<span class="sig-prename descclassname"><span class="pre">Time.</span></span><span class="sig-name descname"><span class="pre">minute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Time.minute" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>分を示す 0 から 59 までの値</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Time.second">
+<span class="sig-prename descclassname"><span class="pre">Time.</span></span><span class="sig-name descname"><span class="pre">second</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Time.second" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>秒を示す 0 から 59 までの値</p>
+</dd></dl>
+
+<p>時刻型のデータは、以下のメソッドを備えています。</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Time.format">
+<span class="sig-prename descclassname"><span class="pre">Time.</span></span><span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt_fmt</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Time.format" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>dt_fmt で指定されたフォーマットで時刻データを文字列に変換します。フォー
+マットの書式指定は、C言語のstrftime()関数に準じています。</p>
+</dd></dl>
+
+</section>
+<section id="timedelta">
+<span id="data_type-Timedelta"></span><h4><span class="section-number">4.3.3.6. </span>経過時間型(Timedelta)<a class="headerlink" href="#timedelta" title="この見出しへのパーマリンク">¶</a></h4>
+<p>経過時間型の値は、日時型の値の差分を表すデータです。日時型の値と経過時
+間型の値の間で、加算と減算が可能です。また、日時型の値同士の差分は経過
+時間型となります。</p>
+<p>経過時間型の値は以下の読み取り専用のプロパティを備えています。</p>
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Timedelta.days">
+<span class="sig-prename descclassname"><span class="pre">Timedelta.</span></span><span class="sig-name descname"><span class="pre">days</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Timedelta.days" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>日数</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Timedelta.seconds">
+<span class="sig-prename descclassname"><span class="pre">Timedelta.</span></span><span class="sig-name descname"><span class="pre">seconds</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Timedelta.seconds" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>秒数</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Timedelta.microseconds">
+<span class="sig-prename descclassname"><span class="pre">Timedelta.</span></span><span class="sig-name descname"><span class="pre">microseconds</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Timedelta.microseconds" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>マイクロ秒数</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Timedelta.total_seconds">
+<span class="sig-prename descclassname"><span class="pre">Timedelta.</span></span><span class="sig-name descname"><span class="pre">total_seconds</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Float"><span class="pre">Float</span></a></em><a class="headerlink" href="#property-Timedelta.total_seconds" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>経過時間のトータル秒数</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+<section id="id27">
+<h2><span class="section-number">4.4. </span>変数<a class="headerlink" href="#id27" title="この見出しへのパーマリンク">¶</a></h2>
+<p>変数は値を保持するための記憶領域に付けた名前のことです。Kompira ジョブ
+フロー言語における変数は、任意の型の値を保持することができます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>fork や pfor ブロックによって生成された子プロセス同士、あるいは親プ
+ロセスと子プロセスの間では、同じスコープであっても変数は共有されませ
+ん。ただし、子プロセスから、子プロセスが生成された時点の親プロセスの
+スコープの変数を参照する（読み取る）ことは可能です。</p>
+</div>
+<section id="id28">
+<h3><span class="section-number">4.4.1. </span>ローカル変数<a class="headerlink" href="#id28" title="この見出しへのパーマリンク">¶</a></h3>
+<p>ローカル変数は、ジョブフローのパラメータ、代入ジョブによって導入されま
+す。ローカル変数はその変数が導入されるソースコード上の位置によって異な
+るスコープを持ちます。</p>
+<section id="id29">
+<h4><span class="section-number">4.4.1.1. </span>ジョブフロースコープ<a class="headerlink" href="#id29" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ジョブフロースコープは、その変数が導入されたジョブの後続の任意のジョブ
+から参照できるスコープです。ジョブフローパラメータはジョブフロースコー
+プを持ちます。また代入ジョブによって未定義変数が新たに導入された場合に
+は、その変数はジョブフロースコープを持ちます。</p>
+<p>ジョブフロースコープの変数は、同名の変数が内側のブロックスコープで再定
+義された場合、隠されます。</p>
+</section>
+<section id="id30">
+<h4><span class="section-number">4.4.1.2. </span>ブロックスコープ<a class="headerlink" href="#id30" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ブロックスコープは、そのブロックの内側からのみ参照できるスコープです。
+単純ブロックで定義される変数や、for や pfor ブロックによって導入される
+ループ変数は、ブロックスコープを持ちます。</p>
+</section>
+</section>
+<section id="id31">
+<h3><span class="section-number">4.4.2. </span>環境変数<a class="headerlink" href="#id31" title="この見出しへのパーマリンク">¶</a></h3>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">バージョン 1.6 で非推奨: </span>環境変数はバージョン1.6.0で廃止されました。
+代わりに$ENV状態変数を使用してください。</p>
+</div>
+</section>
+<section id="id32">
+<h3><span class="section-number">4.4.3. </span>特殊変数<a class="headerlink" href="#id32" title="この見出しへのパーマリンク">¶</a></h3>
+<p>特殊変数は、システムによってあからじめ定義された特別な意味を持つ変数で
+す。</p>
+<section id="status-variables">
+<span id="id33"></span><h4><span class="section-number">4.4.3.1. </span>状態変数<a class="headerlink" href="#status-variables" title="この見出しへのパーマリンク">¶</a></h4>
+<p>状態変数はリモートジョブなどの実行結果やステータスコードなどを一時的に
+格納するための予約された変数であり、$で始まる変数です。これらの変数は、
+Kompiraエンジンによって自動的に値がセットされるものであり、ジョブフロー
+の中で明示的に代入を行うことはできません。</p>
+<p>状態変数には、以下の種類があります。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>変数名</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>$RESULT</p></td>
+<td><p>ジョブの実行結果(標準出力)</p></td>
+</tr>
+<tr class="row-odd"><td><p>$STATUS</p></td>
+<td><p>ジョブの実行ステータス</p></td>
+</tr>
+<tr class="row-even"><td><p>$ERROR</p></td>
+<td><p>ジョブ実行のエラーメッセージ(標準エラー出力)</p></td>
+</tr>
+<tr class="row-odd"><td><p>$DEBUG</p></td>
+<td><p>デバッグ情報</p></td>
+</tr>
+<tr class="row-even"><td><p>$ENV</p></td>
+<td><p>環境変数辞書</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ジョブの実行結果の文字コードは自動判別され、適切な文字列に変換されます。
+文字列への変換に失敗した場合、ジョブの実行は失敗とみなされ、エラーを返します。</p>
+</div>
+<p>$ENV 状態変数は、ジョブフロー実行ユーザの設定する環境変数型
+(Environment)オブジェクトの環境変数フィールドの辞書が格納されます。</p>
+</section>
+<section id="control-variables">
+<span id="id34"></span><h4><span class="section-number">4.4.3.2. </span>制御変数<a class="headerlink" href="#control-variables" title="この見出しへのパーマリンク">¶</a></h4>
+<p>制御変数は、リモートジョブを実行する際のホスト名やログイン名などを指定
+するための変数であり、__*__のように2つ続きのアンダースコア (_)が前後に
+付加された形式の変数です。</p>
+<p>制御変数はローカル変数として定義することもできますし、環境変数として設
+定しておくことも可能です。</p>
+<p>制御変数には、以下の種類があります。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>変数名</p></th>
+<th class="head"><p>意味</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>__realm__</p></td>
+<td><p>リモートコマンドを実行する管理領域を指定する</p></td>
+</tr>
+<tr class="row-odd"><td><p>__host__</p></td>
+<td><p>リモートコマンドの実行ホスト名を指定する</p></td>
+</tr>
+<tr class="row-even"><td><p>__conntype__</p></td>
+<td><p>リモートコマンドの実行ホストの接続種別を指定する。
+（指定できる接続種別については <a class="reference internal" href="admin.html#node"><span class="std std-ref">ノードの設定</span></a> を参照）</p></td>
+</tr>
+<tr class="row-odd"><td><p>__user__</p></td>
+<td><p>リモートコマンドの実行ユーザー名を指定する</p></td>
+</tr>
+<tr class="row-even"><td><p>__password__</p></td>
+<td><p>パスワードを指定する</p></td>
+</tr>
+<tr class="row-odd"><td><p>__node__</p></td>
+<td><p>リモートコマンドを実行するノード情報オブジェクトを指定する</p></td>
+</tr>
+<tr class="row-even"><td><p>__account__</p></td>
+<td><p>リモートコマンドを実行するために必要なアカウント情報オブジェクトを指定する</p></td>
+</tr>
+<tr class="row-odd"><td><p>__sudo__</p></td>
+<td><p>sudoモードで実行する場合はtrueにセットする</p></td>
+</tr>
+<tr class="row-even"><td><p>__dir__</p></td>
+<td><p>リモートコマンドの実行ディレクトリを指定する</p></td>
+</tr>
+<tr class="row-odd"><td><p>__port__</p></td>
+<td><p>sshポート番号を指定する</p></td>
+</tr>
+<tr class="row-even"><td><p>__keyfile__</p></td>
+<td><p>ssh鍵ファイルパスを指定する</p></td>
+</tr>
+<tr class="row-odd"><td><p>__passphrase__</p></td>
+<td><p>ssh鍵ファイルのパスフレーズを指定する
+(パスフレーズ無しの場合や__password__と同じなら省略可能)</p></td>
+</tr>
+<tr class="row-even"><td><p>__timeout__</p></td>
+<td><p>リモートコマンドがタイムアウトするまでの秒数を指定する</p></td>
+</tr>
+<tr class="row-odd"><td><p>__proxy__</p></td>
+<td><p>実行ホストに接続する際の経由ホストを指定する</p></td>
+</tr>
+<tr class="row-even"><td><p>__shell__</p></td>
+<td><p>リモードコマンド実行時に利用するshellを指定する(デフォルト: &quot;/bin/bash&quot;)</p></td>
+</tr>
+<tr class="row-odd"><td><p>__use_shell__</p></td>
+<td><p>リモートコマンド実行時にshellを利用しない場合はfalseをセットする</p></td>
+</tr>
+<tr class="row-even"><td><p>__use_pty__</p></td>
+<td><p>リモートコマンド実行時にPTYを利用する場合はtrueをセットする</p></td>
+</tr>
+<tr class="row-odd"><td><p>__use_cache__</p></td>
+<td><p>リモート接続キャッシュを利用しない場合はfalseをセットする</p></td>
+</tr>
+<tr class="row-even"><td><p>__raw_stdout__</p></td>
+<td><p>標準出力をバイナリとして受け取る場合はtrueをセットする</p></td>
+</tr>
+<tr class="row-odd"><td><p>__raw_stderr__</p></td>
+<td><p>標準エラー出力をバイナリとして受け取る場合はtrueをセットする</p></td>
+</tr>
+<tr class="row-even"><td><p>__encoding__</p></td>
+<td><p>標準入出力のエンコードを指定する(デフォルト: &quot;utf-8&quot;)</p></td>
+</tr>
+<tr class="row-odd"><td><p>__winrs_auth_type__</p></td>
+<td><p>WinRS接続の認証方式を&quot;ntlm&quot;(デフォルト), &quot;credssp&quot;から指定する。</p></td>
+</tr>
+<tr class="row-even"><td><p>__winrs_scheme__</p></td>
+<td><p>WinRS接続のスキームを&quot;https&quot;(デフォルト), &quot;http&quot;から指定する。</p></td>
+</tr>
+<tr class="row-odd"><td><p>__winrs_use_tlsv1_0__</p></td>
+<td><p>WinRS接続にてCredSSP認証を行う際にTLS1.0を使用する場合はtrueをセットする。
+(WindowsServer2008など、TLS1.2を使用出来ない環境向け)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">バージョン 1.4 で非推奨: </span>制御変数 __via__ はバージョン1.4.0で廃止されました。
+かわりに__proxy__を使用してください。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.0 で追加: </span>制御変数 __raw_stdout__, __raw_stderr__ が追加されました。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.2.post6 で追加: </span>制御変数 __use_cache__ が追加されました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.6.4 で変更: </span>制御変数 __conntype__ が拡張されて、ネットワーク機器を指定できるようになりました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.6.4 で変更: </span>制御変数 __conntype__ において Windows 機器の指定方法が変更になりました。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.8.post2 で追加: </span>制御変数 __encoding__ が追加されました (1.6.0 以降で利用できます)。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>WinRS接続の場合は、__use_cache__ の設定にかかわらず常にリモート接続キャッシュは使用しません。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>__dir__ で指定するディレクトリ文字列に ( や )、&quot; や ' など、シェル
+のメタ文字が含まれる場合は、以下のように適切にエスケープする必要が
+あります。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[__dir__ = &#39;somedir\\(foo\\)&#39;]
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>__sudo__ = true かつ __use_shell__ = false のとき、__dir__ は指定できません。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>__timeout__ を指定しない場合、もしくは、0 の値を設定した場合、リモー
+トコマンド実行時にタイムアウトはしません。__timeout__ に負の値を設
+定した場合の動作は未定義です。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.4.9 で変更.</span></p>
+</div>
+<p>winrs モードでは、実行しているリモートコマンドが出力を続けている限
+りはタイムアウトしません。すなわち、__timeout__ で指定した秒数の時
+間、出力が無い場合にタイムアウトします。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.5.4.post5 で変更.</span></p>
+</div>
+<p>winrs モードでコマンドの出力があっても __timeout__ で指定した秒数でタイムアウトするようになりました。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.4.8.post6 で変更.</span></p>
+</div>
+<p>winrs モードによるリモートコマンド実行では、 __timeout__ で指定した
+値と WinRM 側の MaxTimeoutms で設定した値のうち、より小さい値が適用
+されます。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.5.4.post5 で変更.</span></p>
+</div>
+<p>winrs モードでのコマンド実行において、__timeout__ によるタイムアウト指定が MaxTimeoutms より優先されるようになりました。</p>
+</div>
+</section>
+</section>
+</section>
+<section id="id35">
+<h2><span class="section-number">4.5. </span>式<a class="headerlink" href="#id35" title="この見出しへのパーマリンク">¶</a></h2>
+<p>ジョブフロープログラム中の式は、ジョブフローの実行過程の中で評価され、
+結果として何らかの値を持ちます。</p>
+<section id="id36">
+<h3><span class="section-number">4.5.1. </span>アトミック式<a class="headerlink" href="#id36" title="この見出しへのパーマリンク">¶</a></h3>
+<p>アトミックな式は、式を構成する基本単位となります。識別子やオブジェクト
+パス、リテラルはアトミックな式に含まれます。また、カッコで囲まれた形式
+も文法的にはアトミックな式に分類されます。</p>
+<pre>
+<strong id="grammar-token-atomic_expression">atomic_expression</strong> ::=  IDENTIFIER | OBJECT_PATH | SPECIAL_IDENTIFIER
+                       | <a class="reference internal" href="#grammar-token-literal"><code class="xref docutils literal notranslate"><span class="pre">literal</span></code></a>
+                       | <a class="reference internal" href="#grammar-token-parenth_form"><code class="xref docutils literal notranslate"><span class="pre">parenth_form</span></code></a>
+                       | <a class="reference internal" href="#grammar-token-array_expression"><code class="xref docutils literal notranslate"><span class="pre">array_expression</span></code></a>
+                       | <a class="reference internal" href="#grammar-token-dict_expression"><code class="xref docutils literal notranslate"><span class="pre">dict_expression</span></code></a>
+</pre>
+<section id="identifier">
+<h4><span class="section-number">4.5.1.1. </span>識別子(IDENTIFIER)<a class="headerlink" href="#identifier" title="この見出しへのパーマリンク">¶</a></h4>
+<p>アトミックな式としての識別子は、変数名を表します。変数名を評価すると、
+評価時の実行環境の下でその変数名に束縛された値を返します。</p>
+</section>
+<section id="id37">
+<h4><span class="section-number">4.5.1.2. </span>オブジェクトパス<a class="headerlink" href="#id37" title="この見出しへのパーマリンク">¶</a></h4>
+<p>オブジェクトパスは、そのパスが指し示すKompiraのオブジェクトを値として返
+します。オブジェクトパスが相対パス形式の場合は、相対パスの起点はそのジョ
+ブフローオブジェクトが所属するディレクトリとなります。たとえば、ジョブ
+フロー /root/test_jobflow の中で、./test_object が指し示すオブジェクト
+は、 /root/test_object となります。</p>
+<p>オブジェクトが存在しない場合、実行時エラーとなります。</p>
+</section>
+<section id="id38">
+<h4><span class="section-number">4.5.1.3. </span>特殊識別子<a class="headerlink" href="#id38" title="この見出しへのパーマリンク">¶</a></h4>
+<p>特殊識別子はジョブ実行後の状態変数を表します。ジョブフロー開始時点で、
+$STATUS は 0 に、$RESULT と $ERROR は空文字列(&quot;&quot;)にそれぞれ初期化されま
+す。</p>
+</section>
+<section id="id39">
+<h4><span class="section-number">4.5.1.4. </span>リテラル<a class="headerlink" href="#id39" title="この見出しへのパーマリンク">¶</a></h4>
+<p>リテラルは、文字列、バイナリ、整数値、浮動小数、真偽値、ヌルがあります。</p>
+<pre>
+<strong id="grammar-token-literal">literal</strong> ::=  STRING | BINARY | INTEGER | FLOAT | BOOLEAN | NULL
+</pre>
+<p>リテラルを評価すると、そのリテラルが示す値になります。</p>
+<p>文字列リテラルの場合、その文字列に含まれる $で前置された変数が展開されます。以下の規則に従います。</p>
+<ul class="simple">
+<li><p>$identifier は置換プレースホルダの指定で、&quot;identifier&quot;というキーへの対応付けに相当します。デフォルトは、&quot;identifier&quot;の部分にはKompiraの識別子が書かれていなければなりません。$の後に識別子に使えない文字が出現すると、そこでプレースホルダ名の指定が終わります。</p></li>
+<li><p>${identifier} は$identifier と同じです。プレースホルダ名の後ろに識別子として使える文字列が続いていて、それをプレースホルダ名の一部として扱いたくない場合に必要な書き方です。</p></li>
+</ul>
+<p>例えば、以下に示すジョブフローを実行すると、コンソールには &quot;Hello Kompira&quot; と出力されます。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[name = &#39;Kompira&#39;]
+-&gt; print(&#39;Hello $name&#39;)
+</pre></div>
+</div>
+</section>
+<section id="id40">
+<h4><span class="section-number">4.5.1.5. </span>丸カッコ形式<a class="headerlink" href="#id40" title="この見出しへのパーマリンク">¶</a></h4>
+<p>丸カッコ形式は、囲まれている式を評価し、その値を返します。</p>
+<pre>
+<strong id="grammar-token-parenth_form">parenth_form</strong> ::=  &quot;(&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;)&quot;
+</pre>
+</section>
+<section id="id41">
+<h4><span class="section-number">4.5.1.6. </span>配列式<a class="headerlink" href="#id41" title="この見出しへのパーマリンク">¶</a></h4>
+<p>配列式は、角カッコで囲われた式のカンマ区切りの並びです。式の並びは省略
+することも可能です。</p>
+<pre>
+<strong id="grammar-token-array_expression">array_expression</strong> ::=  &quot;[&quot; <a class="reference internal" href="#grammar-token-expression_list"><code class="xref docutils literal notranslate"><span class="pre">expression_list</span></code></a>? &quot;]&quot;
+<strong id="grammar-token-expression_list">expression_list </strong> ::=  <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-expression_list"><code class="xref docutils literal notranslate"><span class="pre">expression_list</span></code></a>)*
+</pre>
+<p>配列式を評価すると、新たに作成された配列型のデータを値として返します。
+配列の各要素は左から右へと順に評価されます。</p>
+</section>
+<section id="id42">
+<h4><span class="section-number">4.5.1.7. </span>辞書式<a class="headerlink" href="#id42" title="この見出しへのパーマリンク">¶</a></h4>
+<p>辞書式は、波カッコで囲われたキーと値のペアのカンマ区切りの並びです。ペ
+アの並びは省略することも可能です。ペアが等号で結ばれる場合、キーは識別
+子でなくてはなりません。キーが重複している場合はコンパイル時にエラーを
+報告します。コロンで結ばれる場合は、キーは任意の式を記述することができ
+ます。この場合はキーの重複はチェックされません。</p>
+<pre>
+<strong id="grammar-token-dict_expression">dict_expression</strong> ::=  &quot;{&quot; ( <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a> | <a class="reference internal" href="#grammar-token-key_val_list"><code class="xref docutils literal notranslate"><span class="pre">key_val_list</span></code></a> )? &quot;}&quot;
+<strong id="grammar-token-binding_list">binding_list   </strong> ::=  <a class="reference internal" href="#grammar-token-binding"><code class="xref docutils literal notranslate"><span class="pre">binding</span></code></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a>)*
+<strong id="grammar-token-binding">binding        </strong> ::=  IDENTIFIER &quot;=&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>
+<strong id="grammar-token-key_val_list">key_val_list   </strong> ::=  <a class="reference internal" href="#grammar-token-key_val"><code class="xref docutils literal notranslate"><span class="pre">key_val</span></code></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-key_val_list"><code class="xref docutils literal notranslate"><span class="pre">key_val_list</span></code></a>)*
+<strong id="grammar-token-key_val">key_val        </strong> ::=  <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;:&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>
+</pre>
+<p>辞書式を評価すると、新たに作成された辞書型のデータを値として返します。
+カンマ区切りの一連のキーと値のペアが与えられると、その要素は左から右へ
+評価され、辞書の項目を定義します。重複したキーを与えると文法エラーとな
+ります。</p>
+</section>
+</section>
+<section id="id43">
+<h3><span class="section-number">4.5.2. </span>後置式<a class="headerlink" href="#id43" title="この見出しへのパーマリンク">¶</a></h3>
+<p>後置式は、式の中で最も結合性が高くなります。</p>
+<pre>
+<strong id="grammar-token-postfix_expression">postfix_expression</strong> ::=  <a class="reference internal" href="#grammar-token-attribute_reference"><code class="xref docutils literal notranslate"><span class="pre">attribute_reference</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-subscript_reference"><code class="xref docutils literal notranslate"><span class="pre">subscript_reference</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-function_call"><code class="xref docutils literal notranslate"><span class="pre">function_call</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>
+</pre>
+<section id="id44">
+<h4><span class="section-number">4.5.2.1. </span>属性参照<a class="headerlink" href="#id44" title="この見出しへのパーマリンク">¶</a></h4>
+<p>属性参照は、後置式の後にドットがあり、さらに識別子が続く形式です。</p>
+<pre>
+<strong id="grammar-token-attribute_reference">attribute_reference</strong> ::=  <a class="reference internal" href="#grammar-token-postfix_expression"><code class="xref docutils literal notranslate"><span class="pre">postfix_expression</span></code></a> &quot;.&quot; IDENTIFIER
+</pre>
+<p>後置式の評価結果は、オブジェクト型でなければいけません。後置式の評価結
+果のオブジェクトの識別子で指定された属性が評価結果の値となります。指定
+された属性が存在しない場合は、識別子の文字列をキーとしてオブジェクトの
+フィールド値となります。そのようなフィールドも存在しない場合は、実行時
+エラーとなります。</p>
+</section>
+<section id="id45">
+<h4><span class="section-number">4.5.2.2. </span>添字参照<a class="headerlink" href="#id45" title="この見出しへのパーマリンク">¶</a></h4>
+<p>角カッコで囲まれた式が後に付いている後置式は、オブジェクトのフィールド
+や配列、辞書データから要素を取り出す式を表します。</p>
+<pre>
+<strong id="grammar-token-subscript_reference">subscript_reference</strong> ::=  <a class="reference internal" href="#grammar-token-postfix_expression"><code class="xref docutils literal notranslate"><span class="pre">postfix_expression</span></code></a> &quot;[&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;]&quot;
+</pre>
+<p>後置式の評価結果は、オブジェクト型、辞書型、配列型のいずれかでなければ
+いけません。後置式の評価結果がオブジェクト型か辞書型の場合、角カッコの
+中の式の評価結果は文字列型である必要があります。この場合、文字列をキー
+としてオブジェクトのフィールドや辞書データの要素が選択されます。後置式
+が配列型の場合、角カッコの中の式は整数型である必要があります。この場合、
+整数値をインデックスとして該当する配列の要素が選択されます。</p>
+<p>キーやインデックスに対応する要素が存在しない場合、実行時エラーとなりま
+す。</p>
+</section>
+<section id="id46">
+<h4><span class="section-number">4.5.2.3. </span>関数呼び出し<a class="headerlink" href="#id46" title="この見出しへのパーマリンク">¶</a></h4>
+<p>関数呼び出しは、組み込み関数やライブラリ型オブジェクトで定義された関数、
+オブジェクトのメソッドを引数のリストとともに呼び出します。引数リストは
+式リストとそれに続く束縛リスト（キーワード引数リスト）から構成され、そ
+れぞれ空でもかまいません。</p>
+<pre>
+<strong id="grammar-token-function_call">function_call</strong> ::=  <a class="reference internal" href="#grammar-token-postfix_expression"><code class="xref docutils literal notranslate"><span class="pre">postfix_expression</span></code></a> &quot;(&quot; <a class="reference internal" href="#grammar-token-argument_list"><code class="xref docutils literal notranslate"><span class="pre">argument_list</span></code></a>? &quot;)&quot;
+<strong id="grammar-token-argument_list">argument_list</strong> ::=  <a class="reference internal" href="#grammar-token-expression_list"><code class="xref docutils literal notranslate"><span class="pre">expression_list</span></code></a> (&quot;,&quot; &quot;*&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>)?
+                     (&quot;,&quot; <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a>)? (&quot;,&quot; &quot;**&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>)?
+                   | <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a> (&quot;,&quot; &quot;**&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>)?
+                   | &quot;*&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a>)?
+                     (&quot;,&quot; &quot;**&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>)?
+                   | &quot;**&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>
+</pre>
+<p>関数呼び出しの際に構文 *atomic_expression が使われるなら、
+atomic_expression の評価は配列型でなくてはなりません。この配列型の要素
+は、追加の固定引数のように扱われます。</p>
+<p>関数呼び出しで **atomic_expression 構文が使われた場合、
+atomic_expression の値評価結果は辞書型でなければなりません。辞書の内容
+は追加のキーワード引数として扱われます。</p>
+<p>引数リストの各要素は、関数呼び出しの前に評価されます。</p>
+</section>
+</section>
+<section id="id47">
+<h3><span class="section-number">4.5.3. </span>演算子式<a class="headerlink" href="#id47" title="この見出しへのパーマリンク">¶</a></h3>
+<section id="id48">
+<h4><span class="section-number">4.5.3.1. </span>単項演算子<a class="headerlink" href="#id48" title="この見出しへのパーマリンク">¶</a></h4>
+<p>単項演算子には、+ と - があります。単項演算子は右結合となるため、+-xは
++(-x)と同じ意味になります。</p>
+<pre>
+<strong id="grammar-token-unary_expression">unary_expression</strong> ::=  <a class="reference internal" href="#grammar-token-postfix_expression"><code class="xref docutils literal notranslate"><span class="pre">postfix_expression</span></code></a>
+                      | ( &quot;+&quot; | &quot;-&quot; ) <a class="reference internal" href="#grammar-token-unary_expression"><code class="xref docutils literal notranslate"><span class="pre">unary_expression</span></code></a>
+</pre>
+<p>単項 - 演算子は、引数となる数値の符号を反転します。</p>
+<p>単項 + 演算子は、数値引数を変更しません。</p>
+</section>
+<section id="id49">
+<h4><span class="section-number">4.5.3.2. </span>乗除演算子<a class="headerlink" href="#id49" title="この見出しへのパーマリンク">¶</a></h4>
+<p>乗除演算子には、 *, /, %があります。これらはどれも同じ優先順位で、左結
+合となります。</p>
+<pre>
+<strong id="grammar-token-multiplicative_expression">multiplicative_expression</strong> ::=  <a class="reference internal" href="#grammar-token-unary_expression"><code class="xref docutils literal notranslate"><span class="pre">unary_expression</span></code></a>
+                               | <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a> &quot;*&quot; <a class="reference internal" href="#grammar-token-unary_expression"><code class="xref docutils literal notranslate"><span class="pre">unary_expression</span></code></a>
+                               | <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a> &quot;/&quot; <a class="reference internal" href="#grammar-token-unary_expression"><code class="xref docutils literal notranslate"><span class="pre">unary_expression</span></code></a>
+                               | <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a> &quot;%&quot; <a class="reference internal" href="#grammar-token-unary_expression"><code class="xref docutils literal notranslate"><span class="pre">unary_expression</span></code></a>
+</pre>
+<p>* 演算は、引数間の積になります。どちらかの引数が文字列や配列で、一方が
+整数の場合、文字列や配列がその数だけ繰り返された値となります。たとえば、
+式 'foo' * 3 は'foofoofoo'に評価されます。</p>
+<p>/ 演算は、引数間の商になります。ゼロによる除算を行うとエラーとなります。</p>
+<p>% 演算は、2つの引数が整数の場合、第1引数を第2引数で除算したときの剰余に
+なります。第1引数が文字列で、第2引数が辞書の場合、テンプレート文字列を
+置換した結果を返します。</p>
+</section>
+<section id="id50">
+<h4><span class="section-number">4.5.3.3. </span>加減演算子<a class="headerlink" href="#id50" title="この見出しへのパーマリンク">¶</a></h4>
+<p>加減演算子には、+, -があります。これらはどれも同じ優先順位で、左結合となります。</p>
+<pre>
+<strong id="grammar-token-additive_expression">additive_expression</strong> ::=  <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a>
+                         | <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a> &quot;+&quot; <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a>
+                         | <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a> &quot;-&quot; <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a>
+</pre>
+<p>+ 演算は、引数を加算した値を返します。両引数が文字列や配列の場合、連結
+された値を返します。</p>
+<p>- 演算は、引数間で減算を行った値を返します。</p>
+</section>
+<section id="id51">
+<h4><span class="section-number">4.5.3.4. </span>比較演算子<a class="headerlink" href="#id51" title="この見出しへのパーマリンク">¶</a></h4>
+<p>比較演算子には、&lt;, &gt;, ==, &gt;=, &lt;=, !=, =~, !~ があります。これらはどれも同じ優先
+順位をもっており、左結合となります。</p>
+<pre>
+<strong id="grammar-token-comparison_expression">comparison_expression</strong> ::=  <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;&lt;&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;&gt;&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;==&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;&gt;=&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;&lt;=&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;!=&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;=~&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;!~&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+</pre>
+<p>比較の結果はブール型の値 true または false となります。比較はいくらでも
+連鎖することができます。たとえば、x &lt; y &lt;= z は x &lt; y and y &lt;= z と等価
+になります。ただし、この場合、前者では y はただ一度だけ評価されます。ま
+た、x &lt; y &lt;= z と (x &lt; y) &lt;= z は意味が異なります。後者は、x &lt; y 評価し
+た結果のブール型の値を z と比較します。</p>
+<p>同じ型の値同士の比較の意味は、型によって異なります。</p>
+<ul class="simple">
+<li><p>整数同士の比較では、算術的な比較が行われます。</p></li>
+<li><p>文字列同士の比較では、辞書的な比較が行われます。</p></li>
+<li><p>配列同士の比較では、対応する各要素の比較結果を使って辞書的な比較が行われます。</p></li>
+<li><p>辞書同士の比較は等価判定のみ定義されています。キーが同じ順序で並んでいて、かつ、キーと値の対応する各要素が等しいときのみ、等価となります。</p></li>
+</ul>
+<p>x != y は not (x == y) と等価です。</p>
+<p>=~ は類似比較を行います。意味は型によって異なります。</p>
+<ul class="simple">
+<li><p>パターンと文字列の比較では、パターンマッチによる比較が行われます。</p></li>
+<li><p>文字列とそれ以外の型の比較では、文字列以外の値を文字列化して比較が行われます。</p></li>
+<li><p>配列同士の比較では、対応する各要素を類似比較します。</p></li>
+<li><p>辞書同士の比較は、キーの順序の違いを無視して、各キーに対応する値を類似比較します。</p></li>
+<li><p>上記以外は通常の == による等価比較と同じ結果となります。</p></li>
+</ul>
+<p>x !~ y は not (x =~ y) と等価です。</p>
+</section>
+<section id="id52">
+<h4><span class="section-number">4.5.3.5. </span>包含演算子<a class="headerlink" href="#id52" title="この見出しへのパーマリンク">¶</a></h4>
+<p>包含演算子は、in, not in があります。これらはどれも同じ優先順位を持っており、左結合となります。</p>
+<pre>
+<strong id="grammar-token-membership_expression">membership_expression</strong> ::=  <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a> &quot;in&quot; <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a> &quot;not&quot; &quot;in&quot; <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a>
+</pre>
+<p>包含演算 x in y は値 x が y の要素として含まれている場合は true、含まれていなければ false を返します。
+x not in y は not (x in y) と同じです。</p>
+<p>y が配列型以外の値の場合、要素かどうかの判定は以下のとおりになります。</p>
+<ul class="simple">
+<li><p>x と y がともに文字列の場合、x が y の部分文字列の場合に要素とみなされます。</p></li>
+<li><p>y が辞書型の値の場合、x が yのキー集合に含まれている場合に要素とみなされます。</p></li>
+<li><p>y がディレクトリ/テーブル型オブジェクトの場合、x が y の子オブジェクトの場合に要素とみなされます。</p></li>
+</ul>
+</section>
+<section id="id53">
+<h4><span class="section-number">4.5.3.6. </span>論理演算子<a class="headerlink" href="#id53" title="この見出しへのパーマリンク">¶</a></h4>
+<p>論理演算子には、not, and, or があります。論理演算のコンテキストや式の結
+果として真偽値を要求される場合、false, null, 0, 空の文字列(&quot;&quot;), 空の配
+列([]), 空の辞書({}) は全て偽と解釈されます。それ以外の値は真と解釈され
+ます。</p>
+<pre>
+<strong id="grammar-token-logical_not_expression">logical_not_expression</strong> ::=  <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a>
+                            | &quot;not&quot; <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a>
+<strong id="grammar-token-logical_and_expression">logical_and_expression</strong> ::=  <a class="reference internal" href="#grammar-token-logical_not_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_not_expression</span></code></a>
+                            | <a class="reference internal" href="#grammar-token-logical_and_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_and_expression</span></code></a> &quot;and&quot; <a class="reference internal" href="#grammar-token-logical_not_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_not_expression</span></code></a>
+<strong id="grammar-token-logical_or_expression">logical_or_expression </strong> ::=  <a class="reference internal" href="#grammar-token-logical_and_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_and_expression</span></code></a>
+                            | <a class="reference internal" href="#grammar-token-logical_or_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_or_expression</span></code></a> &quot;or&quot; <a class="reference internal" href="#grammar-token-logical_and_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_and_expression</span></code></a>
+<strong id="grammar-token-expression">expression            </strong> ::=  <a class="reference internal" href="#grammar-token-logical_or_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_or_expression</span></code></a>
+</pre>
+<p>演算子 not は、引数が偽である場合には true を、それ以外の場合は false になります。</p>
+<p>式 x and y は、式 x と y をそれぞれ評価し、x が偽なら x の評価結果を返
+します。それ以外の場合は y の評価結果を返します。</p>
+<p>式 x or y は、式 x と y をそれぞれ評価し、x が真なら x の評価結果を返し
+ます。それ以外の場合は y の評価結果を返します。</p>
+</section>
+</section>
+</section>
+<section id="id54">
+<h2><span class="section-number">4.6. </span>ジョブ<a class="headerlink" href="#id54" title="この見出しへのパーマリンク">¶</a></h2>
+<p>ジョブは、コマンドの実行やイベントの待ち合わせ、あるいは繰り返しや条件
+分岐などの制御を指示します。ジョブの構文は以下の通りです。</p>
+<pre>
+<strong id="grammar-token-job">job</strong> ::=  <a class="reference internal" href="#grammar-token-skip_job"><code class="xref docutils literal notranslate"><span class="pre">skip_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-execution_job"><code class="xref docutils literal notranslate"><span class="pre">execution_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-assignment_job"><code class="xref docutils literal notranslate"><span class="pre">assignment_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-update_job"><code class="xref docutils literal notranslate"><span class="pre">update_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-event_job"><code class="xref docutils literal notranslate"><span class="pre">event_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-builtin_job"><code class="xref docutils literal notranslate"><span class="pre">builtin_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-control_job"><code class="xref docutils literal notranslate"><span class="pre">control_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-block_job"><code class="xref docutils literal notranslate"><span class="pre">block_job</span></code></a>
+</pre>
+<section id="id55">
+<h3><span class="section-number">4.6.1. </span>スキップジョブ<a class="headerlink" href="#id55" title="この見出しへのパーマリンク">¶</a></h3>
+<p>スキップジョブは、$STATUS を 0 にセットする以外には何も行いません。</p>
+<pre>
+<strong id="grammar-token-skip_job">skip_job</strong> ::=  &quot;[&quot; &quot;]&quot;
+</pre>
+</section>
+<section id="id56">
+<h3><span class="section-number">4.6.2. </span>実行ジョブ<a class="headerlink" href="#id56" title="この見出しへのパーマリンク">¶</a></h3>
+<p>実行ジョブは、式を評価した結果の値の型によって、異なる処理を実行します。</p>
+<pre>
+<strong id="grammar-token-execution_job">execution_job</strong> ::=  &quot;[&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> (&quot;&lt;&lt;&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>)? (&quot;:&quot; <a class="reference internal" href="#grammar-token-argument_list"><code class="xref docutils literal notranslate"><span class="pre">argument_list</span></code></a>)? &quot;]&quot;
+</pre>
+<p>1番目の式を評価した結果が文字列の場合、実行ジョブは制御文脈に応じて、リ
+モートサーバもしくはローカルサーバで文字列をコマンドと解釈して実行しま
+す。記号 &lt;&lt; に引き続いて2番目の式がある場合、その式の評価結果を文字列と
+みなして、コマンドの標準入力に渡されます。</p>
+<p>1番目の式を評価した結果がジョブフローオブジェクトの場合、そのジョブフロー
+オブジェクトを呼び出します。引数リストがある場合には、リスト中の引数の
+式を評価した値がジョブフローのパラメータとして渡されます。</p>
+<p>1番目の式を評価した結果がスクリプトオブジェクトの場合、そのスクリプトが
+リモート、もしくはローカルサーバで実行されます。記号 &lt;&lt; に引き続いて2番
+目の式がある場合、その式の評価結果を文字列とみなして、スクリプト実行時
+の標準入力に渡されます。引数リストがある場合には、リスト中の引数の式を
+評価した値がスクリプトのコマンドライン引数として渡されます。</p>
+<p>1番目の式を評価した結果が、Kompiraオブジェクトのメソッドの場合、引数リ
+ストをパラメータとして、そのメソッドを呼び出します。</p>
+<p>1番目の式を評価した結果が、ライブラリオブジェクトの関数の場合、引数リス
+トをパラメータとして、その関数を呼び出します。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>コマンドの文字列の長さ、スクリプトとスクリプトのコマンドライン引数の
+サイズは、112KB に制限されています。この制限を超えた場合、ジョブの実
+行は失敗し、$STATUS に -1 をセットします。</p>
+</div>
+</section>
+<section id="id57">
+<h3><span class="section-number">4.6.3. </span>代入ジョブ<a class="headerlink" href="#id57" title="この見出しへのパーマリンク">¶</a></h3>
+<p>代入ジョブは、変数に = の右辺式の評価結果を代入します。</p>
+<pre>
+<strong id="grammar-token-assignment_job">assignment_job</strong> ::=  &quot;[&quot; <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a> &quot;]&quot;
+</pre>
+<p>変数が未定義の場合、ジョブフロースコープを持つ変数が新たに定義され、評
+価した値で初期化されます。</p>
+</section>
+<section id="id58">
+<h3><span class="section-number">4.6.4. </span>更新ジョブ<a class="headerlink" href="#id58" title="この見出しへのパーマリンク">¶</a></h3>
+<p>更新ジョブは、最初の式を評価し、その結果の値で、ターゲット式を評価した
+結果の変数やオブジェクト、フィールドの内容を更新します。</p>
+<pre>
+<strong id="grammar-token-update_job">update_job       </strong> ::=  &quot;[&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;&gt;&gt;&quot; <a class="reference internal" href="#grammar-token-target_expression"><code class="xref docutils literal notranslate"><span class="pre">target_expression</span></code></a> &quot;]&quot;
+<strong id="grammar-token-target_expression">target_expression</strong> ::=  IDENTIFIER | OBJECT_PATH
+                       | <a class="reference internal" href="#grammar-token-target_expression"><code class="xref docutils literal notranslate"><span class="pre">target_expression</span></code></a> &quot;.&quot; IDENTIFIER
+                       | <a class="reference internal" href="#grammar-token-target_expression"><code class="xref docutils literal notranslate"><span class="pre">target_expression</span></code></a> &quot;[&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;]&quot;
+</pre>
+</section>
+<section id="job-eventjob">
+<span id="id59"></span><h3><span class="section-number">4.6.5. </span>イベントジョブ<a class="headerlink" href="#job-eventjob" title="この見出しへのパーマリンク">¶</a></h3>
+<p>イベントジョブは、最初の式を評価し、その型に応じた待ち合わせをします。</p>
+<pre>
+<strong id="grammar-token-event_job">event_job</strong> ::=  &quot;&lt;&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> ((&quot;?&quot; | &quot;??&quot;) <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>)? (&quot;:&quot; <a class="reference internal" href="#grammar-token-argument_list"><code class="xref docutils literal notranslate"><span class="pre">argument_list</span></code></a>)? &quot;&gt;&quot;
+               | &quot;&lt;&quot; &quot;&gt;&quot;
+</pre>
+<p>イベントジョブは、1つ目の式を評価した結果がチャネルオブジェクト、もしくは、タスクオブジェクトの時、そのオブジェクトのイベントを待ち合わせします。$RESULT には受信したオブジェクトが格納されます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;./ChannelObject&gt; -&gt;
+[message = $RESULT]
+</pre></div>
+</div>
+<p>プロセスオブジェクトを渡した場合は、そのプロセスが終了するまで待ち合わせします。
+この場合、$RESULTにはプロセスオブジェクトが格納されます。</p>
+<p>チャネルやタスク、プロセスオブジェクトを要素とするリストを渡した場合は、いずれかのオブジェクトのイベントを待ち合わせします。
+$RESULTには、後述する2つの要素を持つリストが格納されます。
+リストの1つ目の要素はイベントが発生したオブジェクト、2つ目の要素は受信したオブジェクトです。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ./ChannelTable is a Table object that contains Channel objects.
+&lt;./ChannelTable.children&gt; -&gt;
+[chan = $RESULT[0], message = $RESULT[1]]
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">?</span></code> の後に式（ガード式）が続く場合、ガード付きのイベントジョブとなります。
+この場合、ガード式が評価された結果の値とチャネルのメッセージキューの先頭にあるオブジェクトがマッチした場合のみ、メッセージを受信します。
+<code class="docutils literal notranslate"><span class="pre">??</span></code> の場合も同様ですが、メッセージキューの先頭から順にオブジェクトがマッチするかどうかを調べ、マッチした場合には、それまでのオブジェクトを破棄して、マッチしたオブジェクトを受信します。プロセスオブジェクトを待つ場合、ガードの指定は単に無視されます。</p>
+<p>引数リストがある場合、タイムアウト指定となります。
+最初の式の値が日時型の場合はタイムアウトする日時が指定され、整数型の場合、タイムアウトまでの秒数が指定されます。
+タイムアウトした場合、$STATUS は 1 にセットされます。</p>
+<p>パラメータとしてキーワード引数 peek_mode=true を渡すと、受信したメッセージの扱いと結果の構造が変化します。
+チャネルオブジェクトに対するイベントジョブで peek_mode=true を指定すると、メッセージ受信時に対象チャネルのメッセージキューの先頭メッセージを（削除せずに）参照して、対象チャネルオブジェクト内で当該メッセージを識別するID値とメッセージ本体を含むリスト [msgid, message] を $RESULT に返します。
+このときチャネルから当該メッセージは削除されていないので、再度イベントジョブを実行すると同じメッセージを得ることになります。
+メッセージの処理を終えるなど、チャネルから当該メッセージを再取得する必要がなくなった場合は、メッセージIDを指定して <a class="reference internal" href="library.html#channel-delete-message"><span class="std std-ref">Channel.delete_message()</span></a> を呼び出すことで、当該メッセージを削除することができます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[chan = ./ChannelObject] -&gt;
+&lt;chan: peek_mode=true&gt; -&gt;
+[msgid = $RESULT[0], message = $RESULT[1]] -&gt;
+    ...
+[chan.delete_message: msgid]
+</pre></div>
+</div>
+<p>peek_mode はガード式と合わせて利用することもできます。
+<code class="docutils literal notranslate"><span class="pre">?</span></code> に続けてガード式を指定してメッセージキューの先頭でマッチした場合は、そのメッセージの [msgid, message] のリストを返します。
+<code class="docutils literal notranslate"><span class="pre">??</span></code> に続けてガード式を指定してメッセージキューの途中でマッチした場合は、先頭からそのメッセージの一つ手前までをメッセージキューから削除して、マッチしたメッセージの [msgid, message] のリストを返します。</p>
+<p>リストに対するイベントジョブでも peek_mode を合わせて利用することができますが、得られる結果の構造が少し複雑になることに注意してください。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;[chanA, chanB, chanC]: peek_mode=true&gt; -&gt;
+[chan = $RESULT[0], msgid = $RESULT[1][0], message = $RESULT[1][1]]
+</pre></div>
+</div>
+<p>リストに対するイベントジョブの結果として得られる「受信したオブジェクト」の部分が、peek_mode によって [msgid, message] のリストになっています。</p>
+<p>プロセスオブジェクトに対するイベントジョブで peek_mode=true を指定した場合、プロセスIDとプロセスオブジェクトを含むリスト [pid, process] を $RESULT に返します。
+これにより、リストを指定したイベントジョブの呼び出し時にリストにチャネルやプロセスを混在させても、結果の構造が同じになります。</p>
+<p>メールチャネルに対するイベントジョブのパラメータとしてキーワード引数 detect_error=true を渡すと、設定の不備やメールサーバの障害などの理由によりメールのフェッチに失敗した場合やメールチャネルが無効化されている場合は、$STATUS を -1 にセットして、イベント待ちが直ちに終了します。
+(メールチャネル以外のイベントジョブパラメータに detect_error を渡しても単に無視されます)</p>
+<p>空式 <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code> の場合、常に発火するイベントとなるため、ジョブフローの実行はただちに継続します。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.6.6 で変更: </span>キーワード引数 detect_error が追加されました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.6.7 で変更: </span>キーワード引数 peek_mode が追加されました。</p>
+</div>
+</section>
+<section id="id60">
+<h3><span class="section-number">4.6.6. </span>組み込みジョブ<a class="headerlink" href="#id60" title="この見出しへのパーマリンク">¶</a></h3>
+<p>組み込みジョブは、Kompiraの組み込みジョブを呼び出します。</p>
+<pre>
+<strong id="grammar-token-builtin_job">builtin_job</strong> ::=  IDENTIFIER &quot;(&quot; <a class="reference internal" href="#grammar-token-argument_list"><code class="xref docutils literal notranslate"><span class="pre">argument_list</span></code></a>? &quot;)&quot;
+</pre>
+<p>引数リストがある場合、リストの先頭か順に式が評価され、その結果が組み込
+みジョブのパラメータとして渡されます。</p>
+<p>Kompira が提供する組み込みジョブの一覧と詳細については、<a class="reference internal" href="library.html"><span class="doc">Kompira 標準ライブラリ</span></a>
+を参照してください。</p>
+</section>
+<section id="id61">
+<h3><span class="section-number">4.6.7. </span>制御ジョブ<a class="headerlink" href="#id61" title="この見出しへのパーマリンク">¶</a></h3>
+<p>制御ジョブは、 break と continue の2つがあります。</p>
+<pre>
+<strong id="grammar-token-control_job">control_job</strong> ::=  &quot;continue&quot; | &quot;break&quot;
+</pre>
+<p>制御ジョブは、while ブロックと for ブロックの内部でのみ使用することがで
+きます。それ以外の場所で使用するとコンパイル時エラーとなります。</p>
+<section id="continue">
+<h4><span class="section-number">4.6.7.1. </span>continue<a class="headerlink" href="#continue" title="この見出しへのパーマリンク">¶</a></h4>
+<p>continue は while/for ブロックの次の繰り返しの先頭に制御を移します。</p>
+</section>
+<section id="break">
+<h4><span class="section-number">4.6.7.2. </span>break<a class="headerlink" href="#break" title="この見出しへのパーマリンク">¶</a></h4>
+<p>break は while/for ブロックの繰り返しを中止し、ブロックの後続に制御を移
+します。</p>
+</section>
+</section>
+<section id="id62">
+<h3><span class="section-number">4.6.8. </span>ブロックジョブ<a class="headerlink" href="#id62" title="この見出しへのパーマリンク">¶</a></h3>
+<p>ブロックジョブはブロックスコープを新しく作成します。</p>
+<pre>
+<strong id="grammar-token-block_job">block_job</strong> ::=  <a class="reference internal" href="#grammar-token-simple_block"><code class="xref docutils literal notranslate"><span class="pre">simple_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-if_block"><code class="xref docutils literal notranslate"><span class="pre">if_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-for_block"><code class="xref docutils literal notranslate"><span class="pre">for_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-while_block"><code class="xref docutils literal notranslate"><span class="pre">while_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-case_block"><code class="xref docutils literal notranslate"><span class="pre">case_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-choice_block"><code class="xref docutils literal notranslate"><span class="pre">choice_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-fork_block"><code class="xref docutils literal notranslate"><span class="pre">fork_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-pfor_block"><code class="xref docutils literal notranslate"><span class="pre">pfor_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-session_block"><code class="xref docutils literal notranslate"><span class="pre">session_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-try_block"><code class="xref docutils literal notranslate"><span class="pre">try_block</span></code></a>
+</pre>
+<section id="id63">
+<h4><span class="section-number">4.6.8.1. </span>単純ブロック<a class="headerlink" href="#id63" title="この見出しへのパーマリンク">¶</a></h4>
+<p>単純ブロックは、変数宣言付きの場合は、そのブロックスコープを持つローカ
+ル変数を新規に定義し、そのもとでブロック内のジョブフロー式を実行します。
+変数宣言が省略された場合は、単にブロック内のジョブフロー式を実行します。</p>
+<pre>
+<strong id="grammar-token-simple_block">simple_block</strong> ::=  &quot;{&quot; (<a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a> &quot;|&quot;)? <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+</section>
+<section id="if">
+<h4><span class="section-number">4.6.8.2. </span>ifブロック<a class="headerlink" href="#if" title="この見出しへのパーマリンク">¶</a></h4>
+<p>if ブロックは、最初の条件式を評価し、その結果によって処理を分岐します。
+条件式が省略された場合、直前のジョブの実行結果である $RESULT の値が使用
+されます。</p>
+<pre>
+<strong id="grammar-token-if_block">if_block   </strong> ::=  &quot;{&quot; &quot;if&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>? &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+                 | &quot;{&quot; &quot;if&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>? &quot;|&quot; <a class="reference internal" href="#grammar-token-then_clause"><code class="xref docutils literal notranslate"><span class="pre">then_clause</span></code></a> <a class="reference internal" href="#grammar-token-elif_clause"><code class="xref docutils literal notranslate"><span class="pre">elif_clause</span></code></a>* <a class="reference internal" href="#grammar-token-else_clause"><code class="xref docutils literal notranslate"><span class="pre">else_clause</span></code></a>? &quot;}&quot;
+<strong id="grammar-token-then_clause">then_clause</strong> ::=  &quot;then&quot; &quot;:&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>
+<strong id="grammar-token-elif_clause">elif_clause</strong> ::=  &quot;elif&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;:&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>
+<strong id="grammar-token-else_clause">else_clause</strong> ::=  &quot;else&quot; &quot;:&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>
+</pre>
+<p>if ブロックの1番目の形式は、条件式が真の場合にのみブロック内のジョブフ
+ロー式が実行されます。</p>
+<p>if ブロックの2番目の形式は、最初の条件式が真の場合に、then節のジョブフ
+ロー式が実行されます。偽の場合には、次のelif節の条件式が評価され、その
+値が真の場合に、elif節のジョブフロー式が実行されます。どの条件式も偽の
+場合で、最後のelse節があればelse節のジョブフロー式が実行されます。</p>
+</section>
+<section id="case">
+<h4><span class="section-number">4.6.8.3. </span>caseブロック<a class="headerlink" href="#case" title="この見出しへのパーマリンク">¶</a></h4>
+<p>case ブロックは最初の式を評価し、その値と各ケース節のパターン式を評価し
+た値とのマッチングが試みられます。マッチングが成功すると、対応する
+case 節のジョブフローを実行します。case 節のパターン式がカンマ区切りで
+複数記述された場合、どれか一つのパターンとマッチするとマッチング成功と
+みなされ、その節のジョブフローが実行されます。</p>
+<p>最初の式が省略された場合、直前のジョブの実行結果である $RESULT の値が使
+用されます。</p>
+<pre>
+<strong id="grammar-token-case_block">case_block </strong> ::=  &quot;{&quot; &quot;case&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>? &quot;|&quot; <a class="reference internal" href="#grammar-token-case_clause"><code class="xref docutils literal notranslate"><span class="pre">case_clause</span></code></a>+ <a class="reference internal" href="#grammar-token-else_clause"><code class="xref docutils literal notranslate"><span class="pre">else_clause</span></code></a>? &quot;}&quot;
+<strong id="grammar-token-case_clause">case_clause</strong> ::=  <a class="reference internal" href="#grammar-token-expression_list"><code class="xref docutils literal notranslate"><span class="pre">expression_list</span></code></a> &quot;:&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>
+</pre>
+<p>case 節は、パターン式の後に、区切り記号であるコロン (:) とそのパターン
+に合致したときに実行するジョブフロー式が続きます。パターン式を評価した
+結果がパターンオブジェクトの場合、そのパターンオブジェクトに応じたマッ
+チングが試みられます。パターン式の評価結果が文字列の場合、大文字小文字
+を区別する Glob パターンとして扱われます。それ以外の場合は、単純な ==
+比較によるマッチングを行います。</p>
+<p>パターンは case 節の先頭から順番にマッチングが試みられます。どのパター
+ンにもマッチしない場合、else 節があればそのジョブフロー式が実行されます。
+else 節が無ければ、マッチングに失敗したとみなされ、 $STATUS に 1 がセッ
+トされます。</p>
+</section>
+<section id="for">
+<h4><span class="section-number">4.6.8.4. </span>forブロック<a class="headerlink" href="#for" title="この見出しへのパーマリンク">¶</a></h4>
+<p>for ブロックはリストやディレクトリ、テーブルなどの複数の要素を含むオブ
+ジェクト内の要素にわたって反復処理を行うために使われます。</p>
+<pre>
+<strong id="grammar-token-for_block">for_block</strong> ::=  &quot;{&quot; &quot;for&quot; IDENTIFIER &quot;in&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+<p>式は for ブロックの実行時に最初の一度だけ評価されます。式の評価結果は反
+復可能なオブジェクトか、もしくは、整数値である必要があり、それ以外の場
+合は実行エラーとなります。オブジェクトの各要素は識別子 (IDENTIFIER) で
+示されるローカル変数に代入されます。式の評価結果が整数値Nの場合、ローカ
+ル変数が 0 から N-1 の範囲で反復します。ただし、N が 0 もしくは負の場合
+は反復しません。このローカル変数は for ブロックのスコープを持つため、
+for ブロックを抜けた後で参照することはできません。</p>
+<p>ジョブフロー式の中で break ジョブが実行されると、ループを終了します。
+continue ジョブが実行されると、ジョブフロー式の後続の処理をスキップして
+ループを終了します。</p>
+<p>for ブロック終了時の $STATUS は常に 0 にセットされます。</p>
+</section>
+<section id="while">
+<h4><span class="section-number">4.6.8.5. </span>whileブロック<a class="headerlink" href="#while" title="この見出しへのパーマリンク">¶</a></h4>
+<p>while ブロックは、式を繰り返し評価し、真であればジョブフロー式を実行し
+ます。式が偽であれば、while ブロックは繰り返しを終了します。</p>
+<pre>
+<strong id="grammar-token-while_block">while_block</strong> ::=  &quot;{&quot; &quot;while&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+<p>ジョブフロー式の中で break ジョブが実行されると、ループを終了します。
+continue ジョブが実行されると、ジョブフロー式の後続の処理をスキップして、
+式の評価に戻ります。</p>
+<p>while ブロック終了時の $STATUS は常に 0 にセットされます。</p>
+</section>
+<section id="choice">
+<h4><span class="section-number">4.6.8.6. </span>choiceブロック<a class="headerlink" href="#choice" title="この見出しへのパーマリンク">¶</a></h4>
+<p>choice ブロックは複数のイベントジョブを待ち、いずれかが実行可能状態にな
+ると、そのイベントジョブに後続するジョブフロー式を実行します。</p>
+<pre>
+<strong id="grammar-token-choice_block">choice_block        </strong> ::=  &quot;{&quot; &quot;choice&quot; &quot;|&quot; <a class="reference internal" href="#grammar-token-eventflow_expression"><code class="xref docutils literal notranslate"><span class="pre">eventflow_expression</span></code></a>+ &quot;}&quot;
+<strong id="grammar-token-eventflow_expression">eventflow_expression</strong> ::=  <a class="reference internal" href="#grammar-token-event_job"><code class="xref docutils literal notranslate"><span class="pre">event_job</span></code></a> (&quot;-&gt;&quot; | &quot;=&gt;&quot; | &quot;-&gt;&gt;&quot; | &quot;=&gt;&gt;&quot;) <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>
+</pre>
+<p>複数のイベントジョブが同時に実行可能状態になった場合は、先頭に近いイベ
+ントジョブが優先されます。</p>
+</section>
+<section id="fork">
+<h4><span class="section-number">4.6.8.7. </span>forkブロック<a class="headerlink" href="#fork" title="この見出しへのパーマリンク">¶</a></h4>
+<p>fork ブロックは、ジョブフロー式を子プロセスとして実行開始します。</p>
+<pre>
+<strong id="grammar-token-fork_block">fork_block</strong> ::=  &quot;{&quot; &quot;fork&quot; &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>+ &quot;}&quot;
+</pre>
+<p>fork ブロックは detach() していない全ての子プロセスが実行完了するまで待ちます。
+fork ブロック終了時の $RESULT には fork ブロックで生成した全ての子プロセスのリストがセットされ、
+$STATUS には異常終了した子プロセスの個数がセットされます。
+すべての子プロセスが正常終了すると $STATUS は 0 になります。</p>
+<p>fork ブロックによって生成されるプロセスが、プロセス数の制限を超える場合、
+他のプロセスが実行完了し、プロセス数制限内に収まるまで fork ブロックは
+実行を待ちます。</p>
+</section>
+<section id="pfor">
+<h4><span class="section-number">4.6.8.8. </span>pforブロック<a class="headerlink" href="#pfor" title="この見出しへのパーマリンク">¶</a></h4>
+<p>pfor ブロックはリストやディレクトリ、テーブルなどの複数の要素を含むオブ
+ジェクト内の要素について、子プロセスを生成して並行処理を行います。</p>
+<pre>
+<strong id="grammar-token-pfor_block">pfor_block</strong> ::=  &quot;{&quot; &quot;pfor&quot; IDENTIFIER &quot;in&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+<p>式は pfor ブロックの実行時に最初の一度だけ評価されます。式の評価結果は
+反復可能なオブジェクトである必要があり、それ以外の場合は実行エラーとな
+ります。オブジェクトの各要素について子プロセスが生成され、各子プロセス
+中で対応する要素が識別子 (IDENTIFIER) で示されるローカル変数に代入され
+て、子プロセスの実行が開始されます。式の評価結果が整数値Nの場合、ローカ
+ル変数が 0 から N-1 のそれぞれで子プロセスの実行が開始されます。ただし、
+N が 0 もしくは負の場合、子プロセスは実行されません。</p>
+<p>pfor ブロックは detach() していない全ての子プロセスの実行が終了するまで待ちます。
+pfor ブロック終了時の $RESULT には pfor ブロックで生成した全ての子プロセスのリストがセットされ、
+$STATUS には異常終了した子プロセスの個数がセットされます。
+すべての子プロセスが正常終了すると $STATUS は 0 になります。</p>
+<p>pfor ブロックによって生成されるプロセスが、プロセス数の制限を超える場合、
+他のプロセスが実行完了し、プロセス数制限内に収まるまで pfor ブロックは
+実行を待ちます。</p>
+</section>
+<section id="session">
+<h4><span class="section-number">4.6.8.9. </span>session ブロック<a class="headerlink" href="#session" title="この見出しへのパーマリンク">¶</a></h4>
+<p>session ブロックは、リモートサーバとのセッションを開始します。</p>
+<pre>
+<strong id="grammar-token-session_block">session_block</strong> ::=  &quot;{&quot; &quot;session&quot; IDENTIFIER &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+<p>セッションブロックが実行されると、まず、制御変数によって指定されたリモー
+トサーバとのセッションを開始します。セッションでリモートサーバとのやり
+とりを行うためのセッションチャネルが、識別子 (IDENTIFIER) で示されるロー
+カル変数に代入されます。このセッションチャネルに対して、文字列を送信
+(send) すると、リモートサーバ側に文字列が送信されます。また、リモートサー
+バ側からの出力を取得するには、イベントジョブを用いてセッションチャネル
+からデータを取得します。リモートサーバからの出力は行単位のメッセージと
+してセッションチャネルに格納されていきます。したがって、セッションチャ
+ネルからのメッセージの読み込みは 1 行ずつとなります。</p>
+<p>セッションブロックを抜けるとセッションが終了し、とセッションチャネルが
+クローズされます。以後、セッションチャネルに対する送信はエラーとなりま
+す。また、セッションチャネルからのメッセージの読み込みもエラーとなりま
+す。(ただし、セッションクローズまでにリモートサーバから出力されたメッセー
+ジは読み込むことができます)</p>
+<p>セッションブロック内で break を呼び出すと、セッションをクローズして、ブ
+ロックを終了します。</p>
+<p>セッションブロックが正常に終了すると、$STATUS に 0 がセットされます。ま
+た、$RESULT には、セッションチャネルが格納されます。セッションチャネル
+の data 属性には、未読み込みのデータが格納されます。（メッセージの各行
+は連結され、1 つの文字列データとなります)</p>
+<p>セッションの開始に失敗した場合は、セッションブロックの中は実行されずに
+セッションブロックは終了し、$STATUS には 非 0 がセットされます。また、
+$ERROR にはエラーの原因を示すメッセージが格納されます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>セッションブロック内で、コマンドジョブを実行することは可能ですが、別の
+セッションを新たに開始することはできません。</p>
+</div>
+<p>以下では、su コマンドを実行して、対話的に処理を行うジョブフローのプログ
+ラム例を示します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[__host__ = &#39;server.exmaple.com&#39;, __user__ = &#39;testuser&#39;, __password__ = &#39;password&#39;,
+ __use_pty__ = true   # su コマンド実行には PTY が必要なため true にセット
+] -&gt;
+# server.example.com にログインしてセッションを開始
+{ session s |
+    [s.send: &#39;LANG=C su\n&#39;] -&gt;               # su コマンドを実行
+    &lt;s ?? &#39;Password: &#39;&gt; -&gt;                   # パスワードプロンプトを待つ
+    [s.send: &#39;root_password\n&#39;] -&gt;           # root のパスワードを送信
+    &lt;s ?? g&#39;*]# &#39;&gt; -&gt;                        # root プロンプトを待つ
+    [s.send: &#39;service httpd restart\n&#39;] -&gt;   # httpd サービスを再起動
+    &lt;s ?? g&#39;*]# &#39;&gt; -&gt;                        # root プロンプトを待つ
+    [s.send: &#39;exit\n&#39;]                       # root を 抜ける
+} -&gt;
+print(&#39;OK&#39;)
+</pre></div>
+</div>
+</section>
+<section id="try">
+<h4><span class="section-number">4.6.8.10. </span>tryブロック<a class="headerlink" href="#try" title="この見出しへのパーマリンク">¶</a></h4>
+<p>try ブロックは、ブロック内のジョブフロー実行中に発生した異常終了をキャッ
+チして、処理を続行します。</p>
+<pre>
+<strong id="grammar-token-try_block">try_block</strong> ::=  &quot;{&quot; &quot;try&quot; &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+<p>try ブロックで囲まれたジョブフローが正常に終了した場合は、try ブロック
+は $STATUS に 0 をセットし、 異常終了した場合は、$STATUS に 1 をセット
+します。また、$DEBUG にデバッグ情報を格納します。</p>
+<p>try ブロック内のジョブフローを実行中に exit が呼び出された場合は、ジョ
+ブフローは常に終了します。また、try ブロック内のジョブフローを実行中に、
+ユーザーによってジョブフローの実行が中止された場合も、ジョブフローは実
+行を終了します。</p>
+</section>
+</section>
+</section>
+<section id="id64">
+<h2><span class="section-number">4.7. </span>ジョブフロー式<a class="headerlink" href="#id64" title="この見出しへのパーマリンク">¶</a></h2>
+<p>ジョブフロー式は、ジョブを結合子で結びつけた式です。</p>
+<pre>
+<strong id="grammar-token-jobflow_expression">jobflow_expression</strong> ::=  <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;-&gt;&quot; <a class="reference internal" href="#grammar-token-job"><code class="xref docutils literal notranslate"><span class="pre">job</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;=&gt;&quot; <a class="reference internal" href="#grammar-token-job"><code class="xref docutils literal notranslate"><span class="pre">job</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;-&gt;&gt;&quot; <a class="reference internal" href="#grammar-token-job"><code class="xref docutils literal notranslate"><span class="pre">job</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;=&gt;&gt;&quot; <a class="reference internal" href="#grammar-token-job"><code class="xref docutils literal notranslate"><span class="pre">job</span></code></a>
+</pre>
+<section id="ref-connector">
+<span id="id65"></span><h3><span class="section-number">4.7.1. </span>結合子<a class="headerlink" href="#ref-connector" title="この見出しへのパーマリンク">¶</a></h3>
+<p>結合子には複数の種類があり、ジョブが失敗した場合にジョブフローの処理を
+継続するかどうかが異なります。</p>
+<p>以下に結合子の一覧と、ジョブが失敗した時の振る舞い、処理を継続する場合
+の状態変数の値を示します。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>結合子</p></th>
+<th class="head"><p>コマンド異常終了時</p></th>
+<th class="head"><p>リモートログイン失敗時</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>-&gt;</p></td>
+<td><div class="line-block">
+<div class="line">強制終了</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">強制終了</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>=&gt;</p></td>
+<td><div class="line-block">
+<div class="line">処理継続</div>
+<div class="line">$STATUS &gt;= 1</div>
+<div class="line">$RESULT = (stdout)</div>
+<div class="line">$ERROR  = (empty)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">強制終了</div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>-&gt;&gt;</p></td>
+<td><div class="line-block">
+<div class="line">強制終了</div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">処理継続</div>
+<div class="line">$STATUS = -1</div>
+<div class="line">$RESULT = (empty)</div>
+<div class="line">$ERROR  = (error message)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>=&gt;&gt;</p></td>
+<td><div class="line-block">
+<div class="line">処理継続</div>
+<div class="line">$STATUS &gt;= 1</div>
+<div class="line">$RESULT = (stdout)</div>
+<div class="line">$ERROR  = (empty)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">処理継続</div>
+<div class="line">$STATUS = -1</div>
+<div class="line">$RESULT = (empty)</div>
+<div class="line">$ERROR  = (error message)</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>リモートコマンドの実行ステータスが0以外の場合は、上表の「コマンド異常終
+了時」の動作となります。このとき、リモートコマンドの実行ステータスの値
+が $STATUS の値となります。</p>
+<p>リモートアクセスがタイムアウトした場合や、ジョブフロー上で指定されたIPアドレス、ユー
+ザ名、パスワード等が正しくなかった場合は、上表の「リモートログイン失敗
+時」の動作となります。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Windows ノードに対してリモートコマンドを実行したとき、その実行ステータスは
+本来は符号あり32bit値ですが、Kompira では符号なし32bit値として扱います。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>1つのジョブフロー式で結合できるジョブの最大数は 4096 個です。
+ブロックの中は別カウントになるので、例えば以下のジョブフロー式では 6 個となります。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x -&gt; y -&gt; { if true | a -&gt; b -&gt; c } -&gt; z -&gt; v -&gt; w
+</pre></div>
+</div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.5.4.post5 で変更: </span>リモートログイン失敗時の $ERROR にはエラーの原因を示すメッセージが格納されます。</p>
+</div>
+</section>
+</section>
+<section id="id66">
+<h2><span class="section-number">4.8. </span>ジョブフロープログラム<a class="headerlink" href="#id66" title="この見出しへのパーマリンク">¶</a></h2>
+<p>ジョブフロープログラムは、0個以上のパラメータ宣言とそれに続くジョブフロー
+式から構成されます。ジョブフロー式が空の場合は、ジョブフロープログラム
+は実行省略することができます。</p>
+<pre>
+<strong id="grammar-token-jobflow_program">jobflow_program</strong> ::=  (<a class="reference internal" href="#grammar-token-parameter_declaration"><code class="xref docutils literal notranslate"><span class="pre">parameter_declaration</span></code></a>)* <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>?
+</pre>
+<section id="id67">
+<h3><span class="section-number">4.8.1. </span>パラメータ宣言<a class="headerlink" href="#id67" title="この見出しへのパーマリンク">¶</a></h3>
+<p>パラメータ宣言は、以下の形式をとります。</p>
+<pre>
+<strong id="grammar-token-parameter_declaration">parameter_declaration</strong> ::=  &quot;|&quot; IDENTIFIER (&quot;=&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>)? &quot;|&quot;
+</pre>
+<p>パラメータ宣言で、parameter_declaration = expresssion の形式がある場合、
+そのジョブフローはデフォルトのパラメータを持ちます。デフォルト値を持つ
+パラメータに対しては、ジョブフロー呼び出しの際に対応するパラメータが省
+略されると、パラメータの値はデフォルト値で置き換えられます。デフォルト
+パラメータ式は、ジョブフロー呼び出しのたびに値評価されます。</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">4. Kompira ジョブフロー言語リファレンス</a><ul>
+<li><a class="reference internal" href="#id1">4.1. イントロダクション</a><ul>
+<li><a class="reference internal" href="#id2">4.1.1. 構文の表記法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">4.2. 字句構造</a><ul>
+<li><a class="reference internal" href="#id4">4.2.1. コメント</a></li>
+<li><a class="reference internal" href="#id5">4.2.2. 空白</a></li>
+<li><a class="reference internal" href="#id6">4.2.3. 識別子</a><ul>
+<li><a class="reference internal" href="#id7">4.2.3.1. キーワード</a></li>
+<li><a class="reference internal" href="#id8">4.2.3.2. 予約済みの識別子クラス</a></li>
+<li><a class="reference internal" href="#id9">4.2.3.3. 特殊識別子</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10">4.2.4. オブジェクトパス</a></li>
+<li><a class="reference internal" href="#id11">4.2.5. リテラル</a><ul>
+<li><a class="reference internal" href="#string">4.2.5.1. 文字列リテラル(STRING)</a></li>
+<li><a class="reference internal" href="#binary">4.2.5.2. バイナリリテラル(BINARY)</a></li>
+<li><a class="reference internal" href="#integer">4.2.5.3. 整数リテラル(INTEGER)</a></li>
+<li><a class="reference internal" href="#float">4.2.5.4. 浮動小数リテラル(FLOAT)</a></li>
+<li><a class="reference internal" href="#boolean">4.2.5.5. 真偽リテラル(BOOLEAN)</a></li>
+<li><a class="reference internal" href="#null">4.2.5.6. ヌルリテラル(NULL)</a></li>
+<li><a class="reference internal" href="#pattern">4.2.5.7. パターンリテラル(PATTERN)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id12">4.2.6. 記号</a><ul>
+<li><a class="reference internal" href="#id13">4.2.6.1. 演算子</a></li>
+<li><a class="reference internal" href="#id14">4.2.6.2. 結合子</a></li>
+<li><a class="reference internal" href="#id15">4.2.6.3. デリミタ</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16">4.3. 値と型</a><ul>
+<li><a class="reference internal" href="#id17">4.3.1. プリミティブ型</a><ul>
+<li><a class="reference internal" href="#data_type-Integer">4.3.1.1. 整数型(Integer)</a></li>
+<li><a class="reference internal" href="#data_type-String">4.3.1.2. 文字列型(String)</a></li>
+<li><a class="reference internal" href="#data_type-Binary">4.3.1.3. バイナリ型(Binary)</a></li>
+<li><a class="reference internal" href="#data_type-Float">4.3.1.4. 浮動小数型(Float)</a></li>
+<li><a class="reference internal" href="#data_type-Boolean">4.3.1.5. ブール型(Boolean)</a></li>
+<li><a class="reference internal" href="#data_type-Null">4.3.1.6. ヌル型(Null)</a></li>
+<li><a class="reference internal" href="#data_type-Pattern">4.3.1.7. パターン型(Pattern)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25">4.3.2. 複合データ型</a><ul>
+<li><a class="reference internal" href="#array">4.3.2.1. 配列型(Array)</a></li>
+<li><a class="reference internal" href="#dictionary">4.3.2.2. 辞書型(Dictionary)</a></li>
+<li><a class="reference internal" href="#lazyarray">4.3.2.3. 遅延評価配列型(LazyArray)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26">4.3.3. 不透明データ型</a><ul>
+<li><a class="reference internal" href="#object">4.3.3.1. オブジェクト型(Object)</a></li>
+<li><a class="reference internal" href="#file">4.3.3.2. ファイル型(File)</a></li>
+<li><a class="reference internal" href="#datetime">4.3.3.3. 日時型(Datetime)</a></li>
+<li><a class="reference internal" href="#date">4.3.3.4. 日付型(Date)</a></li>
+<li><a class="reference internal" href="#time">4.3.3.5. 時刻型(Time)</a></li>
+<li><a class="reference internal" href="#timedelta">4.3.3.6. 経過時間型(Timedelta)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27">4.4. 変数</a><ul>
+<li><a class="reference internal" href="#id28">4.4.1. ローカル変数</a><ul>
+<li><a class="reference internal" href="#id29">4.4.1.1. ジョブフロースコープ</a></li>
+<li><a class="reference internal" href="#id30">4.4.1.2. ブロックスコープ</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id31">4.4.2. 環境変数</a></li>
+<li><a class="reference internal" href="#id32">4.4.3. 特殊変数</a><ul>
+<li><a class="reference internal" href="#status-variables">4.4.3.1. 状態変数</a></li>
+<li><a class="reference internal" href="#control-variables">4.4.3.2. 制御変数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id35">4.5. 式</a><ul>
+<li><a class="reference internal" href="#id36">4.5.1. アトミック式</a><ul>
+<li><a class="reference internal" href="#identifier">4.5.1.1. 識別子(IDENTIFIER)</a></li>
+<li><a class="reference internal" href="#id37">4.5.1.2. オブジェクトパス</a></li>
+<li><a class="reference internal" href="#id38">4.5.1.3. 特殊識別子</a></li>
+<li><a class="reference internal" href="#id39">4.5.1.4. リテラル</a></li>
+<li><a class="reference internal" href="#id40">4.5.1.5. 丸カッコ形式</a></li>
+<li><a class="reference internal" href="#id41">4.5.1.6. 配列式</a></li>
+<li><a class="reference internal" href="#id42">4.5.1.7. 辞書式</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id43">4.5.2. 後置式</a><ul>
+<li><a class="reference internal" href="#id44">4.5.2.1. 属性参照</a></li>
+<li><a class="reference internal" href="#id45">4.5.2.2. 添字参照</a></li>
+<li><a class="reference internal" href="#id46">4.5.2.3. 関数呼び出し</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id47">4.5.3. 演算子式</a><ul>
+<li><a class="reference internal" href="#id48">4.5.3.1. 単項演算子</a></li>
+<li><a class="reference internal" href="#id49">4.5.3.2. 乗除演算子</a></li>
+<li><a class="reference internal" href="#id50">4.5.3.3. 加減演算子</a></li>
+<li><a class="reference internal" href="#id51">4.5.3.4. 比較演算子</a></li>
+<li><a class="reference internal" href="#id52">4.5.3.5. 包含演算子</a></li>
+<li><a class="reference internal" href="#id53">4.5.3.6. 論理演算子</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id54">4.6. ジョブ</a><ul>
+<li><a class="reference internal" href="#id55">4.6.1. スキップジョブ</a></li>
+<li><a class="reference internal" href="#id56">4.6.2. 実行ジョブ</a></li>
+<li><a class="reference internal" href="#id57">4.6.3. 代入ジョブ</a></li>
+<li><a class="reference internal" href="#id58">4.6.4. 更新ジョブ</a></li>
+<li><a class="reference internal" href="#job-eventjob">4.6.5. イベントジョブ</a></li>
+<li><a class="reference internal" href="#id60">4.6.6. 組み込みジョブ</a></li>
+<li><a class="reference internal" href="#id61">4.6.7. 制御ジョブ</a><ul>
+<li><a class="reference internal" href="#continue">4.6.7.1. continue</a></li>
+<li><a class="reference internal" href="#break">4.6.7.2. break</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id62">4.6.8. ブロックジョブ</a><ul>
+<li><a class="reference internal" href="#id63">4.6.8.1. 単純ブロック</a></li>
+<li><a class="reference internal" href="#if">4.6.8.2. ifブロック</a></li>
+<li><a class="reference internal" href="#case">4.6.8.3. caseブロック</a></li>
+<li><a class="reference internal" href="#for">4.6.8.4. forブロック</a></li>
+<li><a class="reference internal" href="#while">4.6.8.5. whileブロック</a></li>
+<li><a class="reference internal" href="#choice">4.6.8.6. choiceブロック</a></li>
+<li><a class="reference internal" href="#fork">4.6.8.7. forkブロック</a></li>
+<li><a class="reference internal" href="#pfor">4.6.8.8. pforブロック</a></li>
+<li><a class="reference internal" href="#session">4.6.8.9. session ブロック</a></li>
+<li><a class="reference internal" href="#try">4.6.8.10. tryブロック</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id64">4.7. ジョブフロー式</a><ul>
+<li><a class="reference internal" href="#ref-connector">4.7.1. 結合子</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id66">4.8. ジョブフロープログラム</a><ul>
+<li><a class="reference internal" href="#id67">4.8.1. パラメータ宣言</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="tutorial.html"
+                          title="前の章へ"><span class="section-number">3. </span>Kompiraチュートリアル</a></p>
+  </div>
+  <div>
+    <h4>次のトピックへ</h4>
+    <p class="topless"><a href="library.html"
+                          title="次の章へ"><span class="section-number">5. </span>Kompira 標準ライブラリ</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/reference.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="library.html" title="5. Kompira 標準ライブラリ"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="3. Kompiraチュートリアル"
+             >前へ</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/reference.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>Kompira ジョブフロー言語リファレンス</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "obj_view.html" %}
+{% load i18n core_extras %}
+
+{% block section_contents %}
+<section>
+  {% if object|getitem:"executable" %}
+  <h4 class="section-title">{% trans 'document'|capfirst %}</h4>
+  {% else %}
+  <h4 class="section-title">{% trans 'error message'|capfirst %}</h4>
+  {% endif %}
+  <pre id="library-document">{{ object.document }}</pre>
+</section>
+{% if object.libraryType %}
+<section>
+<div align=right><p class="text-muted">{% trans 'library type' %}: <span id="library-type">{{ object.libraryType }}</span></p></div>
+</section>
+{% endif %}
+{% endblock %}

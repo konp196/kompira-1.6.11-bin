@@ -1,0 +1,36 @@
+{% extends "login_base.html" %}
+{% load i18n core_extras static %}
+
+{% block article %}
+<div class="col-12">
+  <section class="main-list">
+    {% block contents_main %}
+    {% block main_list_head %}
+    <div class="contents-header clearfix">
+      {% block column_config %}
+      {% endblock %}
+      {% include 'paginator_mini.html' %}
+      {% block display_select %}
+      <div id="additional-operation">
+        <ul class="nav nav-pills page_filters">
+          {% block paginate_filters %}
+          <li id="display_select_active" class="nav-item"><a href="{{ object|getattr:'abspath' }}?is_active=True" class="nav-link" data-filters='{"is_active": "True", "status": false}' data-deletable="false">{{ act_objects|default:_("active objects")|capfirst }}</a></li>
+          <li id="display_select_all" class="nav-item"><a href="{{ object|getattr:'abspath' }}" class="nav-link" data-filters='{"is_active": false, "status": false}' data-deletable="true">{{ all_objects|default:_("all objects")|capfirst }}</a></li>
+          {% endblock %}
+        </ul>
+      </div>
+      {% endblock %}
+    </div>
+    {% endblock %}
+    {% block main_list_body %}{% endblock %}
+    {% block main_list_tail %}{% endblock %}
+    {% endblock %}
+  </section>
+</div>
+{% block bottom_buttons %}{% endblock %}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+{% include "js_paginator.html" %}
+{% endblock %}

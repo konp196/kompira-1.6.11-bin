@@ -1,0 +1,41 @@
+{% extends "obj_view.html" %}
+{% load i18n %}
+
+{% block section_contents %}
+{% if object.extend %}
+<section>
+  <h4 class="section-title">{% trans 'extend module'|capfirst %}</h4>
+  <pre id="type-extend" class="section-contents wordbreak">EXTEND
+    {{ object.extend }}
+
+IMPORTED
+    model class: {{ extend_model_class }}
+    view module: {{ extend_view_module }}</pre>
+</section>
+{% endif %}
+<section>
+  <h4 class="section-title">{% trans 'type field'|capfirst %}</h4>
+  <div class="section-contents">
+    <table class="table table-bordered table-striped table-sm view-table">
+      <thead>
+        <tr>
+          <th>{% trans 'field name'|capfirst %}</th>
+          <th>{% trans 'field display name'|capfirst %}</th>
+          <th>{% trans 'field type'|capfirst %}</th>
+          <th>{% trans 'field qualifier'|capfirst %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for field in type_fields %}
+        <tr>
+          <td class="wordbreak view-field-name">{{ field.name }}</td>
+          <td class="wordbreak view-field-dispname">{{ field.display_name }}</td>
+          <td class="view-field-type">{{ field.type }}</td>
+          <td class="view-field-qualifier">{{ field.qual }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

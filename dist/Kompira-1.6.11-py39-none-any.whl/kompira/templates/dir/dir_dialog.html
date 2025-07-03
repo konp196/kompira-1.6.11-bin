@@ -1,0 +1,137 @@
+{% load static i18n %}
+<script src="{% static 'jsrender-1.0.6/js/jsrender.min.js' %}" type="text/javascript"></script>
+
+<div class="modal hide" id="dir-confirm-dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form  enctype="multipart/form-data" action="" method="post">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body" style="overflow-y: auto">
+          <span id="id_dialog-message"></span>
+          <div id="id_dialog-body-contents"></div>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" id="confirm-objects" name="objects" value="">
+          <div class="form-inline">
+            <span id="id_confirm-options"></span>
+            <button type="submit" class="btn btn-primary">{% trans 'ok'|capfirst %}</button>
+            <button type="button" class="btn btn-outline-secondary ml-3" data-dismiss="modal">{% trans 'cancel'|capfirst %}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{ property_form.media.css }}
+<div class="modal hide" id="dir-property-dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form class="prevent-double-submit" enctype="multipart/form-data" action="{{ object_property.abspath }}.property_objects" method="post">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">{% trans 'Edit property' %}</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body" style="overflow-y: auto">
+          <span id="id_dialog-message"></span>
+          <section>
+            <h5 class="section-title">{% trans 'Object information' %}</h5>
+            <table class="table table-sm">
+              {% if property_form.property.non_field_errors %}
+              <tr><td colspan="3">{{ property_form.property.non_field_errors }}</td></tr>
+              {% endif %}
+              <tr>
+                <th>{{ property_form.property.owner.label_tag }}</th>
+                <td style="text-align:left;width:50%;">{{ property_form.property.owner.errors }}{{ property_form.property.owner }}</td>
+                <td style="text-align:right;width:30%;">{{ property_form.property.apply_owner.label_tag }}&nbsp;{{ property_form.property.apply_owner.errors }}{{ property_form.property.apply_owner }}</td>
+              </tr>
+            </table>
+          </section>
+          <hr>
+          <section>
+            <h5 class="section-title" style="display:inline">{% trans 'User permission' %}</h5>
+            <div style="float:right;">{{ property_form.property.apply_uperm.label_tag }}&nbsp;{{ property_form.property.apply_uperm.errors }}{{ property_form.property.apply_uperm }}</div>
+            {% with form=property_form.user_permission %}{% include 'uperm_table.html' %}{% endwith %}
+          </section>
+          <hr>
+          <section>
+            <h5 class="section-title" style="display:inline;">{% trans 'Group permission' %}</h5>
+            <div style="float:right;">{{ property_form.property.apply_gperm.label_tag }}&nbsp;{{ property_form.property.apply_gperm.errors }}{{ property_form.property.apply_gperm }}</div>
+            {% with form=property_form.group_permission %}{% include 'gperm_table.html' %}{% endwith %}
+          </section>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" id="property-objects" name="objects" value="">
+          <div class="form-inline">
+            <button type="submit" id="id_property_submit" class="submit-btn btn btn-primary" accesskey="S"><i class="fas fa-hdd"></i>
+              {% trans 'apply'|capfirst %}</button>
+            <button type="button" class="btn btn-outline-secondary ml-3" data-dismiss="modal">{% trans 'cancel'|capfirst %}</button>
+          </div>
+        </div>
+        {{ property_form.media.js }}
+      </form>
+    </div>
+  </div>
+</div>
+
+<script id="dialog-rename-tmpl" type="text/x-jsrender">
+  <div class="form-group">
+    <input type="hidden" id="selected-object" name="selected_object" value="">
+    <label for="directory-dialog-rename" accesskey="N" class="mr-2">{% trans 'name'|capfirst%}: </label>
+    <input type="text" id="directory-dialog-rename" name="rename" class="form-control" style="margin-right: 16px;"
+           {% templatetag openvariable %}if rename{% templatetag closevariable %}value="{% templatetag openvariable %}:rename{% templatetag closevariable %}"
+           {% templatetag openvariable %}else{% templatetag closevariable %}disabled="disabled"
+           {% templatetag openvariable %}/if{% templatetag closevariable %} />
+  </div>
+</script>
+
+<script id="dialog-message-tmpl" type="text/x-jsrender">
+    <div {% templatetag openvariable %}if warning{% templatetag closevariable %}class="alert alert-danger" style="font-weight: bold;"
+         {% templatetag openvariable %}else{% templatetag closevariable %}class="alert alert-info"
+         {% templatetag openvariable %}/if{% templatetag closevariable %}>{% templatetag openvariable %}:message{% templatetag closevariable %}</div>
+</script>
+
+<script id="object-table-tmpl" type="text/x-jsrender">
+<table class="table table-sm" style="width: 100%; margin: 0;">
+<thead>
+  <tr>
+    <th>#</th>
+    <th>{% trans 'name' %}</th>
+    <th>{% trans 'type' %}</th>
+    <th>{% trans 'owner' %}</th>
+    {% templatetag openvariable %}if with_warn{% templatetag closevariable %}
+    <th>{% trans 'warning' %}</th>
+    {% templatetag openvariable %}/if{% templatetag closevariable %}
+  </tr>
+</thead>
+<tbody class="objects">
+{% templatetag openvariable %}for objects{% templatetag closevariable %}
+  <tr {% templatetag openvariable %}if warning{% templatetag closevariable %}class="warning"{% templatetag openvariable %}/if{% templatetag closevariable %}>
+    <td>{% templatetag openvariable %}:number{% templatetag closevariable %}</td>
+    <td><a href="{% templatetag openvariable %}:object_path{% templatetag closevariable %}" target="_blank">{% templatetag openvariable %}:object_name{% templatetag closevariable %}</a></td>
+    <td>{% templatetag openvariable %}:type_display_name{% templatetag closevariable %}</td>
+    <td>{% templatetag openvariable %}:owner{% templatetag closevariable %}</td>
+    {% templatetag openvariable %}if with_warn{% templatetag closevariable %}
+    <td>{% templatetag openvariable %}if warning{% templatetag closevariable %}<span class="label label-warning">{% templatetag openvariable %}:warning{% templatetag closevariable %}{% templatetag openvariable %}/if{% templatetag closevariable %}</td>
+    {% templatetag openvariable %}/if{% templatetag closevariable %}
+  </tr>
+{% templatetag openvariable %}/for{% templatetag closevariable %}
+</tbody>
+</table>
+</script>
+
+<script id="import-dialog-tmpl" type="text/x-jsrender">
+  <table class="table-form">
+    {{ import_form.as_table }}
+  </table>
+</script>
+
+<script id="export-dialog-tmpl" type="text/x-jsrender">
+  <table class="table-form">
+    {{ export_form.as_table }}
+  </table>
+</script>

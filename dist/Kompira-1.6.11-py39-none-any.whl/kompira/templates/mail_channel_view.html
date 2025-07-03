@@ -1,0 +1,57 @@
+{% extends "channel_view.html" %}
+{% load i18n core_extras %}
+
+{% block extra_tab_menu %}
+  <li class="nav-item"><a class="nav-link" href="#log" data-toggle="tab" id="tab-log">{% trans 'log'|capfirst %}</a></li>
+{% endblock %}
+
+{% block config_tab_pane %}
+<table class="table table-striped table-sm view-table table-label-left">
+  {% for field in object_fields %}
+  {% if not field.invisible %}
+  <tr id="id_field-{{ field.name }}">
+    <th class="obj-display-name"><span class="toggle-name">{{ field.display_name }}</span><span class="toggle-name" style="display: none;">{{ field.name }}</span></th>
+    <td class="obj-value" style="overflow-wrap: anywhere">
+      {{ field.view.as_html }}
+      {% if field.name == 'serverName' %}
+      <span style="float: right;">
+        <a id="id_conn_check-btn" class="btn btn-outline-secondary btn-sm conn-test-modal" href="#config" data-hostname="{{ field.value }}" data-objpath="{{ object_property.abspath }}" data-timeout="{{object.timeout}}">
+          <i class="fas fa-server"></i> {% trans 'Connection test' %}
+        </a>
+      </span>
+      {% elif field.name == 'use_oauth2' %}
+      <span style="float: right;">
+        <a id="id_start_auth-btn" class="btn btn-outline-secondary btn-sm start-auth-flow {% if not object_ability.writable or not field.value or not authorization_url %}disabled{% endif %}" href="#config" data-authurl="{{ authorization_url }}">
+          <i class="fas fa-id-card"></i> {% trans 'Start authorization' %}
+        </a>
+      </span>
+      {% endif %}
+    </td>
+  </tr>
+  {% endif %}
+  {% include "token_field.html" %}
+  {% endfor %}
+</table>
+{% endblock config_tab_pane %}
+
+{% block extra_tab_contents %}
+  <!-- ログタブ -->
+  <div class="tab-pane" id="log">
+    <pre id="log-samp" class="pre-scrollable">{{ object.log }}</pre>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript">
+$(function() {
+   var log_samp = $('#log-samp');
+   var active = $('#mail-channel-tab').find('.active:last');
+   // 一度 log タブに切り替えてから scrollHeight を取得する
+   $('#tab-log').tab('show');
+   var h = log_samp.prop('scrollHeight');
+   log_samp.scrollTop(h);
+   active.tab('show');
+});
+</script>
+{% endblock %}

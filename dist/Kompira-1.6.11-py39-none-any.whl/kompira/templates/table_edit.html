@@ -1,0 +1,7 @@
+{% extends "obj_edit.html" %}
+{% load static i18n %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'kompira/js/table_edit.js' %}"></script>
+{% endblock %}

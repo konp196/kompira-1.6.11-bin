@@ -1,0 +1,12 @@
+{% load i18n %}
+<div class="btn-group noprint">
+  {% if object_editable %}
+  <a id="id_edit-btn" {% if object_writable %}class="btn btn-outline-secondary" href="{{ object_path }}.update"{% else %}class="btn btn-outline-secondary disabled" href="#" aria-disabled="true"{% endif %} accesskey="E">
+    <i class="fas fa-edit"></i> {% trans 'edit'|capfirst %}
+  </a>
+  {% endif %}
+  <button id="id_delete-btn" type="button" class="btn btn-outline-secondary action-modal" {% if not object_deletable %}disabled{% endif %}
+    data-action="{{ object_path }}.delete" data-operation="{% trans 'delete [[type]] <span class=font-weight-bold>[[target]]</span>' %}" data-type="{{ object_type }}" data-target="{{ object_name }}" data-warning="{% trans 'This operation cannot be undone!' %}">
+    <i class="fas fa-trash"></i> {% trans 'delete'|capfirst %}
+  </button>
+</div>

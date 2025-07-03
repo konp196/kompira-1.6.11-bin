@@ -1,0 +1,23 @@
+{% extends "nologin_base.html" %}
+{% load i18n %}
+
+{% block header_title %}
+{% trans "Account locked out" %}
+{% endblock header_title %}
+
+{% block article %}
+<div class="card border-secondary text-center">
+  <div class="card-body">
+    <h4 class="card-title">{% trans 'Account locked out' %}</h4>
+    <p>
+      {% trans "Too many login attempts." %}
+    </p>
+    <p>
+      {{ message }}
+    </p>
+  </div>
+  <div class="card-footer">
+    <a id="login-link" href="{% url 'login' %}">{% trans "Back to login screen" %}</a>
+  </div>
+</div>
+{% endblock article %}

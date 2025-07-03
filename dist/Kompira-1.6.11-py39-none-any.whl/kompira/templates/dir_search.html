@@ -1,0 +1,24 @@
+{% extends "dir_view.html" %}
+{% load i18n %}
+
+{% block page_main_title %}
+{% trans 'search results in '|capfirst %} <a href="{{ object_property.abspath }}{{ link_search }}">{{ object_property.abspath }}</a>
+{% endblock %}
+{% block page_sub_title %}{% endblock %}
+
+{% block page_header_prepend %}
+{% endblock %}
+
+{% block page_header_append %}
+{{ filter.form.media.css }}
+<div style="clear: both;">
+  <form name="search" action="{{ object_property.abspath }}.search" method="get" class="form-inline">
+    {{ pagesize_form }}
+    {% for field in filter.form %}
+    {{ field }}
+    {% endfor %}
+    <button id="id_search-btn" type="submit" class="btn btn-primary noprint"><i class="fas fa-search"></i> {% trans 'search'|capfirst %}</button>
+  </form>
+  {{ filter.form.media.js }}
+</div>
+{% endblock %}

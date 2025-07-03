@@ -1,0 +1,23 @@
+{% load static i18n core_extras %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block header_title %}{% endblock%} | {{ brand_title }}</title>
+    {% if settings.KOMPIRA_FAVICON_SVG %}
+    <link rel="icon" href="{% static settings.KOMPIRA_FAVICON_SVG %}">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'bootstrap-4.5.2/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome-5.13.0/css/all.min.css' %}">
+    {% if custom_style %}
+    <style type="text/css" id="custom_style">{% include "custom_style.css" %}</style>
+    {% endif %}
+    {% block extra_head %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'kompira/css/kompira.css' %}">
+    <link rel="stylesheet" href="{% static 'kompira/css/model_select2.css' %}">
+  </head>
+  <body>
+    {% block base_body %}{% endblock %}
+  </body>
+</html>

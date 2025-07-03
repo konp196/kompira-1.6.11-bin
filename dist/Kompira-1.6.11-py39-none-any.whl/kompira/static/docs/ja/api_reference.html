@@ -1,0 +1,1503 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>8. Kompira REST API リファレンス &#8212; Kompira 1.6.11 ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="prev" title="7. Kompira の監視" href="monitoring.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="monitoring.html" title="7. Kompira の監視"
+             accesskey="P">前へ</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/api_reference.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">8. </span>Kompira REST API リファレンス</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="kompira-rest-api">
+<h1><span class="section-number">8. </span>Kompira REST API リファレンス<a class="headerlink" href="#kompira-rest-api" title="この見出しへのパーマリンク">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">著者<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira 開発チーム</p>
+</dd>
+</dl>
+<section id="id1">
+<h2><span class="section-number">8.1. </span>イントロダクション<a class="headerlink" href="#id1" title="この見出しへのパーマリンク">¶</a></h2>
+<p>本ドキュメントは、REST API の仕様について記述します。</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">8.2. </span>共通<a class="headerlink" href="#id2" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id3">
+<h3><span class="section-number">8.2.1. </span>エンドポイント<a class="headerlink" href="#id3" title="この見出しへのパーマリンク">¶</a></h3>
+<p>REST API のエンドポイントは、通常の Kompira オブジェクトへのリソースパ
+スと同様です。すなわちルートエンドポイントは</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>http[s]://&lt;hostname&gt;/
+</pre></div>
+</div>
+<p>となります。</p>
+<p>ブラウザからのアクセスと API リクエストを区別するために、HTTP リクエス
+トの Accept ヘッダに</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Accept: application/json
+</pre></div>
+</div>
+<p>を含める必要があります。</p>
+<p>もしくは、クエリ文字列に <code class="docutils literal notranslate"><span class="pre">format=json</span></code> を含める方法もあります。</p>
+</section>
+<section id="id4">
+<h3><span class="section-number">8.2.2. </span>ユーザ認証<a class="headerlink" href="#id4" title="この見出しへのパーマリンク">¶</a></h3>
+<p>認証はトークン認証と、セッション認証方式の2種類が許可されます。セッショ
+ン認証方式はブラウザからのアクセスを想定したものなので、REST API のクラ
+イアントでは通常は使用しません。</p>
+<p>トークン認証を使用する場合、以下のようにリクエストの Authorization ヘッ
+ダにトークン鍵を含めます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Authorization: Token &lt;トークン鍵&gt;
+</pre></div>
+</div>
+<p>または、HTTP リクエストのクエリ文字列に以下のようにトークン鍵を含める方
+法もあります。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>token=&lt;トークン鍵&gt;
+</pre></div>
+</div>
+<p>ユーザ設定ページにて、各ユーザの REST API を有効にすると、アクセストー
+クンが生成されます。REST API を無効にし、再度有効にすると、トークンが再初
+期化されます。</p>
+</section>
+<section id="id5">
+<h3><span class="section-number">8.2.3. </span>フォーマット<a class="headerlink" href="#id5" title="この見出しへのパーマリンク">¶</a></h3>
+<p>データフォーマットは JSON 形式のみサポートしています。</p>
+<section id="datetime">
+<h4><span class="section-number">8.2.3.1. </span>日時型データ (Datetime)<a class="headerlink" href="#datetime" title="この見出しへのパーマリンク">¶</a></h4>
+<p>日時型データは UTC であり、以下の形式(ISO8601)が用いられます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%Y-%m-%dT%H:%M:%S.%fZ もしくは %Y-%m-%dT%H:%M:%SZ
+</pre></div>
+</div>
+<p>入力時にはマイクロ秒や秒を省略することが可能です。末尾の UTC 指示子で
+ある Z を省いた場合は、ローカル時刻（JST) とみなされ、内部で UTC に変換
+されます。</p>
+</section>
+<section id="object">
+<h4><span class="section-number">8.2.3.2. </span>オブジェクト型データ (Object)<a class="headerlink" href="#object" title="この見出しへのパーマリンク">¶</a></h4>
+<p>オブジェクト型データはオブジェクトの絶対パスにより表現されます。</p>
+</section>
+<section id="file">
+<h4><span class="section-number">8.2.3.3. </span>ファイル型データ (File)<a class="headerlink" href="#file" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ファイル型データは出力時は、以下のように name, data をキーに持つ辞書型
+データとなります。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ &quot;name&quot;: &quot;&lt;ファイル名&gt;&quot;, &quot;data&quot;: &quot;&lt;BASE64エンコードされたファイルデータ&gt;&quot; }
+</pre></div>
+</div>
+<p>入力時は、name と data をキーに持つ辞書型データとします。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ &quot;name&quot;: &quot;&lt;ファイル名&gt;&quot;, &quot;data&quot;: &quot;&lt;BASE64エンコードされたファイルデータ&gt;&quot; }
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id6">
+<h3><span class="section-number">8.2.4. </span>エラー<a class="headerlink" href="#id6" title="この見出しへのパーマリンク">¶</a></h3>
+<p>エラー時は、エラーを示す HTTP ステータスコードを返します。この時、 HTTP レ
+スポンスのコンテンツボディにはエラー理由を示すデータが含まれます。</p>
+<p>多くのエラーデータは以下のように detail キーを含む辞書データとなります。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ &quot;detail&quot;: &quot;&lt;エラーの理由&gt;&quot; }
+</pre></div>
+</div>
+<p>必須のフィールドがリクエストデータに含まれていないようなバリデーション
+エラーの場合、以下のような辞書データを返します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{ &quot;&lt;フィールド名&gt;&quot;: [&quot;&lt;エラーメッセージ&gt;&quot;, ...],
+  &quot;&lt;フィールド名&gt;&quot;: [&quot;&lt;エラーメッセージ&gt;&quot;, ...],
+... }
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><span class="section-number">8.2.5. </span>ページネート<a class="headerlink" href="#id7" title="この見出しへのパーマリンク">¶</a></h3>
+<p>一覧取得の場合、以下の形式のページネートされたデータが返されます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;count&quot;: &lt;オブジェクト総数&gt;,
+    &quot;next&quot;: &lt;次ページのURL&gt;,
+    &quot;previous&quot;: &lt;前ページのURL&gt;,
+    &quot;results&quot;: &lt;オブジェクトデータリスト&gt;
+}
+</pre></div>
+</div>
+<p>ページを指定して取得する場合、クエリパスに page=&lt;ページ番号&gt; を含めます。
+最後のページを取得したい場合は、ページ番号に last を指定します。</p>
+<p>ページサイズのデフォルトは 25 です。ページサイズを変更したい場合、</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>page_size=&lt;ページサイズ&gt;
+</pre></div>
+</div>
+<p>をクエリ文字列に含めます。</p>
+</section>
+<section id="id8">
+<h3><span class="section-number">8.2.6. </span>取得属性の指定<a class="headerlink" href="#id8" title="この見出しへのパーマリンク">¶</a></h3>
+<p>取得する属性名をクエリパスに <code class="docutils literal notranslate"><span class="pre">attrs=&lt;属性名&gt;</span></code> と指定することで、オブジェクトデータの一部の属性値だけを取得することが可能です。</p>
+<p>たとえば、オブジェクトのIDと表示名だけを取得する場合は、以下に示す例のように、属性名として <code class="docutils literal notranslate"><span class="pre">id</span></code> と <code class="docutils literal notranslate"><span class="pre">display_name</span></code> を指定します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/some/object?attrs=id&amp;attrs=display_name
+</pre></div>
+</div>
+<p>一覧取得においても、同様に取得したい属性を指定することが可能です。たとえば、プロセス一覧取得において、プロセスIDと状態のみ取得したい場合は、以下のように指定します。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/process?attrs=id&amp;attrs=status
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3><span class="section-number">8.2.7. </span>フィルタリング<a class="headerlink" href="#id9" title="この見出しへのパーマリンク">¶</a></h3>
+<p>一覧取得において、オブジェクトの属性でフィルタリングするには、クエリパスに <code class="docutils literal notranslate"><span class="pre">&lt;属性名&gt;=&lt;値&gt;</span></code> を指定します。</p>
+<p>たとえば、正常に完了したプロセスのみの一覧を取得する場合、以下のように指定します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/process?status=DONE
+</pre></div>
+</div>
+<p>また、以下のように複数の属性をクエリパスで指定した場合は、AND によるフィルタリングとなります。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/app.descendant?display_name=test&amp;owner=root
+</pre></div>
+</div>
+<p>上記は完全一致によるフィルタリングですが、以下のように属性名に続けてルックアップを記述することで、
+細かなフィルタリング条件の指定が可能です。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;属性名&gt;__&lt;ルックアップ&gt;=&lt;値&gt;
+</pre></div>
+</div>
+<p>たとえば、表示名に <code class="docutils literal notranslate"><span class="pre">test</span></code> を含むオブジェクトをフィルタリングできます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/app.descendant?display_name__contains=test
+</pre></div>
+</div>
+<p>ルックアップの種類ごとの値のフィルタリング方式は以下のとおりです。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ルックアップ</p></th>
+<th class="head"><p>フィルタリング方式</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code></p></td>
+<td><p>属性が指定した値に一致する。<code class="docutils literal notranslate"><span class="pre">iexact</span></code> では大小文字を区別しない。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code></p></td>
+<td><p>属性が指定した値を含む。<code class="docutils literal notranslate"><span class="pre">icontains</span></code> では大小文字を区別しない。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">startswith</span></code>, <code class="docutils literal notranslate"><span class="pre">istartswith</span></code></p></td>
+<td><p>属性が指定した値で始まる。<code class="docutils literal notranslate"><span class="pre">istartswith</span></code> では大小文字を区別しない。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code></p></td>
+<td><p>属性が指定した値で終わる。<code class="docutils literal notranslate"><span class="pre">iendswith</span></code> では大小文字を区別しない。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code></p></td>
+<td><p>属性が指定した正規表現にマッチする。<code class="docutils literal notranslate"><span class="pre">iregex</span></code> では大文字小文字区別しない。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code></p></td>
+<td><p>属性が指定した値より大きい(<code class="docutils literal notranslate"><span class="pre">gt</span></code>)、または、属性が指定した値以上である(<code class="docutils literal notranslate"><span class="pre">gte</span></code>)。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code></p></td>
+<td><p>属性が指定した値より小さい(<code class="docutils literal notranslate"><span class="pre">lt</span></code>)、または、属性が指定した値以下である(<code class="docutils literal notranslate"><span class="pre">lte</span></code>)。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">in</span></code></p></td>
+<td><p>属性が指定した値に含まれる。</p></td>
+</tr>
+</tbody>
+</table>
+<p>仮想オブジェクト以外の一般のオブジェクトにおける属性値によるフィルタリングでは、属性によって指定できるルックアップが異なります。
+属性の一覧と指定できるルックアップは以下のとおりです。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>属性</p></th>
+<th class="head"><p>指定できるルックアップ</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>owner</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>abspath</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code>, <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code>, <code class="docutils literal notranslate"><span class="pre">startswith</span></code>,
+<code class="docutils literal notranslate"><span class="pre">istartswith</span></code>, <code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code>, <code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>display_name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code>, <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code>, <code class="docutils literal notranslate"><span class="pre">startswith</span></code>,
+<code class="docutils literal notranslate"><span class="pre">istartswith</span></code>, <code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code>, <code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>description</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code>, <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code>, <code class="docutils literal notranslate"><span class="pre">startswith</span></code>,
+<code class="docutils literal notranslate"><span class="pre">istartswith</span></code>, <code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code>, <code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>created</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>updated</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>type_object</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>parent_object</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>また、仮想オブジェクトでは、属性のデータ型によって指定できるルックアップが異なります。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>属性の型</p></th>
+<th class="head"><p>指定できるルックアップ</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>文字列型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code>, <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code>, <code class="docutils literal notranslate"><span class="pre">startswith</span></code>,
+<code class="docutils literal notranslate"><span class="pre">istartswith</span></code>, <code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code>, <code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>整数型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>日時型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>オブジェクト型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>ユーザ型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>真偽型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>なお、ルックアップを指定していないときは <code class="docutils literal notranslate"><span class="pre">exact</span></code> が適用されます。</p>
+</section>
+<section id="id10">
+<h3><span class="section-number">8.2.8. </span>並び順の指定<a class="headerlink" href="#id10" title="この見出しへのパーマリンク">¶</a></h3>
+<p>オブジェクトの一覧取得において並び順を指定するには、クエリパスに <code class="docutils literal notranslate"><span class="pre">order_by=&lt;属性名&gt;</span></code> を指定します。
+この場合、指定した属性に関して昇順で並べ替えした結果を一覧として返します。
+降順にしたい場合は、クエリパスに <code class="docutils literal notranslate"><span class="pre">order_by=-&lt;属性名&gt;</span></code> を指定します。</p>
+<p>order_by で並び順を指定できるオブジェクト属性は以下の通りです。</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>属性</p></th>
+<th class="head"><p>適用される並び順</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>id</p></td>
+<td><p>オブジェクトの ID 順</p></td>
+</tr>
+<tr class="row-odd"><td><p>owner</p></td>
+<td><p>所有者の ID 順</p></td>
+</tr>
+<tr class="row-even"><td><p>abspath</p></td>
+<td><p>絶対パス順</p></td>
+</tr>
+<tr class="row-odd"><td><p>display_name</p></td>
+<td><p>表示名順</p></td>
+</tr>
+<tr class="row-even"><td><p>description</p></td>
+<td><p>説明順</p></td>
+</tr>
+<tr class="row-odd"><td><p>created</p></td>
+<td><p>作成日時順 (古い順)</p></td>
+</tr>
+<tr class="row-even"><td><p>updated</p></td>
+<td><p>更新日時順 (古い順)</p></td>
+</tr>
+<tr class="row-odd"><td><p>type_object</p></td>
+<td><p>型オブジェクトの ID 順</p></td>
+</tr>
+<tr class="row-even"><td><p>parent_object</p></td>
+<td><p>親オブジェクトの ID 順</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.6post1 で追加: </span>order_by で指定できる属性に description と parent_object を追加しました</p>
+</div>
+<section id="id11">
+<h4><span class="section-number">8.2.8.1. </span>オブジェクト型 (Object)<a class="headerlink" href="#id11" title="この見出しへのパーマリンク">¶</a></h4>
+<p>仮想オブジェクト以外の一般のオブジェクトのフィルタリングに使用できる属性は以下のとおりです。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>属性名</p></th>
+<th class="head"><p>意味 (属性の型) または [指定できるルックアップ]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">owner</span></code></p></td>
+<td><p>所有者 (ユーザ型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">display_name</span></code></p></td>
+<td><p>表示名 (文字列型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">description</span></code></p></td>
+<td><p>説明 (文字列型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">created</span></code></p></td>
+<td><p>作成日時 (日時型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">updated</span></code></p></td>
+<td><p>更新日時 (日時型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">type_object</span></code></p></td>
+<td><p>型オブジェクト (オブジェクト型)</p></td>
+</tr>
+</tbody>
+</table>
+<p>さらに、型オブジェクトが特定される状況では、フィールド値によるフィルタリングも指定できます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>field:&lt;フィールド名&gt;__&lt;ルックアップ&gt;=&lt;値&gt;
+</pre></div>
+</div>
+<p>たとえば、以下のように指定します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/.descendant?type_object=/system/types/Jobflow&amp;field:source__contains=urlopen&amp;field:defaultMonitoringMode=MAIL
+</pre></div>
+</div>
+<p>型オブジェクトが特定される状況とは、以下のいずれかを言います。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">type_object</span></code> 属性フィルタリングによって型オブジェクトが指定されている</p></li>
+<li><p>起点となるオブジェクトがテーブル型であり、テーブルに型オブジェクトが設定されている</p></li>
+</ul>
+<p>型オブジェクトが特定されていない状況で、フィールド値によるフィルタリングを指定するとエラーになります。</p>
+<p>なお、フィールド値によるフィルタリングでは、フィールドのデータ型に応じて指定できるルックアップが異なります。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>フィールドの型</p></th>
+<th class="head"><p>指定できるルックアップ</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>文字列型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">iexact</span></code>, <code class="docutils literal notranslate"><span class="pre">contains</span></code>, <code class="docutils literal notranslate"><span class="pre">icontains</span></code>, <code class="docutils literal notranslate"><span class="pre">startswith</span></code>,
+<code class="docutils literal notranslate"><span class="pre">istartswith</span></code>, <code class="docutils literal notranslate"><span class="pre">endswith</span></code>, <code class="docutils literal notranslate"><span class="pre">iendswith</span></code>, <code class="docutils literal notranslate"><span class="pre">regex</span></code>, <code class="docutils literal notranslate"><span class="pre">iregex</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code>, <code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>整数型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">isnull</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code>, <code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>真偽値型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>日時型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">isnull</span></code>, <code class="docutils literal notranslate"><span class="pre">gt</span></code>, <code class="docutils literal notranslate"><span class="pre">gte</span></code>, <code class="docutils literal notranslate"><span class="pre">lt</span></code>, <code class="docutils literal notranslate"><span class="pre">lte</span></code>, <code class="docutils literal notranslate"><span class="pre">range</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>オブジェクト型</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exact</span></code>, <code class="docutils literal notranslate"><span class="pre">isnull</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>添付ファイル型</p></td>
+<td><p>(文字列型と同じ、ファイル名がフィルタ対象になります)</p></td>
+</tr>
+<tr class="row-even"><td><p>配列型</p></td>
+<td><p>(文字列型と同じ、配列の値がフィルタ対象になります)</p></td>
+</tr>
+<tr class="row-odd"><td><p>辞書型</p></td>
+<td><p>(文字列型と同じ、辞書の値がフィルタ対象になります)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="process">
+<h4><span class="section-number">8.2.8.2. </span>プロセス型 (Process)<a class="headerlink" href="#process" title="この見出しへのパーマリンク">¶</a></h4>
+<p>プロセスオブジェクトのフィルタリングに使用できる属性は以下のとおりです。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>属性名</p></th>
+<th class="head"><p>意味 (属性の型) または [指定できるルックアップ]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">job</span></code></p></td>
+<td><p>ジョブオブジェクト (オブジェクト型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">user</span></code></p></td>
+<td><p>実行ユーザー (ユーザ型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">started_time</span></code></p></td>
+<td><p>開始日時 (日時型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">finished_time</span></code></p></td>
+<td><p>終了日時 (日時型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">status</span></code></p></td>
+<td><p>ステータス [exact]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">schedule</span></code></p></td>
+<td><p>スケジュールオブジェクト (オブジェクト型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">parent</span></code></p></td>
+<td><p>親プロセス (プロセス型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">current_job</span></code></p></td>
+<td><p>実行中ジョブオブジェクト (オブジェクト型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">suspended</span></code></p></td>
+<td><p>一時停止フラグ (真偽型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lineno</span></code></p></td>
+<td><p>実行中行番号 (整数型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">console</span></code></p></td>
+<td><p>コンソール (文字列型)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="scheduler">
+<h4><span class="section-number">8.2.8.3. </span>スケジュール型 (Scheduler)<a class="headerlink" href="#scheduler" title="この見出しへのパーマリンク">¶</a></h4>
+<p>スケジュールオブジェクトのフィルタリングに使用できる属性は以下のとおりです。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>属性名</p></th>
+<th class="head"><p>意味 (属性の型) または [指定できるルックアップ]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>スケジュール名 (文字列型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">description</span></code></p></td>
+<td><p>説明 (文字列型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">user</span></code></p></td>
+<td><p>ユーザー (ユーザ型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">job</span></code></p></td>
+<td><p>ジョブオブジェクト (オブジェクト型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">year</span></code></p></td>
+<td><p>年 [exact, contains]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">month</span></code></p></td>
+<td><p>月 [exact, contains]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">day</span></code></p></td>
+<td><p>日 [exact, contains]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">week</span></code></p></td>
+<td><p>週 [exact, contains]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">day_of_week</span></code></p></td>
+<td><p>曜日 [exact, contains]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hour</span></code></p></td>
+<td><p>時 [exact, contains]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">minute</span></code></p></td>
+<td><p>分 [exact, contains]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">disabled</span></code></p></td>
+<td><p>無効化 (真偽型)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="incident">
+<h4><span class="section-number">8.2.8.4. </span>インシデント型 (Incident)<a class="headerlink" href="#incident" title="この見出しへのパーマリンク">¶</a></h4>
+<p>インシデントオブジェクトのフィルタリングに使用できる属性は以下のとおりです。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>属性名</p></th>
+<th class="head"><p>意味 (属性の型) または [指定できるルックアップ]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>インシデント名 (文字列型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">device</span></code></p></td>
+<td><p>デバイス名 (文字列型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">service</span></code></p></td>
+<td><p>サービス名 (文字列型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">created_date</span></code></p></td>
+<td><p>作成日時 (日時型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">closed_date</span></code></p></td>
+<td><p>完了日時 (日時型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">status</span></code></p></td>
+<td><p>ステータス [exact]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">owner</span></code></p></td>
+<td><p>所有者 (ユーザ型)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="task">
+<h4><span class="section-number">8.2.8.5. </span>タスク型 (Task)<a class="headerlink" href="#task" title="この見出しへのパーマリンク">¶</a></h4>
+<p>タスクオブジェクトのフィルタリングに使用できる属性は以下のとおりです。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>属性名</p></th>
+<th class="head"><p>意味 (属性の型) または [指定できるルックアップ]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>タスク名 (文字列型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">title</span></code></p></td>
+<td><p>タイトル (文字列型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">message</span></code></p></td>
+<td><p>メッセージ (文字列型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">status</span></code></p></td>
+<td><p>ステータス [exact]</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">owner</span></code></p></td>
+<td><p>所有者 (ユーザ型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">created_date</span></code></p></td>
+<td><p>作成日時 (日時型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">closed_date</span></code></p></td>
+<td><p>完了日時 (日時型)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="user">
+<h4><span class="section-number">8.2.8.6. </span>ユーザー型 (User)<a class="headerlink" href="#user" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ユーザーオブジェクトのフィルタリングに使用できる属性は以下のとおりです。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>属性名</p></th>
+<th class="head"><p>意味 (属性の型) または [指定できるルックアップ]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">username</span></code></p></td>
+<td><p>ユーザー名 (文字列型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">first_name</span></code></p></td>
+<td><p>名 (文字列型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">last_name</span></code></p></td>
+<td><p>姓 (文字列型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">email</span></code></p></td>
+<td><p>E-mail (文字列型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">last_login</span></code></p></td>
+<td><p>最終ログイン日時 (日時型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">is_active</span></code></p></td>
+<td><p>有効化 (真偽型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">is_ldap_user</span></code></p></td>
+<td><p>LDAPユーザかどうか (真偽型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">home_directory</span></code></p></td>
+<td><p>ホームディレクトリ (オブジェクト型)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">environment</span></code></p></td>
+<td><p>環境変数 (オブジェクト型)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="group">
+<h4><span class="section-number">8.2.8.7. </span>グループ型 (Group)<a class="headerlink" href="#group" title="この見出しへのパーマリンク">¶</a></h4>
+<p>グループオブジェクトのフィルタリングに使用できる属性は以下のとおりです。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>属性名</p></th>
+<th class="head"><p>意味 (属性の型) または [指定できるルックアップ]</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>グループ名 (文字列型)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">is_ldap_group</span></code></p></td>
+<td><p>LDAPグループかどうか (真偽型)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="kompira">
+<h2><span class="section-number">8.3. </span>Kompiraオブジェクトへのアクセス<a class="headerlink" href="#kompira" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id12">
+<h3><span class="section-number">8.3.1. </span>オブジェクト情報の取得<a class="headerlink" href="#id12" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET &lt;オブジェクトパス&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>応答</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;オブジェクトID&gt;,
+    &quot;abspath&quot;: &lt;オブジェクトパス&gt;,
+    &quot;owner&quot;: &lt;オブジェクト所有ユーザー名&gt;,
+    &quot;fields&quot;: &lt;フィールドデータ辞書&gt;,
+    &quot;extra_properties&quot;: &lt;オブジェクト拡張属性&gt;,
+    &quot;user_permissions&quot;: &lt;ユーザーパーミッション辞書&gt;,
+    &quot;group_permissions&quot;: &lt;グループパーミッション辞書&gt;,
+    &quot;display_name&quot;: &lt;表示名&gt;,
+    &quot;description&quot;: &lt;説明&gt;,
+    &quot;created&quot;: &lt;オブジェクト生成日時&gt;,
+    &quot;updated&quot;: &lt;オブジェクト最終更新日時&gt;,
+    &quot;type_object&quot;: &lt;型オブジェクトのパス&gt;,
+    &quot;parent_object&quot;: &lt;親オブジェクトのパス&gt;
+}
+</pre></div>
+</div>
+<p>フィールドデータ辞書とオブジェクト拡張属性は、オブジェクトの型によって異なるキーを含む辞書データです。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>設定型オブジェクトの場合、上記に加えて設定項目のキーと値を含む辞書データが格納された data フィールドが含まれます。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Password型フィールド、Array&lt;Password&gt;型フィールド、Dictionary&lt;Password&gt;型フィールドのパスワードデータの取得には、
+オブジェクトの書き込み権限が必要です。書き込み権限が無い場合は、null値で置き換えられたデータが返されます。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.6.8 で変更: </span>パスワードデータの取得にオブジェクトの書き込み権限が必要となりました。</p>
+</div>
+</section>
+<section id="id13">
+<h3><span class="section-number">8.3.2. </span>オブジェクト情報の更新<a class="headerlink" href="#id13" title="この見出しへのパーマリンク">¶</a></h3>
+<dl>
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>PUT &lt;オブジェクトパス&gt;</p></li>
+<li><p>PATCH &lt;オブジェクトパス&gt;</p></li>
+</ul>
+<p>PUTはオブジェクトのデータ全体を置き換えます。オブジェクトの一部更新の場合
+は、PATCHリクエストを使用します。</p>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;owner&quot;: &lt;オブジェクト所有ユーザー名&gt;,
+    &quot;fields&quot;: &lt;フィールドデータ辞書&gt;,
+    &quot;user_permissions&quot;: &lt;ユーザーパーミッション辞書&gt;,
+    &quot;group_permissions&quot;: &lt;グループパーミッション辞書&gt;,
+    &quot;display_name&quot;: &lt;表示名&gt;,
+    &quot;description&quot;: &lt;説明&gt;                 # 省略可能
+}
+</pre></div>
+</div>
+<p>PATCH リクエストの場合、属性を省略するとそのキーに対応するオブジェクトの値は変更されません。</p>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>更新されたオブジェクトのデータ</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h3><span class="section-number">8.3.3. </span>オブジェクトの新規追加<a class="headerlink" href="#id14" title="この見出しへのパーマリンク">¶</a></h3>
+<p>ディレクトリオブジェクト、もしくは、テーブルオブジェクトに対して POST
+リクエストを送信すると、オブジェクトが新規に作成されます。</p>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST &lt;ディレクトリ又はテーブルのオブジェクトパス&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;owner&quot;: &lt;オブジェクト所有ユーザー名&gt;,# 省略可能(省略時はリクエストユーザーが所有者となる)
+    &quot;fields&quot;: &lt;フィールドデータ辞書&gt;,
+    &quot;name&quot;: &lt;オブジェクト名&gt;,
+    &quot;user_permissions&quot;: &lt;ユーザーパーミッション辞書&gt;,
+    &quot;group_permissions&quot;: &lt;グループパーミッション辞書&gt;,
+    &quot;display_name&quot;: &lt;表示名&gt;,# 省略可能
+    &quot;description&quot;: &lt;説明&gt;,# 省略可能
+    &quot;type_object&quot;: &lt;型オブジェクトのパス&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>HTTP 201 Created 応答と新規追加されたオブジェクトのデータ</p>
+</dd>
+</dl>
+</section>
+<section id="id15">
+<h3><span class="section-number">8.3.4. </span>オブジェクトの削除<a class="headerlink" href="#id15" title="この見出しへのパーマリンク">¶</a></h3>
+<p>オブジェクトパスに対して DELETE リクエストを送信することで、そのオブジェ
+クトを削除することができます。</p>
+<p>プロセス、スケジュール、インシデント、タスク、の各オブジェクトも同様に
+削除することができる。</p>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>DELETE &lt;オブジェクトパス&gt;</p></li>
+</ul>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>成功すると HTTP 204 No Content が返されます。</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h3><span class="section-number">8.3.5. </span>子/子孫オブジェクトの一覧取得<a class="headerlink" href="#id16" title="この見出しへのパーマリンク">¶</a></h3>
+<p>ディレクトリオブジェクト、もしくは、テーブルオブジェクトの子や子孫オブ
+ジェクトの一覧を取得することができます。</p>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET &lt;オブジェクトパス&gt;.children# 子オブジェクト一覧</p></li>
+<li><p>GET &lt;オブジェクトパス&gt;.descendant# 子孫オブジェクト一覧</p></li>
+</ul>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>オブジェクトデータの一覧が返されます。</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ディレクトリやテーブル以外のオブジェクトの場合、空の一覧が返されます。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>取得した一覧データのうち、読み取り権限が無いオブジェクトには、fields 属性（フィールドデータ辞書）が含まれません。</p>
+</div>
+</section>
+<section id="id17">
+<h3><span class="section-number">8.3.6. </span>ジョブフローの実行<a class="headerlink" href="#id17" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST &lt;ジョブフローパス&gt;.execute</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;step_mode&quot;: &lt;ステップモード&gt;,               # true or false
+    &quot;checkpoint_mode&quot;: &lt;チェックポイントモード&gt;, # true or false
+    &quot;monitoring_mode&quot;: &lt;監視モード&gt;,             # NOTHING, MAIL, ABORT_MAIL
+    &quot;parameters&quot;: &lt;ジョブフローパラメータの辞書&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>実行されたジョブフロープロセスのパスが返されます。</p>
+</dd>
+</dl>
+</section>
+<section id="id18">
+<h3><span class="section-number">8.3.7. </span>スクリプトジョブの実行<a class="headerlink" href="#id18" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST &lt;スクリプトジョブパス&gt;.execute</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;node&quot;: &lt;実行ノードオブジェクトのパス&gt;,
+    &quot;account&quot;: &lt;実行アカウントオブジェクトのパス&gt;,
+    &quot;command_line&quot;: &lt;コマンドライン文字列&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>実行されたジョブフロープロセスのパスが返されます。</p>
+</dd>
+</dl>
+</section>
+<section id="id19">
+<h3><span class="section-number">8.3.8. </span>メッセージ送信<a class="headerlink" href="#id19" title="この見出しへのパーマリンク">¶</a></h3>
+<p>チャネルオブジェクトに対してメッセージ送信が可能です。</p>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST &lt;チャネルオブジェクトパス&gt;.send</p></li>
+</ul>
+</dd>
+<dt><strong>リクエストデータ</strong></dt><dd><p>任意の JSON 形式のデータ</p>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>成功すると HTTP 200 OK が返されます。</p>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h3><span class="section-number">8.3.9. </span>メッセージ受信<a class="headerlink" href="#id20" title="この見出しへのパーマリンク">¶</a></h3>
+<p>チャネルオブジェクトからメッセージを受信します。</p>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST &lt;チャネルオブジェクトパス&gt;.recv</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;timeout&quot;: &lt;タイムアウト値(秒)&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>成功すると受信データが返されます。
+受信タイムアウトすると、ステータスコードとして HTTP 408 Request Timeout が返されます。</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>チャネルにデータが無い場合は、タイムアウトで指定された秒数だけ待ちます。タイムアウトのデフォルト値は 0 秒です。</p>
+</div>
+</section>
+</section>
+<section id="id21">
+<h2><span class="section-number">8.4. </span>プロセス<a class="headerlink" href="#id21" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id22">
+<h3><span class="section-number">8.4.1. </span>プロセス一覧の取得<a class="headerlink" href="#id22" title="この見出しへのパーマリンク">¶</a></h3>
+<dl>
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /process</p></li>
+</ul>
+<p>子プロセス一覧を取得する場合は、以下のリクエストを投げます。</p>
+<ul class="simple">
+<li><p>GET /process/id_&lt;プロセスID&gt;.children</p></li>
+</ul>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>プロセス詳細データの一覧が返されます。</p>
+</dd>
+</dl>
+</section>
+<section id="id23">
+<h3><span class="section-number">8.4.2. </span>プロセス詳細の取得<a class="headerlink" href="#id23" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /process/id_&lt;プロセスID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>応答</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;プロセスID&gt;,
+    &quot;abspath&quot;: &lt;プロセスオブジェクトパス&gt;,
+    &quot;user&quot;: &lt;実行ユーザー名&gt;,
+    &quot;elapsed_time&quot;: &lt;プロセス経過時間&gt;,
+    &quot;started_time&quot;: &lt;実行開始日時&gt;,
+    &quot;finished_time&quot;: &lt;実行終了日時&gt;,
+    &quot;status&quot;: &lt;実行ステータス&gt;,
+    &quot;exit_status&quot;: &lt;終了時ステータス&gt;,
+    &quot;result&quot;: &lt;実行結果&gt;,
+    &quot;error&quot;: &lt;実行エラー&gt;,
+    &quot;suspended&quot;: &lt;停止中&gt;,
+    &quot;lineno&quot;: &lt;行番号&gt;,
+    &quot;console&quot;: &lt;コンソール文字列&gt;,
+    &quot;job&quot;: &lt;実行開始ジョブフローパス&gt;,
+    &quot;schedule&quot;: &lt;スケジュールパス&gt;,
+    &quot;parent&quot;: &lt;親プロセスパス&gt;,
+    &quot;current_job&quot;: &lt;実行中ジョブフローパス&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id24">
+<h3><span class="section-number">8.4.3. </span>プロセスの操作<a class="headerlink" href="#id24" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST /process/id_&lt;プロセスID&gt;.terminate  # プロセス実行を中止する</p></li>
+<li><p>POST /process/id_&lt;プロセスID&gt;.suspend    # プロセス実行を一時停止する</p></li>
+<li><p>POST /process/id_&lt;プロセスID&gt;.resume     # プロセス実行を再開する</p></li>
+</ul>
+</dd>
+<dt><strong>リクエストデータ</strong></dt><dd><p>resume において以下のリクエストデータを渡すことで、再開時の実行モードを指定す
+ることができます。</p>
+</dd>
+</dl>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;step_mode&quot;: &lt;ステップモード&gt;,                # true/false を指定
+    &quot;checkpoint_mode&quot;: &lt;チェックポイントモード&gt;   # true/false を指定
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>成功時は true、失敗時は false が返されます。</p>
+</dd>
+</dl>
+</section>
+<section id="id25">
+<h3><span class="section-number">8.4.4. </span>プロセスの実行完了を待つ<a class="headerlink" href="#id25" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST /process/id_&lt;プロセスID&gt;.wait</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;timeout&quot;: &lt;タイムアウト値&gt;                 # 0以上の整数値を指定
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>成功時はプロセスの詳細情報が返されます。
+タイムアウトすると、ステータスコードとして HTTP 408 Request Timeout が返されます。</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="id26">
+<h2><span class="section-number">8.5. </span>スケジュール<a class="headerlink" href="#id26" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id27">
+<h3><span class="section-number">8.5.1. </span>スケジュール一覧の取得<a class="headerlink" href="#id27" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /scheduler</p></li>
+</ul>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>スケジュール詳細データの一覧が返されます。</p>
+</dd>
+</dl>
+</section>
+<section id="id28">
+<h3><span class="section-number">8.5.2. </span>スケジュール詳細の取得<a class="headerlink" href="#id28" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /scheduler/id_&lt;スケジュールID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>応答</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  {
+      &quot;id&quot;: &lt;スケジュールID&gt;,
+      &quot;abspath&quot;: &lt;スケジュールオブジェクトパス&gt;,
+      &quot;user&quot;: &lt;ユーザー名&gt;,
+      &quot;scheduled_datetimes: &lt;実行予定日時一覧&gt;,
+      &quot;parameters&quot;: &lt;パラメータリスト&gt;,
+      &quot;name&quot;: &lt;スケジュール名&gt;,
+      &quot;description&quot;: &lt;説明&gt;,
+      &quot;year&quot;: &lt;年&gt;,
+      &quot;month&quot;: &lt;月&gt;,
+      &quot;day&quot;: &lt;日&gt;,
+      &quot;week&quot;: &lt;週&gt;,
+      &quot;day_of_week&quot;: &lt;曜日&gt;,
+      &quot;hour&quot;: &lt;時&gt;,
+      &quot;minute&quot;: &lt;分&gt;,
+      &quot;disabled&quot;: &lt;無効化&gt;,
+      &quot;job&quot;: &lt;実行ジョブオブジェクトパス&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id29">
+<h3><span class="section-number">8.5.3. </span>スケジュールの更新<a class="headerlink" href="#id29" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>PUT /scheduler/id_&lt;スケジュールID&gt;</p></li>
+<li><p>PATCH /scheduler/id_&lt;スケジュールID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;user&quot;: &lt;ユーザー名&gt;,
+    &quot;parameters&quot;: &lt;パラメータリスト&gt;,
+    &quot;name&quot;: &lt;スケジュール名&gt;,            # 必須パラメータ
+    &quot;description&quot;: &lt;説明&gt;,
+    &quot;year&quot;: &lt;年&gt;,
+    &quot;month&quot;: &lt;月&gt;,
+    &quot;day&quot;: &lt;日&gt;,
+    &quot;week&quot;: &lt;週&gt;,
+    &quot;day_of_week&quot;: &lt;曜日&gt;,
+    &quot;hour&quot;: &lt;時&gt;,
+    &quot;minute&quot;: &lt;分&gt;,
+    &quot;disabled&quot;: &lt;無効化&gt;,
+    &quot;job&quot;: &lt;実行ジョブオブジェクトパス&gt;  # 必須パラメータ
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>更新されたオブジェクトのデータ</p>
+</dd>
+</dl>
+</section>
+<section id="id30">
+<h3><span class="section-number">8.5.4. </span>スケジュールの作成<a class="headerlink" href="#id30" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST /scheduler</p></li>
+</ul>
+</dd>
+<dt><strong>リクエストデータ</strong></dt><dd><p>更新リクエストと同様</p>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>作成されたオブジェクトのデータ</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="id31">
+<h2><span class="section-number">8.6. </span>インシデント<a class="headerlink" href="#id31" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id32">
+<h3><span class="section-number">8.6.1. </span>インシデント一覧の取得<a class="headerlink" href="#id32" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /incident</p></li>
+</ul>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>インシデント詳細データの一覧が返される。</p>
+</dd>
+</dl>
+</section>
+<section id="id33">
+<h3><span class="section-number">8.6.2. </span>インシデント詳細の取得<a class="headerlink" href="#id33" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /incident/id_&lt;インシデントID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>応答</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;インシデントID&gt;,
+    &quot;abspath&quot;: &lt;インシデントオブジェクトパス&gt;,
+    &quot;owner&quot;: &lt;所有者&gt;,
+    &quot;worklogs&quot;: &lt;作業ログ一覧&gt;,
+    &quot;alerts&quot;: &lt;アラート一覧&gt;,
+    &quot;name&quot;: &lt;インシデント名&gt;,
+    &quot;device&quot;: &lt;デバイス名&gt;,
+    &quot;service&quot;: &lt;サービス名&gt;,
+    &quot;created_date&quot;: &lt;作成日時&gt;,
+    &quot;closed_date&quot;: &lt;完了日時&gt;,
+    &quot;status&quot;: &lt;ステータス&gt;                    # &quot;OPENED&quot;, &quot;WORKING&quot;, &quot;CLOSED&quot; のいずれか
+}
+</pre></div>
+</div>
+</section>
+<section id="id34">
+<h3><span class="section-number">8.6.3. </span>インシデントの更新<a class="headerlink" href="#id34" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>PUT /incident/id_&lt;インシデントID&gt;</p></li>
+<li><p>PATCH /incident/id_&lt;インシデントID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;owner&quot;: &lt;所有者&gt;,
+    &quot;name&quot;: &lt;インシデント名&gt;,
+    &quot;device&quot;: &lt;デバイス名&gt;,
+    &quot;service&quot;: &lt;サービス名&gt;,
+    &quot;status&quot;: &lt;ステータス&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>更新されたオブジェクトのデータ</p>
+</dd>
+</dl>
+</section>
+<section id="id35">
+<h3><span class="section-number">8.6.4. </span>作業ログの追加<a class="headerlink" href="#id35" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST /incident/id_&lt;インシデントID&gt;.worklogs</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;user&quot;: &lt;ユーザー名&gt;,
+    &quot;description&quot;: &lt;作業ログ&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>追加された作業ログのデータ</p>
+</dd>
+</dl>
+</section>
+<section id="id36">
+<h3><span class="section-number">8.6.5. </span>インシデントの作成<a class="headerlink" href="#id36" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST /incident</p></li>
+</ul>
+</dd>
+<dt><strong>リクエストデータ</strong></dt><dd><p>更新リクエストと同様</p>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>作成されたオブジェクトのデータ</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="id37">
+<h2><span class="section-number">8.7. </span>タスク<a class="headerlink" href="#id37" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id38">
+<h3><span class="section-number">8.7.1. </span>タスク一覧の取得<a class="headerlink" href="#id38" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /task</p></li>
+</ul>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>タスク詳細データの一覧</p>
+</dd>
+</dl>
+</section>
+<section id="id39">
+<h3><span class="section-number">8.7.2. </span>タスク詳細の取得<a class="headerlink" href="#id39" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /task/id_&lt;タスクID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>応答</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;タスクID&gt;,
+    &quot;abspath&quot;: &lt;タスクオブジェクトパス&gt;,
+    &quot;owner&quot;: &lt;所有者&gt;,
+    &quot;assigned_users&quot;: &lt;宛先ユーザー一覧&gt;,
+    &quot;assigned_groups&quot;: &lt;宛先グループ一覧&gt;,
+    &quot;name&quot;: &lt;タスク名&gt;,
+    &quot;title&quot;: &lt;タスク件名&gt;,
+    &quot;message&quot;: &lt;タスクメッセージ&gt;,
+    &quot;action_text&quot;: &lt;アクション文字列&gt;,
+    &quot;result&quot;: &lt;結果&gt;,
+    &quot;status&quot;: &lt;ステータス&gt;,      # &quot;WAITING&quot;, &quot;ONGOING&quot;, &quot;DONE&quot;, &quot;CANCELED&quot; のいずれか
+    &quot;created_date&quot;: &lt;作成日時&gt;,
+    &quot;closed_date&quot;: &lt;完了日時&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id40">
+<h3><span class="section-number">8.7.3. </span>タスクのキャンセル<a class="headerlink" href="#id40" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST /task/id_&lt;インシデントID&gt;.cancel</p></li>
+</ul>
+</dd>
+<dt><strong>応答</strong> ::</dt><dd><p>成功すると HTTP 200 OK が返されます。</p>
+</dd>
+</dl>
+</section>
+<section id="id41">
+<h3><span class="section-number">8.7.4. </span>タスクの送信<a class="headerlink" href="#id41" title="この見出しへのパーマリンク">¶</a></h3>
+<p>タスクチャネルに対してメッセージを送信します。</p>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST /task/id_&lt;インシデントID&gt;.submit</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;result&quot;: &lt;結果メッセージ&gt;
+}
+</pre></div>
+</div>
+<p>リクエストデータを省略した場合は、タスクチャネルに &quot;OK&quot; が渡されます。</p>
+</section>
+</section>
+<section id="id42">
+<h2><span class="section-number">8.8. </span>ユーザー/グループ管理<a class="headerlink" href="#id42" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id43">
+<h3><span class="section-number">8.8.1. </span>ユーザー一覧の取得<a class="headerlink" href="#id43" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /config/user</p></li>
+</ul>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>ユーザー詳細データの一覧</p>
+</dd>
+</dl>
+</section>
+<section id="id44">
+<h3><span class="section-number">8.8.2. </span>ユーザー詳細の取得<a class="headerlink" href="#id44" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /config/user/id_&lt;ユーザーID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>応答</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;ユーザーID&gt;,
+    &quot;abspath&quot;: &lt;ユーザーオブジェクトパス&gt;,
+    &quot;groups&quot;: &lt;グループ一覧&gt;,
+    &quot;last_login&quot;: &lt;最終ログイン日時&gt;,
+    &quot;username&quot;: &lt;ユーザー名&gt;,
+    &quot;first_name&quot;: &lt;名&gt;,
+    &quot;last_name&quot;: &lt;姓&gt;,
+    &quot;email&quot;: &lt;E-mailアドレス&gt;,
+    &quot;is_active&quot;: &lt;有効フラグ&gt;,
+    &quot;is_ldap_user&quot;: &lt;LDAPユーザフラグ&gt;,
+    &quot;home_directory&quot;: &lt;ホームディレクトリ&gt;,
+    &quot;environment&quot;: &lt;環境オブジェクト&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id45">
+<h3><span class="section-number">8.8.3. </span>ユーザーの更新<a class="headerlink" href="#id45" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>PUT /config/user/id_&lt;ユーザーID&gt;</p></li>
+<li><p>PATCH /config/user/id_&lt;ユーザーID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;groups&quot;: &lt;グループ一覧&gt;,
+    &quot;last_login&quot;: &lt;最終ログイン日時&gt;,
+    &quot;username&quot;: &lt;ユーザー名&gt;,           # 必須フィールド
+    &quot;password&quot;: &lt;パスワード&gt;,           # 必須フィールド
+    &quot;first_name&quot;: &lt;名&gt;,
+    &quot;last_name&quot;: &lt;姓&gt;,
+    &quot;email&quot;: &lt;E-mailアドレス&gt;,
+    &quot;is_active&quot;: &lt;有効フラグ&gt;,
+    &quot;is_ldap_user&quot;: &lt;LDAPユーザフラグ&gt;,
+    &quot;home_directory&quot;: &lt;ホームディレクトリ&gt;,
+    &quot;environment&quot;: &lt;環境オブジェクト&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>更新されたオブジェクトのデータ</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>root ユーザの is_active フィールドを false に設定することはできません。
+組み込みユーザ (admin, root, guest) の is_ldap_user を true に設定することはできません。
+また、非特権ユーザは groups、および、is_active, is_ldap_user フィールドを変更することはできません。</p>
+</div>
+</section>
+<section id="id46">
+<h3><span class="section-number">8.8.4. </span>ユーザーの新規作成<a class="headerlink" href="#id46" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST /config/user</p></li>
+</ul>
+</dd>
+<dt><strong>リクエストデータ</strong></dt><dd><p>ユーザー更新と同じ</p>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>作成されたオブジェクトのデータ</p>
+</dd>
+</dl>
+</section>
+<section id="id47">
+<h3><span class="section-number">8.8.5. </span>グループ一覧の取得<a class="headerlink" href="#id47" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /config/group</p></li>
+</ul>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>グループ詳細データの一覧</p>
+</dd>
+</dl>
+</section>
+<section id="id48">
+<h3><span class="section-number">8.8.6. </span>グループ詳細の取得<a class="headerlink" href="#id48" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>GET /config/group/id_&lt;グループID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>応答</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;id&quot;: &lt;グループID&gt;,
+    &quot;abspath&quot;: &lt;グループオブジェクトパス&gt;,
+    &quot;name&quot;: &lt;グループ名&gt;,
+    &quot;is_ldap_group&quot;: &lt;LDAPグループフラグ&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id49">
+<h3><span class="section-number">8.8.7. </span>グループの更新<a class="headerlink" href="#id49" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>PUT /config/group/id_&lt;グループID&gt;</p></li>
+<li><p>PATCH /config/group/id_&lt;グループID&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>リクエストデータ</strong></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;name&quot;: &lt;グループ名&gt;,
+    &quot;is_ldap_group&quot;: &lt;LDAPグループフラグ&gt;
+}
+</pre></div>
+</div>
+<dl class="simple">
+<dt><strong>応答</strong></dt><dd><p>更新されたオブジェクトのデータ</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>組み込みグループ (other, wheel) の is_ldap_group を true に設定することはできません。
+また、非特権ユーザはグループを更新することはできません。</p>
+</div>
+</section>
+<section id="id50">
+<h3><span class="section-number">8.8.8. </span>グループの新規追加<a class="headerlink" href="#id50" title="この見出しへのパーマリンク">¶</a></h3>
+<dl class="simple">
+<dt><strong>リクエスト</strong></dt><dd><ul class="simple">
+<li><p>POST /config/group</p></li>
+</ul>
+</dd>
+<dt><strong>リクエストデータ</strong></dt><dd><p>グループ更新と同じ</p>
+</dd>
+<dt><strong>応答</strong></dt><dd><p>更新されたオブジェクトのデータ</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">8. Kompira REST API リファレンス</a><ul>
+<li><a class="reference internal" href="#id1">8.1. イントロダクション</a></li>
+<li><a class="reference internal" href="#id2">8.2. 共通</a><ul>
+<li><a class="reference internal" href="#id3">8.2.1. エンドポイント</a></li>
+<li><a class="reference internal" href="#id4">8.2.2. ユーザ認証</a></li>
+<li><a class="reference internal" href="#id5">8.2.3. フォーマット</a><ul>
+<li><a class="reference internal" href="#datetime">8.2.3.1. 日時型データ (Datetime)</a></li>
+<li><a class="reference internal" href="#object">8.2.3.2. オブジェクト型データ (Object)</a></li>
+<li><a class="reference internal" href="#file">8.2.3.3. ファイル型データ (File)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">8.2.4. エラー</a></li>
+<li><a class="reference internal" href="#id7">8.2.5. ページネート</a></li>
+<li><a class="reference internal" href="#id8">8.2.6. 取得属性の指定</a></li>
+<li><a class="reference internal" href="#id9">8.2.7. フィルタリング</a></li>
+<li><a class="reference internal" href="#id10">8.2.8. 並び順の指定</a><ul>
+<li><a class="reference internal" href="#id11">8.2.8.1. オブジェクト型 (Object)</a></li>
+<li><a class="reference internal" href="#process">8.2.8.2. プロセス型 (Process)</a></li>
+<li><a class="reference internal" href="#scheduler">8.2.8.3. スケジュール型 (Scheduler)</a></li>
+<li><a class="reference internal" href="#incident">8.2.8.4. インシデント型 (Incident)</a></li>
+<li><a class="reference internal" href="#task">8.2.8.5. タスク型 (Task)</a></li>
+<li><a class="reference internal" href="#user">8.2.8.6. ユーザー型 (User)</a></li>
+<li><a class="reference internal" href="#group">8.2.8.7. グループ型 (Group)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira">8.3. Kompiraオブジェクトへのアクセス</a><ul>
+<li><a class="reference internal" href="#id12">8.3.1. オブジェクト情報の取得</a></li>
+<li><a class="reference internal" href="#id13">8.3.2. オブジェクト情報の更新</a></li>
+<li><a class="reference internal" href="#id14">8.3.3. オブジェクトの新規追加</a></li>
+<li><a class="reference internal" href="#id15">8.3.4. オブジェクトの削除</a></li>
+<li><a class="reference internal" href="#id16">8.3.5. 子/子孫オブジェクトの一覧取得</a></li>
+<li><a class="reference internal" href="#id17">8.3.6. ジョブフローの実行</a></li>
+<li><a class="reference internal" href="#id18">8.3.7. スクリプトジョブの実行</a></li>
+<li><a class="reference internal" href="#id19">8.3.8. メッセージ送信</a></li>
+<li><a class="reference internal" href="#id20">8.3.9. メッセージ受信</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id21">8.4. プロセス</a><ul>
+<li><a class="reference internal" href="#id22">8.4.1. プロセス一覧の取得</a></li>
+<li><a class="reference internal" href="#id23">8.4.2. プロセス詳細の取得</a></li>
+<li><a class="reference internal" href="#id24">8.4.3. プロセスの操作</a></li>
+<li><a class="reference internal" href="#id25">8.4.4. プロセスの実行完了を待つ</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26">8.5. スケジュール</a><ul>
+<li><a class="reference internal" href="#id27">8.5.1. スケジュール一覧の取得</a></li>
+<li><a class="reference internal" href="#id28">8.5.2. スケジュール詳細の取得</a></li>
+<li><a class="reference internal" href="#id29">8.5.3. スケジュールの更新</a></li>
+<li><a class="reference internal" href="#id30">8.5.4. スケジュールの作成</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id31">8.6. インシデント</a><ul>
+<li><a class="reference internal" href="#id32">8.6.1. インシデント一覧の取得</a></li>
+<li><a class="reference internal" href="#id33">8.6.2. インシデント詳細の取得</a></li>
+<li><a class="reference internal" href="#id34">8.6.3. インシデントの更新</a></li>
+<li><a class="reference internal" href="#id35">8.6.4. 作業ログの追加</a></li>
+<li><a class="reference internal" href="#id36">8.6.5. インシデントの作成</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id37">8.7. タスク</a><ul>
+<li><a class="reference internal" href="#id38">8.7.1. タスク一覧の取得</a></li>
+<li><a class="reference internal" href="#id39">8.7.2. タスク詳細の取得</a></li>
+<li><a class="reference internal" href="#id40">8.7.3. タスクのキャンセル</a></li>
+<li><a class="reference internal" href="#id41">8.7.4. タスクの送信</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id42">8.8. ユーザー/グループ管理</a><ul>
+<li><a class="reference internal" href="#id43">8.8.1. ユーザー一覧の取得</a></li>
+<li><a class="reference internal" href="#id44">8.8.2. ユーザー詳細の取得</a></li>
+<li><a class="reference internal" href="#id45">8.8.3. ユーザーの更新</a></li>
+<li><a class="reference internal" href="#id46">8.8.4. ユーザーの新規作成</a></li>
+<li><a class="reference internal" href="#id47">8.8.5. グループ一覧の取得</a></li>
+<li><a class="reference internal" href="#id48">8.8.6. グループ詳細の取得</a></li>
+<li><a class="reference internal" href="#id49">8.8.7. グループの更新</a></li>
+<li><a class="reference internal" href="#id50">8.8.8. グループの新規追加</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="monitoring.html"
+                          title="前の章へ"><span class="section-number">7. </span>Kompira の監視</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_reference.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="monitoring.html" title="7. Kompira の監視"
+             >前へ</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/api_reference.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">8. </span>Kompira REST API リファレンス</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

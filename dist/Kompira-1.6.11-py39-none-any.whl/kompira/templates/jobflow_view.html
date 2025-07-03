@@ -1,0 +1,74 @@
+{% extends "obj_view.html" %}
+{% load i18n core_extras %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include 'lib/prettify.html' %}
+{% endblock extra_head %}
+
+{% block section_contents %}
+<form id="execute-form" class="prevent-double-submit" action="{{ object_property.abspath }}.execute" method="post">
+  {% csrf_token %}
+  <div class="noprint btn-group">
+    <button id="id_execute-btn" type="submit" class="submit-btn btn btn-primary" accesskey="X"
+            {% if not object|getitem:"executable" or is_license_error or not request.engine_is_running or not object_ability.executable %}disabled data-disabled="disabled"{% endif %}>
+      <i class="fas fa-play"></i>
+      {% trans 'run'|capfirst %}</button>
+  </div>
+  <hr>
+  <!-- タブメニュー定義 -->
+  <ul class="nav nav-tabs" id="jobflow-tab">
+    <li class="nav-item"><a class="nav-link active" href="#jobflow" data-toggle="tab" id="tab-jobflow">{% trans 'jobflow'|capfirst %}</a></li>
+    <li class="nav-item"><a class="nav-link" href="#config" data-toggle="tab" id="tab-config">{% trans 'config'|capfirst %}</a></li>
+  </ul>
+  <!-- タブコンテンツ定義 -->
+  <div class="tab-content mt-3">
+    <!-- ジョブフロータブ -->
+    <div class="tab-pane active" id="jobflow">
+      {% if object|getitem:"executable" and form.params_form.fields %}
+      <table class="table table-bordered table-striped table-sm">
+        <thead>
+          <tr>
+            <th colspan="2">{% trans 'parameters'|capfirst %}</th>
+          </tr>
+          <tr>
+            <th>{% trans 'name'|capfirst %}</th><th>{% trans 'value'|capfirst %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for param in form.params_form %}
+          <tr>
+            <td class="jobflow-param-name wordbreak">{{ param.label }}{{ param.errors }}</td>
+            <td class="jobflow-param-value">{{ param }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+      <pre id="jobflow-source" class="prettyprint linenums">{% for line in jobview %}{{ line.source|safe }}{% if line.err_msg %}<span class="badge badge-warning error-message"># {% trans line.err_msg %}</span>{% endif %}
+{% endfor %}</pre>
+    </div>
+    <!-- 設定タブ -->
+    <div class="tab-pane" id="config">
+      <table class="table table-striped table-sm table-label-left">
+        {{ form.config_form.as_table }}
+      </table>
+    </div>
+  </div>
+</form>
+<hr>
+<section>
+<div align=right>
+{% if object.multiplicity > 0 %}<span class="text-muted" id="jobflow-multiplicity">{% trans 'multiplicity' %}: {{ object.multiplicity }} | </span>{% endif %}
+<span class="text-muted" id="jobflow-default-monitoring-mode">{% trans 'default monitoring mode' %}: {{ object_fields.8.view.as_html }} | </span>
+<span class="text-muted">compiler version: <span id="jobflow-compiler-version">{{ object.compilerVersion|default_if_none:'unknown'}}</span></span>
+</div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript">
+$(function(){kompira.source.prettify(true);})
+</script>
+{% endblock %}

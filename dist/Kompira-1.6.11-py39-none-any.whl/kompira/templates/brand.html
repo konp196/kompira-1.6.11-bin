@@ -1,0 +1,10 @@
+{% load static %}
+{% if settings.KOMPIRA_BRAND_LOGO %}
+<a class="navbar-logo" href="{{ home_url|default:'/' }}">
+  <img class="brand-logo" src="{% static settings.KOMPIRA_BRAND_LOGO %}" alt="">
+</a>
+{% endif %}
+<a class="navbar-brand" href="{{ home_url|default:'/' }}">
+  <div class="brand-name">{{ brand_title }}</div>
+  <div class="brand-version">{{ KOMPIRA_VERSION }}</div>
+</a>

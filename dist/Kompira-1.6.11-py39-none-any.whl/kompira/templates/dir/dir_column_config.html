@@ -1,0 +1,21 @@
+{% load i18n %}
+<div class="dir-search-config btn-group column-config" data-columns-type="{{ columns.columns_type }}">
+  <a class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown"><i class="fas fa-th-list"></i></a>
+  <div class="dropdown-menu dropdown-menu-right pull-right">
+    {% if object_property.editable %}
+    <a class="dropdown-item dropdown-link" href="{{ object_property.abspath }}.update" accesskey="E"><i class="fas fa-edit fa-fw"></i>
+    {% if object_edit_label %}
+    {{ object_edit_label }}
+    {% else %}
+    {% blocktrans with label=type_object_property.display_name %}Edit this {{ label }}{% endblocktrans %}
+    {% endif %}
+    </a>
+    <div class="dropdown-divider"></div>
+    {% endif %}
+    {% for column in columns.configurable_columns %}
+    <a class="dropdown-item {{ column.hideable|yesno:',disabled' }} dropdown-link"><input type="checkbox" class="column-show-check ml-1 mr-2" name="{{ column.name }}" data-hidden="{{ column.hidden|yesno:'true,false' }}" {{ column.hidden|yesno:',checked=checked' }} {{ column.hideable|yesno:',disabled' }}>{{ column.label }}</a>
+    {% endfor %}
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item dropdown-link reset"><i class="fas fa-sync-alt fa-fw"></i> {% trans 'Reset to defaults' %}</a>
+  </div>
+</div>

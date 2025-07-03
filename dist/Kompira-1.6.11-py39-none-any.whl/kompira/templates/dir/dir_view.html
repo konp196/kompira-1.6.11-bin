@@ -1,0 +1,15 @@
+{% load static %}
+<script src="{% static 'jquery.formset-1.5-pre/js/jquery.formset.js' %}"></script>
+<script src="{% static 'kompira/js/dir_view.min.js' %}"></script>
+<script src="{% static 'kompira/js/kompira.property_formset.js' %}" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function() {
+      var opt = kompira.property_formset_mk_option('user_permission');
+      $('#dynamic-form-user_permission tbody tr').formset(opt);
+      opt = { ...kompira.property_formset_mk_option('group_permission'), added: kompira.property_formset_on_added };
+      $('#dynamic-form-group_permission tbody tr').formset(opt);
+  });
+</script>
+<link rel="stylesheet" href="{% static 'kompira/css/dir_view.css' %}">
+
+{% include "../uploader.html" %}

@@ -1,0 +1,19 @@
+{% extends "obj_edit.html" %}
+{% load static i18n %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include "lib/codemirror.html" %}
+{% endblock %}
+
+{% block form_section %}
+<table class="table table-striped table-sm edit-table table-label-left">
+  {{ form.as_table }}
+</table>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+{% include "popup_editor.html" %}
+<script src="{% static 'kompira/js/type_edit.js' %}"></script>
+{% endblock %}

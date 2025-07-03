@@ -1,0 +1,22 @@
+{% load static i18n %}
+
+<div class="modal" id="upload-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered justify-content-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="upload-title">{% trans 'uploading...'|capfirst %}</h5>
+      </div>
+      <div class="modal-body">
+        <div class="progress" style="width: 100%; height: 20px">
+          <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="upload-cancel-btn" type="button" class="btn btn-outline-secondary" data-dismiss="modal">{% trans 'cancel'|capfirst %}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="{% static 'jquery-form-4.3.0/dist/jquery.form.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'kompira/js/uploader.js' %}"></script>

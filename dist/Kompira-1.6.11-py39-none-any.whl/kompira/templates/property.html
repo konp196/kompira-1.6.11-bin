@@ -1,0 +1,62 @@
+{% extends "obj_form.html" %}
+{% load static i18n core_extras %}
+
+{% block contents %}
+<h4 class="section-title">{% trans 'Edit property' %}</h4>
+<form class="prevent-double-submit dirty-check" action="{{ object_property.abspath }}.property" method="post">
+  {% csrf_token %}
+  <section>
+    <h5 class="section-title">{% trans 'Object information' %}</h5>
+    <table class="table table-sm">
+      {% if form.property.non_field_errors %}
+      <tr><td colspan="3">{{ form.property.non_field_errors }}</td></tr>
+      {% endif %}
+      <tr><th>{{ form.property.display_name.label_tag }}</th><td colspan="2">{{ form.property.display_name.errors }}{{ form.property.display_name }}</td></tr>
+      <tr><th>{{ form.property.description.label_tag }}</th><td colspan="2">{{ form.property.description.errors }}{{ form.property.description }}</td></tr>
+      <tr>
+        <th>{{ form.property.owner.label_tag }}</th>
+        {% if object|getattr:'is_dir' %}
+        <td>{{ form.property.owner.errors }}{{ form.property.owner }}</td>
+        <td style="text-align:right;width:50%;">{{ form.property.rec_apply_owner.label_tag }}&nbsp;{{ form.property.rec_apply_owner.errors }}{{ form.property.rec_apply_owner }}</td>
+        {% else %}
+        <td colspan="2">{{ form.property.owner.errors }}{{ form.property.owner }}</td>
+        {% endif %}
+      </tr>
+    </table>
+  </section>
+  <hr>
+  <section>
+    <h5 class="section-title" style="display:inline">{% trans 'User permission' %}</h5>
+    {% if object|getattr:'is_dir' %}
+    <div style="float:right;">{{ form.property.rec_apply_uperm.label_tag }}&nbsp;{{ form.property.rec_apply_uperm.errors }}{{ form.property.rec_apply_uperm }}</div>
+    {% endif %}
+    {% with form=form.user_permission %}{% include 'uperm_table.html' %}{% endwith %}
+  </section>
+  <hr>
+  <section>
+    <h5 class="section-title" style="display:inline;">{% trans 'Group permission' %}</h5>
+    {% if object|getattr:'is_dir' %}
+    <div style="float:right;">{{ form.property.rec_apply_gperm.label_tag }}&nbsp;{{ form.property.rec_apply_gperm.errors }}{{ form.property.rec_apply_gperm }}</div>
+    {% endif %}
+    {% with form=form.group_permission %}{% include 'gperm_table.html' %}{% endwith %}
+  </section>
+  <section>
+    <button type="submit" class="submit-btn btn btn-secondary" accesskey="S"><i class="fas fa-hdd"></i>
+      {% trans 'save'|capfirst %}</button>
+  </section>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'jquery.formset-1.5-pre/js/jquery.formset.js' %}"></script>
+<script src="{% static 'kompira/js/kompira.property_formset.js' %}" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function() {
+      var opt = kompira.property_formset_mk_option('{{ form.user_permission.prefix }}');
+      $('#dynamic-form-{{ form.user_permission.prefix }} tbody tr').formset(opt);
+      opt = { ...kompira.property_formset_mk_option('{{ form.group_permission.prefix }}'), added: kompira.property_formset_on_added };
+      $('#dynamic-form-{{ form.group_permission.prefix }} tbody tr').formset(opt);
+  });
+</script>
+{% endblock %}

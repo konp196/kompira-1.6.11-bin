@@ -1,0 +1,102 @@
+{% extends "main_view.html" %}
+{% load i18n %}
+
+{% block header_title %}{% trans 'user config'|capfirst %}{% endblock %}
+{% block page_main_title %}{{ object.username }}{% endblock %}
+{% block page_sub_title %}{% trans 'user'|capfirst %}{% endblock %}
+
+{% block section_contents %}
+<h2 class="section-title">{% trans 'information'|capfirst %}</h2>
+<table class="table table-striped table-sm view-table table-label-left">
+  <tbody>
+    <tr>
+      <th>{% trans 'user name'|capfirst %}</th>
+      <td id="user-name">{{ object.username }}</td>
+    </tr>
+{% if LANGUAGE_CODE == 'ja' %}
+    <tr>
+      <th>{% trans 'last name'|capfirst %}</th>
+      <td id="user-lastname">{{ object.last_name }}</td>
+    </tr>
+    <tr>
+      <th>{% trans 'first name'|capfirst %}</th>
+      <td id="user-firstname">{{ object.first_name }}</td>
+    </tr>
+{% else %}
+    <tr>
+      <th>{% trans 'first name'|capfirst %}</th>
+      <td id="user-firstname">{{ object.first_name }}</td>
+    </tr>
+    <tr>
+      <th>{% trans 'last name'|capfirst %}</th>
+      <td id="user-lastname">{{ object.last_name }}</td>
+    </tr>
+{% endif %}
+    <tr>
+      <th>{% trans 'email'|capfirst %}</th>
+      <td id="user-email"><a href="mailto:{{ object.email }}">{{ object.email }}</a></td>
+    </tr>
+    <tr>
+      <th>{% trans 'group'|capfirst %}</th>
+      <td id="user-groups">
+        {% for group in object.groups.all %}
+        <a class="user-group" href="../group/id_{{ group.id }}">{{ group.name }}</a>
+        {% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th>{% trans 'active'|capfirst %}</th>
+      <td id="user-is-active">{{ object.is_active }}</td>
+    </tr>
+    <tr>
+      <th>{% trans 'ldap user'|capfirst %}</th>
+      <td id="user-is-ldap">{{ object.is_ldap_user }}</td>
+    </tr>
+    <tr>
+      <th>{% trans 'home'|capfirst %}</th>
+      <td id="user-home-directory">{% if object.home_directory %}<a href="{{ object.home_directory }}">{{ object.home_directory }}</a>{% endif %}</td>
+    </tr>
+    <tr>
+      <th>{% trans 'environment'|capfirst %}</th>
+      <td id="user-environment">{% if object.environment %}<a href="{{ object.environment }}">{{ object.environment }}</a>{% endif %}</td>
+    </tr>
+{% if object.auth_token %}
+    <tr>
+      <th>{% trans 'REST API token' %}</th>
+      <td><span class="toggle-name"><a class="click-to-toggle">{% trans 'Click here to display token' %}</a></span><span class="toggle-name" style="display: none;">{{ object.auth_token }} <a class="click-to-toggle">({% trans 'Click here to hide token' %})</a></span></td>
+    </tr>
+{% endif %}
+  </tbody>
+</table>
+{% if locked_ip_addrs %}
+<div class="card text-center bg-warning">
+  <div class="card-body">
+    <h5 class="card-title">{% trans 'Account is locked' %}</h5>
+    <p class="card-text">{{ locked_ip_addrs|join:", " }}</p>
+    <button id="id_unlock-btn" class="btn btn-outline-secondary action-modal"
+      data-action="{{ object.abspath }}.unlock_account" data-operation="{% trans 'unlock account &quot;[[target]]&quot;' %}" data-target="{{ object.username }}">
+      <i class="fas fa-sync-alt"></i>
+      {% trans 'Unlock' %}
+    </button>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block bottom_buttons %}
+{% with object_editable=1 object_writable=1 object_deletable=1 object_path=object.abspath object_type=model_verbose_name object_name=object.username %}
+{% include "bottom_button.html" %}
+{% endwith %}
+{% endblock bottom_buttons %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript">
+$(function(){
+  $(".click-to-toggle").click(function () {
+    $("span.toggle-name").toggle();
+  });
+});
+
+</script>
+{% endblock %}

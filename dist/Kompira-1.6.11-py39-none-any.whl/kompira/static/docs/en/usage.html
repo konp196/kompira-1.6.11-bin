@@ -1,0 +1,2475 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>2. Operation Guide &#8212; Kompira 1.6.11 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Kompira Tutorial" href="tutorial.html" />
+    <link rel="prev" title="1. Administration Guide" href="admin.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tutorial.html" title="3. Kompira Tutorial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="admin.html" title="1. Administration Guide"
+             accesskey="P">previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/usage.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Operation Guide</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1><span class="section-number">2. </span>Operation Guide<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira development team</p>
+</dd>
+</dl>
+<section id="usage-introduction">
+<span id="id2"></span><h2><span class="section-number">2.1. </span>Introduction<a class="headerlink" href="#usage-introduction" title="Permalink to this heading">¶</a></h2>
+<p>In this manual, information about using Kompira’s functions through the web user interface (WebUI) provided by Kompira, will be explained.</p>
+</section>
+<section id="login">
+<span id="id3"></span><h2><span class="section-number">2.2. </span>Basic operations<a class="headerlink" href="#login" title="Permalink to this heading">¶</a></h2>
+<section id="id4">
+<h3><span class="section-number">2.2.1. </span>Login and logout<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>You can access the login screen of Kompira by accessing the following URL.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>https://&lt;Hostname or ipaddress of Kompira server&gt;/
+</pre></div>
+</div>
+<p>Please enter your user name and password to login to the Kompira login screen.</p>
+<p>For a list of available default users, refert to: <a class="reference internal" href="#settings-user"><span class="std std-ref">User management</span></a>.</p>
+<p>When you log in, your logged in user name will appear in the upper right hand corner of the screen. Click on the user name and a drop-down menu will appear, from which you can log out by selecting “Logout”.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The login information will be saved in the browser’s cookies. Login information cookies expire after 2 weeks. So after the expiry date, you will need to log in again.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the <a class="reference internal" href="#settings-system-config"><span class="std std-ref">System Settings</span></a> maximum number of login attempts is set, then after a certain number of failed login attempts, the account will be locked and the target user will not be able to login from the same IP address thereafter. If an account lock period is set, the account lock will be automatically released after a certain period of time from the last failed login attempt, and the user will be able to log in again. Users with administrative privileges, such as root, can also manually unlock a locked user from the locked user’s details screen. An ordinary user can also log in from another IP address that has not been locked and unlock the account from his/her own user details screen.</p>
+</div>
+</section>
+<section id="id5">
+<h3><span class="section-number">2.2.2. </span>Menu operations<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<p>When logged in, you can navigate to Home, File System, Task List, Incident List, <a class="reference internal" href="#processes"><span class="std std-ref">Process Management</span></a>, <a class="reference internal" href="#scheduler"><span class="std std-ref">Scheduler</span></a>, <a class="reference internal" href="#settings"><span class="std std-ref">Settings</span></a> and Help from the menu at the top of the screen.</p>
+<p>The logo image and the “Kompira” notation on the left side of the menu are links to the Home page, which takes the user to the page of the object (usually a directory) that has been set as Home for each user.</p>
+<p>The menu “File System” is a shortcut to several typical directories and their child objects.</p>
+</section>
+<section id="id6">
+<h3><span class="section-number">2.2.3. </span>Keyboard operations<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<p>Kompira also allows keyboard operation of some of the functions that correspond to each page you are viewing. Common keyboard operations are listed below.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key bindings</p></th>
+<th class="head"><p>Operation</p></th>
+<th class="head"><p>Note</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">?</span></code></p></td>
+<td><p>Display the help</p></td>
+<td><p>Display a list of keyboard shortcuts in a dialog.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/</span></code></p></td>
+<td><p>Focus on search box</p></td>
+<td><p>If the search box is present.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">~</span></code></p></td>
+<td><p>Go to home object</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">^</span></code></p></td>
+<td><p>Go to parent directory</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Ctrl-Left</span></code></p></td>
+<td><p>Go to previous page</p></td>
+<td><p>If the object has multiple page views.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Ctrl-Right</span></code></p></td>
+<td><p>Go to next page</p></td>
+<td><p>If the object has multiple page views.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-E</span></code></p></td>
+<td><p>Edit object</p></td>
+<td><p>If the object is editable in the object detail screen.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-S</span></code></p></td>
+<td><p>Save object</p></td>
+<td><p>If the object’s edit screen is open.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some key bindings such as <code class="docutils literal notranslate"><span class="pre">Alt-E</span></code> may differ from actual key operations such as <code class="docutils literal notranslate"><span class="pre">Alt-Shift-E</span></code> depending on the OS or browser.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.6: </span>Added description of keyboard operations.</p>
+</div>
+</section>
+</section>
+<section id="kompira">
+<span id="file-system"></span><h2><span class="section-number">2.3. </span>Kompira file system<a class="headerlink" href="#kompira" title="Permalink to this heading">¶</a></h2>
+<p>Kompira defined Information, such as job flow definitions and node information, are centrally managed on the Kompira file system as Kompira objects.</p>
+<p>Below, we explain the settings and values not dependent on Kompira object type.</p>
+<section id="id7">
+<h3><span class="section-number">2.3.1. </span>Names of object<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<p>The name of the Kompira object can be freely named within the following rules.</p>
+<ul class="simple">
+<li><p>You can use alphabetical and numerical characters, as well as underscores (“_”), and Japanese characters.</p></li>
+<li><p>The first character must be a number</p></li>
+<li><p>It is case-sensitive</p></li>
+<li><p>Object name length must be within 128 characters</p></li>
+<li><p>Absolute path length must be within 1024 characters</p></li>
+</ul>
+</section>
+<section id="file-system-property">
+<span id="id8"></span><h3><span class="section-number">2.3.2. </span>Object Properties<a class="headerlink" href="#file-system-property" title="Permalink to this heading">¶</a></h3>
+<p>All Kompira objects have properties, and the object owner or root users can edit each item of the property.</p>
+<p>Here is the list of items that can be set in the properties.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Display name</p></td>
+<td><p>Name used to display the object. (It is different from the object name)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Description</p></td>
+<td><p>A description of the object.</p></td>
+</tr>
+<tr class="row-even"><td><p>Owner</p></td>
+<td><p>Owner of the object</p></td>
+</tr>
+<tr class="row-odd"><td><p>User permissions</p></td>
+<td><p>Access permission list given to users.</p></td>
+</tr>
+<tr class="row-even"><td><p>Group permission</p></td>
+<td><p>The permission list given to the group.</p></td>
+</tr>
+</tbody>
+</table>
+<p>In the section on user permissions and group permissions, you can set access permissions for each user and group.</p>
+<p>If you want to set common access permissions for all users, it is a good idea to use the other group to which all users belong.</p>
+<p>If the target of property editing is a directory or a table, the “Apply changes to descendant objects” checkbox will appear on the property edit screen for the Owner, User Permissions, and Group Permissions items, respectively. By checking these checkboxes and saving the changes, the corresponding property settings will be reflected in the descendant objects.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Properties can be edited only by the owner of the object or root users, regardless of the permission setting. A user with writing permission can edit the contents of an object, but be aware that properties cannot be edited.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that if a directory contains many descendant objects, applying property changes to the descendant objects may take a long time to complete.</p>
+</div>
+</section>
+<section id="file-system-permission">
+<span id="id9"></span><h3><span class="section-number">2.3.3. </span>Object permissions<a class="headerlink" href="#file-system-permission" title="Permalink to this heading">¶</a></h3>
+<p>All Kompira objects have permission settings.</p>
+<p>Here is a list of access permission types that the Kompira objects have.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Permission type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Read</p></td>
+<td><p>Grants the capability to read the contents of the object. An attempt to move to the path of an unauthorized object will result in an error.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Write</p></td>
+<td><p>Grants the capability to edit the contents of the object. If you do not have writing permission on a directory or table object, you can not add new objects.</p></td>
+</tr>
+<tr class="row-even"><td><p>Execute</p></td>
+<td><p>Grants the capability to execute objects. It is a permission type valid only for executable objects (job flow and script job).</p></td>
+</tr>
+</tbody>
+</table>
+<p>For root users, all access is allowed, even if they are not explicitly specified.</p>
+<p>Object permission settings can be edited from <a class="reference internal" href="#file-system-property"><span class="std std-ref">Object Properties</span></a> .</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When adding an object to a directory or table object, permission settings are not inherited.</p>
+</div>
+</section>
+</section>
+<section id="kompira-object">
+<span id="id10"></span><h2><span class="section-number">2.4. </span>Kompira object<a class="headerlink" href="#kompira-object" title="Permalink to this heading">¶</a></h2>
+<p>There are various kinds of objects created on the Kompira file system, such as job flow and node information. These are specified by the type object on the Kompira file system. For predefined type objects, you can refer to the list in /system/types.</p>
+<p>In the current version, the type objects shown below are defined as standard.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TypeObject</p></td>
+<td><p>An object for defining type objects. When you create a type object, you can create an object of the type you created.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Directory</p></td>
+<td><p>An object that can store multiple objects.</p></td>
+</tr>
+<tr class="row-even"><td><p>License</p></td>
+<td><p>An object for registering a license file. This is a special object used in the system, it will not be created anew.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Virtual</p></td>
+<td><p>Object for defining virtual objects. Process list (/process) and task list (/task) are defined as virtual objects. This is not used in general.</p></td>
+</tr>
+<tr class="row-even"><td><p>Jobflow</p></td>
+<td><p>An object that can write and execute job flow.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Channel</p></td>
+<td><p>An object with a queue that can store messages. It can be used for sending and receiving messages.</p></td>
+</tr>
+<tr class="row-even"><td><p>Wiki</p></td>
+<td><p>An object that can create Creole format Wiki pages.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ScriptJob</p></td>
+<td><p>An object that can write and execute scripts.</p></td>
+</tr>
+<tr class="row-even"><td><p>Environment</p></td>
+<td><p>An object that can store environment information in key-value format.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Template</p></td>
+<td><p>An object that can store template text used in tasks.</p></td>
+</tr>
+<tr class="row-even"><td><p>Table</p></td>
+<td><p>An object that can store multiple objects of the same type.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Realm</p></td>
+<td><p>An object for defining the area managed by the job manager. This will be created under the management area list object, and this will not be created under the normal directory or table.</p></td>
+</tr>
+<tr class="row-even"><td><p>AttachedFile</p></td>
+<td><p>An object that can save arbitrary files.</p></td>
+</tr>
+<tr class="row-odd"><td><p>NodeInfo</p></td>
+<td><p>An object that can store information for specifying a node, such as server IP address or SSH port number.</p></td>
+</tr>
+<tr class="row-even"><td><p>AccountInfo</p></td>
+<td><p>An object that can store account information for remote login.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Repository</p></td>
+<td><p>An object that defines information for linking with the version control system.</p></td>
+</tr>
+<tr class="row-even"><td><p>MailChannel</p></td>
+<td><p>A channel that can receive email from the IMAP server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Form</p></td>
+<td><p>An object that can create a user input form.</p></td>
+</tr>
+<tr class="row-even"><td><p>Config</p></td>
+<td><p>An object that can create a setting form.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Library</p></td>
+<td><p>An object that defines a Python library that can be called from a job flow.</p></td>
+</tr>
+<tr class="row-even"><td><p>MailTemplate</p></td>
+<td><p>An object that can store the template text used for sending mail.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Text</p></td>
+<td><p>An object that holds text information such as plain text and HTML text.</p></td>
+</tr>
+<tr class="row-even"><td><p>SystemInfo</p></td>
+<td><p>An object that provides Kompira system information.</p></td>
+</tr>
+<tr class="row-odd"><td><p>NodeType</p></td>
+<td><p>An object that defines the connection peer information available for remote jobs.</p></td>
+</tr>
+<tr class="row-even"><td><p>CustomStyle</p></td>
+<td><p>An object that sets the color scheme and other settings for the screen displayed by the browser.</p></td>
+</tr>
+<tr class="row-odd"><td><p>OAuth2Provider</p></td>
+<td><p>This object defines the service provider information for OAuth2 authentication.</p></td>
+</tr>
+<tr class="row-even"><td><p>SmtpServer</p></td>
+<td><p>This object defines the SMTP server information to be used when sending mail.</p></td>
+</tr>
+<tr class="row-odd"><td><p>LdapServer</p></td>
+<td><p>This object defines the LDAP server information to be used when linking login users to LDAP.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Each type object defines its own field and its type. For details on what fields are defined , please refer to: <a class="reference internal" href="library.html#builtin-type-object"><span class="std std-ref">Built-in objects</span></a></p>
+<p>In the following we will introduce some typical Kompira objects and explain how to use them.</p>
+<section id="kompira-object-directory">
+<span id="id11"></span><h3><span class="section-number">2.4.1. </span>Directory<a class="headerlink" href="#kompira-object-directory" title="Permalink to this heading">¶</a></h3>
+<p>A directory is a Kompira object that can contain several different types of objects. When you open the Directory Objects page, you will see a list of objects stored in that directory.</p>
+<p>If there are a large number of stored objects, they will be displayed over multiple pages. Use the paginate buttons located in the upper right corner of the object list to navigate to the previous or next page, or to the first or last page. The menu to the left of the paginate button allows you to change the number of objects displayed per page (page size).</p>
+<p>The sort order of the list view can be changed by clicking on the header row of the object list where the column names are displayed. Clicking the same column again toggles between ascending and descending order.</p>
+<p>For the sort order of object listings and page size, their default values can be set for each directory object. Select “Edit this directory” from the menu button located in the upper right corner of the object list to go to the edit directory screen, where you can save your settings.</p>
+<p>From the directory object, you can do the following operations. These operations can be performed from the buttons located in the upper left corner of the object list and from the “More actions” menu. They can also be operated from the context menu that appears by right-clicking on the object list.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Create New</p></td>
+<td><p>Create an object. When creating, you need to specify a type object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Brows</p></td>
+<td><p>Move to the page of the stored object.</p></td>
+</tr>
+<tr class="row-even"><td><p>Edit</p></td>
+<td><p>Edit the contents of the object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Change name</p></td>
+<td><p>Change the name of the object. If the display name of the property is the same as the object name, the display name will be also be changed at the same time.</p></td>
+</tr>
+<tr class="row-even"><td><p>Move</p></td>
+<td><p>Move the object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Copy</p></td>
+<td><p>Copy the object to another directory.</p></td>
+</tr>
+<tr class="row-even"><td><p>Delete</p></td>
+<td><p>Delete the object.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Export</p></td>
+<td><p>Export the selected object. When an object is not selected, all objects under the directory will be exported.</p></td>
+</tr>
+<tr class="row-even"><td><p>Import</p></td>
+<td><p>Import the object into the selected directory from the file. When the directory is not selected, the object will be imported under the current directory.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Property</p></td>
+<td><p>Edit the properties of the object.</p></td>
+</tr>
+<tr class="row-even"><td><p>Search</p></td>
+<td><p>Searches for descendant objects under a directory.</p></td>
+</tr>
+</tbody>
+</table>
+<p>In addition to the common key operations, the following key operations are supported on the detailed screen of directory objects.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key bindings</p></th>
+<th class="head"><p>Operation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n</span></code></p></td>
+<td><p>Create new object</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#</span></code></p></td>
+<td><p>Select type object</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">j</span></code></p></td>
+<td><p>Move cursor to next object</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">k</span></code></p></td>
+<td><p>Move cursor to previous object</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Space</span></code></p></td>
+<td><p>Toggle the object selection</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span></code></p></td>
+<td><p>Toggle selection of all objects</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Delete</span></code></p></td>
+<td><p>Delete objects</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">F2</span></code></p></td>
+<td><p>Rename object</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p>Copy objects</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">m</span></code></p></td>
+<td><p>Move objects</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">p</span></code></p></td>
+<td><p>Edit property</p></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.6: </span>Key operation description added.</p>
+</div>
+<section id="id12">
+<h4><span class="section-number">2.4.1.1. </span>Create new object<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h4>
+<p>New objects can be created in the directory screen.</p>
+<ul class="simple">
+<li><p>In the “Type” column on the bottom line, select the type of object you wish to create.</p></li>
+<li><p>Enter the name of the object you wish to create in the input form in the “Name” column on the bottom line.</p></li>
+<li><p>Click the button with the “+” sign to the right of the form in which you have entered the name, and you will be taken to the editing screen corresponding to the type you have selected.</p></li>
+<li><p>Enter the necessary information on the edit screen and click the “Save” button to create the object.</p></li>
+</ul>
+<p>Note that for some types, such as directory type, a new object is created without moving to the edit screen.</p>
+</section>
+<section id="id13">
+<h4><span class="section-number">2.4.1.2. </span>Viewing and editing object<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h4>
+<p>Clicking on a link of an object listed in the directory screen, or selecting one of the objects and pressing enter or choosing “Open” from the menu, will take you to the page (detail screen) of that object.</p>
+<p>You can also select an object and choose “Edit” from the menu to go directly to the object’s editing page.</p>
+</section>
+<section id="id14">
+<h4><span class="section-number">2.4.1.3. </span>Rename object<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h4>
+<p>You can rename an object by selecting one and choosing “Rename” from the menu. An input form will appear above the “Name” column of the selected row, with the current name of the object entered. The name can be changed by entering a new name and pressing enter. Alternatively, the ESC key can be used to cancel.</p>
+</section>
+<section id="id15">
+<h4><span class="section-number">2.4.1.4. </span>Moving and copying objects<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h4>
+<p>Select one or more objects and choose “Move” or “Copy” from the menu to move or copy the selected objects. A dialog box will appear to select the move or copy destination. Select the desired location and press the “Move” or “Copy” button.</p>
+<p>Note that if only one object is selected, the name form in the dialog will be inputtable, and you can also specify a new name for the move or copy destination.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please note that copying operations with a very large number of target objects may take a long time to complete.</p>
+</div>
+</section>
+<section id="id16">
+<h4><span class="section-number">2.4.1.5. </span>Delete objects<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h4>
+<p>Select one or more objects and choose “Delete” from the menu to delete the selected objects. A dialog box will appear asking you to confirm that you really want to delete the object, so choose “Delete” or “Cancel”.</p>
+</section>
+<section id="id17">
+<h4><span class="section-number">2.4.1.6. </span>Editing object properties<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h4>
+<p>Select one or more objects and choose “Properties” from the menu to edit the properties of the selected objects.</p>
+<p>If only one object is selected, you will be taken to the edit properties screen for that object. Edit the properties you want to change and then click the “Save” button to update the properties of that object.</p>
+<p>Selecting the Properties menu with two or more multiple objects selected will bring up the Edit Properties dialog. In this dialog, you can change the owner and user permissions, group permissions, and items with “Apply Changes” checked can be applied to the selected objects at once. Note that if the selected objects include directories or tables, the property changes will not be reflected in their descendant objects.</p>
+</section>
+<section id="id18">
+<h4><span class="section-number">2.4.1.7. </span>Importing objects<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h4>
+<p>You can import exported JSON files into Kompira by selecting “Import” from the menu. A dialog will appear, select the file you want to import, and then click the “Import” button to start the import process. At this time, you can also specify whether or not the import will overwrite existing objects.</p>
+<p>Note that if no objects are selected in the directory screen, the import will be performed in that directory. If a directory or table is selected, the import will be performed in the selected directory or table.</p>
+<p>When an object that cannot be imported is selected, or when two or more objects are selected, it cannot be imported.</p>
+<p>Importing objects can only be done by the owner of the directory or root users.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that if the JSON file to be imported is large or contains a very large number of objects, the import process may take a long time or require a lot of memory.</p>
+</div>
+</section>
+<section id="id19">
+<h4><span class="section-number">2.4.1.8. </span>Exporting objects<a class="headerlink" href="#id19" title="Permalink to this heading">¶</a></h4>
+<p>You can export the data of a Kompira object as a JSON file by selecting “Export” from the menu. In the dialog that appears, press the “Export” button to start the export process. When the export file is ready, a system dialog will appear asking you where you want to save the file. At this time, you can also specify whether to include virtual objects in the export target. Check this box if you wish to include virtual objects such as process information, users, groups, etc. Translated with www.DeepL.com/Translator (free version)</p>
+<p>Exporting objects can only be done by the owner of the directory or root users.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that if the number of objects to be exported is very large, or if the size of the included field data is huge, the export process may take a long time or require a lot of memory.</p>
+</div>
+</section>
+<section id="id20">
+<h4><span class="section-number">2.4.1.9. </span>Searching for objects<a class="headerlink" href="#id20" title="Permalink to this heading">¶</a></h4>
+<p>Enter a search key in the search box at the upper right of the directory listing screen and click the search button to go to the search result listing screen.</p>
+<p>If you prefix the search key with <code class="docutils literal notranslate"><span class="pre">#</span></code>, the search will be performed using the display name of the type. For example, specifying <code class="docutils literal notranslate"><span class="pre">#JobFlow</span></code> as the search key will search for objects of type JobFlow. Similarly, <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> will search by owner. For example, a search key of <code class="docutils literal notranslate"><span class="pre">&#64;guest</span></code> will search for objects owned by the <code class="docutils literal notranslate"><span class="pre">guest</span></code> user. If the first character is not <code class="docutils literal notranslate"><span class="pre">#</span></code> or <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>, the search key will search for objects whose display name contains the specified string. If you want to search for display names that start with <code class="docutils literal notranslate"><span class="pre">#</span></code> or <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>, you can do so by adding a backslash, like <code class="docutils literal notranslate"><span class="pre">\#</span></code> or <code class="docutils literal notranslate"><span class="pre">\&#64;</span></code>.</p>
+<p>If more than one type of search key is specified at the same time, the search will be performed using AND conditions. Multiple search keys are generally separated by whitespace, but consecutive display names are treated as a single display name including whitespace. For example, typing <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">display</span> <span class="pre">name</span> <span class="pre">&#64;root</span> <span class="pre">#directory</span></code> will return a display name that contains the string <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">display</span> <span class="pre">name</span></code> and is owned by the user <code class="docutils literal notranslate"><span class="pre">root</span></code>. For example, typing <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">display</span> <span class="pre">name</span> <span class="pre">&#64;root</span> <span class="pre">#directory</span></code> will search for objects with a display name containing the string <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">display</span> <span class="pre">name</span></code> and whose owner is the user <code class="docutils literal notranslate"><span class="pre">root</span></code> and whose type is directory.</p>
+<p>If you specify multiple search keys of the same type, the last one will be used.</p>
+</section>
+</section>
+<section id="kompira-object-table">
+<span id="id21"></span><h3><span class="section-number">2.4.2. </span>Table<a class="headerlink" href="#kompira-object-table" title="Permalink to this heading">¶</a></h3>
+<p>A table is a Kompira object that can store multiple objects like a directory. However, it differs from the directory in that only one type of object can be stored.</p>
+<p>When creating a table object, first select the type object and the fields in that type object. In the created table object, in addition to the information displayed in the directory object, the field information selected at the time of creation will be displayed.</p>
+<p>By using the table object you can view all bundled fields of stored objects.</p>
+<p>The table object detail screen supports the same key operations as the directory object. However, type object selection by <code class="docutils literal notranslate"><span class="pre">#</span></code> is not available.</p>
+<section id="id22">
+<h4><span class="section-number">2.4.2.1. </span>Searching for objects<a class="headerlink" href="#id22" title="Permalink to this heading">¶</a></h4>
+<p>In the detailed view of the table object, you can search for objects contained within the table. You will need to select the object’s property or field as the search target in order to begin searching.</p>
+<p>In order to search objects by properties, you can choose <code class="docutils literal notranslate"><span class="pre">abspath</span></code>, <code class="docutils literal notranslate"><span class="pre">display_name</span></code>, and <code class="docutils literal notranslate"><span class="pre">owner</span></code>.</p>
+<p>You can select from the fields defined in the type object associated with the table as the search targets. However, the following fields cannot be selected as search targets.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Any field of the following types</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Password</span></code>, <code class="docutils literal notranslate"><span class="pre">Array&lt;Password&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">Dictionary&lt;Password&gt;</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Fields set as hidden with the field modifier (<code class="docutils literal notranslate"><span class="pre">invisible=true</span></code>)</p></li>
+</ul>
+<p>How objects are narrowed down based on the value (search value) entered into the search box depends on the selected search target. If a property is chosen as the search target, the search will be conducted as follows.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>abspath (Absolute path)</dt><dd><ul>
+<li><p>Objects with the search value contained in their path will be retrieved.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>display_name (Display name)</dt><dd><ul>
+<li><p>Objects with the search value contained in their display name will be retrieved.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>owner (Object owner)</dt><dd><ul>
+<li><p>Objects whose owner’s name matches the search value will be retrieved.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>If a field is selected as the search target, the object will be retrieved when the field value matches the search criteria. In this case, for each selected <a class="reference internal" href="library.html#fields-types"><span class="std std-ref">field type</span></a> , the input format and search criteria for the search value are as follows.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>String, Enum, Text, LargeText, IPAddress, EMail, URL</dt><dd><ul>
+<li><p>Input format: Any string</p></li>
+<li><p>Search criteria: Search value matches a portion of the field value.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Binary</dt><dd><ul>
+<li><p>Input format: Hexadecimal value</p></li>
+<li><p>Search criteria: Search value matches a portion of the field value.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Integer</dt><dd><ul>
+<li><p>Input format: Integer value</p></li>
+<li><p>Search criteria: Field value matches the search value.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Float</dt><dd><ul>
+<li><p>Input format: Float value</p></li>
+<li><p>Search criteria: Field value matches the search value.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Boolean</dt><dd><ul>
+<li><dl class="simple">
+<dt>Input format:</dt><dd><ul>
+<li><p>True: <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>False: <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Search criteria: Field value <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code> matches with the search values of (True, False).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Object</dt><dd><ul>
+<li><p>Input format: Object Path</p></li>
+<li><p>Search criteria: The path of the field value (object) matches the search value.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Datetime</dt><dd><ul>
+<li><dl class="simple">
+<dt>Input format(1): Datetime format parseable by the <a class="reference internal" href="library.html#library-functions"><span class="std std-ref">datetime()</span></a> function like the following.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">YYYY-mm-dd</span> <span class="pre">HH:MM:SS</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YYYY-mm-dd</span> <span class="pre">HH:MM:SS.mmmmmm</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Search criteria(1)</dt><dd><ul>
+<li><p>[When specified in seconds] Field value is within a 1-second range from the search value. i.e: (<code class="docutils literal notranslate"><span class="pre">YYYY-mm-dd</span> <span class="pre">HH:MM:SS.000000</span> <span class="pre">..</span> <span class="pre">YYYY-mm-dd</span> <span class="pre">HH:MM:SS.999999</span></code>)</p></li>
+<li><p>[When specified in microseconds] Field value matches the search value</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Input format(2): Date format parseable by the <a class="reference internal" href="library.html#library-functions"><span class="std std-ref">date()</span></a>, such as <code class="docutils literal notranslate"><span class="pre">YYYY-mm-dd</span></code>.</p></li>
+<li><p>Search criteria(2): Field value matches the search value.</p></li>
+<li><dl class="simple">
+<dt>Input format(3): Time format parseable by the <a class="reference internal" href="library.html#library-functions"><span class="std std-ref">time()</span></a> function like the following.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">HH:MM:SS</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HH:MM:SS.mmmmmm</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Search criteria(3)</dt><dd><ul>
+<li><p>[When specified in seconds] Time part of the field value is within a 1-second range from the search value. i.e: (<code class="docutils literal notranslate"><span class="pre">HH:MM:SS.000000</span> <span class="pre">..</span> <span class="pre">HH:MM:SS.999999</span></code>).</p></li>
+<li><p>[When specified in microseconds] Time part of the field value matches the search value.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Date</dt><dd><ul>
+<li><p>Input format: Date format parseable by the <a class="reference internal" href="library.html#library-functions"><span class="std std-ref">date()</span></a>, such as <code class="docutils literal notranslate"><span class="pre">YYYY-mm-dd</span></code>.</p></li>
+<li><p>Search criteria: Field value matches the search value.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Time</dt><dd><ul>
+<li><dl class="simple">
+<dt>Input format: Time format parseable by the <a class="reference internal" href="library.html#library-functions"><span class="std std-ref">time()</span></a> function like the following.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">HH:MM:SS</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HH:MM:SS.mmmmmm</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Search criteria</dt><dd><ul>
+<li><p>[When specified in seconds] Field value is within a 1-second range from the search value. i.e: (<code class="docutils literal notranslate"><span class="pre">HH:MM:SS.000000</span> <span class="pre">..</span> <span class="pre">HH:MM:SS.999999</span></code>).</p></li>
+<li><p>[When specified in microseconds] Field value matches the search value</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>File</dt><dd><ul>
+<li><p>Input format: File name</p></li>
+<li><p>Search criteria: The filename of the field value (file) matches the search value.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Array&lt;T&gt;</dt><dd><ul>
+<li><p>The search process depends on <a class="reference internal" href="library.html#fields-types"><span class="std std-ref">type T</span></a> .</p></li>
+<li><p>If there is at least one element in the array data that meets the search criteria, that object will be retrieved.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Dictionary&lt;T&gt;</dt><dd><ul>
+<li><p>The search process depends on <a class="reference internal" href="library.html#fields-types"><span class="std std-ref">type T</span></a> . In the dictionary data, the keys are not subject to search, only the values are considered as search targets.</p></li>
+<li><p>If there is at least one element in the dictionary data that meets the search criteria, that object will be retrieved.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.9: </span>The table detail screen now supports searching for Float, DateTime, Date, and Time fields.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.9.post1: </span>The table detail screen now supports searching for Binary, Boolean, Integer, and Object fields.</p>
+</div>
+</section>
+</section>
+<section id="kompira-object-jobflow">
+<span id="id23"></span><h3><span class="section-number">2.4.3. </span>Job flow<a class="headerlink" href="#kompira-object-jobflow" title="Permalink to this heading">¶</a></h3>
+<p>The job flow can be described and executed from the job flow object. For details on syntax of the job flow, refer to: <a class="reference internal" href="tutorial.html"><span class="doc">Kompira Tutorial</span></a> . For details on the job flow language, refer to: <a class="reference internal" href="reference.html"><span class="doc">Kompira Jobflow Language Reference</span></a></p>
+<p>In addition to the common key operations, the following key operations are supported on the job flow object detail screen.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key bindings</p></th>
+<th class="head"><p>Operation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-X</span></code></p></td>
+<td><p>Job flow execution</p></td>
+</tr>
+</tbody>
+</table>
+<section id="kompira-object-jobflow-execution">
+<span id="id24"></span><h4><span class="section-number">2.4.3.1. </span>Job flow execution<a class="headerlink" href="#kompira-object-jobflow-execution" title="Permalink to this heading">¶</a></h4>
+<p>When you write and save the job flow, the execution button of the job flow becomes effective. When you press the execute button, the job flow starts and the process details screen will be displayed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If there is a syntax error in the job flow or the Kompira engine is stopped, the execution button of the job flow will be invalid.</p>
+</div>
+</section>
+<section id="kompira-object-jobflow-parameter">
+<span id="id25"></span><h4><span class="section-number">2.4.3.2. </span>Specifying parameters<a class="headerlink" href="#kompira-object-jobflow-parameter" title="Permalink to this heading">¶</a></h4>
+<p>If parameters are defined for a job flow, you can specify the value of each parameter by entering it on the screen when executing the job flow. For parameters for which default values are defined, the default values are entered in the input fields when the job flow screen is displayed. The input fields for parameters for which no default values have been defined are empty. However, if there are empty parameters, the job flow cannot be executed, so be sure to enter all parameters before executing the job flow.</p>
+<p>The parameter entry field can be a value or an expression in the job flow notation. This means, for example, that if you want to give a string for a parameter, you must enclose it in quotation marks.</p>
+<p>When displaying the job flow screen, you can also specify job flow parameters in the URL parameter in the form “parameter-name=expression”. For example, if a job flow named /root/test_jobflow has parameters named foo and bar defined, and you want to specify a number and a string, the URL would look like this</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>https://&lt;kompira-server&gt;/root/test_jobflow?foo=100&amp;bar=&quot;hello&quot;
+</pre></div>
+</div>
+<p>Note that the parameter part must be URL-encoded, and depending on the characters used, it may be written as %XX (where XX is the hexadecimal code of the character set). For example, if you want to give foo the expression 50+50 and bar a string containing the symbol “#hashtag”, the URL should look like this</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>https://&lt;kompira-server&gt;/root/test_jobflow?foo=50%2b50&amp;bar=&quot;%23hashtag&quot;
+</pre></div>
+</div>
+</section>
+<section id="id26">
+<h4><span class="section-number">2.4.3.3. </span>Specifying options<a class="headerlink" href="#id26" title="Permalink to this heading">¶</a></h4>
+<p>The following options can be selected to run a job flow.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option name</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Step mode</p></td>
+<td><p>This mode is used when debugging a job flow. Before the command is executed, the job flow is paused and the contents of the execution command can be confirmed.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Checkpoint mode</p></td>
+<td><p>Checkpoint mode is a mode for saving the execution status of job flow. If the Kompira server stopped abnormally during job flow execution, the job flow process can be resumed from the saved checkpoint status.</p></td>
+</tr>
+<tr class="row-even"><td><p>Monitoring mode</p></td>
+<td><p>Specify the execution monitoring mode of the job flow. When the job flow is completed or abnormally stopped, a mail is sent to the mail address of the user who executed the job flow.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="kompira-object-scriptjob">
+<span id="id27"></span><h3><span class="section-number">2.4.4. </span>Script job<a class="headerlink" href="#kompira-object-scriptjob" title="Permalink to this heading">¶</a></h3>
+<p>When you create a script job, you can run scripts written in languages such as Bash, Perl, Ruby, Python on a remote server.</p>
+<p>In addition to the common key operations, the following key operations are supported on the script job object detail screen.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key bindings</p></th>
+<th class="head"><p>Operation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-X</span></code></p></td>
+<td><p>Script job execution</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id28">
+<h4><span class="section-number">2.4.4.1. </span>Script edit<a class="headerlink" href="#id28" title="Permalink to this heading">¶</a></h4>
+<p>Pressing the Edit button will take you to the script edit screen. Write a script to execute it in the text area of the source.</p>
+<p>When running a script on a Unix type OS such as Linux, please write (shebang) as the top line of the script.</p>
+<p>Example</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+echo hello
+</pre></div>
+</div>
+<p>When executing a script on a Windows OS, you need to specify an extension. Please specify the following extensions according to the type of script.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Script</p></th>
+<th class="head"><p>Extension</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Batch file</p></td>
+<td><p>bat</p></td>
+</tr>
+<tr class="row-odd"><td><p>VBScript</p></td>
+<td><p>vbs</p></td>
+</tr>
+<tr class="row-even"><td><p>JScript</p></td>
+<td><p>js</p></td>
+</tr>
+<tr class="row-odd"><td><p>PowerShell script</p></td>
+<td><p>ps1</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id29">
+<h4><span class="section-number">2.4.4.2. </span>How to execute a script<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h4>
+<p>When you press the execute button, the script’s execution will be started and the process details screen is displayed. When the script is completed, the results of the exit status, standard output, and standard error output are printed on the console.</p>
+<p>Command parameters can be entered in the text field to the right of the execute button. Multiple command arguments can be passed by separating them with spaces.</p>
+<p>For the execution node specify the remote server on which the script is executed. If not specified, the script is executed on the local server on which the job manager is running.</p>
+<p>For the execution account, specify the user’s credential when logging in to the remote server.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4.0: </span>The function to execute script jobs directly from the browser has been added.</p>
+</div>
+</section>
+</section>
+<section id="kompira-object-mail-channel">
+<span id="id30"></span><h3><span class="section-number">2.4.5. </span>Mail channel<a class="headerlink" href="#kompira-object-mail-channel" title="Permalink to this heading">¶</a></h3>
+<p>A mail channel is an object that works with an external IMAP4/POP3 server to receive mail from a job flow. As shown below, the message receiving function of JobFlow can be used for the created mail channel object to receive and process mail. (The following example assumes reception from a mail channel created in /home/guest/test_mchan.)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;/home/guest/test_mchan&gt; -&gt;
+[mail = mail_parse($RESULT)] -&gt;
+print(&#39;Received mail:&#39;, mail[&#39;Subject&#39;])
+</pre></div>
+</div>
+<section id="id31">
+<h4><span class="section-number">2.4.5.1. </span>How to set up mail channels<a class="headerlink" href="#id31" title="Permalink to this heading">¶</a></h4>
+<p>On the mail channel object edit screen, set the following items and save them.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting items</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Server name</p></td>
+<td><p>Set the host name or IP address of the IMAP4/POP3 server to connect to.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Protocol</p></td>
+<td><p>Set either IMAP4 or POP3 as the protocol for receiving mail.</p></td>
+</tr>
+<tr class="row-even"><td><p>SSL</p></td>
+<td><p>Check this box if you wish to use SSL for communication.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Port number</p></td>
+<td><p>Sets the port number of the IMAP server. If not specified, the default port number is used.</p></td>
+</tr>
+<tr class="row-even"><td><p>Mailbox</p></td>
+<td><p>Sets the mailbox to receive. The default is “INBOX”.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User name</p></td>
+<td><p>Set the user name to connect to the IMAP4/POP3 server.</p></td>
+</tr>
+<tr class="row-even"><td><p>Password</p></td>
+<td><p>Set the password for connecting to the IMAP4/POP3 server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Interval</p></td>
+<td><p>Specify the interval to check for new messages to the IMAP4/POP3 server in minutes.</p></td>
+</tr>
+<tr class="row-even"><td><p>Timeout</p></td>
+<td><p>Specify the connection timeout to the IMAP4/POP3 server in seconds.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Use OAuth2</p></td>
+<td><p>Check this box if you wish to authenticate using OAuth2. In this case, a password is not required.</p></td>
+</tr>
+<tr class="row-even"><td><p>OAuth2 provider</p></td>
+<td><p>Select the OAuth2 service provider; required if OAuth2 authentication is used.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Disabled</p></td>
+<td><p>Disables connections to IMAP4/POP3 servers.</p></td>
+</tr>
+<tr class="row-even"><td><p>Log size</p></td>
+<td><p>Specify the maximum size of the log. If the maximum size is exceeded, the oldest log messages are deleted first.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id32">
+<h4><span class="section-number">2.4.5.2. </span>Connection test<a class="headerlink" href="#id32" title="Permalink to this heading">¶</a></h4>
+<p>Click the “Test Connection” button to the right of the server name to connect to the configured IMAP4/POP3 server, authenticate with a user name and password, and check the mailbox.</p>
+</section>
+<section id="oauth2">
+<span id="kompira-object-mail-channel-oauth2"></span><h4><span class="section-number">2.4.5.3. </span>Setup procedure when using OAuth2 authentication<a class="headerlink" href="#oauth2" title="Permalink to this heading">¶</a></h4>
+<p>To connect using OAuth2 authentication, set the user name, select the OAuth2 provider that supports the mail service you are connecting to, and check Use OAuth2.</p>
+<p>Then, click the “Start authorization” button displayed to the right of OAuth2 use to start the approval flow. The OAuth2 provider’s authentication screen will appear in a separate window. After logging in with the user name you have set, confirm the contents and click the Approve button. If the redirection fails and the window displays “Cannot access this site,” copy the URL displayed in the address bar portion of the window, paste it into the dialog box for entering the redirection URL displayed on the original Kompira screen, and click the “Submit” button. Kompira uses the authorization code contained in the redirect URL entered to obtain an access token.</p>
+<p>If the token is successfully obtained, a new token expiration date will appear on the mail channel screen.</p>
+<p>If you have changed the provider’s settings, for example, click the “Clear Token” button to clear the token stored inside Kompira, and then re-create the token by performing the “Start Authorization” again.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>With a refresh token, an expired access token is automatically refreshed and its expiration date extended when sending/receiving mail or performing a connection test. Refresh tokens generally have a longer expiration time than access tokens, but if a refresh token expires, token refresh will fail. In that case, please “Start Authentication” to obtain the token again. Since the refresh token is also updated upon refresh, regular mail sending/receiving and connection tests can be performed to prevent the refresh token from expiring.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The user must register the Kompira application with the OAuth2 provider and define an OAuth2 provider type object based on the configuration information there. Please refer to the technical documentation of each OAuth2 provider for information on how to register your application.</p>
+</div>
+</section>
+</section>
+<section id="smtp">
+<span id="kompira-object-smtp-server"></span><h3><span class="section-number">2.4.6. </span>SMTP server<a class="headerlink" href="#smtp" title="Permalink to this heading">¶</a></h3>
+<p>The SMTP server is an object that defines information about the SMTP server to be used when sending mail.</p>
+<section id="id33">
+<h4><span class="section-number">2.4.6.1. </span>How to set up an SMTP server<a class="headerlink" href="#id33" title="Permalink to this heading">¶</a></h4>
+<p>On the edit screen of the SMTP server object, set each of the following items and save them.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting items</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Host name</p></td>
+<td><p>Set the host name or IP address of the SMTP server to be followed.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Port number</p></td>
+<td><p>Sets the port number of the SMTP server. If not specified, the default port number is used.</p></td>
+</tr>
+<tr class="row-even"><td><p>User name</p></td>
+<td><p>Sets the user name when connecting to an SMTP server that requires authentication.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Password</p></td>
+<td><p>Sets the password when connecting to an SMTP server that requires authentication.</p></td>
+</tr>
+<tr class="row-even"><td><p>Timeout</p></td>
+<td><p>Specifies the connection timeout to the SMTP server in seconds.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Use TLS</p></td>
+<td><p>Check this box if you want to connect to the SMTP server using TLS.</p></td>
+</tr>
+<tr class="row-even"><td><p>Use SSL</p></td>
+<td><p>Check this box if you want to connect to the SMTP server using SSL.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Use OAuth2</p></td>
+<td><p>Check this box if you wish to authenticate using OAuth2. In this case, a password is not required.</p></td>
+</tr>
+<tr class="row-even"><td><p>OAuth2 provider</p></td>
+<td><p>Select the OAuth2 service provider; required if OAuth2 authentication is used.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Click the “Connection Test” button to check the connection to the SMTP server. It also confirms user authentication if a user name and password have been set.</p>
+<p>The procedure for setting up OAuth2 authentication is the same as for the mail channel. (<a class="reference internal" href="#kompira-object-mail-channel-oauth2"><span class="std std-ref">Setup procedure when using OAuth2 authentication</span></a>)</p>
+</section>
+</section>
+<section id="ldap">
+<h3><span class="section-number">2.4.7. </span>LDAP Server<a class="headerlink" href="#ldap" title="Permalink to this heading">¶</a></h3>
+<p>The LDAP server is an object that defines the LDAP server and configuration information for linking Kompira login accounts with LDAP. Specify the LDAP server object to be federated in the LDAP Server (ldapServer) field of the system configuration.</p>
+<section id="id34">
+<h4><span class="section-number">2.4.7.1. </span>How to set up an LDAP server<a class="headerlink" href="#id34" title="Permalink to this heading">¶</a></h4>
+<p>On the edit screen of the SMTP server object, set each of the following items and save them.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting items</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Server URL</p></td>
+<td><p>Specify the URL of the LDAP server. (Example: <a class="reference external" href="ldap://ldap.example.com">ldap://ldap.example.com</a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Timeout</p></td>
+<td><p>Specifies the connection timeout to the LDAP server.</p></td>
+</tr>
+<tr class="row-even"><td><p>Use STARTTLS</p></td>
+<td><p>Set if STARTTLS is used to connect to the LDAP server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fallback Login</p></td>
+<td><p>Set to allow login with the password of the most recent login in case of LDAP login failure.</p></td>
+</tr>
+<tr class="row-even"><td><p>Session Expiration</p></td>
+<td><p>Specify the session expiration time in hours when logging in as an LDAP user.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Bind DN</p></td>
+<td><p>Specifies the bind DN to the LDAP server. If empty, anonymous bindings are used.</p></td>
+</tr>
+<tr class="row-even"><td><p>Bind Password</p></td>
+<td><p>Specify the password for binding to the LDAP server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Search DN</p></td>
+<td><p>Specifies the DN on which the user search will be based.</p></td>
+</tr>
+<tr class="row-even"><td><p>User Search Scope</p></td>
+<td><p>Specify the scope from the base point of the user search among BASE, ONELEVEL, and SUBTREE.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Search Attribute</p></td>
+<td><p>Specifies which of the attributes of the object to which the user search is directed contains the user name.</p></td>
+</tr>
+<tr class="row-even"><td><p>Target Users</p></td>
+<td><p>Specify a list of user names to be linked to LDAP.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Required Group DN</p></td>
+<td><p>Specify the DN of the group to which the user to be linked to LDAP belongs.</p></td>
+</tr>
+<tr class="row-even"><td><p>Group Search DN</p></td>
+<td><p>Specifies the DN on which the group search will be based.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Group Search Scope</p></td>
+<td><p>Specify the scope of the search target from the base point of the group search among BASE, ONELEVEL, and SUBTREE.</p></td>
+</tr>
+<tr class="row-even"><td><p>Group Search Class</p></td>
+<td><p>Specifies the class (objectClass) to filter from among the objects in the group search.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Group Type</p></td>
+<td><p>Specifies the type of group to be searched for in the group search.</p></td>
+</tr>
+<tr class="row-even"><td><p>Mirror Groups</p></td>
+<td><p>Specify the group name that reflects the LDAP group to which the LDAP user belongs to the Kompira group.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Data (First Name)</p></td>
+<td><p>Specify the corresponding LDAP user attribute if you want the “name” of the user object to reflect LDAP values.</p></td>
+</tr>
+<tr class="row-even"><td><p>User Data (Last Name)</p></td>
+<td><p>Specify the corresponding LDAP user attribute if you want the “last name” of the user object to reflect LDAP values.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Data (Email)</p></td>
+<td><p>Specify the corresponding LDAP user attribute when reflecting LDAP values in the “Email” user object.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Click the “Test Connection” button to check the connection to the LDAP server.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After the first successful login as an LDAP user, a new LDAP user is created in the Kompira user list (/config/user). The created LDAP user will remain in the Kompira user list even if it is deleted from the LDAP server, so you can delete it if necessary.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The session validity period setting only affects users logged in via LDAP. When logged in as a local user, the system default session validity period (2 weeks = 336 hours) always applies. Also, if the session expiration time is set to 0, the session will be destroyed when the browser is closed. If set to empty, the default session validity period will be applied.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a group search DN or user data (first_name, last_name, email) is specified, the corresponding fields of the user object (groups, first_name, last_name, email) will be overwritten with the latest values from the LDAP server each time the LDAP user logs in. Note that even if you rewrite the values of these fields separately, they will be overwritten by the LDAP server values each time you log in. However, if you have set a non-LDAP group in the group field of the user object, that value will be preserved.</p>
+</div>
+</section>
+</section>
+<section id="kompira-object-form">
+<span id="id35"></span><h3><span class="section-number">2.4.8. </span>Form<a class="headerlink" href="#kompira-object-form" title="Permalink to this heading">¶</a></h3>
+<p>A form is an object that allows you to create a user input form. The functions that a form can perform depend on the type of object set as the submission object.</p>
+<ul class="simple">
+<li><p>If a channel type object is set as the submission object, the message entered in the form can be sent to that channel.</p></li>
+<li><p>If a job flow type object is set as the submission object, then the job flow can be executed with the parameters entered in the form.</p></li>
+</ul>
+<p>In addition to the common key operations, the following key operations are supported on the form object detail screen.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key bindings</p></th>
+<th class="head"><p>Operation</p></th>
+<th class="head"><p>Note</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p><code class="docutils literal notranslate"><span class="pre">Alt-S</span></code></p></td>
+<td><p>Send</p></td>
+<td><p>If the submission object is a channel type.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Execute</p></td>
+<td><p>If the submission object is a job flow type.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id36">
+<h4><span class="section-number">2.4.8.1. </span>How to set up a form<a class="headerlink" href="#id36" title="Permalink to this heading">¶</a></h4>
+<p>On the form object edit screen, set each of the following items and save them.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting items</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Submit object</p></td>
+<td><p>Set up a channel type or job flow type object to be submitted from this form.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Type fields</p></td>
+<td><p>Sets the structure of the data to be submitted in the submission object.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id37">
+<h4><span class="section-number">2.4.8.2. </span>Entering submission data<a class="headerlink" href="#id37" title="Permalink to this heading">¶</a></h4>
+<p>The form object detail screen displays the entry fields (form) for the data to be submitted to the submission object. Each field is an input interface according to its field type that you have defined, allowing you to enter values such as numbers or strings. Note that while expressions could be given in job flow parameters as shown in <a class="reference internal" href="#kompira-object-jobflow-parameter"><span class="std std-ref">Specifying parameters</span></a>, only values can be entered in forms, but not expressions.</p>
+<p>When displaying the screen of a form object, you can also specify submitted data in the form “field-name=value” in the URL parameter. For example, if a form object named /root/test_form defines an Integer type field named foo and a String type field named bar, and you want to specify a number and a string, the URL would look like this</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>https://&lt;kompira-server&gt;/root/test_form?foo=100&amp;bar=hello
+</pre></div>
+</div>
+<p>Unlike the parameter specification that gives an expression in a job flow, there is no need to enclose the string in quotation marks because the value is specified according to the type.</p>
+</section>
+<section id="id38">
+<h4><span class="section-number">2.4.8.3. </span>Send message<a class="headerlink" href="#id38" title="Permalink to this heading">¶</a></h4>
+<p>If a channel type object is set as the submission object, a “Send” button will appear below the input form.</p>
+<p>Enter a value in the form and press the send button, and the entered value will be sent to the channel object set as the submission object as dictionary type data.</p>
+</section>
+<section id="id39">
+<h4><span class="section-number">2.4.8.4. </span>Run job flow<a class="headerlink" href="#id39" title="Permalink to this heading">¶</a></h4>
+<p>If a job flow type object is set as the submission object, an “Run” button will appear below the input form.</p>
+<p>Enter a value in the form and pressing the run button executes the job flow object set in the submitted object with the entered value as a parameter.</p>
+</section>
+</section>
+<section id="kompira-object-repository">
+<span id="id40"></span><h3><span class="section-number">2.4.9. </span>Repository<a class="headerlink" href="#kompira-object-repository" title="Permalink to this heading">¶</a></h3>
+<p>It is possible to synchronize the Kompira directory and the repository on the distributed version control system (DVCS) by creating repository objects. You can import objects from the remote repository into the specified Kompira directory, or conversely save the created Kompira objects on the remote repository. This enables version control of Kompira’s job flow and script jobs. It also makes it easy to share job flows across multiple Kompira.</p>
+<section id="id41">
+<h4><span class="section-number">2.4.9.1. </span>How to set up repository<a class="headerlink" href="#id41" title="Permalink to this heading">¶</a></h4>
+<p>On the repository object edit screen, set the following items and save them.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting items</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>URL</p></td>
+<td><p>Specify the URL of the remote repository.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Repository type</p></td>
+<td><p>Specify the type of remote repository. (In the current version, only git or mercurial can be selected.)</p></td>
+</tr>
+<tr class="row-even"><td><p>Port number</p></td>
+<td><p>Specify this when the port number of the repository server is different from the default.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User name</p></td>
+<td><p>Specify the user name of the account accessing the remote repository.</p></td>
+</tr>
+<tr class="row-even"><td><p>Password</p></td>
+<td><p>Specify the password for the account that will access the remote repository.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Directory</p></td>
+<td><p>Specify the directory object of Kompira to be synchronized.</p></td>
+</tr>
+<tr class="row-even"><td><p>Update config data</p></td>
+<td><p>If checked, the configuration data of the Config type object will also be overwritten when pulled from the remote repository.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Remote repository must be created in advance.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.7: </span>The setting item “Update config data” has been added.</p>
+</div>
+</section>
+<section id="id42">
+<h4><span class="section-number">2.4.9.2. </span>Initialization<a class="headerlink" href="#id42" title="Permalink to this heading">¶</a></h4>
+<p>Initialize a local repository on the Kompira server and import the contents of the repository into the Kompira directory. When the Initialize button is clicked, the following process is performed.</p>
+<ul class="simple">
+<li><p>Clones the remote repository and initializes it as a local repository.</p></li>
+<li><p>Imports the contents of the local repository into the Kompira directory.</p></li>
+</ul>
+<p>The initialize button is enabled when the required repository configuration items are entered on the edit screen.</p>
+</section>
+<section id="id43">
+<h4><span class="section-number">2.4.9.3. </span>Push<a class="headerlink" href="#id43" title="Permalink to this heading">¶</a></h4>
+<p>Commits the changes in the Kompira directory to the specified branch and pushes them to the remote repository. When the Push button is clicked, the following process is performed.</p>
+<ul class="simple">
+<li><p>Switches the local repository to the selected branch.</p></li>
+<li><p>Exports the Kompira directory to the local repository in directory format.</p></li>
+<li><p>Commits the changes in the local repository with the commit message entered.</p></li>
+<li><p>Pushes to the remote repository.</p></li>
+</ul>
+<p>When committing the changes, the full name and email address of the user logged into Kompira are recorded as author. However, if the first name and last name are not specified, the logged in <code class="docutils literal notranslate"><span class="pre">{username}</span></code> is used, and if the email address is not specified, <code class="docutils literal notranslate"><span class="pre">{username}&#64;{hostname}</span></code> is used.</p>
+<p>After initialization, the push button will be enabled.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.9.post4: </span>The Kompira login user is now recorded as the author of the commit during push operation.</p>
+</div>
+</section>
+<section id="id44">
+<h4><span class="section-number">2.4.9.4. </span>Pull<a class="headerlink" href="#id44" title="Permalink to this heading">¶</a></h4>
+<p>Pulls the remote repository and imports the contents of the specified branch into the Kompira directory with overwrite. When the Pull button is clicked, the following process is performed.</p>
+<ul class="simple">
+<li><p>Pulls from the remote repository.</p></li>
+<li><p>Switches the local repository to the selected branch.</p></li>
+<li><p>Import the contents of the local repository into the Kompira directory with overwrite.</p></li>
+</ul>
+<p>If “Update config data” is checked when importing to the Kompira directory, the configuration data of Config type objects are also overwritten.</p>
+<p>After initialization, the pull button will be enabled.</p>
+</section>
+</section>
+</section>
+<section id="processes">
+<span id="id45"></span><h2><span class="section-number">2.5. </span>Process Management<a class="headerlink" href="#processes" title="Permalink to this heading">¶</a></h2>
+<p>We will explain the process for managing the execution state of job flows and script jobs.</p>
+<p>A process is created when a job flow and a script job are executed. For details on starting execution, please refer to: <a class="reference internal" href="#kompira-object-jobflow"><span class="std std-ref">Job flow</span></a> and <a class="reference internal" href="#kompira-object-scriptjob"><span class="std std-ref">Script job</span></a></p>
+<section id="id46">
+<h3><span class="section-number">2.5.1. </span>Process list<a class="headerlink" href="#id46" title="Permalink to this heading">¶</a></h3>
+<p>On the process list screen, you can check the list of processes that are being executed or were executed in the past.</p>
+<p>By default, processes with process statuses NEW (New), READY (Executable), RUNNING (Running), WAITING (Waiting for Input or Command Completion) are displayed with [Running Process] selected.</p>
+<p>When process status is DONE (completed) or ABORTED (abnormal termination), the process has already ended. If you want to check these, please select [All processes].</p>
+<p>For processes that have already been executed, you can delete them from the list screen.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Normal users can view only the processes that they themselves executed. Root users can view all processes.</p>
+</div>
+</section>
+<section id="id47">
+<h3><span class="section-number">2.5.2. </span>Process details<a class="headerlink" href="#id47" title="Permalink to this heading">¶</a></h3>
+<p>On the process details screen, you can check and control the execution status of processes.</p>
+<p>Button operations and displayed tabs in the process details screen are described in the next and subsequent sections.</p>
+<p>In addition to the common key operations, the following key operations are supported on the process detail screen.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key bindings</p></th>
+<th class="head"><p>Operation</p></th>
+<th class="head"><p>Note</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">F6</span></code></p></td>
+<td><p>Terminate processes</p></td>
+<td><p>A confirmation dialog will appear.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">F7</span></code></p></td>
+<td><p>Suspend processes</p></td>
+<td><p>Not supported for script jobs.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">F8</span></code></p></td>
+<td><p>Resume processes</p></td>
+<td><p>Not supported for script jobs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CTRL-[</span></code></p></td>
+<td><p>Switch to previous tab</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CTRL-]</span></code></p></td>
+<td><p>Switch to next tab</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span></code></p></td>
+<td><p>Toggle text selection</p></td>
+<td><p>Can be operated in the console tab or the result tab.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.6: </span>Key operations are now available on the process detail screen.</p>
+</div>
+<section id="terminate">
+<h4><span class="section-number">2.5.2.1. </span>Terminate<a class="headerlink" href="#terminate" title="Permalink to this heading">¶</a></h4>
+<p>Stop execution of the process. Terminated processes will show an ABORTED (abnormal termination) status and cannot be restarted.</p>
+<p>If there is a child process running, the status of the child process will also be ABORTED (abnormal termination).</p>
+</section>
+<section id="suspend">
+<h4><span class="section-number">2.5.2.2. </span>Suspend<a class="headerlink" href="#suspend" title="Permalink to this heading">¶</a></h4>
+<p>Temporarily suspend execution of the process.</p>
+<p>If there is a child process running, the child process will also be paused.</p>
+</section>
+<section id="resume">
+<h4><span class="section-number">2.5.2.3. </span>Resume<a class="headerlink" href="#resume" title="Permalink to this heading">¶</a></h4>
+<p>Resume the suspended process.</p>
+<p>If there is a stopped child process, the child process also restarts.</p>
+</section>
+<section id="id48">
+<h4><span class="section-number">2.5.2.4. </span>Console<a class="headerlink" href="#id48" title="Permalink to this heading">¶</a></h4>
+<p>Output shown during process execution.</p>
+<p>In the case of a job flow, messages of print statement, execution result of a remote command, a stack trace at error, etc. are displayed.</p>
+<p>For script jobs, the exit status of the script, standard output, and standard error output are displayed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The maximum console buffer size is limited to 64 KB. Please note that if there is output of 64 KB or more, only the first 64 KB message can be printed.</p>
+</div>
+</section>
+<section id="id49">
+<h4><span class="section-number">2.5.2.5. </span>Job flow / Script<a class="headerlink" href="#id49" title="Permalink to this heading">¶</a></h4>
+<p>The job flow and script executed will be displayed.</p>
+<p>In the case of a job flow, the line currently being executed is also displayed.</p>
+</section>
+<section id="id50">
+<h4><span class="section-number">2.5.2.6. </span>Result<a class="headerlink" href="#id50" title="Permalink to this heading">¶</a></h4>
+<p>The contents of the result <code class="docutils literal notranslate"><span class="pre">$RESULT</span></code> at the end of the process will be displayed in JSON format.</p>
+</section>
+<section id="id51">
+<h4><span class="section-number">2.5.2.7. </span>Child processes<a class="headerlink" href="#id51" title="Permalink to this heading">¶</a></h4>
+<p>You can check the list of child processes on the screen that is displayed only when the job flow is executed.</p>
+<p>A child process is created when you execute a job flow that creates a child process using fork or pfor syntax.</p>
+</section>
+<section id="id52">
+<h4><span class="section-number">2.5.2.8. </span>Settings<a class="headerlink" href="#id52" title="Permalink to this heading">¶</a></h4>
+<p>This screen is displayed only when a job flow is executed, and allows you to check the settings of the process. You can also change the settings when it is stopped.</p>
+<p>What you can see or change here are the options for job flow execution shown in <a class="reference internal" href="#kompira-object-jobflow-execution"><span class="std std-ref">Job flow execution</span></a>.</p>
+</section>
+</section>
+<section id="manage-process">
+<span id="id53"></span><h3><span class="section-number">2.5.3. </span>Process operation by management command<a class="headerlink" href="#manage-process" title="Permalink to this heading">¶</a></h3>
+<p>On kompira server, you can use the management command <code class="docutils literal notranslate"><span class="pre">/opt/kompira/bin/manage.py</span> <span class="pre">process</span> <span class="pre">[options...]</span></code> to perform the following operations on Kompira processes.</p>
+<ul class="simple">
+<li><p>Display process list</p></li>
+<li><p>Display process count</p></li>
+<li><p>Delete processes</p></li>
+<li><p>Terminate processes</p></li>
+<li><p>Suspend processes</p></li>
+<li><p>Resume processes</p></li>
+</ul>
+<p>At this time, you can specify the conditions for filtering the processes to be operated on.</p>
+<ul class="simple">
+<li><p>The status of the process.</p></li>
+<li><p>The job flow that the process is executing.</p></li>
+<li><p>Whether the process was started by a schedule.</p></li>
+<li><p>Whether the invoker object is a specified process or not.</p></li>
+<li><p>The user who executed the process.</p></li>
+<li><p>Started datetime and finished datetime.</p></li>
+<li><p>The elapsed time during which the process is running.</p></li>
+<li><p>A string included in the console output.</p></li>
+</ul>
+<section id="id54">
+<h4><span class="section-number">2.5.3.1. </span>Process operation options<a class="headerlink" href="#id54" title="Permalink to this heading">¶</a></h4>
+<p>The following options specify the operations to be performed on the Kompira process.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-L</span></code>, <code class="docutils literal notranslate"><span class="pre">--list</span></code></p></td>
+<td><p>Displays a list of processes. By default, it shows the processes in the active state.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-C</span></code>, <code class="docutils literal notranslate"><span class="pre">--count</span></code></p></td>
+<td><p>Displays the number of processes. By default, it displays the number of processes in all states.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-D</span></code>, <code class="docutils literal notranslate"><span class="pre">--delete</span></code></p></td>
+<td><p>Deletes processes. Processes in the active state will be excluded.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-T</span></code>, <code class="docutils literal notranslate"><span class="pre">--terminate</span></code></p></td>
+<td><p>Terminates processes. Processes that have already been terminated will excluded.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-S</span></code>, <code class="docutils literal notranslate"><span class="pre">--suspend</span></code></p></td>
+<td><p>Suspends processes. Processes that have already been terminated or have been suspended are excluded.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-R</span></code>, <code class="docutils literal notranslate"><span class="pre">--resume</span></code></p></td>
+<td><p>Resumes processes. Processes that have already been terminated or have not been suspended will be excluded.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Only one of the options specifying the operation can be specified, and if more than one is specified, the last option will be applied. If none of the above options are specified, a list of processes will be displayed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please note that when a large number of processes are to be processed, the load on memory, CPU, and other resources may increase.</p>
+</div>
+<p>When an operation involving a change in process information (delete, terminate, suspend, resume) is specified, a confirmation (yes/no input) will be given to actually apply the control. If you want to apply the control without any confirmation, specify the <code class="docutils literal notranslate"><span class="pre">-y</span></code> option. If you want to check the behavior without applying the control, use the <code class="docutils literal notranslate"><span class="pre">--dry-run</span></code> option.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-y</span></code>, <code class="docutils literal notranslate"><span class="pre">--noinput</span></code></p></td>
+<td><p>Apply operation without confirmation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--dry-run</span></code></p></td>
+<td><p>It does not actually apply the change.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id55">
+<h4><span class="section-number">2.5.3.2. </span>Process filtering options<a class="headerlink" href="#id55" title="Permalink to this heading">¶</a></h4>
+<p>The following options allow you to specify conditions for filtering the Kompira processes to be operated on.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-i</span> <span class="pre">PID</span></code>, <code class="docutils literal notranslate"><span class="pre">--pid</span> <span class="pre">PID</span></code></p></td>
+<td><p>processes whose process ID is <code class="docutils literal notranslate"><span class="pre">PID</span></code> (more than one can be specified)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-a</span></code>, <code class="docutils literal notranslate"><span class="pre">--all</span></code></p></td>
+<td><p>processes whose with any status.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--active</span></code></p></td>
+<td><p>processes in active state (NEW, READY, RUNNING, or WAITING)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--finish</span></code></p></td>
+<td><p>processes in finished state (ABORTED or DONE)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--status</span> <span class="pre">{NEW,READY,RUNNING,WAITING,ABORTED,DONE}</span></code></p></td>
+<td><p>processes in the specified state (more than one can be specified)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--suspended</span></code></p></td>
+<td><p>processes in suspended state</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--not-suspended</span></code></p></td>
+<td><p>processes not in suspended state</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--parent</span> <span class="pre">PARENT</span></code></p></td>
+<td><p>processes whose parent process ID is <code class="docutils literal notranslate"><span class="pre">PARENT</span></code> (more than one can be specified)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--anyones-child</span></code></p></td>
+<td><p>processes whose with an arbitrary parent process.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--min-children</span> <span class="pre">MIN_CHILDREN</span></code></p></td>
+<td><p>Processes whose with equal or more than <code class="docutils literal notranslate"><span class="pre">MIN_CHILDREN</span></code> child processes.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--job</span> <span class="pre">JOB</span></code></p></td>
+<td><p>processes whose job flow at the start matches <code class="docutils literal notranslate"><span class="pre">JOB</span></code> in the regular expression.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--current-job</span> <span class="pre">CURRENT_JOB</span></code></p></td>
+<td><p>processes whose running job flow matches <code class="docutils literal notranslate"><span class="pre">CURRENT_JOB</span></code> with a regular expression.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--scheduled</span></code></p></td>
+<td><p>Processes started by the schedule.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--not-scheduled</span></code></p></td>
+<td><p>Processes started by other than the schedule.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--scheduler-id</span> <span class="pre">SCHEDULER_ID</span></code></p></td>
+<td><p>Processes started by the schedule whose ID is <code class="docutils literal notranslate"><span class="pre">SCHEDULER_ID</span></code> (more than one can be specified)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--scheduler-name</span> <span class="pre">SCHEDULER_NAME</span></code></p></td>
+<td><p>Processes started by the schedule whose name matches <code class="docutils literal notranslate"><span class="pre">SCHEDULER_NAME</span></code> in a regular expression.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--invoked</span></code></p></td>
+<td><p>Processes executed in a manner in which the invoker object is recorded.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--not-invoked</span></code></p></td>
+<td><p>Processes executed in a way that does not record the invoker object.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--invoker</span> <span class="pre">INVOKER</span></code></p></td>
+<td><p>Processes whose invoker object is <code class="docutils literal notranslate"><span class="pre">INVOKER</span></code> (abspath; more than one can be specified).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--invoker-type</span> <span class="pre">INVOKER_TYPE</span></code></p></td>
+<td><p>Processes whose invoker object has type <code class="docutils literal notranslate"><span class="pre">INVOKER_TYPE</span></code> (abspath; more than one can be specified).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--user</span> <span class="pre">USER</span></code></p></td>
+<td><p>Processes whose executing user name matches <code class="docutils literal notranslate"><span class="pre">USER</span></code> (more than one can be specified)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--started-since</span> <span class="pre">STARTED_SINCE</span></code></p></td>
+<td><p>processes whose start date and time is since <code class="docutils literal notranslate"><span class="pre">STARTED_SINCE</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--started-before</span> <span class="pre">STARTED_BEFORE</span></code></p></td>
+<td><p>Processes whose start date and time is before <code class="docutils literal notranslate"><span class="pre">STARTED_BEFORE</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--finished-since</span> <span class="pre">FINISHED_SINCE</span></code></p></td>
+<td><p>processes whose finish date and time is since <code class="docutils literal notranslate"><span class="pre">FINISHED_SINCE</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--finished-before</span> <span class="pre">FINISHED_BEFORE</span></code></p></td>
+<td><p>Processes whose finish date and time is before <code class="docutils literal notranslate"><span class="pre">FINISHED_BEFORE</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--elapsed-more</span> <span class="pre">ELAPSED_MORE</span></code></p></td>
+<td><p>processes whose elapsed time is longer than or equal to <code class="docutils literal notranslate"><span class="pre">ELAPSED_MORE</span></code> (in seconds).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--elapsed-less</span> <span class="pre">ELAPSED_LESS</span></code></p></td>
+<td><p>Processes whose elapsed time is shorter than <code class="docutils literal notranslate"><span class="pre">ELAPSED_LESS</span></code> (in seconds).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--console</span> <span class="pre">CONSOLE</span></code></p></td>
+<td><p>Processes that include <code class="docutils literal notranslate"><span class="pre">CONSOLE</span></code> in their console output.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--head</span> <span class="pre">HEAD</span></code></p></td>
+<td><p>The first <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> of the filtered results will be operated.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--tail</span> <span class="pre">TAIL</span></code></p></td>
+<td><p>The last <code class="docutils literal notranslate"><span class="pre">TAIL</span></code> of the filtered results will be operated.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-r</span></code>, <code class="docutils literal notranslate"><span class="pre">--reverse</span></code></p></td>
+<td><p>Reverse the sort order.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--order</span> <span class="pre">ORDER</span></code></p></td>
+<td><p>The sort order is specified by <code class="docutils literal notranslate"><span class="pre">ORDER</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>If you specify multiple filtering options that can be specified more than once, they will be filtered as OR conditions.</p></li>
+<li><p>If you specify multiple filtering options of different types, they will be filtered as AND conditions.</p></li>
+<li><p>The optional date and time can be specified in a format that is recognized by the <code class="docutils literal notranslate"><span class="pre">datetime()</span></code> built-in function of the job flow.</p></li>
+</ul>
+</section>
+<section id="id56">
+<h4><span class="section-number">2.5.3.3. </span>Other options<a class="headerlink" href="#id56" title="Permalink to this heading">¶</a></h4>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--format</span> <span class="pre">{table,json,export}</span></code></p></td>
+<td><p>The format for listing processes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--datetime-format</span> <span class="pre">DATETIME_FORMAT</span></code></p></td>
+<td><p>The format for displaying date and time.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="scheduler">
+<span id="id57"></span><h2><span class="section-number">2.6. </span>Scheduler<a class="headerlink" href="#scheduler" title="Permalink to this heading">¶</a></h2>
+<p>By adding the job flow and script job created on Kompira in the scheduler, you can run the job periodically.</p>
+<p>Here is the list of items that can be set with the scheduler.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Default value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Schedule name</p></td>
+<td><p>Nil</p></td>
+<td><p>Name of schedule</p></td>
+</tr>
+<tr class="row-odd"><td><p>Description</p></td>
+<td><p>Nil</p></td>
+<td><p>A description about the schedule</p></td>
+</tr>
+<tr class="row-even"><td><p>User</p></td>
+<td></td>
+<td><p>User who runs the job</p></td>
+</tr>
+<tr class="row-odd"><td><p>Job</p></td>
+<td></td>
+<td><p>Job run by the scheduler</p></td>
+</tr>
+<tr class="row-even"><td><p>Year</p></td>
+<td><p>*</p></td>
+<td><p>Scheduled year (4 digit number)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Month</p></td>
+<td><p>*</p></td>
+<td><p>Scheduled month (1-12)</p></td>
+</tr>
+<tr class="row-even"><td><p>Date</p></td>
+<td><p>*</p></td>
+<td><p>Scheduled date (1-31)</p></td>
+</tr>
+<tr class="row-odd"><td><p>ISO week number</p></td>
+<td><p>*</p></td>
+<td><p>Scheduled week number (1-53) Week number defied in ISO 8601</p></td>
+</tr>
+<tr class="row-even"><td><p>Day or day number</p></td>
+<td><p>*</p></td>
+<td><p>Day of the week (0 (Monday) - 6 (Sunday), or mon, tue, wed, thu, fri, sat, sun)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hour</p></td>
+<td><p>*</p></td>
+<td><p>Scheduled hour (0-23)</p></td>
+</tr>
+<tr class="row-even"><td><p>Minute</p></td>
+<td><p>*</p></td>
+<td><p>Schduled minute (0-59)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Disable schedule</p></td>
+<td><p>false (unchecked)</p></td>
+<td><p>If true (checked), it will not run job</p></td>
+</tr>
+</tbody>
+</table>
+<section id="scheduler-format">
+<span id="id58"></span><h3><span class="section-number">2.6.1. </span>Date and time setting field format<a class="headerlink" href="#scheduler-format" title="Permalink to this heading">¶</a></h3>
+<p>The date and time setting field can be used the same format as Unix cron as follows.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Format</p></th>
+<th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>*</p></td>
+<td><p>All</p></td>
+<td><p>Run on each value</p></td>
+</tr>
+<tr class="row-odd"><td><p>*/a</p></td>
+<td><p>All</p></td>
+<td><p>Run every (a).</p></td>
+</tr>
+<tr class="row-even"><td><p>a-b</p></td>
+<td><p>All</p></td>
+<td><p>Run every (a-b)</p></td>
+</tr>
+<tr class="row-odd"><td><p>a-b/c</p></td>
+<td><p>All</p></td>
+<td><p>Run every (a-b) and (c).</p></td>
+</tr>
+<tr class="row-even"><td><p>xth y</p></td>
+<td><p>Day</p></td>
+<td><p>Run at the (x)th y (day) of the month.</p></td>
+</tr>
+<tr class="row-odd"><td><p>last x</p></td>
+<td><p>Day</p></td>
+<td><p>Run on the last (x) day of the month.</p></td>
+</tr>
+<tr class="row-even"><td><p>last</p></td>
+<td><p>Day</p></td>
+<td><p>Run on the last day of the month.</p></td>
+</tr>
+<tr class="row-odd"><td><p>x,y,z</p></td>
+<td><p>All</p></td>
+<td><p>Run with condition x, y or z (any combination of the above formats can be used)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the above format, be careful not to put a space next to ‘,’, ‘/’, ‘-‘.</p>
+</div>
+<p>Example 1: Run at 0:00 on the first Monday and last Friday of December every year:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Month: 12
+Day: 1st mon,last fri
+</pre></div>
+</div>
+<p>Example 2: Run at 12:30 of 15th-20th in April and August 2012:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Year: 2012
+Month: 4,8
+Day: 15-20
+Hour: 12
+Minute: 30
+</pre></div>
+</div>
+<p>Example 3: Run every hour on weekdays:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Day of week: mon-fri
+Hour: *
+</pre></div>
+</div>
+<p>Example 4: Run at 0:00 on January 1st every year:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Year: *
+</pre></div>
+</div>
+</section>
+</section>
+<section id="settings">
+<span id="id59"></span><h2><span class="section-number">2.7. </span>Settings<a class="headerlink" href="#settings" title="Permalink to this heading">¶</a></h2>
+<p>Below is an explanation of various settings that you can set from the “Settings” tab at the top of the Kompira screen.</p>
+<section id="settings-user">
+<span id="id60"></span><h3><span class="section-number">2.7.1. </span>User management<a class="headerlink" href="#settings-user" title="Permalink to this heading">¶</a></h3>
+<p>You can check the list of users registered on Kompira.</p>
+<p>Here is the list of initial users.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>User name</p></th>
+<th class="head"><p>Password</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>guest</p></td>
+<td><p>guest</p></td>
+<td><p>Guest user</p></td>
+</tr>
+<tr class="row-odd"><td><p>root</p></td>
+<td><p>root</p></td>
+<td><p>root user</p></td>
+</tr>
+<tr class="row-even"><td><p>admin</p></td>
+<td><p>admin</p></td>
+<td><p>Administrative user. All objects are accessible regardless of access permission settings. By default it is a disabled user.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The name of the user can be freely named within the following rules.</p>
+<ul class="simple">
+<li><p>You can use alphabetical and numerical characters, as well as underscores (“_”).</p></li>
+<li><p>The first character must be a number</p></li>
+<li><p>It is case-sensitive</p></li>
+<li><p>User name must be no longer than 30 characters.</p></li>
+</ul>
+<p>When creating a new user, /home/&lt;username&gt; directory is created automatically as the home directory.</p>
+<p>General users can only edit their own user information. However, it cannot change its own group or valid fields. Only root users can edit all users information.</p>
+<p>Here is the list of items that can be set for each user.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>User name</p></td>
+<td><p>Name used to identify users in the system</p></td>
+</tr>
+<tr class="row-odd"><td><p>Surname</p></td>
+<td><p>User’s surname</p></td>
+</tr>
+<tr class="row-even"><td><p>Name</p></td>
+<td><p>User’s first name</p></td>
+</tr>
+<tr class="row-odd"><td><p>Email</p></td>
+<td><p>User’s email address</p></td>
+</tr>
+<tr class="row-even"><td><p>Group</p></td>
+<td><p>Group user belongs to.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Active</p></td>
+<td><p>If false (unchecked), it will not allow user login</p></td>
+</tr>
+<tr class="row-even"><td><p>LDAP User</p></td>
+<td><p>If true (checked), represents an LDAP user</p></td>
+</tr>
+<tr class="row-odd"><td><p>Home</p></td>
+<td><p>The page that displays first when the user logs in</p></td>
+</tr>
+<tr class="row-even"><td><p>Environment variable</p></td>
+<td><p>Environment variable object automatically loaded when running a job flow</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Guest, root, and admin users can not be deleted. Nor can it delete itself.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Group, Enabled, and LDAP User fields can only be modified by privileged users. However, the LDAP user fields for built-in users (admin, root, guest) cannot be modified. Also, LDAP user passwords cannot be changed (if necessary, please change the password on the LDAP server side).</p>
+</div>
+<section id="id61">
+<h4><span class="section-number">2.7.1.1. </span>Account Unlocking<a class="headerlink" href="#id61" title="Permalink to this heading">¶</a></h4>
+<p>When an account is locked, a list of the IP addresses from which the account was accessed is displayed with a warning message at the bottom of the locked user’s information display screen. The user’s account can be unlocked by clicking the “Unlock” button displayed along with the warning message.</p>
+<p>It is also possible to unlock the device by logging in to the Kompira server at the terminal and executing the following administrative commands</p>
+<p><code class="docutils literal notranslate"><span class="pre">axes_reset</span></code> removes all account locks at once.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/kompira/bin/manage.py axes_reset
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">axes_reset_ip</span></code> unlocks the account from the specified IP address.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/kompira/bin/manage.py axes_reset_ip [ip ...]
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">axes_reset_username</span></code> unlocks the account for the specified user.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/kompira/bin/manage.py axes_reset_username [username ...]
+</pre></div>
+</div>
+<p>You can also run the <code class="docutils literal notranslate"><span class="pre">axes_list_attempts</span></code> command to see a list of failed login attempts. (The corresponding history will be deleted when the lock is released.)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/kompira/bin/manage.py axes_list_attempts
+</pre></div>
+</div>
+</section>
+</section>
+<section id="settings-group">
+<span id="id62"></span><h3><span class="section-number">2.7.2. </span>Group management<a class="headerlink" href="#settings-group" title="Permalink to this heading">¶</a></h3>
+<p>You can check the list of groups registered on Kompira.</p>
+<p>Here is the initial group list.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Group name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>other</p></td>
+<td><p>All users on Kompira belong to other</p></td>
+</tr>
+<tr class="row-odd"><td><p>wheel</p></td>
+<td><p>Users with root privilege belong to wheel.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The name of the group can be freely named within the following rules.</p>
+<ul class="simple">
+<li><p>You can use alphabetical and numerical characters, as well as underscores (“_”).</p></li>
+<li><p>The first character must be a number</p></li>
+<li><p>It is case-sensitive</p></li>
+<li><p>Group name must be no longer than 30 characters.</p></li>
+</ul>
+<p>Group information can only be edited by root users.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>You can not delete other and wheel groups.</p></li>
+<li><p>As mentioned above, to be able to see what group other users belong to can be done regardless of their settings. That means that user settings belonging to the other group are ignored.</p></li>
+</ul>
+</div>
+</section>
+<section id="settings-realm">
+<span id="id63"></span><h3><span class="section-number">2.7.3. </span>Management area setting<a class="headerlink" href="#settings-realm" title="Permalink to this heading">¶</a></h3>
+<p>A management area is a network area managed by each job manager.</p>
+<p>When using multiple job managers in Kompira, Each Job Manager can specify the area, such as the job manager A will access 192.168.1.x and the Job Manager B will access 192.168.2.x.</p>
+<p>Here is the list of items that can be set for each management area.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Display name</p></td>
+<td><p>Specify the display name of the management area</p></td>
+</tr>
+<tr class="row-odd"><td><p>Description</p></td>
+<td><p>Describe the management area</p></td>
+</tr>
+<tr class="row-even"><td><p>Disable</p></td>
+<td><p>Set this to temporarily disable the target management area</p></td>
+</tr>
+<tr class="row-odd"><td><p>Range</p></td>
+<td><p>Specify the range of the management area by IP address or host name. You can specify more than one, and wildcard (*) can also be used.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Only root users can edit the management area information.</p>
+<p>By default, there is a management area named default that has it’s range set to ‘*’. In this case, all remote commands are executed by the job manager of the default management area.</p>
+<p>If you use Kompira with only one job manager, or if you do not need to set a management area for each job manager, you do not need to change the management area setting.</p>
+<section id="id64">
+<h4><span class="section-number">2.7.3.1. </span>Job manager status check<a class="headerlink" href="#id64" title="Permalink to this heading">¶</a></h4>
+<p>In the management area setting screen, you can check the operation status of the job manager registered in each management area.</p>
+<p>The following items are displayed as job manager status.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Host name</p></td>
+<td><p>Name of the host on which the job manager is running</p></td>
+</tr>
+<tr class="row-odd"><td><p>Process ID</p></td>
+<td><p>The process ID of the job manager process (kompira_jobmngrd)</p></td>
+</tr>
+<tr class="row-even"><td><p>Version</p></td>
+<td><p>Job Manager’s Kompira Version</p></td>
+</tr>
+<tr class="row-odd"><td><p>Status</p></td>
+<td><p>Job manager’s operating status (‘Active’ or ‘Down’)</p></td>
+</tr>
+</tbody>
+</table>
+<p>When the status is [active], the job manager can communicate with Kompira, and remote command can be executed.</p>
+</section>
+</section>
+<section id="settings-system-config">
+<span id="id65"></span><h3><span class="section-number">2.7.4. </span>System Settings<a class="headerlink" href="#settings-system-config" title="Permalink to this heading">¶</a></h3>
+<p>On the system setting screen, you can configure the entire Kompira system.</p>
+<p>Here is the list of setting items.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Item name (Key name)</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Server URL (serverUrl)</p></td>
+<td><p>URL of Kompira server</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">Administrator email address</div>
+<div class="line">(adminEmail)</div>
+</div>
+</td>
+<td><p>Set the mail address of the administrator of the Kompira server.  It is used as the default ‘from’ address when sending mail.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">Successful email template</div>
+<div class="line">(doneMailTemplate)</div>
+</div>
+</td>
+<td><p>The email template used when the job flow completed normally.</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">Unsuccessful email template</div>
+<div class="line">(abortMailTemplate)</div>
+</div>
+</td>
+<td><p>The email template used when the job flow completed unsuccessfuly.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">SMTP Server (smtpServer)</div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><p>Select the SMTP server for sending e-mail. If abbreviated, the SMTP server on localhost is used.</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">LDAP Server (ldapServer)</div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><p>Select the LDAP server to be used for LDAP federation. If omitted, LDAP linking is not performed.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">Login failure limit</div>
+<div class="line">(loginFailureLimit)</div>
+</div>
+</td>
+<td><p>Locks the account if the specified number of consecutive login attempts fail. If the value is set to a value less than or equal to 0 or empty, the account is not locked.</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">Account lockout time</div>
+<div class="line">(accountLockoutTime)</div>
+</div>
+</td>
+<td><p>Specify the period of time, in minutes, to lock the account. The lock will be automatically released after the specified period of time. If the value is set to a value less than or equal to 0 or empty, the account lock will not be automatically released.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">Show command enabled</div>
+<div class="line">(showCommandEnabled)</div>
+</div>
+</td>
+<td><p>Check if you want the console to display information about the command or job to be executed when executing a command or script by an executing job, when starting a session block, and when executing a reboot job.</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">Show command format</div>
+<div class="line">(showCommandFormat)</div>
+</div>
+</td>
+<td><p>Specifies the format for displaying information about the command or job to be executed.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">Show stdout enabled</div>
+<div class="line">(showStdoutEnabled)</div>
+</div>
+</td>
+<td><p>Check to display standard output from command execution on the console.</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">Show stdout filter</div>
+<div class="line">(showStdoutFilter)</div>
+</div>
+</td>
+<td><p>Sets how much of the standard output is displayed on the console when it is allowed.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">Show stderr enabled</div>
+<div class="line">(showStderrEnabled)</div>
+</div>
+</td>
+<td><p>Check to display standard error output from command execution on the console.</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">Show stderr filter</div>
+<div class="line">(showStderrFilter)</div>
+</div>
+</td>
+<td><p>Sets how much of the standard error output is displayed on the console when it is allowed.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">Show session enabled</div>
+<div class="line">(showSessionEnabled)</div>
+</div>
+</td>
+<td><p>Check if you want the console to display output received while the session is executing.</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">Show session filter</div>
+<div class="line">(showSessionFilter)</div>
+</div>
+</td>
+<td><p>Sets how much of the session is displayed on the console when it is allowed.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">Hide password while editing</div>
+<div class="line">(hidePasswordWhileEditing)</div>
+</div>
+</td>
+<td><p>If checked, the password set in the password field cannot be displayed when editing an object. The newly entered password can be displayed by clicking on the eye icon until the object is saved.</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">Custom style</div>
+<div class="line">(customStyle)</div>
+</div>
+</td>
+<td><p>Select a custom style with settings such as the color scheme of the screen displayed in the browser. This makes it easier to distinguish between multiple Kompira servers.</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">Brand tag</div>
+<div class="line">(brandTag)</div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><p>You can set a string of brand tag that will be displayed following the brand name notation in the upper left corner of the menu bar. If a brand tag is specified, it will appear between <code class="docutils literal notranslate"><span class="pre">[</span></code> and <code class="docutils literal notranslate"><span class="pre">]</span></code> with a space after the brand name.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the system setting (/system/config) is a setting type object (<a class="reference internal" href="library.html#type_object-Config"><code class="xref kompira kompira-type_object docutils literal notranslate"><span class="pre">Config</span></code></a>), it can refer to the data dictionary of setting’s dictionary data from the job flow with key name.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When password hiding mode is enabled, editing an object containing a password dictionary (Dictionary&lt;Password&gt;) or password array (Array&lt;Password&gt;) field from multiple locations simultaneously does not guarantee that the value will always be reflected if the password is later saved unchanged.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.8: </span>Login failure limit (loginFailureLimit), account lockout time (accountLockoutTime) and hide password while editing (hidePasswordWhileEditing) have been added.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.8: </span>The default value of show command enabled (showCommandEnabled) has been changed to false.</p>
+</div>
+<section id="id66">
+<h4><span class="section-number">2.7.4.1. </span>Show command format<a class="headerlink" href="#id66" title="Permalink to this heading">¶</a></h4>
+<p>Specifies the display format for command display as a string. The item name can be enclosed in <code class="docutils literal notranslate"><span class="pre">{}</span></code> to embed the information at the time of execution and display it on the console. The default values for the command display format are as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[{username}@{hostname}]{sudomark} {command}
+</pre></div>
+</div>
+<p>The following items can be specified in the command display format. If you specify an item name that is not specified, it will be ignored.</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Item name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>now</p></td>
+<td><p>Current date and time</p></td>
+</tr>
+<tr class="row-odd"><td><p>jobtype</p></td>
+<td><p>Job type (one of “COMMAND”, “SCRIPT”, “SESSION”, “REBOOT”)</p></td>
+</tr>
+<tr class="row-even"><td><p>conntype</p></td>
+<td><p>Connection type specified by control variable (“ssh”, “windows/http”, etc.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>hostname</p></td>
+<td><p>Remote host name or IP address specified in the control variable (“localhost” if local)</p></td>
+</tr>
+<tr class="row-even"><td><p>port</p></td>
+<td><p>Port number specified in the control variable (”” if not specified)</p></td>
+</tr>
+<tr class="row-odd"><td><p>username</p></td>
+<td><p>User name for remote access specified in the control variable (“kompira” if local)</p></td>
+</tr>
+<tr class="row-even"><td><p>sudomark</p></td>
+<td><p>Usually <code class="docutils literal notranslate"><span class="pre">$</span></code>, or <code class="docutils literal notranslate"><span class="pre">#</span></code> if <code class="docutils literal notranslate"><span class="pre">__sudo___=true</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>A string indicating the command line, which varies for each job type. Detailed formatting for each job type cannot be specified.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Of these, the item <code class="docutils literal notranslate"><span class="pre">command</span></code> is expanded as follows for each job type.</p>
+<ul>
+<li><p>For command execution (jobtype=”COMMAND”)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Entire command line specified for the job to be executed</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>For script job execution (jobtype=”SCRIPT”)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{script_job.abspath}.{script_jop[&quot;ext&quot;]}</span> <span class="pre">{args}</span></code></p></li>
+<li><p>where script_job refers to the script job object passed to the executing job and args refers to the parameters passed to the executing job.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>For session block (jobtype=”SESSION”)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;SESSION:</span> <span class="pre">{session_id}&gt;</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>for reboot job (jobtype=”REBOOT”)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">reboot</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>The same format as Python3’s str.format() can be used for the command display format. If an error occurs due to an incorrect format, the default format will be used.</p>
+</section>
+<section id="id67">
+<h4><span class="section-number">2.7.4.2. </span>console display filter<a class="headerlink" href="#id67" title="Permalink to this heading">¶</a></h4>
+<p>The standard output display filter, standard error output display filter, and session display filter allow you to set filter conditions for console display in a common format.”</p>
+<p>Depending on the format set, there are several types of filters, with different behaviors, such as whether or not the output is displayed on the console when it is obtained.”</p>
+<p>If the filter is empty, an unlimited number of entries will be displayed.</p>
+<ul class="simple">
+<li><p>All obtained output is displayed on the console.</p></li>
+</ul>
+<p>If you set the filter in the format &lt;number&gt;&lt;unit&gt;, only the specified amount will be displayed. For example, <code class="docutils literal notranslate"><span class="pre">10L</span></code> will display only the first 10 lines.</p>
+<ul>
+<li><p>From the start of the job up to the specified quantity is displayed on the console, after which it is suppressed and no longer displayed.</p></li>
+<li><p>&lt;number&gt; can be specified as an integer.</p></li>
+<li><p>&lt;unit&gt; is optional and can be one of the following It is case-insensitive.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">L</span></code> or <code class="docutils literal notranslate"><span class="pre">LINES</span></code> is specified, count by lines. If the output is binary, the count is separated by 0x0A.</p></li>
+<li><p>If the unit is omitted, the number of characters is counted. If the output is binary, it is counted in bytes.</p></li>
+<li><p>If an undefined unit is specified, count in characters or bytes.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>If &lt;number&gt; is 0 (or a negative value), it will not be displayed at all.</p></li>
+<li><p>If you get more than one character of output after the specified quantity is reached, you will get a one-time <a href="#id1"><span class="problematic" id="id2">``</span></a>… `` and a new line will be printed to the console.</p></li>
+</ul>
+</section>
+</section>
+<section id="settings-system-startup">
+<span id="id68"></span><h3><span class="section-number">2.7.5. </span>Startup job flow<a class="headerlink" href="#settings-system-startup" title="Permalink to this heading">¶</a></h3>
+<p>In the startup directory (/system/startup), you can set a startup job flow that starts automatically when the Kompira server starts up.</p>
+</section>
+<section id="settings-license">
+<span id="id69"></span><h3><span class="section-number">2.7.6. </span>License Management<a class="headerlink" href="#settings-license" title="Permalink to this heading">¶</a></h3>
+<p>You can check the Kompira license</p>
+<p>Here is the list of items that can be checked on the license management screen.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>License ID</p></td>
+<td><p>Unique ID of license file</p></td>
+</tr>
+<tr class="row-odd"><td><p>Edition</p></td>
+<td><p>License type</p></td>
+</tr>
+<tr class="row-even"><td><p>Hardware ID</p></td>
+<td><p>Kompira server’s Hardware unique ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>Expiration date</p></td>
+<td><p>License expiration date</p></td>
+</tr>
+<tr class="row-even"><td><p>Number of registered nodes</p></td>
+<td><div class="line-block">
+<div class="line">The number of nodes that have been connected from the job flow</div>
+<div class="line">Select Reset to delete connection history</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Number of job flows</p></td>
+<td><p>Number of job flows registered as objects</p></td>
+</tr>
+<tr class="row-even"><td><p>Number of scripts</p></td>
+<td><p>Number of script jobs registered as objects</p></td>
+</tr>
+<tr class="row-odd"><td><p>User</p></td>
+<td><p>licensed user</p></td>
+</tr>
+<tr class="row-even"><td><p>signature</p></td>
+<td><p>License file signature</p></td>
+</tr>
+</tbody>
+</table>
+<p>The number of registered nodes, the number of job flows, and the number of scripts are displayed together with the maximum number according to the license.</p>
+<p>If the license file is not registered, Kompira will operate using a temporary license. You can use a temporary license for up to one week after Kompira installation.</p>
+<section id="id70">
+<h4><span class="section-number">2.7.6.1. </span>License of registration<a class="headerlink" href="#id70" title="Permalink to this heading">¶</a></h4>
+<p>Press the edit button on the right side of the license management screen to go to the license file upload screen.</p>
+<p>Select the license file by pressing “Select file”, and press the “Save” button to register the license.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The license file is saved in /var/opt/kompira/kompira.lic. By placing the license file directly in the above path, you can register the license without accessing the license management screen.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="troubleshooting">
+<span id="id71"></span><h2><span class="section-number">2.8. </span>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading">¶</a></h2>
+<p>A list of errors, causes and ways to troubleshoot them when you operate Kompira via a browser.</p>
+<section id="jobflow-scriptjob">
+<h3><span class="section-number">2.8.1. </span>“The number of Jobflows has exceeded the limit”, “The number of ScriptJobs has exceeded the limit”<a class="headerlink" href="#jobflow-scriptjob" title="Permalink to this heading">¶</a></h3>
+<p>The number of job flows and script job objects that can be created are controlled by the Kompira license.</p>
+<p>If you attempt to create an object beyond the limit set by the license, an error message will be displayed and the creation of the object will fail.</p>
+<p>Please check the available object numbers from the license management page.</p>
+</section>
+<section id="id72">
+<h3><span class="section-number">2.8.2. </span>“Kompira engine has stopped”<a class="headerlink" href="#id72" title="Permalink to this heading">¶</a></h3>
+<p>When the kompirad process has stopped this message is displayed.</p>
+<p>Please check the log file under /var/log/kompira and start the kompirad process.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="admin.html#process-daemon"><span class="std std-ref">Starting / stopping the Kompira daemon and Checking the state</span></a>, <a class="reference internal" href="admin.html#file-log"><span class="std std-ref">Kompira logs</span></a></p>
+</div>
+</section>
+<section id="id73">
+<h3><span class="section-number">2.8.3. </span>Database connection error<a class="headerlink" href="#id73" title="Permalink to this heading">¶</a></h3>
+<p>This message is displayed when the database cannot be connected to.</p>
+<p>You can check the status of the database process and restart it by the following commands.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># systemctl status postgresql-&lt;pgver&gt;.service
+# systemctl restart postgresql-&lt;pgver&gt;.service
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">&lt;pgver&gt;</span></code> with the version of PostgreSQL you have installed.</p>
+</div>
+</section>
+<section id="id74">
+<h3><span class="section-number">2.8.4. </span>Internal error<a class="headerlink" href="#id74" title="Permalink to this heading">¶</a></h3>
+<p>This will be displayed when an unexpected error occurs inside Kompira.</p>
+<p>Check the logs under /var/log/kompira and then please contact us at <a class="reference external" href="mailto:support&#37;&#52;&#48;kompira&#46;jp">support<span>&#64;</span>kompira<span>&#46;</span>jp</a></p>
+</section>
+<section id="kompira-dump-sh">
+<h3><span class="section-number">2.8.5. </span>kompira_dump.sh Information collection and support inquiries<a class="headerlink" href="#kompira-dump-sh" title="Permalink to this heading">¶</a></h3>
+<p>In order to solve any problems you are having on Kompira, it may be necessary to check various information sources such as various log files and setting files.</p>
+<p>Run  <code class="docutils literal notranslate"><span class="pre">/opt/kompira/bin/kompira_dump.sh</span></code> as root on the Kompira server and this will automatically collect useful information to solve the problem. In addition, since the database dump is included, the file size can be large. Please make sure there is enough free space to run the script.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo /opt/kompira/bin/kompira_dump.sh
+2014-11-18 15:18:52 # mkdir /home/ec2-user/kompira_dump-20141118-151852
+###
+### kompira_dump ver 1.0.0
+### dump started: 2014-11-18 15:18:52
+###
+========== system ==========
+2014-11-18 15:18:52 # mkdir /home/ec2-user/kompira_dump-20141118-151852/system
+2014-11-18 15:18:52 # cp -a /etc/os-release /etc/system-release ./
+2014-11-18 15:18:52 # printenv
+2014-11-18 15:18:52 # who -aH
+    :
+    :
+    :
+========== kompira ==========
+2014-11-18 15:19:09 # mkdir /home/ec2-user/kompira_dump-20141118-151852/kompira
+2014-11-18 15:19:09 # /opt/kompira/bin/kompirad --version
+2014-11-18 15:19:09 # /opt/kompira/bin/manage.py license_info
+2014-11-18 15:19:10 # /opt/kompira/bin/manage.py dumpdata -a
+2014-11-18 15:19:16 # cp -a /opt/kompira/kompira.conf ./
+2014-11-18 15:19:16 # cp -a /var/opt/kompira/kompira.lic ./
+2014-11-18 15:19:16 # tar -cf - /var/log/kompira
+tar: Removing leading `/&#39; from member names
+---------- kompira ----------
+###
+### dump finished: 2014-11-18 15:19:16
+###
+compressing...
+/home/ec2-user/kompira_dump-20141118-151852.tar.gz
+</pre></div>
+</div>
+<p>In the last line you will see a file that summarizes the collection results (kompira_dump-20141118-151852.tar.gz in the example above). Please attach this file along with a description of the problem and email it to: <a class="reference external" href="mailto:support&#37;&#52;&#48;kompira&#46;jp">support<span>&#64;</span>kompira<span>&#46;</span>jp</a></p>
+<p>Please note that this .tar.gz file is not encrypted, so please treat it according to your security policy.</p>
+<section id="id75">
+<h4><span class="section-number">2.8.5.1. </span>Information not collected<a class="headerlink" href="#id75" title="Permalink to this heading">¶</a></h4>
+<p>kompira_dump.sh does not collect confidential information such as the following.</p>
+<ul class="simple">
+<li><p>Account password information set in Kompira server</p></li>
+</ul>
+</section>
+<section id="id76">
+<h4><span class="section-number">2.8.5.2. </span>Information collected<a class="headerlink" href="#id76" title="Permalink to this heading">¶</a></h4>
+<p>kompira_dump.sh collects the following information.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>System information</dt><dd><ul>
+<li><p>Process information (ps, top, etc.)</p></li>
+<li><p>Service information (service, chkconfig, etc.)</p></li>
+<li><p>Installed package information (yum, rpm, pip etc)</p></li>
+<li><p>Kernel information (sysctl, lsmod, /proc/{version,*info,*stat}, etc.)</p></li>
+<li><p>Log files (/var/log/{dmesg,messages} etc)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Network information</dt><dd><ul>
+<li><p>Interface information (ip link, ip addr, ip route, etc.)</p></li>
+<li><p>Firewall information (iptables -L etc)</p></li>
+<li><p>Network status (netstat, traceroute, etc.)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Information on Apache</dt><dd><ul>
+<li><p>Service state (service httpd status, etc.)</p></li>
+<li><p>Log files (/var/log/httpd/)</p></li>
+<li><p>Configuration files (/etc/httpd)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Information on RabbitMQ</dt><dd><ul>
+<li><p>Service status (service rabbitmq-server status)</p></li>
+<li><p>Log files (/var/log/rabbitmq/)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Information on PostgreSQL</dt><dd><ul>
+<li><p>Service status (service postgresql-&lt;pgver&gt; status)</p></li>
+<li><p>Log files (/var/lib/pgsql/&lt;pgver&gt;/data/{pg_log,pgstartup.log})</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Information on Kompira</dt><dd><ul>
+<li><p>Version (kompirad –version)</p></li>
+<li><p>License information (manage.py license_info, etc.)</p></li>
+<li><p>Database dump (manage.py dumpdata -a)</p></li>
+<li><p>Configuration file (/opt/kompira/kompira.conf)</p></li>
+<li><p>Log files (/var/log/kompira/)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Please note that because it contains a Kompira database dump, <strong>node information and account / password information stored on Kompira objects and job flows are included</strong>.</p>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">2. Operation Guide</a><ul>
+<li><a class="reference internal" href="#usage-introduction">2.1. Introduction</a></li>
+<li><a class="reference internal" href="#login">2.2. Basic operations</a><ul>
+<li><a class="reference internal" href="#id4">2.2.1. Login and logout</a></li>
+<li><a class="reference internal" href="#id5">2.2.2. Menu operations</a></li>
+<li><a class="reference internal" href="#id6">2.2.3. Keyboard operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira">2.3. Kompira file system</a><ul>
+<li><a class="reference internal" href="#id7">2.3.1. Names of object</a></li>
+<li><a class="reference internal" href="#file-system-property">2.3.2. Object Properties</a></li>
+<li><a class="reference internal" href="#file-system-permission">2.3.3. Object permissions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object">2.4. Kompira object</a><ul>
+<li><a class="reference internal" href="#kompira-object-directory">2.4.1. Directory</a><ul>
+<li><a class="reference internal" href="#id12">2.4.1.1. Create new object</a></li>
+<li><a class="reference internal" href="#id13">2.4.1.2. Viewing and editing object</a></li>
+<li><a class="reference internal" href="#id14">2.4.1.3. Rename object</a></li>
+<li><a class="reference internal" href="#id15">2.4.1.4. Moving and copying objects</a></li>
+<li><a class="reference internal" href="#id16">2.4.1.5. Delete objects</a></li>
+<li><a class="reference internal" href="#id17">2.4.1.6. Editing object properties</a></li>
+<li><a class="reference internal" href="#id18">2.4.1.7. Importing objects</a></li>
+<li><a class="reference internal" href="#id19">2.4.1.8. Exporting objects</a></li>
+<li><a class="reference internal" href="#id20">2.4.1.9. Searching for objects</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-table">2.4.2. Table</a><ul>
+<li><a class="reference internal" href="#id22">2.4.2.1. Searching for objects</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-jobflow">2.4.3. Job flow</a><ul>
+<li><a class="reference internal" href="#kompira-object-jobflow-execution">2.4.3.1. Job flow execution</a></li>
+<li><a class="reference internal" href="#kompira-object-jobflow-parameter">2.4.3.2. Specifying parameters</a></li>
+<li><a class="reference internal" href="#id26">2.4.3.3. Specifying options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-scriptjob">2.4.4. Script job</a><ul>
+<li><a class="reference internal" href="#id28">2.4.4.1. Script edit</a></li>
+<li><a class="reference internal" href="#id29">2.4.4.2. How to execute a script</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-mail-channel">2.4.5. Mail channel</a><ul>
+<li><a class="reference internal" href="#id31">2.4.5.1. How to set up mail channels</a></li>
+<li><a class="reference internal" href="#id32">2.4.5.2. Connection test</a></li>
+<li><a class="reference internal" href="#oauth2">2.4.5.3. Setup procedure when using OAuth2 authentication</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#smtp">2.4.6. SMTP server</a><ul>
+<li><a class="reference internal" href="#id33">2.4.6.1. How to set up an SMTP server</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ldap">2.4.7. LDAP Server</a><ul>
+<li><a class="reference internal" href="#id34">2.4.7.1. How to set up an LDAP server</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-form">2.4.8. Form</a><ul>
+<li><a class="reference internal" href="#id36">2.4.8.1. How to set up a form</a></li>
+<li><a class="reference internal" href="#id37">2.4.8.2. Entering submission data</a></li>
+<li><a class="reference internal" href="#id38">2.4.8.3. Send message</a></li>
+<li><a class="reference internal" href="#id39">2.4.8.4. Run job flow</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-repository">2.4.9. Repository</a><ul>
+<li><a class="reference internal" href="#id41">2.4.9.1. How to set up repository</a></li>
+<li><a class="reference internal" href="#id42">2.4.9.2. Initialization</a></li>
+<li><a class="reference internal" href="#id43">2.4.9.3. Push</a></li>
+<li><a class="reference internal" href="#id44">2.4.9.4. Pull</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#processes">2.5. Process Management</a><ul>
+<li><a class="reference internal" href="#id46">2.5.1. Process list</a></li>
+<li><a class="reference internal" href="#id47">2.5.2. Process details</a><ul>
+<li><a class="reference internal" href="#terminate">2.5.2.1. Terminate</a></li>
+<li><a class="reference internal" href="#suspend">2.5.2.2. Suspend</a></li>
+<li><a class="reference internal" href="#resume">2.5.2.3. Resume</a></li>
+<li><a class="reference internal" href="#id48">2.5.2.4. Console</a></li>
+<li><a class="reference internal" href="#id49">2.5.2.5. Job flow / Script</a></li>
+<li><a class="reference internal" href="#id50">2.5.2.6. Result</a></li>
+<li><a class="reference internal" href="#id51">2.5.2.7. Child processes</a></li>
+<li><a class="reference internal" href="#id52">2.5.2.8. Settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#manage-process">2.5.3. Process operation by management command</a><ul>
+<li><a class="reference internal" href="#id54">2.5.3.1. Process operation options</a></li>
+<li><a class="reference internal" href="#id55">2.5.3.2. Process filtering options</a></li>
+<li><a class="reference internal" href="#id56">2.5.3.3. Other options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scheduler">2.6. Scheduler</a><ul>
+<li><a class="reference internal" href="#scheduler-format">2.6.1. Date and time setting field format</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#settings">2.7. Settings</a><ul>
+<li><a class="reference internal" href="#settings-user">2.7.1. User management</a><ul>
+<li><a class="reference internal" href="#id61">2.7.1.1. Account Unlocking</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#settings-group">2.7.2. Group management</a></li>
+<li><a class="reference internal" href="#settings-realm">2.7.3. Management area setting</a><ul>
+<li><a class="reference internal" href="#id64">2.7.3.1. Job manager status check</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#settings-system-config">2.7.4. System Settings</a><ul>
+<li><a class="reference internal" href="#id66">2.7.4.1. Show command format</a></li>
+<li><a class="reference internal" href="#id67">2.7.4.2. console display filter</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#settings-system-startup">2.7.5. Startup job flow</a></li>
+<li><a class="reference internal" href="#settings-license">2.7.6. License Management</a><ul>
+<li><a class="reference internal" href="#id70">2.7.6.1. License of registration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting">2.8. Troubleshooting</a><ul>
+<li><a class="reference internal" href="#jobflow-scriptjob">2.8.1. “The number of Jobflows has exceeded the limit”, “The number of ScriptJobs has exceeded the limit”</a></li>
+<li><a class="reference internal" href="#id72">2.8.2. “Kompira engine has stopped”</a></li>
+<li><a class="reference internal" href="#id73">2.8.3. Database connection error</a></li>
+<li><a class="reference internal" href="#id74">2.8.4. Internal error</a></li>
+<li><a class="reference internal" href="#kompira-dump-sh">2.8.5. kompira_dump.sh Information collection and support inquiries</a><ul>
+<li><a class="reference internal" href="#id75">2.8.5.1. Information not collected</a></li>
+<li><a class="reference internal" href="#id76">2.8.5.2. Information collected</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="admin.html"
+                          title="previous chapter"><span class="section-number">1. </span>Administration Guide</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="tutorial.html"
+                          title="next chapter"><span class="section-number">3. </span>Kompira Tutorial</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/usage.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tutorial.html" title="3. Kompira Tutorial"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="admin.html" title="1. Administration Guide"
+             >previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/usage.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Operation Guide</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

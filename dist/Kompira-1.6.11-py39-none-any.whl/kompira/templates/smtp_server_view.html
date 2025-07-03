@@ -1,0 +1,30 @@
+{% extends "obj_view.html" %}
+{% load i18n core_extras %}
+
+{% block section_contents %}
+<table class="table table-striped table-sm view-table table-label-left">
+  {% for field in object_fields %}
+  {% if not field.invisible %}
+  <tr id="id_field-{{ field.name }}">
+    <th class="obj-display-name"><span class="toggle-name">{{ field.display_name }}</span><span class="toggle-name" style="display: none;">{{ field.name }}</span></th>
+    <td class="obj-value" style="overflow-wrap: anywhere">{{ field.view.as_html }}
+      {% if field.name == 'hostname' %}
+      <span style="float: right;">
+        <a id="id_conn_check-btn" class="btn btn-outline-secondary btn-sm conn-test-modal" href="#" data-hostname="{{ field.value }}" data-objpath="{{ object_property.abspath }}" data-timeout="{{ object.timeout }}">
+          <i class="fas fa-server"></i> {% trans 'Connection test'|capfirst %}
+        </a>
+      </span>
+      {% elif field.name == 'use_oauth2' %}
+      <span style="float: right;">
+        <a id="id_start_auth-btn" class="btn btn-outline-secondary btn-sm start-auth-flow {% if not object_ability.writable or not field.value or not authorization_url %}disabled{% endif %}" href="#" data-authurl="{{ authorization_url }}">
+          <i class="fas fa-id-card"></i> {% trans 'Start authorization' %}
+        </a>
+      </span>
+      {% endif %}
+    </td>
+  </tr>
+  {% endif %}
+  {% include "token_field.html" %}
+  {% endfor %}
+</table>
+{% endblock %}

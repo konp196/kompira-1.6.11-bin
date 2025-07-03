@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block base_body %}
+<header>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    {% url 'login' as home_url %}
+    {% include "brand.html" %}
+    <div class="navbar-right-spacer" style="width: 2.5rem;"></div>
+  </nav>
+</header>
+<main>
+  <div class="container-fluid mt-3">
+    <div class="nologin_container">
+      {% block article%}{% endblock %}
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends "main_base.html" %}
+{% load static i18n %}
+
+{% block page_main_title %}{{ form.sched_form.name.value }}{% endblock %}
+{% block page_sub_title %}{% trans 'schedule information'|capfirst %}{% endblock %}
+
+{% block contents %}
+{{ form.media.css }}
+{% if form.sched_form.instance.id %}
+<form action="{{ object.abspath }}.update" method="post">
+  <section>
+    {% csrf_token %}
+    <h4>{% trans 'edit'|capfirst %}</h4>
+{% else %}
+<form action="/scheduler.add" method="post">
+  <section>
+    {% csrf_token %}
+    <h4>{% trans 'create'|capfirst %}</h4>
+{% endif %}
+    <table class="table table-striped table-sm">
+      {{ form.sched_form.non_field_errors }}
+      <tr>
+        <th>{{ form.sched_form.name.label_tag }}{{ form.sched_form.name.errors }}</th>
+        <td>{{ form.sched_form.name }}</td>
+      </tr>
+      <tr>
+        <th>{{ form.sched_form.description.label_tag }}</th>
+        <td>{{ form.sched_form.description }}</td>
+      </tr>
+      <tr>
+        <th>{{ form.sched_form.user.label_tag }}{{ form.sched_form.user.errors }}</th>
+        <td>{{ form.sched_form.user }}</td>
+      </tr>
+      <tr>
+        <th>{{ form.sched_form.job.label_tag }}{{ form.sched_form.job.errors }}</th>
+        <td>{{ form.sched_form.job }}
+          {{ form.param_form.management_form }}
+          <table id="dynamic-form-{{ form.param_form.prefix }}"
+                 class="table table-bordered table-sm edit-table table-operation-right">
+            <thead>
+              <tr>
+                <th class="sortable-handle"></th>
+                <th>{% trans 'parameter'|capfirst %}</th>
+                <th class="table-operation">{% trans 'operation'|capfirst %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for frm in form.param_form %}
+              <tr>
+                {{ frm.id }}
+                <td class="sortable-handle"><i class="fas fa-align-justify"></i></td>
+                <td>{{ frm.parameter.errors }}{% if frm.instance.pk %}{{ frm.DELETE }}{% endif %}{{ frm.parameter }}</td>
+                <td class="table-operation"></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            <tfoot>
+            </tfoot>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_year">{% trans 'date'|capfirst %}:</label>
+        </th>
+        <td>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{ form.sched_form.year.label }}</span>
+            </div>
+            {{ form.sched_form.year }}{{ form.sched_form.year.errors }}
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{ form.sched_form.month.label }}</span>
+            </div>
+            {{ form.sched_form.month }}{{ form.sched_form.month.errors }}
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{ form.sched_form.day.label }}</span>
+            </div>
+            {{ form.sched_form.day }}{{ form.sched_form.day.errors }}
+            <div class="input-group-append" id="sched-datepicker" data-target-input="nearest">
+              <input type="hidden" class="datetimepicker-input" data-format="yyyy-MM-dd" type="text" data-target="#sched-datepicker"></input>
+              <div class="input-group-text" data-target="#sched-datepicker" data-toggle="datetimepicker"><i class="fas fa-calendar"></i></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>{{ form.sched_form.week.label_tag }}</th>
+        <td>{{ form.sched_form.week }}{{ form.sched_form.week.errors }}</td>
+      </tr>
+      <tr>
+        <th>{{ form.sched_form.day_of_week.label_tag }}</th>
+        <td>{{ form.sched_form.day_of_week }}{{ form.sched_form.day_of_week.errors }}</td>
+      </tr>
+      <tr>
+        <th><label for="id_hour">{% trans 'time'|capfirst %}:</label></th>
+        <td>
+          <div class="input-group">
+            <div class = "input-group-prepend">
+              <span class="input-group-text">{{ form.sched_form.hour.label }}</span>
+            </div>
+            {{ form.sched_form.hour }}{{ form.sched_form.hour.errors }}
+            <div class = "input-group-prepend">
+              <span class="input-group-text">{{ form.sched_form.minute.label }}</span>
+            </div>
+            {{ form.sched_form.minute }}{{ form.sched_form.minute.errors }}
+            <div class="input-group-append" id="sched-timepicker" data-target-input="nearest">
+              <input type="hidden" class="datetimepicker-input" data-format="HH:mm" type="text" data-target="#sched-timepicker"></input>
+              <div class="input-group-text" data-target="#sched-timepicker" data-toggle="datetimepicker"><i class="fas fa-clock"></i></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>{{ form.sched_form.disabled.label_tag }}</th>
+        <td>{{ form.sched_form.disabled }}</td>
+      </tr>
+    </table>
+  </section>
+  <section>
+    <button type="submit" class="submit-btn btn btn-secondary" accesskey="S"><i class="fas fa-hdd"></i> {% trans 'save'|capfirst %}</button>
+  </section>
+  {{ form.media.js }}
+</form>
+{% endblock %}
+{% block extra_js %}
+{{ block.super }}
+{% include "js_field_form.html" %}
+<script>
+  $(function(){
+      $('#sched-datepicker').datetimepicker({locale: '{{ LANGUAGE_CODE|default:"en" }}', format: 'L'});
+      $('#sched-datepicker').on('change.datetimepicker', function(ev){
+          $('#id_{{ form.sched_form.prefix }}-year').val(ev.date.year());
+          $('#id_{{ form.sched_form.prefix }}-month').val(ev.date.month()+1);
+          $('#id_{{ form.sched_form.prefix }}-day').val(ev.date.date());
+      });
+      $('#sched-timepicker').datetimepicker({locale: '{{ LANGUAGE_CODE|default:"en" }}', format: 'HH:mm'});
+      $('#sched-timepicker').on('change.datetimepicker', function(ev){
+          $('#id_{{ form.sched_form.prefix }}-hour').val(ev.date.hours());
+          $('#id_{{ form.sched_form.prefix }}-minute').val(ev.date.minutes());
+      });
+  });
+</script>
+{% endblock %}

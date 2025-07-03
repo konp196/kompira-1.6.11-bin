@@ -1,0 +1,1803 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>4. Kompira Jobflow Language Reference &#8212; Kompira 1.6.11 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. Kompira Standard Library" href="library.html" />
+    <link rel="prev" title="3. Kompira Tutorial" href="tutorial.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="library.html" title="5. Kompira Standard Library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="3. Kompira Tutorial"
+             accesskey="P">previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/reference.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>Kompira Jobflow Language Reference</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="kompira">
+<h1><span class="section-number">4. </span>Kompira Jobflow Language Reference<a class="headerlink" href="#kompira" title="Permalink to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira development team</p>
+</dd>
+</dl>
+<section id="id1">
+<h2><span class="section-number">4.1. </span>Introduction<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>This document explains the tokens and syntax and meanings of the job flow language. A description of built-in functions and embedded jobs can be found in <a class="reference internal" href="library.html"><span class="doc">Kompira Standard Library</span></a>.</p>
+<section id="id2">
+<h3><span class="section-number">4.1.1. </span>Syntax Notation<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<p>In this document, the syntax is shown using extended BNF. Extended BNF uses symbols such as “*” representing zero or more repetitions, “+” representing one or more repetitions, “?” Representing an optional element, in addition to normal BNF. The parentheses “(” and “)” are also used to group multiple elements together.</p>
+</section>
+</section>
+<section id="id3">
+<h2><span class="section-number">4.2. </span>Lexical structure<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
+<p>This chapter specifies the lexical structure of the job flow language. The program text of the job flow language is written in Unicode. The text is delimited by vocabulary units called tokens by Kompira’s lexical analyzer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The maximum number of characters that can be written as program text for a job flow is 65536.</p>
+</div>
+<section id="id4">
+<h3><span class="section-number">4.2.1. </span>Comment<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>Comments begin with a hash character (#) that is not included in a string literal, and end at the end of the line. Comments are skipped by the lexical analyzer.</p>
+</section>
+<section id="id5">
+<h3><span class="section-number">4.2.2. </span>Blanks<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<p>Newline characters, spaces, tabs, and form feeds are treated as blanks. Whitespace is skipped by the lexical analyzer.</p>
+</section>
+<section id="id6">
+<h3><span class="section-number">4.2.3. </span>Identifiers<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<p>The identifier (IDENTIFIER) is defined by the following regular expression.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>IDENTIFIER = [^\W0-9]\w*
+</pre></div>
+</div>
+<p>\w matches any Unicode word character. This includes letters, numbers, and underscores that can be part of a word in any language. \W means [^w]. The length of the identifier is unlimited. Identifiers are case-sensitive.</p>
+<section id="id7">
+<h4><span class="section-number">4.2.3.1. </span>Keywords<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h4>
+<p>The following character sequences are reserved as keywords and can not be used as identifiers.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>and             break           case            choice
+continue        elif            else            false
+for             fork            if              in
+not             null            or              pfor
+session         then            true            try
+while
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h4><span class="section-number">4.2.3.2. </span>Reserved identifier Class<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h4>
+<p>Identifiers of the form __*__ are reserved in the system for control variables and have special meanings. Since it is possible that unexpected behavior of the job flow may occur, it is better to avoid users using these names as identifiers.</p>
+</section>
+<section id="id9">
+<h4><span class="section-number">4.2.3.3. </span>Special identifiers<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h4>
+<p>An identifier starting with $ is a special identifier used for special variables as defined below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SPECIAL_IDENTIFIER = &quot;$&quot; IDENTIFIER
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id10">
+<h3><span class="section-number">4.2.4. </span>Object Path<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
+<p>The object path points to the location of the object on the Kompira file system. It is defined as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>      OBJECT_PATH = RELATIVE_PATH
+                  | (&quot;/&quot; | RELATIVE_PATH) PATH_ELEMENT* LAST_PATH_ELEMENT
+    RELATIVE_PATH = &quot;./&quot; | &quot;../&quot;
+     PATH_ELEMENT = RELATIVE_PATH | IDENTIFIER &quot;/&quot;
+LAST_PATH_ELEMENT = RELATIVE_PATH | IDENTIFIER
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although a single “/” is also treated as an object path, it is not included in OBJECT_PATH as a token, because it is indistinguishable from the division operator “/” in terms of lexical analysis.</p>
+</div>
+</section>
+<section id="id11">
+<h3><span class="section-number">4.2.5. </span>Literal<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
+<p>A literal is a source code representation of values of type String, Binary, Integer, Float, Boolean, Null, and Pattern.</p>
+<section id="string">
+<h4><span class="section-number">4.2.5.1. </span>String literal (STRING)<a class="headerlink" href="#string" title="Permalink to this heading">¶</a></h4>
+<p>A string literal consists of zero or more characters enclosed in single quotation marks (’) or double quotation marks (“)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;&quot;                   # empty string
+&#39;&quot;&#39;                  # &quot;
+&#39;\&#39;&#39;                 # &#39;
+&quot;This is a string&quot;   # String containing 16 characters.
+</pre></div>
+</div>
+<p>It can also be surrounded by corresponding triple quotes or double quotes. In this case, you can write non-escaped newlines and quotes.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&#39;&#39;&#39;&#39;&#39;&#39;&#39;              # &#39;
+&quot;&quot;&quot;String containing
+line feed code&quot;&quot;&quot;    # String containing line feed code
+</pre></div>
+</div>
+<p>Within a string literal, you can use escape sequences to represent certain non-expressable characters, such as newline characters and tab characters.</p>
+<p>The list of escape sequences is shown below.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Escape sequence</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>\</p></td>
+<td><p>backslash()</p></td>
+</tr>
+<tr class="row-odd"><td><p>'</p></td>
+<td><p>Single quotations (‘)</p></td>
+</tr>
+<tr class="row-even"><td><p>&quot;</p></td>
+<td><p>double quotations(“)</p></td>
+</tr>
+<tr class="row-odd"><td><p>a</p></td>
+<td><p>ASCII terminal bell (BEL)</p></td>
+</tr>
+<tr class="row-even"><td><p>b</p></td>
+<td><p>ASCII backspace (BS)</p></td>
+</tr>
+<tr class="row-odd"><td><p>f</p></td>
+<td><p>ASCII form feed (FF)</p></td>
+</tr>
+<tr class="row-even"><td><p>n</p></td>
+<td><p>ASCII line feed (LF)</p></td>
+</tr>
+<tr class="row-odd"><td><p>r</p></td>
+<td><p>ASCII return (CR)</p></td>
+</tr>
+<tr class="row-even"><td><p>t</p></td>
+<td><p>ASCII horizontal tab (TAB)</p></td>
+</tr>
+<tr class="row-odd"><td><p>v</p></td>
+<td><p>ASCII vertical tab (VT)</p></td>
+</tr>
+<tr class="row-even"><td><p>ooo</p></td>
+<td><p>Characters with octal <em>ooo</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>xhh</p></td>
+<td><p>Characters with hexadecimal value <em>hh</em></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="binary">
+<h4><span class="section-number">4.2.5.2. </span>Binary literal (BINARY)<a class="headerlink" href="#binary" title="Permalink to this heading">¶</a></h4>
+<p>A binary literal consists of zero or more characters enclosed in single quotation marks (’) or double quotation marks (”) with the prefix sign b.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>b&quot;&quot;                   # empty binary
+b&#39;&quot;&#39;                  # &quot;
+b&#39;\&#39;&#39;                 # &#39;
+b&quot;This is a string&quot;   # binary containing 16 bytes.
+</pre></div>
+</div>
+<p>Unlike string literals, you cannot use multi-line descriptions with a corresponding triplet of quotation marks. Nor can you include non-ASCII characters such as Japanese. Escape sequences can be used in the same way as string literals.</p>
+</section>
+<section id="integer">
+<h4><span class="section-number">4.2.5.3. </span>Integer literal (INTEGER)<a class="headerlink" href="#integer" title="Permalink to this heading">¶</a></h4>
+<p>Integer literals can be expressed in decimal. It is described by the following lexical definition.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>INTEGER       = NONZERO_DIGIT DIGIT* | &quot;0&quot;
+DIGIT         = [0-9]
+NONZERO_DIGIT = [1-9]
+</pre></div>
+</div>
+</section>
+<section id="float">
+<h4><span class="section-number">4.2.5.4. </span>Floating-point literal (FLOAT)<a class="headerlink" href="#float" title="Permalink to this heading">¶</a></h4>
+<p>A floating-point literal is a representation of a floating-point number consisting of mantissa and exponential parts consisting of integer and decimal parts. It is described by a lexical definition.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FLOAT         = DIGIT+ &quot;.&quot; DIGIT* ( [eE] [+-]? DIGIT+ )?
+DIGIT         = [0-9]
+</pre></div>
+</div>
+<p>An example is shown below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>3.1415926
+0.5e-3          # 0.0005
+12.3e+2         # 1230.0
+9.E5            # 900000.0
+</pre></div>
+</div>
+</section>
+<section id="boolean">
+<h4><span class="section-number">4.2.5.5. </span>Boolean literal (BOOLEAN)<a class="headerlink" href="#boolean" title="Permalink to this heading">¶</a></h4>
+<p>A boolean literal has two boolean expressions of true (true) and false (false).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>BOOLEAN = &quot;true&quot; | &quot;false&quot;
+</pre></div>
+</div>
+</section>
+<section id="null">
+<h4><span class="section-number">4.2.5.6. </span>Null literal (NULL)<a class="headerlink" href="#null" title="Permalink to this heading">¶</a></h4>
+<p>A null literal is a value indicating that there is no value, and it is written as null.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>NULL = &quot;null&quot;
+</pre></div>
+</div>
+</section>
+<section id="pattern">
+<h4><span class="section-number">4.2.5.7. </span>Pattern literal (PATTERN)<a class="headerlink" href="#pattern" title="Permalink to this heading">¶</a></h4>
+<p>After the characters a pattern literal makes up, (‘e’ ‘g’ or ‘r’ making a pattern), more than 0 characters are surrounded with a single quotation mark (’) or double quotation marks (”) (pattern string). The ‘i’ which indicates a mode at the end is sometimes added as an option.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>r&quot;(From|Subject): &quot;      # regular expression pattern
+g&#39;*.txt&#39;                 # glob pattern
+e&#39;kompira&#39;i              # case-insensitive exact match pattern
+r&quot;windows(95|nt|2000)&quot;i  # case-insensitive regular expression pattern
+</pre></div>
+</div>
+<p>Within a pattern character string, the escape sequence is invalid and it is handled as it is. String substitution by ${identifier} is valid.</p>
+</section>
+</section>
+<section id="id12">
+<h3><span class="section-number">4.2.6. </span>Symbols<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
+<p>Symbols are classified as operator symbol (OPERATOR), connector symbol (COMBINATOR), and delimiter.</p>
+<section id="id13">
+<h4><span class="section-number">4.2.6.1. </span>Operators<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h4>
+<p>The following tokens are operators:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+       -       *       /       %
+&lt;       &gt;       &lt;=      &gt;=      ==      !=      =~      !~
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h4><span class="section-number">4.2.6.2. </span>Connectors<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h4>
+<p>The following tokens are connectors:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-&gt;      =&gt;      -&gt;&gt;     =&gt;&gt;
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h4><span class="section-number">4.2.6.3. </span>Delimiter<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h4>
+<p>The following tokens are delimiters:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(   )   {   }   [   ]   |   ,   .   =   &gt;&gt;   &lt;&lt;   ?   ??
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="id16">
+<h2><span class="section-number">4.3. </span>Value and type<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h2>
+<p>Kompira’s job flow language can handle various values (data) such as integers, character strings and dates.</p>
+<section id="id17">
+<h3><span class="section-number">4.3.1. </span>Primitive types<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h3>
+<p>Primitive type is a generic name of basic data types of Kompira’s job flow language, which are four types: integer type, character type, boolean type, and null type. Values of primitive types are never shared with values of other primitive types.</p>
+<section id="data_type-Integer">
+<span id="id18"></span><h4><span class="section-number">4.3.1.1. </span>Integer type (Integer)<a class="headerlink" href="#data_type-Integer" title="Permalink to this heading">¶</a></h4>
+<p>The integer type handles types of values representing integers such as 0, 1, 1000, -9999. The integer type of Kompira is not limited in scope (as far as memory allows).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the range of the Integer type field of the Kompira object is limited, writing data outside the range from the job flow to the Integer type field will result in a runtime error.</p>
+</div>
+</section>
+<section id="data_type-String">
+<span id="id19"></span><h4><span class="section-number">4.3.1.2. </span>String type (String)<a class="headerlink" href="#data_type-String" title="Permalink to this heading">¶</a></h4>
+<p>String type is a type for string values like “kompira” or “today is sunny”. Each element of the string is a letter. There is no character type in Kompira’s job flow language. A single character is represented as a string with only one element. Each character is expressed internally as Unicode.</p>
+<p>If you write the value of a string representing an integer, such as “123” or “-999”, into an integer field, it will be implicitly converted to the corresponding integer value.</p>
+<p>When the value of the string type is converted to Boolean type, the empty string (“”) corresponds to false, and the other string corresponds to true. Therefore, be aware that the string “false” corresponds to Boolean true.</p>
+<p>The string type data has the following methods:</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.format">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a string formatting operation. The string on which this method is called can contain literal text or replacement fields delimited by braces {}. Each replacement field contains either the numeric index of a positional argument, or the name of a keyword argument. Returns a copy of the string where each replacement field is replaced with the string value of the corresponding argument.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.join">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string which is the concatenation of the strings in list. The separator between elements is the string providing this method.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.find">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#method-String.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the lowest index in the string where substring sub is found within the slice s[start:end]. Optional arguments start and end are interpreted as in slice notation. Return -1 if sub is not found.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.rfind">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#method-String.rfind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the highest index in the string where substring sub is found, such that sub is contained within s[start:end]. Optional arguments start and end are interpreted as in slice notation. Return -1 on failure.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.startswith">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Boolean"><span class="pre">Boolean</span></a></em><a class="headerlink" href="#method-String.startswith" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if string starts with the prefix, otherwise return false. prefix can also be a tuple of prefixes to look for. With optional start, test string beginning at that position. With optional end, stop comparing string at that position.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.encode">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">encoding</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Binary"><span class="pre">Binary</span></a></em><a class="headerlink" href="#method-String.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the string to a byte string encoded with the specified encoding. If encoding is not specified, the string is encoded as ‘utf-8’.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.endswith">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Boolean"><span class="pre">Boolean</span></a></em><a class="headerlink" href="#method-String.endswith" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if the string ends with the specified suffix, otherwise return false. suffix can also be a tuple of suffixes to look for. With optional start, test beginning at that position. With optional end, stop comparing at that position.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.lower">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">lower</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.lower" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the string with all the cased characters converted to lowercase.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.upper">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">upper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.upper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the string with all the cased characters converted to uppercase.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.replace">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the string with all occurrences of substring old replaced by new. If the optional argument count is given, only the first count occurrences are replaced.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.split">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Array"><span class="pre">Array</span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a><span class="p"><span class="pre">&gt;</span></span></em><a class="headerlink" href="#method-String.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of the words in the string, using sep as the delimiter string. If maxsplit is given, at most maxsplit splits are done.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.rsplit">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Array"><span class="pre">Array</span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a><span class="p"><span class="pre">&gt;</span></span></em><a class="headerlink" href="#method-String.rsplit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of the words in the string, using sep as the delimiter string. If maxsplit is given, at most maxsplit splits are done, the rightmost ones.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.splitlines">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">splitlines</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">keepends</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Array"><span class="pre">Array</span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a><span class="p"><span class="pre">&gt;</span></span></em><a class="headerlink" href="#method-String.splitlines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of the lines in the string, breaking at line boundaries.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-String.strip">
+<span class="sig-prename descclassname"><span class="pre">String.</span></span><span class="sig-name descname"><span class="pre">strip</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">chars</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-String.strip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the string with the leading and trailing characters removed. The chars argument is a string specifying the set of characters to be removed.</p>
+</dd></dl>
+
+</section>
+<section id="data_type-Binary">
+<span id="id20"></span><h4><span class="section-number">4.3.1.3. </span>Binary type (Binary)<a class="headerlink" href="#data_type-Binary" title="Permalink to this heading">¶</a></h4>
+<p>A binary type is a type whose value is a sequence of bytes. A sequence of bytes is similar to a string of characters, but the units of a sequence of bytes are not characters, but rather byte values (8-bit integers between 0 and 255).</p>
+<p>The binary type data has the following methods:</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Binary.decode">
+<span class="sig-prename descclassname"><span class="pre">Binary.</span></span><span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">encoding</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Binary.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A byte sequence is interpreted with the encoding specified by the encoding and converted into a string. If the encoding is omitted, it will be interpreted as ‘utf-8’.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Binary.hex">
+<span class="sig-prename descclassname"><span class="pre">Binary.</span></span><span class="sig-name descname"><span class="pre">hex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Binary.hex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts each byte value in a string of bytes into a string of 2-digit hexadecimal notations.</p>
+</dd></dl>
+
+</section>
+<section id="data_type-Float">
+<span id="id21"></span><h4><span class="section-number">4.3.1.4. </span>Floating-point type (Float)<a class="headerlink" href="#data_type-Float" title="Permalink to this heading">¶</a></h4>
+<p>A floating-point type is a type that takes a floating point number as a value.</p>
+</section>
+<section id="data_type-Boolean">
+<span id="id22"></span><h4><span class="section-number">4.3.1.5. </span>Boolean (Boolean)<a class="headerlink" href="#data_type-Boolean" title="Permalink to this heading">¶</a></h4>
+<p>Boolean type is a type that takes two values of truth  - 1. value true (true) and 2. false (false)</p>
+</section>
+<section id="data_type-Null">
+<span id="id23"></span><h4><span class="section-number">4.3.1.6. </span>Null type (Null)<a class="headerlink" href="#data_type-Null" title="Permalink to this heading">¶</a></h4>
+<p>A null type is a type that has only null values.</p>
+</section>
+<section id="data_type-Pattern">
+<span id="id24"></span><h4><span class="section-number">4.3.1.7. </span>Pattern type (Pattern)<a class="headerlink" href="#data_type-Pattern" title="Permalink to this heading">¶</a></h4>
+<p>A pattern type is a type of a value that represents a pattern for matching with a character string. There are three types of patterns: ‘r’ (regular expression pattern), ‘g’ (glob pattern), ‘e’ (perfect match pattern). Also, you can combine capitalized and lowercase non-discriminating mode (‘i’) as pattern matching mode.</p>
+<p>The regular expression pattern conforms to the regular expression of the re module of the programming language Python.</p>
+<p>In the glob pattern, you can use Unix shell-style wildcards and correspond to the following special characters.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Pattern</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>*</p></td>
+<td><p>Matches everything</p></td>
+</tr>
+<tr class="row-odd"><td><p>?</p></td>
+<td><p>Matches any single character</p></td>
+</tr>
+<tr class="row-even"><td><p>[seq]</p></td>
+<td><p>Matches any character in seq</p></td>
+</tr>
+<tr class="row-odd"><td><p>[!seq]</p></td>
+<td><p>Matches any character not in seq</p></td>
+</tr>
+</tbody>
+</table>
+<p>Exact match patterns also allow match comparisons with non-string values.</p>
+<p>Pattern type data has the following methods:</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Pattern.match">
+<span class="sig-prename descclassname"><span class="pre">Pattern.</span></span><span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Boolean"><span class="pre">Boolean</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Dictionary"><span class="pre">Dictionary</span></a></em><a class="headerlink" href="#method-Pattern.match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempts to match the string s with the pattern. If a match is true, or if the pattern is a regular expression pattern, it returns a dictionary containing matched information. If it does not match, it returns false. If a non-string is passed to s in the regular expression or glob pattern, false is returned.</p>
+</dd></dl>
+
+<p>The dictionary data returned when the regular expression pattern matches includes the following entries</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>group</p></td>
+<td><p>String matched with regular expression</p></td>
+</tr>
+<tr class="row-odd"><td><p>groups</p></td>
+<td><p>List containing strings of all subgroups</p></td>
+</tr>
+<tr class="row-even"><td><p>groupdict</p></td>
+<td><p>Named group dictionary</p></td>
+</tr>
+<tr class="row-odd"><td><p>start</p></td>
+<td><p>Start position of match</p></td>
+</tr>
+<tr class="row-even"><td><p>end</p></td>
+<td><p>End position of match</p></td>
+</tr>
+</tbody>
+</table>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.8.post1: </span>If a non-string is passed to the match(s) method in a regular expression pattern or glob pattern, it will now return false.</p>
+</div>
+</section>
+</section>
+<section id="id25">
+<h3><span class="section-number">4.3.2. </span>Complex data type<a class="headerlink" href="#id25" title="Permalink to this heading">¶</a></h3>
+<p>A complex data type is a generic name of data types that can hold multiple elements of other types, and there are three types: array, dictionary and lazy evaluation array.</p>
+<section id="array">
+<span id="data_type-Array"></span><h4><span class="section-number">4.3.2.1. </span>Array type (Array)<a class="headerlink" href="#array" title="Permalink to this heading">¶</a></h4>
+<p>Array type data is a data structure in which elements are arranged in one dimension, and elements can be accessed with an integer index. If the length of the array is n, the index is 0, 1, …, n - 1. Element i of array can be referenced by a[i]. If index i is negative, a[i] refers to element n + i.</p>
+<p>If you access elements outside the range of the array, a run-time error occurs. Also, arrays can not be extended.</p>
+<p>The array type data has the following methods:</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Array.add_item">
+<span class="sig-prename descclassname"><span class="pre">Array.</span></span><span class="sig-name descname"><span class="pre">add_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#method-Array.add_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add data value to the end of array a.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Array.del_item">
+<span class="sig-prename descclassname"><span class="pre">Array.</span></span><span class="sig-name descname"><span class="pre">del_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#method-Array.del_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the element a[index] of the array a.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Array.pop_item">
+<span class="sig-prename descclassname"><span class="pre">Array.</span></span><span class="sig-name descname"><span class="pre">pop_item</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#method-Array.pop_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the element a[index] of the array a. If index is not specified, the last element is deleted.</p>
+</dd></dl>
+
+</section>
+<section id="dictionary">
+<span id="data_type-Dictionary"></span><h4><span class="section-number">4.3.2.2. </span>Dictionary type (Dictionary)<a class="headerlink" href="#dictionary" title="Permalink to this heading">¶</a></h4>
+<p>Dictionary type data is a data structure that allows elements to access elements associated with any type of key except for complex data types. Elements associated with key k of dictionary d can be referenced by d[k]. If the key k is a string type value and it is a character string satisfying the lexical requirement of the identifier (IDENTIFIER), it can be referred to as d.k.</p>
+<p>If you attempt to refer to an element with a key that is not included in the dictionary, it will result in an execution error. You can add new keys and elements by writing job (described later).</p>
+<p>Dictionary type data has the following methods:</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Dictionary.del_item">
+<span class="sig-prename descclassname"><span class="pre">Dictionary.</span></span><span class="sig-name descname"><span class="pre">del_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#method-Dictionary.del_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete element d[key] of dictionary d.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Dictionary.get_item">
+<span class="sig-prename descclassname"><span class="pre">Dictionary.</span></span><span class="sig-name descname"><span class="pre">get_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#method-Dictionary.get_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the element d[key] of dictionary d. If element d[key] does not exist, it returns default. The default value of default is null.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Dictionary.pop_item">
+<span class="sig-prename descclassname"><span class="pre">Dictionary.</span></span><span class="sig-name descname"><span class="pre">pop_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#method-Dictionary.pop_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete element d[key] of dictionary d. If element d[key] does not exist, it returns default. If default is not given and the element d[key] does not exist, an error occurs.</p>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Dictionary.get_keys">
+<span class="sig-prename descclassname"><span class="pre">Dictionary.</span></span><span class="sig-name descname"><span class="pre">get_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#method-Dictionary.get_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the dictionary d list of keys.</p>
+</dd></dl>
+
+</section>
+<section id="lazyarray">
+<span id="data_type-LazyArray"></span><h4><span class="section-number">4.3.2.3. </span>Lazy evaluation array type (LazyArray)<a class="headerlink" href="#lazyarray" title="Permalink to this heading">¶</a></h4>
+<p>Data of the lazy evaluation array type has a data structure similar to that of the array type, allowing access to elements by integer index. However, as the name suggests, the content of the data is determined only when it is actually accessed.</p>
+<p>The lazy evaluation array type is used as a result type to indicate the result of an object find, for example. Therefore, it is not possible to directly describe data of the lazy evaluation array type in a job flow.</p>
+<p>Even if a lazy evaluation array type is returned as a result of an object find, at that point, it only contains the specified search conditions and so on. It is called lazy evaluation because it works by querying the database with those search criteria when it is actually accessed. Note that this means that a lazy-evaluation array type may give different results depending on when you access its data.</p>
+<p>Below is a brief description of how the internal behavior differs from that of ordinary array types.</p>
+<p>If you pass a lazy evaluation array type to the length() builtin, it queries the database for the number of objects that match the current search criteria and returns them. Also, when accessing elements of the lazy evaluation array type by integer index, the database is queried and the objects are returned one at a time for each access.</p>
+<p>Because of these characteristics, if we use length() to get the number of items and access them by integer index in a loop process by the number of items, the number of times the database is queried will increase according to the number of items.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[found = /root.find()] -&gt;
+{ for i in length(found) |
+    [obj = found[i]] -&gt;
+    ...
+}
+</pre></div>
+</div>
+<p>Lazy evaluation array types can also be iterated over in a for block (or pfor block). In this case, at the start of the block, the database is queried for objects that match the search criteria, and the objects are expanded in memory one at a time and passed to processing inside the block.</p>
+<p>The number of queries to the database can be reduced by iterating through the for block instead of iterating through the integer index.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[found = /root.find()] -&gt;
+{ for obj in found |
+    ...
+}
+</pre></div>
+</div>
+<p>Inside the “for” block, the field values of the object can be updated or the object can be deleted.</p>
+<p>The lazy evaluation array type can be combined with an array type (or lazy evaluation array type) with the + operator. In this case, the database is queried for all objects that match the search criteria at that time. The combined value will also be a regular array type, with all elements in memory. Note that the larger the number of objects involved in such a query, the longer the processing time and memory usage will increase.</p>
+<p>Because of its features, the lazy evaluation array type can be used to add or remove elements using the add_item, del_item, pop_item methods.</p>
+<p>The lazy evaluation array type data has the following methods:</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-LazyArray.delete">
+<span class="sig-prename descclassname"><span class="pre">LazyArray.</span></span><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#method-LazyArray.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>All corresponding objects are deleted when this method is called. This method returns the number of objects deleted.</p>
+</dd></dl>
+
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.8: </span>The lazy evaluation array type has been added.</p>
+</div>
+</section>
+</section>
+<section id="id26">
+<h3><span class="section-number">4.3.3. </span>Opaque data type<a class="headerlink" href="#id26" title="Permalink to this heading">¶</a></h3>
+<p>The opaque data type is a generic term for data types whose internal structure of data is hidden. Also, since it does not have a corresponding data constructor, it can not directly generate data by notation in the source code of the job flow program like a complex data type.</p>
+<section id="object">
+<span id="data_type-Object"></span><h4><span class="section-number">4.3.3.1. </span>Object type (Object)<a class="headerlink" href="#object" title="Permalink to this heading">¶</a></h4>
+<p>The value of the object type represents a reference to the object on the Kompira file system. The string representation of the value of the object type is the absolute path of that object. The property p of the object o can be accessed with op, and the field f can be accessed with the notation o[f]. If there is no property name or method name with the same name as the field f, the field can be referenced with the notation of o.f.</p>
+<p>Kompira’s object have fields and methods defined by a type object (TypeObject). For details, refer to the Kompira Object Reference (<a class="reference internal" href="library.html"><span class="doc">Kompira Standard Library</span></a>)</p>
+</section>
+<section id="file">
+<span id="data_type-File"></span><h4><span class="section-number">4.3.3.2. </span>File type (File)<a class="headerlink" href="#file" title="Permalink to this heading">¶</a></h4>
+<p>The value of the file type represents the file data attached to the object with the file type field.</p>
+<p>The following fields are defined in the file type value.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field name</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>Attachment (file) name</p></td>
+</tr>
+<tr class="row-odd"><td><p>data</p></td>
+<td><p>Attached file data</p></td>
+</tr>
+<tr class="row-even"><td><p>size</p></td>
+<td><p>Data size (read only)</p></td>
+</tr>
+<tr class="row-odd"><td><p>url</p></td>
+<td><p>Download URL (read only)</p></td>
+</tr>
+</tbody>
+</table>
+<p>It is possible to write a value to a file type field (i.e., create a file from a job flow) by passing dictionary data with name and data as keys to an update job as follows</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[{&#39;name&#39;: &#39;binary.txt&#39;, &#39;data&#39;: b&#39;\xde\xad\xbe\xef \xca\xfe&#39;} &gt;&gt; ./some_obj[&#39;attached1&#39;]]
+</pre></div>
+</div>
+<p>Basically, data is binary data, but it can also be a string, as shown below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[{&#39;name&#39;: &#39;some.txt&#39;, &#39;data&#39;: &#39;Hello&#39;} &gt;&gt; ./some_obj[&#39;attached1&#39;]]
+</pre></div>
+</div>
+<p>In this case, the data will be encoded as UTF-8 and written to the file as binary data.</p>
+<p>It is also possible to update only the name or data of an existing file, as shown below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;update.txt&#39; &gt;&gt; ./some_obj[&#39;attached1&#39;][&#39;name&#39;]] -&gt;    # Update the file name to &quot;update.txt&quot;
+[&#39;new text&#39; &gt;&gt; ./some_obj[&#39;attached1&#39;][&#39;data&#39;]]         # Update the file data to &quot;new text&quot;
+</pre></div>
+</div>
+<p>To delete a file by a job flow, pass a null value to the update job as follows</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[null &gt;&gt; ./some_obj[&#39;attached1&#39;]]
+</pre></div>
+</div>
+</section>
+<section id="datetime">
+<span id="data_type-Datetime"></span><h4><span class="section-number">4.3.3.3. </span>Date and time data (Datetime)<a class="headerlink" href="#datetime" title="Permalink to this heading">¶</a></h4>
+<p>A datetime value represents data that contains both the date and the time.</p>
+<p>Date-time type values have the following read-only properties:</p>
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.year">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">year</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.year" title="Permalink to this definition">¶</a></dt>
+<dd><p>Year</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.month">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">month</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.month" title="Permalink to this definition">¶</a></dt>
+<dd><p>Month (values from 1 to 12)</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.day">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">day</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.day" title="Permalink to this definition">¶</a></dt>
+<dd><p>Day (value from 1 to the number of days in the given month and year)</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.hour">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">hour</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.hour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time (value from 0 to 23)</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.minute">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">minute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.minute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minute (value from 0 to 59)</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.second">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">second</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.second" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seconds (values from 0 to 59)</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.weekday">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">weekday</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Datetime.weekday" title="Permalink to this definition">¶</a></dt>
+<dd><p>With Monday as 0, Sunday as 6, a value representing the day of the week as an integer</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.date">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">date</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Date"><span class="pre">Date</span></a></em><a class="headerlink" href="#property-Datetime.date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Date portion of datetime type data</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Datetime.time">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Time"><span class="pre">Time</span></a></em><a class="headerlink" href="#property-Datetime.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time portion of datetime type data</p>
+</dd></dl>
+
+<p>Datetime data has the following methods:</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Datetime.format">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt_fmt</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Datetime.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the date / time data to a character string in the format specified by dt_fmt. Format specification of this format conforms to C language strftime() function.</p>
+<p>An example is shown below:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[dt = now()] -&gt; print(dt.format(&#39;%Y-%m-%d %H:%M:%S&#39;))
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Datetime.isoformat">
+<span class="sig-prename descclassname"><span class="pre">Datetime.</span></span><span class="sig-name descname"><span class="pre">isoformat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Datetime.isoformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string representing the date and time in ISO 8601 format, <cite>YYYY-MM-DDTHH:mm:ssZ</cite>. The time zone is always UTC and has a suffix of <cite>Z</cite>.</p>
+</dd></dl>
+
+</section>
+<section id="date">
+<span id="data_type-Date"></span><h4><span class="section-number">4.3.3.4. </span>Date data (Date)<a class="headerlink" href="#date" title="Permalink to this heading">¶</a></h4>
+<p>A date value represents date data.</p>
+<p>Date type values have the following read-only properties:</p>
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Date.year">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">year</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Date.year" title="Permalink to this definition">¶</a></dt>
+<dd><p>Year</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Date.month">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">month</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Date.month" title="Permalink to this definition">¶</a></dt>
+<dd><p>Month (values from 1 to 12)</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Date.day">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">day</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Date.day" title="Permalink to this definition">¶</a></dt>
+<dd><p>Day (value from 1 to the number of days in the given month and year)</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Date.weekday">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">weekday</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Date.weekday" title="Permalink to this definition">¶</a></dt>
+<dd><p>With Monday as 0, Sunday as 6, a value representing the day of the week as an integer</p>
+</dd></dl>
+
+<p>Date data has the following methods:</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Date.format">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt_fmt</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Date.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the date data to a character string in the format specified by dt_fmt. Format specification of this format conforms to C language strftime() function.</p>
+</dd></dl>
+
+</section>
+<section id="time">
+<span id="data_type-Time"></span><h4><span class="section-number">4.3.3.5. </span>Time data (Time)<a class="headerlink" href="#time" title="Permalink to this heading">¶</a></h4>
+<p>A time value represents time data.</p>
+<p>Time type values have the following read-only properties:</p>
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Time.hour">
+<span class="sig-prename descclassname"><span class="pre">Time.</span></span><span class="sig-name descname"><span class="pre">hour</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Time.hour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time (value from 0 to 23)</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Time.minute">
+<span class="sig-prename descclassname"><span class="pre">Time.</span></span><span class="sig-name descname"><span class="pre">minute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Time.minute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minute (value from 0 to 59)</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Time.second">
+<span class="sig-prename descclassname"><span class="pre">Time.</span></span><span class="sig-name descname"><span class="pre">second</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Time.second" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seconds (values from 0 to 59)</p>
+</dd></dl>
+
+<p>Time data has the following methods:</p>
+<dl class="kompira method">
+<dt class="sig sig-object kompira" id="method-Time.format">
+<span class="sig-prename descclassname"><span class="pre">Time.</span></span><span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt_fmt</span></span></em><span class="sig-paren">)</span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-String"><span class="pre">String</span></a></em><a class="headerlink" href="#method-Time.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the time data to a character string in the format specified by dt_fmt. Format specification of this format conforms to C language strftime() function.</p>
+</dd></dl>
+
+</section>
+<section id="timedelta">
+<span id="data_type-Timedelta"></span><h4><span class="section-number">4.3.3.6. </span>Elapsed time type (Timedelta)<a class="headerlink" href="#timedelta" title="Permalink to this heading">¶</a></h4>
+<p>The value of elapsed time type data represents the difference between date and time type values. Addition and subtraction are possible between the date-time type value and the elapsed time type value. Also, the difference between date and time type values will be elapsed time type.</p>
+<p>The elapsed time value has the following read-only properties:</p>
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Timedelta.days">
+<span class="sig-prename descclassname"><span class="pre">Timedelta.</span></span><span class="sig-name descname"><span class="pre">days</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Timedelta.days" title="Permalink to this definition">¶</a></dt>
+<dd><p>Days</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Timedelta.seconds">
+<span class="sig-prename descclassname"><span class="pre">Timedelta.</span></span><span class="sig-name descname"><span class="pre">seconds</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Timedelta.seconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seconds</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Timedelta.microseconds">
+<span class="sig-prename descclassname"><span class="pre">Timedelta.</span></span><span class="sig-name descname"><span class="pre">microseconds</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Integer"><span class="pre">Integer</span></a></em><a class="headerlink" href="#property-Timedelta.microseconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Microseconds</p>
+</dd></dl>
+
+<dl class="kompira property">
+<dt class="sig sig-object kompira" id="property-Timedelta.total_seconds">
+<span class="sig-prename descclassname"><span class="pre">Timedelta.</span></span><span class="sig-name descname"><span class="pre">total_seconds</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#data_type-Float"><span class="pre">Float</span></a></em><a class="headerlink" href="#property-Timedelta.total_seconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The total number of seconds contained in the duration.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+<section id="id27">
+<h2><span class="section-number">4.4. </span>Variables<a class="headerlink" href="#id27" title="Permalink to this heading">¶</a></h2>
+<p>A variable is a name given to a storage area that holds a value. Variables in the Kompira job flow language can hold values of any type.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Variables are not shared between child processes generated by fork and pfor blocks, or between parent processes and child processes, even if they have the same scope. However, it is possible to reference (read) the variable of the scope of the parent process from the child process when the child process is generated.</p>
+</div>
+<section id="id28">
+<h3><span class="section-number">4.4.1. </span>Local variables<a class="headerlink" href="#id28" title="Permalink to this heading">¶</a></h3>
+<p>Local variables are introduced by job flow parameters, assignment jobs. Local variables have different scopes depending on the position on the source code where the variables are introduced.</p>
+<section id="id29">
+<h4><span class="section-number">4.4.1.1. </span>Job Flow Scope<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h4>
+<p>A job flow scope is a scope that can be referred to from any subsequent job following the job in which the variable is introduced. The job flow parameter has a job flow scope. Also, if an undefined variable is newly introduced by an assignment job, that variable has a job flow scope.</p>
+<p>Job flow scope variables are hidden if variables of the same name are redefined in inner block scope.</p>
+</section>
+<section id="id30">
+<h4><span class="section-number">4.4.1.2. </span>Block scope<a class="headerlink" href="#id30" title="Permalink to this heading">¶</a></h4>
+<p>Block scope is a scope that can only be referenced from within that block. Variables defined by simple blocks and loop variables introduced by for and pfor blocks have block scope.</p>
+</section>
+</section>
+<section id="id31">
+<h3><span class="section-number">4.4.2. </span>Environment variable<a class="headerlink" href="#id31" title="Permalink to this heading">¶</a></h3>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 1.6: </span>Environment variables have been deprecated in version 1.6.0. Use the $ENV state variable instead.</p>
+</div>
+</section>
+<section id="id32">
+<h3><span class="section-number">4.4.3. </span>Special variable<a class="headerlink" href="#id32" title="Permalink to this heading">¶</a></h3>
+<p>A special variable is a variable with special meaning defined in advance by the system.</p>
+<section id="status-variables">
+<span id="id33"></span><h4><span class="section-number">4.4.3.1. </span>Status variable<a class="headerlink" href="#status-variables" title="Permalink to this heading">¶</a></h4>
+<p>A status variable is a reserved variable for temporarily storing of execution results such as remote jobs, status codes, etc., and starts with $. These variables are those whose values are set automatically by the Kompira engine and can not be explicitly assigned in the job flow.</p>
+<p>There are the following types of status variables:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable name</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>$RESULT</p></td>
+<td><p>Job execution result (standard output)</p></td>
+</tr>
+<tr class="row-odd"><td><p>$STATUS</p></td>
+<td><p>Job execution status</p></td>
+</tr>
+<tr class="row-even"><td><p>$ERROR</p></td>
+<td><p>Job execution error message (standard error output)</p></td>
+</tr>
+<tr class="row-odd"><td><p>$DEBUG</p></td>
+<td><p>Debug information</p></td>
+</tr>
+<tr class="row-even"><td><p>$ENV</p></td>
+<td><p>Environment variable dictionary</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The character code of the execution result of the job is automatically determined and converted into an appropriate character string. If conversion to a character string fails, job execution is regarded as failed and an error is returned.</p>
+</div>
+<p>The $ENV state variable contains a dictionary of environment variable fields in an environment variable type (Environment) object set by the JobFlow user.</p>
+</section>
+<section id="control-variables">
+<span id="id34"></span><h4><span class="section-number">4.4.3.2. </span>Control variable<a class="headerlink" href="#control-variables" title="Permalink to this heading">¶</a></h4>
+<p>The control variable is a variable for specifying the host name, login name, etc. when executing the remote job, and it is a variable in the form of two consecutive underscores (_) appended before and after, such as __*__ . It is a variable.</p>
+<p>The control variable can be defined as a local variable or it can be set as an environment variable.</p>
+<p>There are the following types of control variables:</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable name</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>__realm__</p></td>
+<td><p>Specify the management area to execute the remote command</p></td>
+</tr>
+<tr class="row-odd"><td><p>__host__</p></td>
+<td><p>Specify the execution host name of the remote command</p></td>
+</tr>
+<tr class="row-even"><td><p>__conntype__</p></td>
+<td><p>Specify the host’s connection type of remote command execution. (See <a class="reference internal" href="admin.html#node"><span class="std std-ref">Node setting</span></a> for the connection types that can be specified)</p></td>
+</tr>
+<tr class="row-odd"><td><p>__user__</p></td>
+<td><p>Specify the execution user name of the remote command</p></td>
+</tr>
+<tr class="row-even"><td><p>__password__</p></td>
+<td><p>Specify a password</p></td>
+</tr>
+<tr class="row-odd"><td><p>__node__</p></td>
+<td><p>Specify the node information object to execute the remote command</p></td>
+</tr>
+<tr class="row-even"><td><p>__account__</p></td>
+<td><p>Specify the account information object necessary for executing the remote command</p></td>
+</tr>
+<tr class="row-odd"><td><p>__sudo__</p></td>
+<td><p>When executing in sudo mode, set it to true</p></td>
+</tr>
+<tr class="row-even"><td><p>__dir__</p></td>
+<td><p>Specify the execution directory of the remote command</p></td>
+</tr>
+<tr class="row-odd"><td><p>__port__</p></td>
+<td><p>Specify ssh port number</p></td>
+</tr>
+<tr class="row-even"><td><p>__keyfile__</p></td>
+<td><p>Specify ssh key file path</p></td>
+</tr>
+<tr class="row-odd"><td><p>__passphrase__</p></td>
+<td><p>Specify the passphrase of the ssh key file (it can be omitted if there is no passphrase or same as __password__)</p></td>
+</tr>
+<tr class="row-even"><td><p>__timeout__</p></td>
+<td><p>Specify the number of seconds before the remote command times out</p></td>
+</tr>
+<tr class="row-odd"><td><p>__proxy__</p></td>
+<td><p>Specify the proxy host when connecting to the execution host</p></td>
+</tr>
+<tr class="row-even"><td><p>__shell__</p></td>
+<td><p>Specify the shell to use when executing the remote command (default: “/bin/bash”)</p></td>
+</tr>
+<tr class="row-odd"><td><p>__use_shell__</p></td>
+<td><p>Set to false if shell is not used when executing remote command</p></td>
+</tr>
+<tr class="row-even"><td><p>__use_pty__</p></td>
+<td><p>Set to true to use PTY when executing remote command</p></td>
+</tr>
+<tr class="row-odd"><td><p>__use_cache__</p></td>
+<td><p>Set to false if the remote connection cache is not used</p></td>
+</tr>
+<tr class="row-even"><td><p>__raw_stdout__</p></td>
+<td><p>Set to true to receive standard output as binary</p></td>
+</tr>
+<tr class="row-odd"><td><p>__raw_stderr__</p></td>
+<td><p>Set to true to receive standard error output as binary</p></td>
+</tr>
+<tr class="row-even"><td><p>__encoding__</p></td>
+<td><p>Specifies the encoding of standard input/output (default: “utf-8”).</p></td>
+</tr>
+<tr class="row-odd"><td><p>__winrs_auth_type__</p></td>
+<td><p>Specify the authentication method of WinRS connection from “ntlm” (default) and “credssp”.</p></td>
+</tr>
+<tr class="row-even"><td><p>__winrs_scheme__</p></td>
+<td><p>Specify the scheme of WinRS connection from “https” (default) and “http”.</p></td>
+</tr>
+<tr class="row-odd"><td><p>__winrs_use_tlsv1_0__</p></td>
+<td><p>Set to true to use TLS 1.0 when performing CredSSP authentication with a WinRS connection. (For environments where TLS 1.2 can not be used, such as Windows Server 2008)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 1.4: </span>The control variable __via__ has been removed in version 1.4.0. Use __proxy__ instead.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.0: </span>The control variables __raw_stdout__, __raw_stderr__ have been added.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.2.post6: </span>The control variable __use_cache__ has been added.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.4: </span>The control variable __conntype__ has been extended to allow the specification of network devices.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.4: </span>The value of the control variable __conntype__ to specify a Windows device has been changed.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.6.8.post2: </span>The control variable __encoding__ has been added (available since 1.6.0).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For WinRS connections, the remote connection cache is always not used, regardless of the setting of __use_cache__.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the directory string specified by __dir__ contains shell metacharacters such as (and) and “and” etc., it must be properly escaped as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[__dir__ = &#39;somedir\\(foo\\)&#39;]
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>__dir__ can’t be specified when __sudo__=true and __use_shell__=false.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you do not specify __timeout__ or set a value of 0, timeout does not occur when executing remote command. The operation when __timeout__ is set to a negative value is undefined.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4.9.</span></p>
+</div>
+<p>In winrs mode, as long as the remote command being executed continues to output, it does not time out. In other words, it will time out if there is no output for the number of seconds specified by __timeout__.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.4.post5.</span></p>
+</div>
+<p>Even when there is command output in winrs mode, it now timeouts in seconds specified by __timeout__.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4.8.post6.</span></p>
+</div>
+<p>For remote command execution in winrs mode, the smaller value of the value specified by __timeout__ and the value set by MaxTimeoutms from WinRM is applied.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.4.post5.</span></p>
+</div>
+<p>In command execution in winrs mode, the timeout specification by __timeout__ is now prioritized over MaxTimeoutms.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="id35">
+<h2><span class="section-number">4.5. </span>Expression<a class="headerlink" href="#id35" title="Permalink to this heading">¶</a></h2>
+<p>Expressions in the job flow program are evaluated during the execution of the job flow and have some value as a result.</p>
+<section id="id36">
+<h3><span class="section-number">4.5.1. </span>Atomic formula<a class="headerlink" href="#id36" title="Permalink to this heading">¶</a></h3>
+<p>An atomic expression is the basic unit that constitutes an expression. Identifiers, object paths, literals are included in atomic expressions. Also, the format enclosed in parentheses is also grammatically classified as an atomic expression.</p>
+<pre>
+<strong id="grammar-token-atomic_expression">atomic_expression</strong> ::=  IDENTIFIER | OBJECT_PATH | SPECIAL_IDENTIFIER
+                       | <a class="reference internal" href="#grammar-token-literal"><code class="xref docutils literal notranslate"><span class="pre">literal</span></code></a>
+                       | <a class="reference internal" href="#grammar-token-parenth_form"><code class="xref docutils literal notranslate"><span class="pre">parenth_form</span></code></a>
+                       | <a class="reference internal" href="#grammar-token-array_expression"><code class="xref docutils literal notranslate"><span class="pre">array_expression</span></code></a>
+                       | <a class="reference internal" href="#grammar-token-dict_expression"><code class="xref docutils literal notranslate"><span class="pre">dict_expression</span></code></a>
+</pre>
+<section id="identifier">
+<h4><span class="section-number">4.5.1.1. </span>Identifier (IDENTIFIER)<a class="headerlink" href="#identifier" title="Permalink to this heading">¶</a></h4>
+<p>An identifier as an atomic expression represents a variable name. When evaluating the variable name, it returns the value bound to that variable name under the execution environment at the time of evaluation.</p>
+</section>
+<section id="id37">
+<h4><span class="section-number">4.5.1.2. </span>Object Path<a class="headerlink" href="#id37" title="Permalink to this heading">¶</a></h4>
+<p>The object path returns the value of the Kompira object pointed to by that path.</p>
+<p>If the object does not exist, a run-time error occurs.</p>
+</section>
+<section id="id38">
+<h4><span class="section-number">4.5.1.3. </span>Special identifiers<a class="headerlink" href="#id38" title="Permalink to this heading">¶</a></h4>
+<p>The special identifier represents a status variable after job execution. At the start of the job flow, $STATUS is initialized to 0 and $RESULT and $ERROR are initialized to the empty string (“”), respectively.</p>
+</section>
+<section id="id39">
+<h4><span class="section-number">4.5.1.4. </span>Literal<a class="headerlink" href="#id39" title="Permalink to this heading">¶</a></h4>
+<p>Literals are strings, binary, integers, floating-point numbers, booleans, and nulls.</p>
+<pre>
+<strong id="grammar-token-literal">literal</strong> ::=  STRING | BINARY | INTEGER | FLOAT | BOOLEAN | NULL
+</pre>
+<p>When evaluating a literal, it becomes the value indicated by that literal.</p>
+<p>In the case of a string literal, the variable prefixed by $ in that string is expanded. The following rules will be observed:</p>
+<ul class="simple">
+<li><p>A $identifier is a replacement placeholder specification and corresponds to mapping to the key “identifier”. By default, the “identifier” part must contain Kompira’s identifier. If a character that can not be used as an identifier appears after $, specification of the placeholder name ends.</p></li>
+<li><p>${identifier} is the same as $identifier. It is a necessary writing method if the placeholder name is followed by a character string that can be used as an identifier and you do not want to treat it as part of the placeholder name.</p></li>
+</ul>
+<p>For example, if you execute the following job flow, “Hello Kompira” will be output to the console.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[name = &#39;Kompira&#39;]
+-&gt; print(&#39;Hello $name&#39;)
+</pre></div>
+</div>
+</section>
+<section id="id40">
+<h4><span class="section-number">4.5.1.5. </span>Parentheses format<a class="headerlink" href="#id40" title="Permalink to this heading">¶</a></h4>
+<p>The parenthesis format evaluates the enclosed expression and returns its value.</p>
+<pre>
+<strong id="grammar-token-parenth_form">parenth_form</strong> ::=  &quot;(&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;)&quot;
+</pre>
+</section>
+<section id="id41">
+<h4><span class="section-number">4.5.1.6. </span>Array expression<a class="headerlink" href="#id41" title="Permalink to this heading">¶</a></h4>
+<p>Array expressions are a comma-separated list of expressions enclosed in square brackets. It is also possible to omit the sequence of expressions.</p>
+<pre>
+<strong id="grammar-token-array_expression">array_expression</strong> ::=  &quot;[&quot; <a class="reference internal" href="#grammar-token-expression_list"><code class="xref docutils literal notranslate"><span class="pre">expression_list</span></code></a>? &quot;]&quot;
+<strong id="grammar-token-expression_list">expression_list </strong> ::=  <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-expression_list"><code class="xref docutils literal notranslate"><span class="pre">expression_list</span></code></a>)*
+</pre>
+<p>When evaluating an array expression, it returns the data of the newly created array type as a value. Each element of the array is evaluated from left to right.</p>
+</section>
+<section id="id42">
+<h4><span class="section-number">4.5.1.7. </span>Dictionary expression<a class="headerlink" href="#id42" title="Permalink to this heading">¶</a></h4>
+<p>A dictionary expression is a comma-separated sequence of key-value pairs enclosed in curly brackets. It is possible to omit the list of pairs. If the pair is connected with an equal sign, the key must be an identifier. If the key is duplicated, it will report an error at the time of compilation. If it is bound by a colon, the key can describe arbitrary expressions. In this case key duplication is not checked.</p>
+<pre>
+<strong id="grammar-token-dict_expression">dict_expression</strong> ::=  &quot;{&quot; ( <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a> | <a class="reference internal" href="#grammar-token-key_val_list"><code class="xref docutils literal notranslate"><span class="pre">key_val_list</span></code></a> )? &quot;}&quot;
+<strong id="grammar-token-binding_list">binding_list   </strong> ::=  <a class="reference internal" href="#grammar-token-binding"><code class="xref docutils literal notranslate"><span class="pre">binding</span></code></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a>)*
+<strong id="grammar-token-binding">binding        </strong> ::=  IDENTIFIER &quot;=&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>
+<strong id="grammar-token-key_val_list">key_val_list   </strong> ::=  <a class="reference internal" href="#grammar-token-key_val"><code class="xref docutils literal notranslate"><span class="pre">key_val</span></code></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-key_val_list"><code class="xref docutils literal notranslate"><span class="pre">key_val_list</span></code></a>)*
+<strong id="grammar-token-key_val">key_val        </strong> ::=  <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;:&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>
+</pre>
+<p>When evaluating a dictionary expression, it returns the newly created dictionary type data as a value. Given a set of comma-delimited key-value pairs, the expression will be evaluated from left to right to define the dictionary’s entry. Giving a duplicate key, results in a syntax error.</p>
+</section>
+</section>
+<section id="id43">
+<h3><span class="section-number">4.5.2. </span>Postfix expressions<a class="headerlink" href="#id43" title="Permalink to this heading">¶</a></h3>
+<p>Postfix expressions have the highest connectivity among expressions.</p>
+<pre>
+<strong id="grammar-token-postfix_expression">postfix_expression</strong> ::=  <a class="reference internal" href="#grammar-token-attribute_reference"><code class="xref docutils literal notranslate"><span class="pre">attribute_reference</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-subscript_reference"><code class="xref docutils literal notranslate"><span class="pre">subscript_reference</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-function_call"><code class="xref docutils literal notranslate"><span class="pre">function_call</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>
+</pre>
+<section id="id44">
+<h4><span class="section-number">4.5.2.1. </span>Attribute reference<a class="headerlink" href="#id44" title="Permalink to this heading">¶</a></h4>
+<p>Attribute references are formats in which the postfix expression has a dot followed by an identifier.</p>
+<pre>
+<strong id="grammar-token-attribute_reference">attribute_reference</strong> ::=  <a class="reference internal" href="#grammar-token-postfix_expression"><code class="xref docutils literal notranslate"><span class="pre">postfix_expression</span></code></a> &quot;.&quot; IDENTIFIER
+</pre>
+<p>The evaluation result of the postfix expression must be an object type. The value specified by the identifier of the object of the post evaluation result is the value of the evaluation result. If the specified attribute does not exist, it becomes the field value of the object with the identifier string as the key. If no such field exists, a runtime error will result.</p>
+</section>
+<section id="id45">
+<h4><span class="section-number">4.5.2.2. </span>Subscript Reference<a class="headerlink" href="#id45" title="Permalink to this heading">¶</a></h4>
+<p>A postfix expression followed by an expression enclosed in square brackets represents an expression that retrieves an element from fields or arrays of objects, and dictionary data.</p>
+<pre>
+<strong id="grammar-token-subscript_reference">subscript_reference</strong> ::=  <a class="reference internal" href="#grammar-token-postfix_expression"><code class="xref docutils literal notranslate"><span class="pre">postfix_expression</span></code></a> &quot;[&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;]&quot;
+</pre>
+<p>The evaluation result of the postfix expression must be one of either object type, dictionary type, or array type.</p>
+<p>If there is no element corresponding to the key or index, a runtime error will occur.</p>
+</section>
+<section id="id46">
+<h4><span class="section-number">4.5.2.3. </span>Function calls<a class="headerlink" href="#id46" title="Permalink to this heading">¶</a></h4>
+<p>Function calls call functions of objects defined by built-in functions, library type objects, and methods of objects with a list of arguments. The argument list consists of an expression list followed by a binding list (keyword argument list), each of which can be empty.</p>
+<pre>
+<strong id="grammar-token-function_call">function_call</strong> ::=  <a class="reference internal" href="#grammar-token-postfix_expression"><code class="xref docutils literal notranslate"><span class="pre">postfix_expression</span></code></a> &quot;(&quot; <a class="reference internal" href="#grammar-token-argument_list"><code class="xref docutils literal notranslate"><span class="pre">argument_list</span></code></a>? &quot;)&quot;
+<strong id="grammar-token-argument_list">argument_list</strong> ::=  <a class="reference internal" href="#grammar-token-expression_list"><code class="xref docutils literal notranslate"><span class="pre">expression_list</span></code></a> (&quot;,&quot; &quot;*&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>)?
+                     (&quot;,&quot; <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a>)? (&quot;,&quot; &quot;**&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>)?
+                   | <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a> (&quot;,&quot; &quot;**&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>)?
+                   | &quot;*&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a>)?
+                     (&quot;,&quot; &quot;**&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>)?
+                   | &quot;**&quot; <a class="reference internal" href="#grammar-token-atomic_expression"><code class="xref docutils literal notranslate"><span class="pre">atomic_expression</span></code></a>
+</pre>
+<p>If the syntax *atomic_expression appears in the function call, atomic_expression must evaluate to an array. Elements from this array are treated as if they were additional positional arguments</p>
+<p>If the syntax **atomic_expression appears in the function call, atomic_expression must evaluate to a dictionary, the contents of which are treated as additional keyword arguments.</p>
+<p>Each element of the argument list is evaluated before the function call.</p>
+</section>
+</section>
+<section id="id47">
+<h3><span class="section-number">4.5.3. </span>Operator expression<a class="headerlink" href="#id47" title="Permalink to this heading">¶</a></h3>
+<section id="id48">
+<h4><span class="section-number">4.5.3.1. </span>Unary operator<a class="headerlink" href="#id48" title="Permalink to this heading">¶</a></h4>
+<p>Unary operators show as + and -. Since the unary operator is a right join, +-x has the same meaning as +(-x).</p>
+<pre>
+<strong id="grammar-token-unary_expression">unary_expression</strong> ::=  <a class="reference internal" href="#grammar-token-postfix_expression"><code class="xref docutils literal notranslate"><span class="pre">postfix_expression</span></code></a>
+                      | ( &quot;+&quot; | &quot;-&quot; ) <a class="reference internal" href="#grammar-token-unary_expression"><code class="xref docutils literal notranslate"><span class="pre">unary_expression</span></code></a>
+</pre>
+<p>The unary - operator inverts the sign of the numeric value to be argument.</p>
+<p>The unary + operator does not change numeric arguments.</p>
+</section>
+<section id="id49">
+<h4><span class="section-number">4.5.3.2. </span>Multiplication and division operator<a class="headerlink" href="#id49" title="Permalink to this heading">¶</a></h4>
+<p>The multiplicative operator has *, /, and %. All of them have the same priority and become a left join.</p>
+<pre>
+<strong id="grammar-token-multiplicative_expression">multiplicative_expression</strong> ::=  <a class="reference internal" href="#grammar-token-unary_expression"><code class="xref docutils literal notranslate"><span class="pre">unary_expression</span></code></a>
+                               | <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a> &quot;*&quot; <a class="reference internal" href="#grammar-token-unary_expression"><code class="xref docutils literal notranslate"><span class="pre">unary_expression</span></code></a>
+                               | <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a> &quot;/&quot; <a class="reference internal" href="#grammar-token-unary_expression"><code class="xref docutils literal notranslate"><span class="pre">unary_expression</span></code></a>
+                               | <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a> &quot;%&quot; <a class="reference internal" href="#grammar-token-unary_expression"><code class="xref docutils literal notranslate"><span class="pre">unary_expression</span></code></a>
+</pre>
+<p>The * operation is the product of the arguments. If either argument is a character string or an array and one is an integer, it is the value obtained by repeating the number of strings and arrays by that number. For example, the expression ‘foo’ * 3 evaluates to ‘foofoofoo’.</p>
+<p>The / operation is the quotient between the arguments. If division by zero occurs, an error occurs.</p>
+<p>The % operation is the remainder when dividing the first argument by the second argument when the two arguments are integers. If the first argument is a character string and the second argument is a dictionary, it returns the result of replacing the template string.</p>
+</section>
+<section id="id50">
+<h4><span class="section-number">4.5.3.3. </span>Arithmetic operators<a class="headerlink" href="#id50" title="Permalink to this heading">¶</a></h4>
+<p>Arithmetic operators include + and -. All of them have the same priority and become a left join.</p>
+<pre>
+<strong id="grammar-token-additive_expression">additive_expression</strong> ::=  <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a>
+                         | <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a> &quot;+&quot; <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a>
+                         | <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a> &quot;-&quot; <a class="reference internal" href="#grammar-token-multiplicative_expression"><code class="xref docutils literal notranslate"><span class="pre">multiplicative_expression</span></code></a>
+</pre>
+<p>The + operation returns the value obtained by adding the argument. If both arguments are a string or an array, it returns the concatenated value.</p>
+<p>The - operation returns the subtracted value between the arguments.</p>
+</section>
+<section id="id51">
+<h4><span class="section-number">4.5.3.4. </span>Comparison operators<a class="headerlink" href="#id51" title="Permalink to this heading">¶</a></h4>
+<p>The comparison operators are &lt;, &gt;, ==, &gt;=, &lt;=, !=, =~ and !~. All of them have the same priority and become a left join.</p>
+<pre>
+<strong id="grammar-token-comparison_expression">comparison_expression</strong> ::=  <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;&lt;&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;&gt;&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;==&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;&gt;=&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;&lt;=&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;!=&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;=~&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a> &quot;!~&quot; <a class="reference internal" href="#grammar-token-additive_expression"><code class="xref docutils literal notranslate"><span class="pre">additive_expression</span></code></a>
+</pre>
+<p>The result of the comparison is Boolean value true or false. You can chain any number of comparisons. For example, x &lt; y &lt;= z is equivalent to x &lt; y and y &lt;= z. However, in this case, y is evaluated only once for the former. Also, x &lt; y &lt;= z and (x &lt; y) &lt;= z have different meanings. The latter compares the Boolean value of z with the result of evaluating x &lt; y.</p>
+<p>The meaning of comparison between values of the same type depends on type.</p>
+<ul class="simple">
+<li><p>For integer-by-integer comparisons, an arithmetic comparison is made.</p></li>
+<li><p>In comparison between character strings, a dictionary comparison is performed.</p></li>
+<li><p>In comparison between arrays, a dictionary comparison is performed using the comparison result of each corresponding element.</p></li>
+<li><p>Comparison between dictionaries is defined only for equivalence judgment. They are only equivalent when the keys are in the same order and the corresponding elements of the key and value are equal.</p></li>
+</ul>
+<p>x != y is equivalent to not (x == y).</p>
+<p>=~ makes similar comparisons. The meaning depends on type.</p>
+<ul class="simple">
+<li><p>In comparisons between pattern and character strings, comparison by pattern matching is performed.</p></li>
+<li><p>In comparison between character strings and other types, comparison is performed by converting values other than character strings into character strings.</p></li>
+<li><p>In comparing arrays, similarities between corresponding elements are compared.</p></li>
+<li><p>A comparison between dictionaries ignores differences in the order of keys and compares the values corresponding to each key in a similar manner.</p></li>
+<li><p>Except for the above, it has the same result as the equivalent comparison by normal ==.</p></li>
+</ul>
+<p>x !~ y is equivalent to not (x =~ y).</p>
+</section>
+<section id="id52">
+<h4><span class="section-number">4.5.3.5. </span>Inclusion operators<a class="headerlink" href="#id52" title="Permalink to this heading">¶</a></h4>
+<p>Inclusion operators are expressed as in or not in. They all have the same priority and become a left join.</p>
+<pre>
+<strong id="grammar-token-membership_expression">membership_expression</strong> ::=  <a class="reference internal" href="#grammar-token-comparison_expression"><code class="xref docutils literal notranslate"><span class="pre">comparison_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a> &quot;in&quot; <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a>
+                           | <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a> &quot;not&quot; &quot;in&quot; <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a>
+</pre>
+<p>Inclusive operations x in y returns true if the value x is included as an element of y, and false if it is not included. x not in y is the same as not (x in y).</p>
+<p>If y is a value other than an array type, the judgment as to whether it is an element or not is as follows:</p>
+<ul class="simple">
+<li><p>If x and y are both strings, they are regarded as elements if x is a substring of y.</p></li>
+<li><p>If y is a dictionary type value, it is considered an element if x is included in the key set of y.</p></li>
+<li><p>If y is a directory/table type object, it is regarded as an element if x is a child object of y.</p></li>
+</ul>
+</section>
+<section id="id53">
+<h4><span class="section-number">4.5.3.6. </span>Logical operators<a class="headerlink" href="#id53" title="Permalink to this heading">¶</a></h4>
+<p>Logical operators include not, and, and or. When a boolean value is required as a result of a logical operation context or expression, false, null, 0, an empty string (“”), an empty array ([]), and an empty dictionary ({}) are all interpreted as false. Any other value is interpreted as true.</p>
+<pre>
+<strong id="grammar-token-logical_not_expression">logical_not_expression</strong> ::=  <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a>
+                            | &quot;not&quot; <a class="reference internal" href="#grammar-token-membership_expression"><code class="xref docutils literal notranslate"><span class="pre">membership_expression</span></code></a>
+<strong id="grammar-token-logical_and_expression">logical_and_expression</strong> ::=  <a class="reference internal" href="#grammar-token-logical_not_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_not_expression</span></code></a>
+                            | <a class="reference internal" href="#grammar-token-logical_and_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_and_expression</span></code></a> &quot;and&quot; <a class="reference internal" href="#grammar-token-logical_not_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_not_expression</span></code></a>
+<strong id="grammar-token-logical_or_expression">logical_or_expression </strong> ::=  <a class="reference internal" href="#grammar-token-logical_and_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_and_expression</span></code></a>
+                            | <a class="reference internal" href="#grammar-token-logical_or_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_or_expression</span></code></a> &quot;or&quot; <a class="reference internal" href="#grammar-token-logical_and_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_and_expression</span></code></a>
+<strong id="grammar-token-expression">expression            </strong> ::=  <a class="reference internal" href="#grammar-token-logical_or_expression"><code class="xref docutils literal notranslate"><span class="pre">logical_or_expression</span></code></a>
+</pre>
+<p>The operator “not” is true if the argument is false, if the argument is true, then “not” is false.</p>
+<p>The expressions x and y evaluate the expressions x and y respectively, and return the evaluation result of x if x is false. Otherwise it returns the evaluation result of y.</p>
+<p>The expression x or y evaluates the expression x and y respectively, and returns the evaluation result of x if x is true. Otherwise it returns the evaluation result of y.</p>
+</section>
+</section>
+</section>
+<section id="id54">
+<h2><span class="section-number">4.6. </span>A job<a class="headerlink" href="#id54" title="Permalink to this heading">¶</a></h2>
+<p>A job instructs execution of a command, waiting for an event, or a control such as repetition or conditional branching. The syntax of a job is as follows:</p>
+<pre>
+<strong id="grammar-token-job">job</strong> ::=  <a class="reference internal" href="#grammar-token-skip_job"><code class="xref docutils literal notranslate"><span class="pre">skip_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-execution_job"><code class="xref docutils literal notranslate"><span class="pre">execution_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-assignment_job"><code class="xref docutils literal notranslate"><span class="pre">assignment_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-update_job"><code class="xref docutils literal notranslate"><span class="pre">update_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-event_job"><code class="xref docutils literal notranslate"><span class="pre">event_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-builtin_job"><code class="xref docutils literal notranslate"><span class="pre">builtin_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-control_job"><code class="xref docutils literal notranslate"><span class="pre">control_job</span></code></a>
+         | <a class="reference internal" href="#grammar-token-block_job"><code class="xref docutils literal notranslate"><span class="pre">block_job</span></code></a>
+</pre>
+<section id="id55">
+<h3><span class="section-number">4.6.1. </span>Skip Job<a class="headerlink" href="#id55" title="Permalink to this heading">¶</a></h3>
+<p>Skip job does nothing but set $STATUS to 0.</p>
+<pre>
+<strong id="grammar-token-skip_job">skip_job</strong> ::=  &quot;[&quot; &quot;]&quot;
+</pre>
+</section>
+<section id="id56">
+<h3><span class="section-number">4.6.2. </span>Execution job<a class="headerlink" href="#id56" title="Permalink to this heading">¶</a></h3>
+<p>An execution job performs different processing depending on the value type of the result of evaluating the expression.</p>
+<pre>
+<strong id="grammar-token-execution_job">execution_job</strong> ::=  &quot;[&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> (&quot;&lt;&lt;&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>)? (&quot;:&quot; <a class="reference internal" href="#grammar-token-argument_list"><code class="xref docutils literal notranslate"><span class="pre">argument_list</span></code></a>)? &quot;]&quot;
+</pre>
+<p>If the result of evaluating the first expression is a character string, the execution job interprets the character string as a command on the remote server or on the local server according to the control context and executes it. If there is a second expression following the symbol &lt;&lt;, the evaluation result of that expression is regarded as a character string and passed to the standard input of the command.</p>
+<p>If the result of evaluating the first expression is a job flow object, call that job flow object. If there is an argument list, the value obtained by evaluating the expression of the argument in the list is the parameter of the job flow.</p>
+<p>If the result of evaluating the first expression is a script object, that script will be executed on the remote server or on the local server. If there is a second expression following the symbol &lt;&lt;, the evaluation result of that expression is regarded as a character string and passed to the standard input at the time of script execution. If there is an argument list, the value evaluating the expression of the argument in the list is the command line argument of the script.</p>
+<p>If the result of evaluating the first expression is a method of Kompira objects, call its method with argument list as a parameter.</p>
+<p>If the result of evaluating the first expression is a library object function, call that function with the argument list as a parameter.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The length of the command string, the size of the script and script command line arguments is limited to 112 KB. If this limit is exceeded, the job execution will fail and set $STATUS to -1.</p>
+</div>
+</section>
+<section id="id57">
+<h3><span class="section-number">4.6.3. </span>Assignment jobs<a class="headerlink" href="#id57" title="Permalink to this heading">¶</a></h3>
+<p>Assignment jobs assign the evaluation result of the right side of the = expression to a variable.</p>
+<pre>
+<strong id="grammar-token-assignment_job">assignment_job</strong> ::=  &quot;[&quot; <a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a> &quot;]&quot;
+</pre>
+<p>If the variable is undefined, a variable with job flow scope is newly defined and initialized with the evaluated value.</p>
+</section>
+<section id="id58">
+<h3><span class="section-number">4.6.4. </span>Update jobs<a class="headerlink" href="#id58" title="Permalink to this heading">¶</a></h3>
+<p>An update job evaluates the first expression and updates the contents of variables, objects, and fields as a result of evaluating the target expression against the value of the result.</p>
+<pre>
+<strong id="grammar-token-update_job">update_job       </strong> ::=  &quot;[&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;&gt;&gt;&quot; <a class="reference internal" href="#grammar-token-target_expression"><code class="xref docutils literal notranslate"><span class="pre">target_expression</span></code></a> &quot;]&quot;
+<strong id="grammar-token-target_expression">target_expression</strong> ::=  IDENTIFIER | OBJECT_PATH
+                       | <a class="reference internal" href="#grammar-token-target_expression"><code class="xref docutils literal notranslate"><span class="pre">target_expression</span></code></a> &quot;.&quot; IDENTIFIER
+                       | <a class="reference internal" href="#grammar-token-target_expression"><code class="xref docutils literal notranslate"><span class="pre">target_expression</span></code></a> &quot;[&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;]&quot;
+</pre>
+</section>
+<section id="job-eventjob">
+<span id="id59"></span><h3><span class="section-number">4.6.5. </span>Event jobs<a class="headerlink" href="#job-eventjob" title="Permalink to this heading">¶</a></h3>
+<p>The event job evaluates the first expression and waits according to its type.</p>
+<pre>
+<strong id="grammar-token-event_job">event_job</strong> ::=  &quot;&lt;&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> ((&quot;?&quot; | &quot;??&quot;) <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>)? (&quot;:&quot; <a class="reference internal" href="#grammar-token-argument_list"><code class="xref docutils literal notranslate"><span class="pre">argument_list</span></code></a>)? &quot;&gt;&quot;
+               | &quot;&lt;&quot; &quot;&gt;&quot;
+</pre>
+<p>When the result of evaluating the first expression is a channel object or a task object, the event job waits for the event of that object. Received objects are stored in $RESULT.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;./ChannelObject&gt; -&gt;
+[message = $RESULT]
+</pre></div>
+</div>
+<p>If you pass a process object, wait until the process ends. In this case, $RESULT stores process objects.</p>
+<p>If you pass a list whose elements are channels, tasks, or process objects, wait for the event of one of the objects. $RESULT stores a list with two elements described below. The first element of the list is the object where the event occurred, the second element is the received object.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># ./ChannelTable is a Table object that contains Channel objects.
+&lt;./ChannelTable.children&gt; -&gt;
+[chan = $RESULT[0], message = $RESULT[1]]
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">?</span></code> is followed by an expression (guard expression), it becomes an event job with a guard. In this case, we will only receive a message if the result of evaluating the guard expression matches the object at the top of the message queue of the channel. It is the same in the case of <code class="docutils literal notranslate"><span class="pre">??</span></code>, but checks whether objects match in order from the top of the message queue, and if they match, discards the previous object and receives the matched object. When waiting for a process object, the guard specification is simply ignored.</p>
+<p>If there is an argument list, timeout is specified. If the value of the first expression is a datetime type, the date and time to time out is specified, and in the case of an integer type, the number of seconds until the timeout is specified. If it times out, $STATUS is set to 1.</p>
+<p>Passing the keyword argument peek_mode=true as a parameter changes the handling of received messages and the structure of the result. If peek_mode=true is specified in an event job for a channel object, when a message is received, the first message in the message queue of the target channel is referenced (without deleting it) and a list [msgid, message] containing the ID value identifying the message in the target channel object and the message body is returned to $RESULT. Since the message has not been removed from the channel at this time, the same message will be retrieved when the event job is executed again. When a message is no longer needed to be retrieved from the channel, such as when a message has been processed, the message can be deleted by calling <a class="reference internal" href="library.html#channel-delete-message"><span class="std std-ref">Channel.delete_message()</span></a> with the message ID.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[chan = ./ChannelObject] -&gt;
+&lt;chan: peek_mode=true&gt; -&gt;
+[msgid = $RESULT[0], message = $RESULT[1]] -&gt;
+    ...
+[chan.delete_message: msgid]
+</pre></div>
+</div>
+<p>peek_mode can also be used in conjunction with guard expressions. <code class="docutils literal notranslate"><span class="pre">?</span></code> followed by a guard expression and matched at the top of the message queue, returns a list of [msgid, message] for that message. <code class="docutils literal notranslate"><span class="pre">??</span></code> followed by a guard expression and matched in the middle of the message queue, it removes the message from the message queue from the beginning to one before the message and returns a list of [msgid, message] of the matched messages.</p>
+<p>Note that peek_mode can also be used in conjunction with event jobs on lists, but the structure of the resulting results is a bit more complex.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;[chanA, chanB, chanC]: peek_mode=true&gt; -&gt;
+[chan = $RESULT[0], msgid = $RESULT[1][0], message = $RESULT[1][1]]
+</pre></div>
+</div>
+<p>The “received object” portion of the result of an event job on a list is a list of [msgid, message], which is created by peek_mode.</p>
+<p>If peek_mode=true is specified in an event job for a process object, a list [pid, process] containing the process ID and process object is returned to $RESULT. This ensures that the structure of the result will be the same, even if the list contains mixed channels and processes when invoking an event job that specifies a list.</p>
+<p>Passing the keyword argument detect_error=true as a parameter to an event job for a mail channel will set $STATUS to -1 and immediately terminate the event wait if mail fetching fails due to misconfiguration, mail server failure, or if the mail channel is disabled. (Passing detect_error to any event job parameter other than mail channel is simply ignored.)</p>
+<p>If it is empty expression <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code>, the event is always fired, so the job flow will continue executing immediately.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.6: </span>The keyword argument detect_error has been added.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.7: </span>The keyword argument peek_mode has been added.</p>
+</div>
+</section>
+<section id="id60">
+<h3><span class="section-number">4.6.6. </span>Built-in jobs<a class="headerlink" href="#id60" title="Permalink to this heading">¶</a></h3>
+<p>Embedded jobs are called Kompira’s built-in jobs.</p>
+<pre>
+<strong id="grammar-token-builtin_job">builtin_job</strong> ::=  IDENTIFIER &quot;(&quot; <a class="reference internal" href="#grammar-token-argument_list"><code class="xref docutils literal notranslate"><span class="pre">argument_list</span></code></a>? &quot;)&quot;
+</pre>
+<p>If there is an argument list, the expression is evaluated from the beginning in order of the list, and the result is passed as a parameter of the built-in job.</p>
+<p>For a list and details of the embedded jobs provided by Kompira, see <a class="reference internal" href="library.html"><span class="doc">Kompira Standard Library</span></a>.</p>
+</section>
+<section id="id61">
+<h3><span class="section-number">4.6.7. </span>Control jobs<a class="headerlink" href="#id61" title="Permalink to this heading">¶</a></h3>
+<p>There are two control jobs, break and continue.</p>
+<pre>
+<strong id="grammar-token-control_job">control_job</strong> ::=  &quot;continue&quot; | &quot;break&quot;
+</pre>
+<p>Control jobs can only be used inside while blocks and for blocks. If you use it elsewhere, it will result in a compile-time error.</p>
+<section id="continue">
+<h4><span class="section-number">4.6.7.1. </span>Continue<a class="headerlink" href="#continue" title="Permalink to this heading">¶</a></h4>
+<p>Continue transfers control to the beginning of the next iteration of the while/for block.</p>
+</section>
+<section id="break">
+<h4><span class="section-number">4.6.7.2. </span>Break<a class="headerlink" href="#break" title="Permalink to this heading">¶</a></h4>
+<p>Break aborts the iteration of the while/for block, and transfers control to the block after it.</p>
+</section>
+</section>
+<section id="id62">
+<h3><span class="section-number">4.6.8. </span>Block jobs<a class="headerlink" href="#id62" title="Permalink to this heading">¶</a></h3>
+<p>A block job creates a new block scope.</p>
+<pre>
+<strong id="grammar-token-block_job">block_job</strong> ::=  <a class="reference internal" href="#grammar-token-simple_block"><code class="xref docutils literal notranslate"><span class="pre">simple_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-if_block"><code class="xref docutils literal notranslate"><span class="pre">if_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-for_block"><code class="xref docutils literal notranslate"><span class="pre">for_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-while_block"><code class="xref docutils literal notranslate"><span class="pre">while_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-case_block"><code class="xref docutils literal notranslate"><span class="pre">case_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-choice_block"><code class="xref docutils literal notranslate"><span class="pre">choice_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-fork_block"><code class="xref docutils literal notranslate"><span class="pre">fork_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-pfor_block"><code class="xref docutils literal notranslate"><span class="pre">pfor_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-session_block"><code class="xref docutils literal notranslate"><span class="pre">session_block</span></code></a>
+               | <a class="reference internal" href="#grammar-token-try_block"><code class="xref docutils literal notranslate"><span class="pre">try_block</span></code></a>
+</pre>
+<section id="id63">
+<h4><span class="section-number">4.6.8.1. </span>Simple block<a class="headerlink" href="#id63" title="Permalink to this heading">¶</a></h4>
+<p>If a simple block has a variable declaration, the local variable holding the block scope is newly defined, and then a job flow expression in the block is executed accordingly. If the variable declaration is omitted, simply execute the job flow expression in the block.</p>
+<pre>
+<strong id="grammar-token-simple_block">simple_block</strong> ::=  &quot;{&quot; (<a class="reference internal" href="#grammar-token-binding_list"><code class="xref docutils literal notranslate"><span class="pre">binding_list</span></code></a> &quot;|&quot;)? <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+</section>
+<section id="if">
+<h4><span class="section-number">4.6.8.2. </span>if Block<a class="headerlink" href="#if" title="Permalink to this heading">¶</a></h4>
+<p>The if block evaluates the first conditional expression and branches processing depending on the result. If the conditional expression is omitted, the value of $RESULT which is the execution result of the immediately preceding job is used.</p>
+<pre>
+<strong id="grammar-token-if_block">if_block   </strong> ::=  &quot;{&quot; &quot;if&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>? &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+                 | &quot;{&quot; &quot;if&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>? &quot;|&quot; <a class="reference internal" href="#grammar-token-then_clause"><code class="xref docutils literal notranslate"><span class="pre">then_clause</span></code></a> <a class="reference internal" href="#grammar-token-elif_clause"><code class="xref docutils literal notranslate"><span class="pre">elif_clause</span></code></a>* <a class="reference internal" href="#grammar-token-else_clause"><code class="xref docutils literal notranslate"><span class="pre">else_clause</span></code></a>? &quot;}&quot;
+<strong id="grammar-token-then_clause">then_clause</strong> ::=  &quot;then&quot; &quot;:&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>
+<strong id="grammar-token-elif_clause">elif_clause</strong> ::=  &quot;elif&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;:&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>
+<strong id="grammar-token-else_clause">else_clause</strong> ::=  &quot;else&quot; &quot;:&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>
+</pre>
+<p>In the first form of an if block, the job flow expression in the block is executed only if the conditional expression is true.</p>
+<p>In the second form of an if block, if the first conditional expression is true, the jobflow expression in the then clause is executed. In the case of false, the conditional expression of the next elif clause is evaluated, and if the value is true, the job flow expression of the elif clause is executed. When every conditional expression is false, and if there is a last else clause, the job flow expression of the else clause is executed.</p>
+</section>
+<section id="case">
+<h4><span class="section-number">4.6.8.3. </span>Case block<a class="headerlink" href="#case" title="Permalink to this heading">¶</a></h4>
+<p>The case block evaluates the first expression and attempts to match that value with the value evaluated for the pattern expression of each case clause. If the matching is successful, execute the job flow of the corresponding case clause. If multiple pattern expressions of case clause are described in comma-separated form, if matching with any one pattern is regarded as a success, the job flow of that section is executed.</p>
+<p>If the first expression is omitted, the value of $RESULT (which is the execution result of the previous job) is used.</p>
+<pre>
+<strong id="grammar-token-case_block">case_block </strong> ::=  &quot;{&quot; &quot;case&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>? &quot;|&quot; <a class="reference internal" href="#grammar-token-case_clause"><code class="xref docutils literal notranslate"><span class="pre">case_clause</span></code></a>+ <a class="reference internal" href="#grammar-token-else_clause"><code class="xref docutils literal notranslate"><span class="pre">else_clause</span></code></a>? &quot;}&quot;
+<strong id="grammar-token-case_clause">case_clause</strong> ::=  <a class="reference internal" href="#grammar-token-expression_list"><code class="xref docutils literal notranslate"><span class="pre">expression_list</span></code></a> &quot;:&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>
+</pre>
+<p>The case clause is followed by a pattern expression followed by a colon (:), which is a delimiter, and a job flow expression to be executed when it matches the pattern. If the result of evaluating the pattern expression is a pattern object, matching based on that pattern object is attempted. If the evaluation result of the pattern expression is a character string, it is treated as a case-sensitive Glob pattern. Otherwise, we will do a simple == comparison by matching.</p>
+<p>Patterns are tried in order from the beginning of the case clause. If no pattern matches, if there is an else clause, the job flow expression is executed. If there is no else clause, matching is considered to have failed and $STATUS is set to 1.</p>
+</section>
+<section id="for">
+<h4><span class="section-number">4.6.8.4. </span>for block<a class="headerlink" href="#for" title="Permalink to this heading">¶</a></h4>
+<p>A for block is used to iterate over elements within an object that contains multiple elements, such as lists, directories, and tables.</p>
+<pre>
+<strong id="grammar-token-for_block">for_block</strong> ::=  &quot;{&quot; &quot;for&quot; IDENTIFIER &quot;in&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+<p>Expressions are evaluated only the first time when the for block is executed. The evaluation result of the expression must be a repeatable object or an integer value, otherwise an execution error will occur. Each element of the object is assigned to a local variable indicated by an identifier (IDENTIFIER). If the evaluation result of the expression is an integer value N, the local variable iterates in the range 0 to N-1. However, it does not iterate if N is 0 or negative. Since this local variable has the scope of the for block, it can not be referenced after leaving the for block.</p>
+<p>When the break job is executed in the job flow expression, the loop is terminated. When the continue job is executed, the subsequent processing of the job flow expression is skipped and the loop is terminated.</p>
+<p>$STATUS at the end of the for block is always set to 0.</p>
+</section>
+<section id="while">
+<h4><span class="section-number">4.6.8.5. </span>While block<a class="headerlink" href="#while" title="Permalink to this heading">¶</a></h4>
+<p>The while block evaluates the expression iteratively, and if it is true, it executes the job flow expression. If the expression is false, the while block ends the iteration.</p>
+<pre>
+<strong id="grammar-token-while_block">while_block</strong> ::=  &quot;{&quot; &quot;while&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+<p>When the break job is executed in the job flow expression, the loop is terminated. When the continue job is executed, skip the subsequent processing of the job flow expression and return to evaluating the expression.</p>
+<p>$STATUS at the end of the while block is always set to 0.</p>
+</section>
+<section id="choice">
+<h4><span class="section-number">4.6.8.6. </span>Choice block<a class="headerlink" href="#choice" title="Permalink to this heading">¶</a></h4>
+<p>The choice block waits for multiple event jobs, and when one becomes executable, it executes the job flow expression following that event job.</p>
+<pre>
+<strong id="grammar-token-choice_block">choice_block        </strong> ::=  &quot;{&quot; &quot;choice&quot; &quot;|&quot; <a class="reference internal" href="#grammar-token-eventflow_expression"><code class="xref docutils literal notranslate"><span class="pre">eventflow_expression</span></code></a>+ &quot;}&quot;
+<strong id="grammar-token-eventflow_expression">eventflow_expression</strong> ::=  <a class="reference internal" href="#grammar-token-event_job"><code class="xref docutils literal notranslate"><span class="pre">event_job</span></code></a> (&quot;-&gt;&quot; | &quot;=&gt;&quot; | &quot;-&gt;&gt;&quot; | &quot;=&gt;&gt;&quot;) <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>
+</pre>
+<p>If multiple event jobs can be executed at the same time, the event job closest to the top takes precedence.</p>
+</section>
+<section id="fork">
+<h4><span class="section-number">4.6.8.7. </span>Fork block<a class="headerlink" href="#fork" title="Permalink to this heading">¶</a></h4>
+<p>The fork block starts executing the job flow expression as a child process.</p>
+<pre>
+<strong id="grammar-token-fork_block">fork_block</strong> ::=  &quot;{&quot; &quot;fork&quot; &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>+ &quot;}&quot;
+</pre>
+<p>The fork block waits until all child processes that has not been detach() have completed execution. $RESULT is set to the list of child processes. At the end of the fork block, $RESULT is set to the list of all child processes created in the fork block, and $STATUS is set to the number of child processes terminate abnormally. If all child processes terminate normally, $STATUS is set to 0.</p>
+<p>If the process generated by the fork block exceeds the limit of the number of processes, the fork block waits for execution until the other process complete execution and it falls within the process limit.</p>
+</section>
+<section id="pfor">
+<h4><span class="section-number">4.6.8.8. </span>Pfor block<a class="headerlink" href="#pfor" title="Permalink to this heading">¶</a></h4>
+<p>The pfor block creates a child process and performs concurrent processing on elements in an object including multiple elements such as lists, directories, and tables.</p>
+<pre>
+<strong id="grammar-token-pfor_block">pfor_block</strong> ::=  &quot;{&quot; &quot;pfor&quot; IDENTIFIER &quot;in&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a> &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+<p>Expressions are evaluated only during the first time when executing the pfor block. The evaluation result of the expression must be a repeatable object, otherwise it will result in an execution error. A child process is created for each element of the object and the corresponding element in each child process is assigned to a local variable identified by an identifier (IDENTIFIER), and execution of the child process is started. If the evaluation result of the expression is an integer value N, execution of the child process is started for each of the local variables from 0 to N-1. However, if N is 0 or negative, the child process is not executed.</p>
+<p>The pfor block waits until all child processes that has not been detach() have completed execution. $RESULT is set to the list of child processes. At the end of the pfor block, $RESULT is set to the list of all child processes created in the pfor block, and $STATUS is set to the number of child processes terminate abnormally. If all child processes terminate normally, $STATUS is set to 0.</p>
+<p>If the process generated by the pfor block exceeds the limit of the number of processes, the pfor block waits for execution until the other processes are executed and it is within the processing limit.</p>
+</section>
+<section id="session">
+<h4><span class="section-number">4.6.8.9. </span>Session block<a class="headerlink" href="#session" title="Permalink to this heading">¶</a></h4>
+<p>The session block starts a session with the remote server.</p>
+<pre>
+<strong id="grammar-token-session_block">session_block</strong> ::=  &quot;{&quot; &quot;session&quot; IDENTIFIER &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+<p>When a session block is executed, it first starts a session with the remote server specified by the control variable. The session channel for interaction with the remote server in the session is assigned to the local variable indicated by the identifier (IDENTIFIER). When sending (send) a character string to this session channel, a character string is sent to the remote server side. In addition, in order to obtain output from the remote server side, data is acquired from the session channel using the event job. The output from the remote server is stored in the session channel as a line-by-line message. Therefore, reading messages from the session channel is one line at a time.</p>
+<p>Exiting the session block ends the session, and the session channel is closed. After that, transmission to the session channel will result in an error. Reading messages from the session channel also results in an error. (However, messages output from the remote server before closing the session can be read)</p>
+<p>Calling break in a session block closes the session and ends the block.</p>
+<p>When the session block ends normally, $STATUS is set to 0. In addition, the session channel is stored in $RESULT. Unread data is stored in the data attribute of the session channel. (Each line of the message is concatenated and becomes one character string data)</p>
+<p>If the session fails to start, the session block is terminated without being executed in the session block, and $STATUS is set to non-0. In addition, $ERROR contains a message indicating the cause of the error.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can execute a command job within a session block, but you can not start another session anew.</p>
+</div>
+<p>The following shows an example of a job flow program that executes interactive processing by executing the su command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[__host__ = &#39;server.exmaple.com&#39;, __user__ = &#39;testuser&#39;, __password__ = &#39;password&#39;,
+ __use_pty__ = true   # su command require PTY.
+] -&gt;
+# log in to server.example.com and start session.
+{ session s |
+    [s.send: &#39;LANG=C su\n&#39;] -&gt;               # execute su command
+    &lt;s ?? &#39;Password: &#39;&gt; -&gt;                   # wait for password prompt
+    [s.send: &#39;root_password\n&#39;] -&gt;           # send root&#39;s password
+    &lt;s ?? g&#39;*]# &#39;&gt; -&gt;                        # wait for root user prompt
+    [s.send: &#39;service httpd restart\n&#39;] -&gt;   # restart the httpd service
+    &lt;s ?? g&#39;*]# &#39;&gt; -&gt;                        # wait for root user prompt
+    [s.send: &#39;exit\n&#39;]                       # exit from root
+} -&gt;
+print(&#39;OK&#39;)
+</pre></div>
+</div>
+</section>
+<section id="try">
+<h4><span class="section-number">4.6.8.10. </span>Try block<a class="headerlink" href="#try" title="Permalink to this heading">¶</a></h4>
+<p>The try block catches the abnormal termination that occurred while executing the job flow in the block, and continues the processing.</p>
+<pre>
+<strong id="grammar-token-try_block">try_block</strong> ::=  &quot;{&quot; &quot;try&quot; &quot;|&quot; <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;}&quot;
+</pre>
+<p>If the job flow enclosed by the try block ends normally, the try block sets $STATUS to 0, and if it ends abnormally, sets $STATUS to 1. It also stores debugging information in $DEBUG.</p>
+<p>If exit is called while executing the job flow in the try block, the job flow always ends. Also, if the execution of the job flow is cancelled by the user while executing the job flow in the try block, the job flow will terminate execution.</p>
+</section>
+</section>
+</section>
+<section id="id64">
+<h2><span class="section-number">4.7. </span>Job flow expressions<a class="headerlink" href="#id64" title="Permalink to this heading">¶</a></h2>
+<p>A job flow expression is an expression that combines jobs with connectors.</p>
+<pre>
+<strong id="grammar-token-jobflow_expression">jobflow_expression</strong> ::=  <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;-&gt;&quot; <a class="reference internal" href="#grammar-token-job"><code class="xref docutils literal notranslate"><span class="pre">job</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;=&gt;&quot; <a class="reference internal" href="#grammar-token-job"><code class="xref docutils literal notranslate"><span class="pre">job</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;-&gt;&gt;&quot; <a class="reference internal" href="#grammar-token-job"><code class="xref docutils literal notranslate"><span class="pre">job</span></code></a>
+                        | <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a> &quot;=&gt;&gt;&quot; <a class="reference internal" href="#grammar-token-job"><code class="xref docutils literal notranslate"><span class="pre">job</span></code></a>
+</pre>
+<section id="ref-connector">
+<span id="id65"></span><h3><span class="section-number">4.7.1. </span>Connectors<a class="headerlink" href="#ref-connector" title="Permalink to this heading">¶</a></h3>
+<p>There are multiple types of connectors, and whether job flow processing continues or not when the job fails is different.</p>
+<p>Below is a list of connectors, the behaviour they exhibit when the job fails and the value of the status variable, when processing is continued.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Connectors</p></th>
+<th class="head"><p>Command abnormal termination</p></th>
+<th class="head"><p>Remote login failed</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>-&gt;</p></td>
+<td><div class="line-block">
+<div class="line">Forced termination</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Forced termination</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>=&gt;</p></td>
+<td><div class="line-block">
+<div class="line">Processing continuation</div>
+<div class="line">$STATUS &gt;= 1</div>
+<div class="line">$RESULT = (stdout)</div>
+<div class="line">$ERROR  = (empty)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Forced termination</div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>-&gt;&gt;</p></td>
+<td><div class="line-block">
+<div class="line">Forced termination</div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Processing continuation</div>
+<div class="line">$STATUS = -1</div>
+<div class="line">$RESULT = (empty)</div>
+<div class="line">$ERROR  = (error message)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>=&gt;&gt;</p></td>
+<td><div class="line-block">
+<div class="line">Processing continuation</div>
+<div class="line">$STATUS &gt;= 1</div>
+<div class="line">$RESULT = (stdout)</div>
+<div class="line">$ERROR  = (empty)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">Processing continuation</div>
+<div class="line">$STATUS = -1</div>
+<div class="line">$RESULT = (empty)</div>
+<div class="line">$ERROR  = (error message)</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If the execution status of the remote command is anything other than 0, it begins to operate as per “Command abnormal termination” in the above table. At this time, the value of the execution status of the remote command is the value of $STATUS.</p>
+<p>If remote access times out, or if the IP address, user name, password, etc. specified in the job flow are incorrect, the failure will be as per “Remote login failure” in the above table.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a remote command is executed to a Windows node, the execution status is normally a signed 32-bit value, but Kompira treats it as an unsigned 32-bit value.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The maximum number of jobs that can be combined in a single job flow expression is 4096. Inside a block is counted separately, so for example, the following job flow expression would have 6 jobs.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x -&gt; y -&gt; { if true | a -&gt; b -&gt; c } -&gt; z -&gt; v -&gt; w
+</pre></div>
+</div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.4.post5: </span>When remote login fails, $ERROR contains a message indicating the cause of the error.</p>
+</div>
+</section>
+</section>
+<section id="id66">
+<h2><span class="section-number">4.8. </span>Job flow Program<a class="headerlink" href="#id66" title="Permalink to this heading">¶</a></h2>
+<p>A job flow program consists of zero or more parameter declarations followed by job flow expressions. If the job flow expression is empty, execution of the job flow program can be skipped.</p>
+<pre>
+<strong id="grammar-token-jobflow_program">jobflow_program</strong> ::=  (<a class="reference internal" href="#grammar-token-parameter_declaration"><code class="xref docutils literal notranslate"><span class="pre">parameter_declaration</span></code></a>)* <a class="reference internal" href="#grammar-token-jobflow_expression"><code class="xref docutils literal notranslate"><span class="pre">jobflow_expression</span></code></a>?
+</pre>
+<section id="id67">
+<h3><span class="section-number">4.8.1. </span>Parameter declaration<a class="headerlink" href="#id67" title="Permalink to this heading">¶</a></h3>
+<p>The parameter declaration takes the following form:</p>
+<pre>
+<strong id="grammar-token-parameter_declaration">parameter_declaration</strong> ::=  &quot;|&quot; IDENTIFIER (&quot;=&quot; <a class="reference internal" href="#grammar-token-expression"><code class="xref docutils literal notranslate"><span class="pre">expression</span></code></a>)? &quot;|&quot;
+</pre>
+<p>In the parameter declaration, if there is a form of parameter_declaration = expresssion, the job flow has default parameters. For parameters with default values, if the corresponding parameter is omitted during the job flow call, the value of the parameter will be replaced with the default value. The default parameter expression is evaluated for each job flow invocation.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">4. Kompira Jobflow Language Reference</a><ul>
+<li><a class="reference internal" href="#id1">4.1. Introduction</a><ul>
+<li><a class="reference internal" href="#id2">4.1.1. Syntax Notation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">4.2. Lexical structure</a><ul>
+<li><a class="reference internal" href="#id4">4.2.1. Comment</a></li>
+<li><a class="reference internal" href="#id5">4.2.2. Blanks</a></li>
+<li><a class="reference internal" href="#id6">4.2.3. Identifiers</a><ul>
+<li><a class="reference internal" href="#id7">4.2.3.1. Keywords</a></li>
+<li><a class="reference internal" href="#id8">4.2.3.2. Reserved identifier Class</a></li>
+<li><a class="reference internal" href="#id9">4.2.3.3. Special identifiers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10">4.2.4. Object Path</a></li>
+<li><a class="reference internal" href="#id11">4.2.5. Literal</a><ul>
+<li><a class="reference internal" href="#string">4.2.5.1. String literal (STRING)</a></li>
+<li><a class="reference internal" href="#binary">4.2.5.2. Binary literal (BINARY)</a></li>
+<li><a class="reference internal" href="#integer">4.2.5.3. Integer literal (INTEGER)</a></li>
+<li><a class="reference internal" href="#float">4.2.5.4. Floating-point literal (FLOAT)</a></li>
+<li><a class="reference internal" href="#boolean">4.2.5.5. Boolean literal (BOOLEAN)</a></li>
+<li><a class="reference internal" href="#null">4.2.5.6. Null literal (NULL)</a></li>
+<li><a class="reference internal" href="#pattern">4.2.5.7. Pattern literal (PATTERN)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id12">4.2.6. Symbols</a><ul>
+<li><a class="reference internal" href="#id13">4.2.6.1. Operators</a></li>
+<li><a class="reference internal" href="#id14">4.2.6.2. Connectors</a></li>
+<li><a class="reference internal" href="#id15">4.2.6.3. Delimiter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16">4.3. Value and type</a><ul>
+<li><a class="reference internal" href="#id17">4.3.1. Primitive types</a><ul>
+<li><a class="reference internal" href="#data_type-Integer">4.3.1.1. Integer type (Integer)</a></li>
+<li><a class="reference internal" href="#data_type-String">4.3.1.2. String type (String)</a></li>
+<li><a class="reference internal" href="#data_type-Binary">4.3.1.3. Binary type (Binary)</a></li>
+<li><a class="reference internal" href="#data_type-Float">4.3.1.4. Floating-point type (Float)</a></li>
+<li><a class="reference internal" href="#data_type-Boolean">4.3.1.5. Boolean (Boolean)</a></li>
+<li><a class="reference internal" href="#data_type-Null">4.3.1.6. Null type (Null)</a></li>
+<li><a class="reference internal" href="#data_type-Pattern">4.3.1.7. Pattern type (Pattern)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25">4.3.2. Complex data type</a><ul>
+<li><a class="reference internal" href="#array">4.3.2.1. Array type (Array)</a></li>
+<li><a class="reference internal" href="#dictionary">4.3.2.2. Dictionary type (Dictionary)</a></li>
+<li><a class="reference internal" href="#lazyarray">4.3.2.3. Lazy evaluation array type (LazyArray)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26">4.3.3. Opaque data type</a><ul>
+<li><a class="reference internal" href="#object">4.3.3.1. Object type (Object)</a></li>
+<li><a class="reference internal" href="#file">4.3.3.2. File type (File)</a></li>
+<li><a class="reference internal" href="#datetime">4.3.3.3. Date and time data (Datetime)</a></li>
+<li><a class="reference internal" href="#date">4.3.3.4. Date data (Date)</a></li>
+<li><a class="reference internal" href="#time">4.3.3.5. Time data (Time)</a></li>
+<li><a class="reference internal" href="#timedelta">4.3.3.6. Elapsed time type (Timedelta)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27">4.4. Variables</a><ul>
+<li><a class="reference internal" href="#id28">4.4.1. Local variables</a><ul>
+<li><a class="reference internal" href="#id29">4.4.1.1. Job Flow Scope</a></li>
+<li><a class="reference internal" href="#id30">4.4.1.2. Block scope</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id31">4.4.2. Environment variable</a></li>
+<li><a class="reference internal" href="#id32">4.4.3. Special variable</a><ul>
+<li><a class="reference internal" href="#status-variables">4.4.3.1. Status variable</a></li>
+<li><a class="reference internal" href="#control-variables">4.4.3.2. Control variable</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id35">4.5. Expression</a><ul>
+<li><a class="reference internal" href="#id36">4.5.1. Atomic formula</a><ul>
+<li><a class="reference internal" href="#identifier">4.5.1.1. Identifier (IDENTIFIER)</a></li>
+<li><a class="reference internal" href="#id37">4.5.1.2. Object Path</a></li>
+<li><a class="reference internal" href="#id38">4.5.1.3. Special identifiers</a></li>
+<li><a class="reference internal" href="#id39">4.5.1.4. Literal</a></li>
+<li><a class="reference internal" href="#id40">4.5.1.5. Parentheses format</a></li>
+<li><a class="reference internal" href="#id41">4.5.1.6. Array expression</a></li>
+<li><a class="reference internal" href="#id42">4.5.1.7. Dictionary expression</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id43">4.5.2. Postfix expressions</a><ul>
+<li><a class="reference internal" href="#id44">4.5.2.1. Attribute reference</a></li>
+<li><a class="reference internal" href="#id45">4.5.2.2. Subscript Reference</a></li>
+<li><a class="reference internal" href="#id46">4.5.2.3. Function calls</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id47">4.5.3. Operator expression</a><ul>
+<li><a class="reference internal" href="#id48">4.5.3.1. Unary operator</a></li>
+<li><a class="reference internal" href="#id49">4.5.3.2. Multiplication and division operator</a></li>
+<li><a class="reference internal" href="#id50">4.5.3.3. Arithmetic operators</a></li>
+<li><a class="reference internal" href="#id51">4.5.3.4. Comparison operators</a></li>
+<li><a class="reference internal" href="#id52">4.5.3.5. Inclusion operators</a></li>
+<li><a class="reference internal" href="#id53">4.5.3.6. Logical operators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id54">4.6. A job</a><ul>
+<li><a class="reference internal" href="#id55">4.6.1. Skip Job</a></li>
+<li><a class="reference internal" href="#id56">4.6.2. Execution job</a></li>
+<li><a class="reference internal" href="#id57">4.6.3. Assignment jobs</a></li>
+<li><a class="reference internal" href="#id58">4.6.4. Update jobs</a></li>
+<li><a class="reference internal" href="#job-eventjob">4.6.5. Event jobs</a></li>
+<li><a class="reference internal" href="#id60">4.6.6. Built-in jobs</a></li>
+<li><a class="reference internal" href="#id61">4.6.7. Control jobs</a><ul>
+<li><a class="reference internal" href="#continue">4.6.7.1. Continue</a></li>
+<li><a class="reference internal" href="#break">4.6.7.2. Break</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id62">4.6.8. Block jobs</a><ul>
+<li><a class="reference internal" href="#id63">4.6.8.1. Simple block</a></li>
+<li><a class="reference internal" href="#if">4.6.8.2. if Block</a></li>
+<li><a class="reference internal" href="#case">4.6.8.3. Case block</a></li>
+<li><a class="reference internal" href="#for">4.6.8.4. for block</a></li>
+<li><a class="reference internal" href="#while">4.6.8.5. While block</a></li>
+<li><a class="reference internal" href="#choice">4.6.8.6. Choice block</a></li>
+<li><a class="reference internal" href="#fork">4.6.8.7. Fork block</a></li>
+<li><a class="reference internal" href="#pfor">4.6.8.8. Pfor block</a></li>
+<li><a class="reference internal" href="#session">4.6.8.9. Session block</a></li>
+<li><a class="reference internal" href="#try">4.6.8.10. Try block</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id64">4.7. Job flow expressions</a><ul>
+<li><a class="reference internal" href="#ref-connector">4.7.1. Connectors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id66">4.8. Job flow Program</a><ul>
+<li><a class="reference internal" href="#id67">4.8.1. Parameter declaration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="tutorial.html"
+                          title="previous chapter"><span class="section-number">3. </span>Kompira Tutorial</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="library.html"
+                          title="next chapter"><span class="section-number">5. </span>Kompira Standard Library</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/reference.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="library.html" title="5. Kompira Standard Library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="3. Kompira Tutorial"
+             >previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/reference.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>Kompira Jobflow Language Reference</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

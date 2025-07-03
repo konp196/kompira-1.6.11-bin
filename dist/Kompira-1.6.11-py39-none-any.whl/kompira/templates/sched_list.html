@@ -1,0 +1,65 @@
+{% extends "main_list.html" %}
+{% load static i18n core_extras %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include 'lib/tablesorter.html' %}
+{% endblock extra_head %}
+
+{% block header_title %}{% trans 'schedule list'|capfirst %}{% endblock %}
+{% block page_main_title %}{% trans 'schedule list'|capfirst %}{% endblock %}
+
+{% block display_select %}
+{% with act_objects=_("active schedules") all_objects=_("all schedules") %}
+{{ block.super }}
+{% endwith %}
+{% endblock %}
+
+{% block main_list_body %}
+<table class="table table-bordered table-striped table-sm tablesorter list-table table-operation-right">
+  <thead>
+    <tr>
+      <th>{% trans 'name'|capfirst %}</th>
+      <th>{% trans 'job'|capfirst %}</th>
+      <th>{% trans 'next datetime'|capfirst %}</th>
+      <th>{% trans 'user'|capfirst %}</th>
+      <th class="{sorter: false} table-operation">{% trans 'operation'|capfirst %}</th>
+    </tr>
+  </thead>
+  <tbody id="schedule-list">
+    {% for schedule in object_list %}
+    <tr>
+      <td><a href="{{ schedule.abspath }}">{{ schedule.name }}</a></td>
+      <td><a href="{{ schedule.job|getattr:'abspath' }}">{{ schedule.job }}</td>
+      {% trans "NOT_SCHEDULED" as status %}
+      <td>{{ schedule.next_run_time|default:status }}</td>
+      <td>{{ schedule.user }}</td>
+      <td class="table-operation">
+        {% with object_path=schedule.abspath object_name=schedule.name copyable="true" %}
+        {% include 'action_button.html' %}
+        {% endwith %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <form action="{{ object|getattr:'abspath' }}.add" method="get">
+        <td>{{ create_form.name }}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="table-operation">
+          <input type="submit" class="btn btn-outline-secondary btn-sm" id="id_create-btn" value="{% trans 'create'|capfirst %}">
+        </td>
+      </form>
+    </tr>
+  </tfoot>
+</table>
+{% include "action_form.html" %}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'kompira/js/action_script.js' %}" type="text/javascript"></script>
+{% endblock %}

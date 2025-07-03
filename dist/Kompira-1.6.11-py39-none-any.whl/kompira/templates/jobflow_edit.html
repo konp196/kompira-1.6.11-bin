@@ -1,0 +1,18 @@
+{% extends "obj_edit.html" %}
+{% load static i18n %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include "lib/codemirror.html" %}
+<script src="{% static 'kompira/js/codemirror-jobflow-fold.js' %}"></script>
+<script src="{% static 'kompira/js/codemirror-jobflow-mode.js' %}"></script>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript">
+(function(){
+    kompira.editor.create("id_source", {codemirror: {mode: "jobflow"}});
+})();
+</script>
+{% endblock %}

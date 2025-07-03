@@ -1,0 +1,109 @@
+{% extends "obj_edit.html" %}
+{% load static i18n %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include "lib/codemirror.html" %}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript">
+(function(){
+    var id_textarea = "id_source";
+    var $ext_input = $('#id_ext');
+
+    var current_mode = {};
+    var check_timer = undefined;
+    var check_delay = 500;
+    // モードを判定するためにチェックするテキスト範囲
+    var check_range = { from: 0, to: 2 };
+
+    // モードを推定する：
+    //   - 拡張子が指定されていれば、拡張子で推定する
+    //   - スクリプト先頭に shebang (#! ...) があれば、そのコマンド指定で推定する
+    function estimate_mode() {
+        // 拡張子を取得する
+        var ext = $ext_input.val();
+        if (ext) {
+            var mode = CodeMirror.findModeByExtension(ext);
+            if (mode) {
+                return mode;
+            }
+        }
+        var cm = kompira.editor.get(id_textarea);
+        if (!cm) {
+            return null;
+        }
+        // from行頭 ～ to行末までのテキストを取得する
+        var codes = cm.getRange(
+            { line: check_range.from, ch:0 },
+            { line: check_range.to, ch:99999 }
+        ).split("\n");
+
+        // shebang 判定
+        // [TODO] shebang にパターンにマッチするコマンド名が複数あった場合に先頭のモードを設定する
+        for (var ln=0 ; ln<codes.length ; ln++) {
+            var code = codes[ln];
+            if (code.match(/^\s*#!\s*(.+)/)) {
+                var shebang = RegExp.$1;
+                console.log("estimate_mode: shebang='" + shebang + "'");
+                var chunks = shebang.split(/\s+/);
+                for (var i=0; i<chunks.length ; i++) {
+                    var chunk = chunks[i].split('/').pop();
+                    if (chunk) {
+                        var mode = CodeMirror.findModeByName(chunk);
+                        if (mode) {
+                            return mode;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        return null;
+    }
+
+    //
+    // スクリプトに適したモードを codemirror に設定する
+    //
+    function check_mode() {
+        var mode = estimate_mode() || {name: 'null'};
+        if (current_mode.mode != mode.mode) {
+            console.log("script-mode:", mode);
+            var cm = kompira.editor.get(id_textarea);
+            if (cm) {
+                cm.setOption("mode", mode.mime);
+                current_mode = mode;
+            }
+        }
+        check_timer = undefined;
+    }
+
+    //
+    // 拡張子・スクリプトを編集したときのハンドラ
+    // チェック対象範囲が更新されたときに、check_mode() を遅延呼び出しする
+    //
+    function ext_change_handler() {
+        // check_mode() 呼び出しタイマーを再設定する（遅延させる）
+        if (check_timer !== undefined) {
+            clearTimeout(check_timer);
+        }
+        check_timer = setTimeout(check_mode, check_delay);
+    }
+    function scr_change_handler(cm, change) {
+        // 変更箇所がチェック対象範囲でなければ何もしない
+        if (change.from.line > check_range.to || change.to.line < check_range.from)
+            return;
+        ext_change_handler();
+    }
+
+    var cm = kompira.editor.create(id_textarea);
+    // 拡張子・スクリプトの変更ハンドラ登録
+    $ext_input.on("keyup", ext_change_handler);
+    cm.on("change", scr_change_handler);
+    // 初期モード判定
+    check_mode();
+})();
+</script>
+{% endblock %}

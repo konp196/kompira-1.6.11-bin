@@ -1,0 +1,1915 @@
+======================
+ Kompiraチュートリアル
+======================
+
+:著者: Kompira 開発チーム
+
+.. highlight:: none
+
+
+はじめに
+========
+
+このチュートリアルでは、Kompira ジョブフロー言語の基本的な書き方や仕様について
+ざっと紹介します。実際に Kompira 上でジョブフローを作成しながら学ぶことで、
+リモートノードの制御方法や Kompira オブジェクトの利用方法が理解できることでしょう。
+
+Kompira 標準オブジェクトの仕様については、 :doc:`library` を参照してください。
+また :doc:`reference` にはより形式的な言語の定義が書いてあります。
+
+このチュートリアルは Kompira の機能を網羅的に紹介しているわけではありません。
+しかしこのチュートリアルを読むことで、Kompira の特筆すべき機能や特徴を学び、
+簡単なジョブフローであれば読み書きできるようになるでしょう。
+
+
+ジョブフローを動かす
+====================
+
+Hello World
+-----------
+
+最初のジョブフローは、コンソールに "Hello World" を表示する単純なものです。 ::
+
+    print("Hello World")
+
+このジョブフローを実行するとコンソールに以下のように出力されるはずです。 ::
+
+    Hello World
+
+.. note::
+    ジョブフローに文法エラーがあると、保存しても実行できない状態になります。
+    実行ボタンが押せない場合は、ジョブフローのエラーを修正して再度保存してください。
+
+
+Kompiraのジョブフロー言語は、1つの処理を表す **ジョブ** が基本的な
+実行の単位となります。
+
+上の例では ``print()`` がジョブフローの **組み込みジョブ** のひとつで、
+丸括弧内に引数として与えられた文字列をコンソールに出力します。
+詳しくは :ref:`print <lib-print>` を参照してください。
+
+コメントの書き方
+----------------
+
+ジョブフローではハッシュ文字 ``#`` から行末までがコメントとなります。
+コメントは行の先頭にも、ジョブの後にも書くことができます。
+ただし、文字列中に現れるハッシュ文字は対象外です。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        # これはコメントです
+        print("# これはコメントではありません")  # これはコメント
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        # This would be recognised as a comment in a job flow
+        print("# This would NOT be a comment.")  # This would be a comment
+
+コマンドを実行する
+------------------
+
+実行したいコマンドを文字列として **[** と **]** の中に記述することで、
+コマンドとして実行することができる **実行ジョブ** になります。
+
+.. note::
+    ``[]`` の中が文字列であれば実行すべきコマンドとして解釈しますので、
+    コマンドラインの文字列を代入した変数を ``[]`` に記述して実行させる
+    ことも可能です。（変数への代入については後ほど説明します）
+
+コマンドの実行結果を表示する例を以下に示します。::
+
+    ['whoami'] ->
+    print($RESULT)
+
+このジョブフローを実行すると ``whoami`` コマンドを実行し、
+その結果（標準出力）が ``print()`` ジョブでコンソールに出力されます。
+通常はコンソールに以下のように表示されるはずです。::
+
+    [localhost] local: whoami
+
+    kompira
+
+.. note::
+    特に指定しないとコマンドはジョブマネージャが動作しているホスト
+    上で ``kompira`` アカウントで実行されるため、 ``whoami`` コマンド
+    の実行結果として ``kompira`` と表示されています。
+
+    ``[localhost] local:`` で始まる行はどのノードでどんなコマンドを実行したかを
+    示しています。リモートでコマンドを実行した場合は ``[<ホスト名>] run: <コマンド>``
+    または ``[<IPアドレス>] run: <コマンド>`` のように表示されます。
+
+
+$RESULT
+-------
+
+``$RESULT`` は直前のジョブの実行結果が格納されている特殊な変数（状態変数）です。
+この場合は ``whoami`` コマンドの実行結果、すなわち "kompira" という文字列が
+格納されることになります。
+
+.. note::
+    ``$RESULT`` に格納される値の形式はジョブの種類によって異なります。
+    コマンドジョブの場合は、標準出力が文字列として格納されていますが、
+    ジョブによっては数値や辞書型の場合もあります。
+
+
+ジョブの連結
+------------
+
+ジョブとジョブの間の矢印 ``->`` は、前のジョブが成功したら、後続のジョブを
+実行する、という意味です。したがって、ジョブを ``->`` でつないでいくことで、
+順番にジョブを実行していくことができます。
+
+ジョブが失敗した場合（コマンドの実行ステータスが0以外を返した場合）でも
+次の処理を継続したい場合には、二重矢印 ``=>`` を使います。
+なお、直前のコマンドの実行ステータスは ``$STATUS`` 状態変数で参照することができます。
+
+こうしたジョブを連結する矢印を :ref:`ref-connector` といい、ジョブフローでは4種類あります。
+
+
+変数を使う
+==========
+
+変数の定義
+----------
+
+変数は ``{ <変数定義> | <ジョブ> }`` という構文を用いて定義することができます。
+``<変数定義>`` の部分は ``変数名 = 値(または式)`` という形式で記述します。
+コンマで区切って複数の変数定義を記述することもできます。 ::
+
+    { x = 'what do you get if you multiply six by nine?', y = 6 * 9 |
+      print(x) -> print(y) }
+
+この場合、変数 ``x`` が ``'what do you get if you multiply six by nine?'``
+という文字列で初期化され、変数 ``y`` が ``6 * 9`` と式の計算結果で初期化されます。
+変数定義の後に縦棒 ``|`` で区切って、その変数を参照するジョブを記述することができます。
+
+上のジョブフローを実行すると、コンソールには以下のように表示されます。 ::
+
+    what do you get if you multiply six by nine?
+    54
+
+識別子
+------
+
+変数名などに用いる識別子には、Unicode で単語文字として分類される文字が使用できます。
+これには日本語の漢字や平仮名、英数字やアンダースコアが含まれています（アンダースコア
+以外の記号は含まれません）。ただし、識別子の先頭に数字 ``[0-9]`` は使用できません。
+
+したがって、以下のような文字列は識別子として使用可能です。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        x, foo123, 結果, __reserved_variable__
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        x, foo123, RESULT, __reserved_variable__
+
+
+次のような文字列は識別子として使用できません。 ::
+
+    1st, foo-bar, @id, #hash
+
+なお、以下は予約語またはキーワードとして扱われるため、変数名などに用いることはできません。 ::
+
+    and             break           case            choice
+    continue        elif            else            false
+    for             fork            if              in
+    not             null            or              pfor
+    then            true            while
+
+
+スコープ
+--------
+
+変数の有効範囲（スコープ）は ``{`` と ``}`` で囲まれた範囲です。
+スコープ内で定義されていない変数は参照できないため、
+以下のようなジョブフローは実行時にエラーとなります。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        { x = 'hello' |      # 変数 x のスコープは
+            print(x) }       # ここまで
+        -> print(x)          # ここはスコープ外
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        { x = 'hello' |      # Scope of variable x is ...
+            print(x) }       # ... up to here.
+        -> print(x)          # This is outside the scope.
+
+なお、以下のようにスコープを入れ子にすることは可能です。 ::
+
+    { x = 'outer', y = 999 |
+        print(x) -> print(y)
+        -> { x = 'inner' |
+            print(x) -> print(y) }
+        -> print(x) -> print(y)
+    }
+
+このジョブフローを実行すると以下のようになり、 ``x = 'inner'`` のスコープが
+3～4行目であり、5行目では外側のスコープを参照していることが分かります。 ::
+
+    outer
+    999
+    inner
+    999
+    outer
+    999
+
+すなわち、ジョブフローでの変数のスコープ規則は、C や Java などと同様です。
+
+
+変数の代入
+----------
+
+定義された変数の値を変更するには、 ``[変数 = 値(または式)]``
+という形式の **代入ジョブ** を使います。 ::
+
+    { x = 'outer', y = 'foo' |
+        print(x) -> print(y) ->
+        { x = '1st' |
+            print(x)
+            -> [x = '2nd'] -> print(x)
+            -> [x = '3rd'] -> print(x)
+            -> [y = 'bar']
+            -> [z = 'baz'] }
+        -> print(x) -> print(y) }
+    -> print(z)
+
+スコープが入れ子になっている場合、代入はその位置を含む外側のスコープ
+のうち対象となる変数定義を含む **もっとも内側のスコープ** に対して行われます。
+上の例で言うと、5～6行目で値を代入している変数 ``x`` は 3行目で定義したもの、
+7行目で代入している変数 ``y`` は1行目で定義したものです。
+
+未定義の変数に対して値を代入すると、 **最も外側のスコープ（ジョブフロースコープ）**
+で変数が新たに定義され、その値にセットされます。
+上の例で言うと、8行目で値を代入している変数 ``z`` はその時点では未定義であるため、
+最も外側のスコープに新たに定義され、10行目で表示できることになります。
+
+最も外側のスコープというのは明示的に ``{}`` で囲まれてはいませんが、
+ジョブフロー全体を囲んでいるスコープがあると考えてください。
+
+上記のジョブフローの実行結果は以下のようになります。 ::
+
+    outer
+    foo
+    1st
+    2nd
+    3rd
+    outer
+    bar
+    baz
+
+.. note::
+    ``$RESULT`` や ``$STATUS`` など状態変数は Kompira が内部的に値を設定するもので、
+    ジョブフローで状態変数への値の代入はできません。
+
+配列と辞書
+----------
+
+配列
+....
+
+複数の値を一度に保持したい場合は配列や辞書を使います。
+配列は ``[ 式,... ]`` と角括弧の中にコンマで複数の値や式を区切って記述します。
+配列要素へのアクセスは 0 始まりのインデックスを角括弧で指定することで可能です。
+また配列要素の書き換えは ``[値 >> 配列要素]`` で可能です。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [arr = [1, true, 'foo' ,['nested', 'array']]] ->
+        print(arr[1]) ->              # 配列要素の参照
+        [false >> arr[1]] ->          # 配列要素の書き換え
+        [arr = arr + ['added']] ->    # 配列要素の追加
+        print(arr[3][1]) ->           # 入れ子になった配列要素の参照
+        print(arr)                    # print() は配列自体の表示も可能
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [arr = [1, true, 'foo' ,['nested', 'array']]] ->
+        print(arr[1]) ->              # get array elements
+        [false >> arr[1]] ->          # set array elements
+        [arr = arr + ['added']] ->    # add array elements
+        print(arr[3][1]) ->           # get nested array elements
+        print(arr)                    # print() can print array
+
+このジョブフローを実行すると、以下のようになります。 ::
+
+    true
+    array
+    [1, false, 'foo', ['nested', 'array'], 'added']
+
+また負の値をインデックスに指定すると、配列の後ろから要素にアクセスします。 ::
+
+    [arr = [1, true, 'foo']] -> print(arr[-1])
+
+このジョブフローの実行結果は次のようになります。 ::
+
+    foo
+
+辞書
+....
+
+辞書は ``{ 識別子=式,... }`` と波括弧の中にコンマで複数の ``識別子=値`` を区切って記述します。
+辞書要素へのアクセスはドット記法または識別子を角括弧で指定することで可能です。
+また辞書要素の書き換えは ``[値 >> 辞書要素]`` で可能です。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [dic = {foo=1, bar=true, baz={a=123, b=456}}] ->
+        print(dic.foo) ->             # 辞書要素の参照（ドット記法）
+        [false >> dic.bar] ->         # 辞書要素の書き換え
+        print(dic['bar']) ->          # 辞書要素の参照（角括弧記法）
+        [[1,2,3] >> dic.arr] ->       # 辞書要素の追加
+        print(dic.baz.a) ->           # 入れ子になった辞書要素の参照
+        [777 >> dic.baz.a] ->         # 入れ子になった辞書要素の書き換え
+        [999 >> dic['baz']['b']] ->   # 入れ子になった辞書要素の書き換え
+        print(dic)                    # print() は辞書自体の表示も可能
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [dic = {foo=1, bar=true, baz={a=123, b=456}}] ->
+        print(dic.foo) ->             # get dictionary elements (dot notation)
+        [false >> dic.bar] ->         # set dictionary elements
+        print(dic['bar']) ->          # get dictionary elements (square bracket notation)
+        [[1,2,3] >> dic.arr] ->       # add dictionary elements
+        print(dic.baz.a) ->           # get nested dictionary elements
+        [777 >> dic.baz.a] ->         # set nested dictionary elements
+        [999 >> dic['baz']['b']] ->   # set nested dictionary elements
+        print(dic)                    # print() can print dictionary
+
+このジョブフローを実行すると、以下のようになります。 ::
+
+    1
+    false
+    123
+    {foo=1, bar=false, baz={a=777, b=999}, arr=[1, 2, 3]}
+
+
+テンプレート文字列
+------------------
+
+ジョブフローでは文字列中に変数の値を展開することができます。
+以下のように文字列中に ``$`` と識別子からなるプレースホルダがあると、
+その部分が識別子の示す変数値で置き換えられます。 ::
+
+    [service = 'http', port = 80] ->
+    print('Port $port is used by $service')
+
+このジョブフローを実行すると以下のようになります。 ::
+
+    Port 80 is used by http
+
+プレースホルダは ``$識別子`` のほかに ``${識別子}`` という記法も可能ですので、
+文字列中で識別子の区切りがつかない場合に使用してください。 ::
+
+    [w=640, h=480] ->
+    print("width=${w}px, height=${h}px")
+
+また、文字列のあとに ``%`` を書くと続く辞書に含まれる値を展開することもできます。
+その場合は文字列中に ``%`` と識別子からなるプレースホルダを記述します。 ::
+
+    print('Port %port is used by %service' % {service = 'http', port = 80})
+
+``%`` に続ける辞書はもちろん変数でもよいので以下のようにも書けます。 ::
+
+    [ctx = {service = 'http', port = 80}] ->
+    print('Port %port is used by %service' % ctx)
+
+いずれの記法でもプレースホルダが指定する変数や辞書要素が未定義である場合は、
+``$`` や ``%`` も含めてそのまま文字列中に残ります。
+
+
+パラメータ
+----------
+
+ジョブフローはその実行時にパラメータを受け取ることができます。
+
+ジョブフローの先頭で変数名を縦棒で囲む ``|変数名|`` という記法で、
+その変数をパラメータとして定義することができます。
+また、 ``|変数名 = 値(または式)|`` と記述することで、
+パラメータのデフォルト値を定義することができます。
+デフォルト値が定義されていないパラメータは、ジョブフローの実行時に
+値を指定する必要がある（省略できない）ことに注意してください。
+
+以下のジョブフローでは、 ``command`` と ``wait`` という2つのパラメータを
+定義していて、 ``wait`` にはデフォルト値として 10 が設定されています。 ::
+
+    | command |
+    | wait = 10 |
+
+    print('Execute the command "$command" after $wait seconds.') ->
+    ["sleep $wait"] ->
+    [command] ->
+    print($RESULT)
+
+.. note::
+    パラメータはジョブフローの実行開始時に上から順番に評価されます。
+    そのため先に登場したパラメータの値を参照する式を使うこともできます。
+
+
+リモートでコマンド実行する
+==========================
+
+次は、ジョブマネージャが動作しているホストとは別のホスト上で
+コマンドを実行させてみましょう。
+
+制御変数による指定
+------------------
+
+まずは制御変数によるコマンドを実行するホストやアカウントの指定方法です。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [__host__ = '<ホスト名 もしくは IPアドレス>',
+         __user__ = '<ユーザー名>',
+         __password__ = '<パスワード>']
+        -> ['hostname'] -> print($RESULT)
+        -> ['whoami'] -> print($RESULT)
+        -> ['echo Hello World'] -> print($RESULT)
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [__host__ = '<Hostname or IP-Address>',
+         __user__ = '<Username>',
+         __password__ = '<Password>']
+        -> ['hostname'] -> print($RESULT)
+        -> ['whoami'] -> print($RESULT)
+        -> ['echo Hello World'] -> print($RESULT)
+
+.. note::
+    ``<ホスト名>`` や ``<ユーザー名>`` 、 ``<パスワード>`` は、
+    自分の環境に合わせて書き変えてください。
+
+``__host__`` ,  ``__user__`` ,  ``__password__`` は、Kompira で予約済みの
+**制御変数** で、これらの変数にそれぞれ、ホスト名(またはIPアドレス)，
+ユーザー名，パスワードを設定しておくことで、以降のリモートを処理対象とする
+ジョブを設定したホストとユーザー名で実行します。
+
+成功すれば、実行結果は以下のように表示されるはずです。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+       <ホスト名>
+       <ユーザー名>
+       Hello World
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+       <Hostname>
+       <Username>
+       Hello World
+
+もし、ホスト名が間違っていたり、ユーザー名やパスワードが間違っていると、
+ジョブフローが失敗し、処理が中止（abort）されます。
+
+
+ノード情報とアカウント情報の指定
+--------------------------------
+
+ノード情報オブジェクトとアカウント情報オブジェクトを Kompira ファイルシス
+テム上に作成しておくと、それらをコマンド実行の対象サーバとしてジョブフ
+ローから指定することができます。
+
+今、ノード情報オブジェクト ``test_node`` とアカウント情報オブジェクト
+``test_account`` を作成し、ホスト名やユーザ名、パスワード情報が適切に
+設定されているとします。
+すると、同じディレクトリにあるジョブフローからのコマンド実行は、
+ノード情報オブジェクトの指定には制御変数 ``__node__`` を、
+アカウント情報オブジェクトの指定には ``__account__`` を使用することで、
+以下のように簡潔に記述することができます。 ::
+
+    [__node__ = ./test_node, __account__ = ./test_account]
+    -> ['hostname'] -> print($RESULT)
+    -> ['whoami'] -> print($RESULT)
+    -> ['echo Hello World'] -> print($RESULT)
+
+
+.. note::
+    ジョブフローから Kompira オブジェクトの参照は、相対パスまたは絶対パスで
+    記述することで行えます。上の例では ``./`` で始まる同じディレクトリ
+    にあるオブジェクトを指定していますが、 ``../`` や ``/`` で始まるパス
+    で親ディレクトリやルートディレクトリを基準とした指定も可能です。
+
+
+なおノード情報オブジェクト ``test_node`` にデフォルトアカウントを
+設定している場合は、 ``__account__`` の指定を省略することも可能です。 ::
+
+    [__node__ = ./test_node]
+    -> ['hostname'] -> print($RESULT)
+    -> ['whoami'] -> print($RESULT)
+
+また、制御変数をジョブフローのパラメータとして指定することもできるので、
+実行時に制御対象ノードを指定するジョブフローを作ることもできます。 ::
+
+    |__node__ = ./test_node|
+    -> ['hostname'] -> print($RESULT)
+
+
+sudoによる実行
+--------------
+
+コマンドの実行にroot権限が必要な場合、 ``__sudo__`` 制御変数に ``true``
+をセットして sudo モードに移行します。 ::
+
+    |__node__ = ./test_node|
+    -> ['whoami'] -> print($RESULT)
+    -> [__sudo__ = true]
+    -> ['whoami'] -> print($RESULT)
+
+このジョブフローを実行するとコンソールには以下のように表示されます。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        <ユーザー名>
+        root
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        <Username>
+        root
+
+.. warning::
+    sudo モードでコマンドを正しく実行するためには、そのユーザーが sudoers
+    ファイルに登録されている必要があります。そうでない場合には、sudo モード
+    でのリモートコマンド実行時に処理が失敗(abort)します。
+    詳しくはマニュアル sudoers(5) を参照してください。
+
+.. note::
+    ホストを指定しないコマンド実行ジョブを sudo モードで実行する場合、
+    ジョブマネージャを実行しているサーバ（通常は Kompira をインストール
+    したサーバ）の ``kompira`` ユーザーを sudoers ファイルに登録する必要が
+    あります。
+    さらに、以下のように requiretty フラグを無効にする設定を
+    sudoers ファイルに追加しておく必要もあります。
+
+    .. code::
+
+        Defaults:kompira    !requiretty
+
+
+制御構造でジョブを操る
+======================
+
+条件分岐
+--------
+
+直前のジョブの実行結果や変数の内容によって処理を分岐させるには、
+``if`` ブロックもしくは ``case`` ブロックを利用します。
+
+if ブロック
+...........
+
+``if`` ブロックを使うと条件式の結果によって、処理を分岐させることができます。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        ['echo $$RANDOM'] ->
+        [x = int($RESULT)] ->
+        { if x % 2 == 0 |
+            then: print('$x は偶数です')
+            else: print('$x は奇数です')
+        }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        ['echo $$RANDOM'] ->
+        [x = int($RESULT)] ->
+        { if x % 2 == 0 |
+            then: print('$x is an even number')
+            else: print('$x is an odd number')
+        }
+
+上記では、変数 ``x`` の値を2で割った余りが0に等しければ ``then`` 節が実行され、
+それ以外の場合は ``else`` 節が実行されます。なお、 ``['echo $$RANDOM']`` は乱数
+を返す環境変数である ``RANDOM`` を表示しており、 ``[x = int($RESULT)]`` はその
+結果の文字列を整数化して変数 ``x`` に代入しています。
+
+真・偽だけでなく、さらに処理を分岐させたい場合は ``elif`` 節を使います。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        { if x % 3 == 0 and x % 5 == 0 |
+            then: print('FizzBuzz')           # x が 3 でも 5 でも割り切れれば 'FizzBuzz' と表示
+            elif x % 3 == 0: print('Fizz')    # x が 3 で割り切れれば 'Fizz' と表示
+            elif x % 5 == 0: print('Buzz')    # x が 5 で割り切れれば 'Buzz' と表示
+            else: print(x)                    # それ以外の場合は x を表示
+        }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        { if x % 3 == 0 and x % 5 == 0 |
+            then: print('FizzBuzz')
+            elif x % 3 == 0: print('Fizz')
+            elif x % 5 == 0: print('Buzz')
+            else: print(x)
+        }
+
+逆に ``else`` 節を省略することも可能です。
+さらにその場合は ``then`` キーワードを省略することもできます。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [command] =>
+        { if $STATUS != 0 | print('エラーが発生しました: ' + $ERROR) }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [command] =>
+        { if $STATUS != 0 | print('An error occurred: ' + $ERROR) }
+
+上記の例では変数 ``command`` の内容が示すコマンドを実行し、その結果ステータス ``$STATUS``
+の値が0でないとき、 ``print`` ジョブで標準エラー出力(``$ERROR``)を表示します。
+
+
+case ブロック
+.............
+
+``case`` ブロックによる条件分岐は以下のように書けます。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        ['cat /etc/redhat-release'] ->
+        { case $RESULT |
+            'CentOS*release 7.*': print("CentOS です")
+            'Red Hat*release 7.*': print("Red Hat です")
+            else: print("CentOS/Red Hat 7.x が必要です")
+        }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        ['cat /etc/redhat-release'] ->
+        { case $RESULT |
+            'CentOS*release 7.*': print("This is CentOS")
+            'Red Hat*release 7.*': print("This is Red Hat")
+            else: print("CentOS/Red Hat 7.x is required")
+        }
+
+この例では、ファイル ``/etc/redhat-release`` の内容で OS の種別を判定
+するために条件分岐を行っています。
+パターン文字列には ``*`` や ``?`` などUnixのワイルドカードが使用できます。
+
+``case`` ブロックでの文字列のマッチングは先頭のパターンから順次行われ、
+最初にマッチしたパターンに続くジョブフロー系列のみが実行されます。
+
+どのパターンにもマッチしなかった場合は以下のようになります。
+
+* ``else`` 節が含まれる場合はそのジョブフロー系列が実行されます。
+* ``else`` 節が含まれない場合は ``case`` ブロック全体が失敗します
+  （``$STATUS`` に1がセットされます）。
+
+.. note::
+
+    ``if`` ブロックとは異なり、 ``case`` ブロックでは ``else`` 節を省略していて
+    どの条件にもマッチしなかった場合はブロック全体が失敗することに注意が必要です。
+    ``case`` ブロックでマッチしなかった場合に何もせずエラーにもしない場合は、
+    ``else: []`` とスキップジョブを ``else`` 節に書くようにしてください。
+
+
+繰り返し
+--------
+
+繰り返しは ``for`` ブロックや ``while`` ブロックを用います。
+
+for ブロック
+............
+
+Kompira が扱えるオブジェクトには、配列や辞書といった複合データまたはディレクトリ
+など子要素を含むものがあります。あるオブジェクトに含まれる子要素（値やオブジェクト）
+に対して同じ処理を行ないたい場合 ``for`` ブロックを用います。
+``for`` ブロックの構文は以下のようなものです。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        { for <ループ変数> in <子要素を含むオブジェクト> | ジョブ... }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        { for <loop variable> in <object containing child elements> | job... }
+
+たとえば ``in`` 節に <ディレクトリパス> を記述することで、
+そのディレクトリの中にあるオブジェクトのリストを参照することができます。 ::
+
+    { for t in /system/types | print(t) }
+
+この例では /system/types ディレクトリの中にあるすべてのオブジェクトを、１つずつ
+ループ変数 ``t`` で参照して ``print()`` ジョブでコンソールに出力しています。
+なお Kompira オブジェクトを ``print()`` ジョブに渡すと、
+その絶対パスがコンソールに出力されるため、結果は以下のようになります。 ::
+
+    /system/types/TypeObject
+    /system/types/Directory
+    /system/types/License
+    /system/types/Virtual
+    /system/types/Jobflow
+    /system/types/Channel
+        :
+
+``in`` 節には以下のように直接配列を記述することも可能です。 ::
+
+    { sum = 0 |
+        { for i in [1,2,3,4,5,6,7,8,9,10] |
+            [sum = sum + i]
+        } ->
+        print('The total of 1 to 10 is ${sum}.')
+    }
+
+このジョブフローは、1から10までの合計値を計算して出力します。 ::
+
+    The total of 1 to 10 is 55.
+
+また辞書を ``in`` 節に続けて記述した場合は、その辞書に含まれる識別子の
+リストを順次参照することができます。 ::
+
+    [dic = {a=10, b=20, c=30}] ->
+    { for k in dic |
+        print("$k = %{$k}" % dic)
+    }
+
+このジョブフローを実行するとコンソールには以下のように表示されます。 ::
+
+    a = 10
+    b = 20
+    c = 30
+
+.. note::
+
+    ``%{$k}`` となっている部分は ``%`` によるテンプレート展開の前に ``$k``
+    の部分が辞書の識別子によって置き換えられます。そのため、繰り返しの
+    たびにまず ``%a``, ``%b``, ``%c`` と展開され、それが辞書 ``dic`` の
+    各要素の値でテンプレート展開されて ``10``, ``20``, ``30`` と表示さ
+    れます。
+
+
+while ブロック
+..............
+
+繰り返す対象が決まっているのではなく、ある条件を満たすあいだはジョブを
+繰り返し処理したいという場合は ``while`` ブロックを用います。 ``while``
+ブロックの構文は以下のようなものです。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        { while <式> | ジョブ... }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        { while <expression> | job... }
+
+例えば、与えられた2つの数の最大公約数を求める「ユークリッドの互除法」は
+剰余が0になるまで繰り返すアルゴリズムですが、これを ``while`` ブロックを
+用いて記述すると以下のようになります。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        |x = 165|
+        |y = 105|
+        [m = x, n = y] ->
+        { while n != 0 |
+            [r = m % n] ->
+            print("$m と $n の剰余は $r です") ->
+            [m = n, n = r]
+        } ->
+        print("$x と $y の最大公約数は $m です")
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        |x = 165|
+        |y = 105|
+        [m = x, n = y] ->
+        { while n != 0 |
+            [r = m % n] ->
+            print("The remainder of $m and $n is $r.") ->
+            [m = n, n = r]
+        } ->
+        print("The greatest common divisor of $x and $y is $m.")
+
+
+この ``while`` ブロックの部分では、 ``n`` が 0 ではない間、 ``m`` には
+``n`` を、 ``n`` には ``m`` と ``n`` の剰余を代入する（および表示する）、
+というジョブを繰り返しています。実行すると以下のように表示されます。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        165 と 105 の剰余は 60 です
+        105 と 60 の剰余は 45 です
+        60 と 45 の剰余は 15 です
+        45 と 15 の剰余は 0 です
+        165 と 105 の最大公約数は 15 です
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        The remainder of 165 and 105 is 60.
+        The remainder of 105 and 60 is 45.
+        The remainder of 60 and 45 is 15.
+        The remainder of 45 and 15 is 0.
+        The greatest common divisor of 165 and 105 is 15.
+
+
+ジョブの呼び出し
+----------------
+
+ジョブフローの呼び出し
+......................
+
+あるジョブフローから別のジョブフローを呼び出すには以下の様な構文を用います。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [<ジョブフローオブジェクト>]
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [<Jobflow object>]
+
+ここでは「サブジョブ」というジョブを作成して、それを呼び出す例を示します。
+まず、サブジョブを適当なディレクトリの下で、以下のように定義します。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        print("サブジョブです") ->
+        return("成功しました")
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        print("This is subjob.") ->
+        return("Succeeded.")
+
+``return`` ジョブは、サブジョブを終了し、結果を呼び出し側のジョブに返します。
+
+次に、このサブジョブを呼び出すメインジョブを同じディレクトリの下に作成しま
+す。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        print("サブジョブを呼び出します")
+        -> [./サブジョブ]              # サブジョブを呼び出す
+        -> print($RESULT)              # サブジョブの実行結果を出力する
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        print("Call the subjob.")
+        -> [./SubJob]                  # call the subjob
+        -> print($RESULT)              # return the result of subjob
+
+「サブジョブ」の呼び出しを指定するところで、文字列の先頭に「./」を追加
+していることに注意してください。これは、現在のジョブフローが定義されて
+いるディレクトリと同じディレクトリ内に「サブジョブ」が定義されているこ
+とを示しています。
+
+サブジョブの実行結果は ``$RESULT`` で受け取ることができます。
+上記のメインジョブを実行すると、以下のように表示されます。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        サブジョブを呼び出します
+        サブジョブです
+        成功しました
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        Call the subjob.
+        This is subjob.
+        Succeeded.
+
+
+ジョブフローへのパラメータ渡し
+..............................
+
+ジョブフローを呼び出すときに、次のような構文を用いてパラメータを渡すこともできます。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [<ジョブフローオブジェクト> : <パラメータ列> ... ]
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [<Jobflow object> : <parameter list> ... ]
+
+まず、サブジョブを拡張して、以下のようにパラメータを追加してみましょう。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        |パラメータ1 = 'Hello'|
+        |パラメータ2 = 'World'|
+
+        print("サブジョブです")
+        -> print(パラメータ1)
+        -> print(パラメータ2)
+        -> return("成功しました")
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        |parameter1 = 'Hello'|
+        |parameter2 = 'World'|
+
+        print("This is subjob.")
+        -> print(parameter1)
+        -> print(parameter2)
+        -> return("Succeeded.")
+
+この状態でさきほどのメインジョブをそのまま実行すると、以下のように表示されます。
+呼び出し時にパラメータを指定していないため、サブジョブ側で定義した
+デフォルトパラメータが使われていることがわかります。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        サブジョブを呼び出します
+        サブジョブです
+        Hello
+        World
+        成功しました
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        Call the subjob.
+        This is subjob.
+        Hello
+        World
+        Succeeded.
+
+このサブジョブにパラメータを渡して呼び出すには、メインジョブを以下のように
+拡張します。サブジョブ呼び出し時に、 ``:`` に続けて値を記述することで、
+それらをパラメータ値としてサブジョブに渡すことができます。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        print("パラメータ付きでサブジョブを呼び出します")
+        -> [./サブジョブ: 'こんにちは', '世界']
+        -> print($RESULT)
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        print("Call the subjob with parameter.")
+        -> [./SubJob: 'HELLO', 'WORLD']
+        -> print($RESULT)
+
+これを実行すると、以下のような結果となります。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        パラメータ付きでサブジョブを呼び出します
+        サブジョブです
+        こんにちは
+        世界
+        成功しました
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        Call the subjob with parameter.
+        This is subjob.
+        HELLO
+        WORLD
+        Succeeded.
+
+呼び出されるジョブフロー側で定義したパラメータ名を指定して、パラメータ値を
+渡すこともできます。一部のパラメータだけ指定したい場合などに便利です。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [./サブジョブ: パラメータ2='世界']
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [./SubJob: parameter2='WORLD']
+
+.. note::
+    呼び出される側で定義されていないパラメータ名を指定したり、定義されたより
+    多くのパラメータ値を渡そうとしたりするとエラーになるので注意してください。
+
+
+スクリプトジョブの実行
+......................
+
+より複雑なジョブを作成したい場合、Kompiraジョブフロー言語よりも、bash,
+perl, ruby, python などの既存のスクリプト言語を組み合わせて使った方が良
+いでしょう。Kompira ファイルシステム上で、スクリプトジョブを作成すること
+で、これらのスクリプト言語のプログラムをジョブフローから呼び出すことが
+可能になります。
+
+ここでは、シェルスクリプトを用いてスクリプトジョブを記述し、それをジョ
+ブフローから呼び出す例をみてみます。まず、以下に示すような簡単なシェル
+スクリプトをスクリプトジョブとして保存します。 ::
+
+    #! /bin/sh
+    echo Hello world from shell script
+
+Unix 環境で実行させるスクリプトの場合は、1行目の ``#!`` で始まる shebang
+行を適切に記述してください。Windows 環境で実行するスクリプトの場合は
+拡張子(bat/vbs/ps1など)を適切に指定する必要があります。
+
+このスクリプトジョブを「サンプルスクリプト」として保存したとすると、
+これを実行するためのジョブフローは、以下のようになります。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        print('スクリプトジョブを実行します') ->
+        [./サンプルスクリプト] ->
+        print($RESULT)
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        print('Execute the ScriptJob') ->
+        [./SampleScript] ->
+        print($RESULT)
+
+``__node__`` や ``__host__`` を指定しない場合、このスクリプトは
+ジョブマネージャが動作しているマシン上に転送された上で実行されます。
+実行結果の出力は、リモートコマンドの実行結果と同じように ``$RESULT`` に格納されます。
+
+.. note::
+    スクリプトは実行時に指定したホストに一時ファイルとして転送され、
+    実行後に削除されます。
+
+
+スクリプトジョブにもパラメータを渡すことができます。
+スクリプトジョブ側では、コマンドライン引数としてパラメータを受け取ります。
+
+スクリプトの呼び出し側では、以下のようにキーワード無しの引数としてパラ
+メータを渡します。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [./サンプルスクリプト: 'パラメータ1', 'パラメータ2']
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [./SampleScript: 'parameter1', 'parameter2']
+
+
+オブジェクトを操作する
+======================
+
+オブジェクトの参照
+------------------
+
+ジョブフローや環境変数定義など、Kompira で扱う情報は **Kompira オブジェクト**
+として、Kompira ファイルシステム上で一元的に管理されています。
+そしてこれらのオブジェクトは Unix のファイルシステムのようなパス指定によっ
+てジョブフローからアクセスすることができます。
+
+これまでの例では、Kompira オブジェクトの参照は相対パスによって指定していました。
+この場合、オブジェクトのパスは、実行中のジョブフローが定義されている
+ディレクトリを基準にして特定されます。
+
+たとえば、実行中のジョブが ``/some/path/jobflow`` であるときに、
+``./subdir/object`` という相対パスによってオブジェクトを参照すると、
+``/some/path/subdir/object`` がアクセスされることになります。
+
+また、 ``../object`` という相対パスによって参照すると、 ``/some/object``
+がアクセスされることになります。 ``../`` で始まる相対パスは親ディレクトリ
+にあるオブジェクトを参照することを意味します。
+
+もちろん絶対パスで ``/some/path/object`` のように直接オブジェクトを参照することもできます。
+
+.. warning::
+    Kompira オブジェクトの参照では先頭に、 ``./`` や ``../`` 、 ``/`` を付けるのを忘れないでください。
+    Kompiraは ``./`` や ``../`` 、 ``/`` から始まる文字列を **パス識別** と認識し、
+    それ以外は変数の識別子と認識します。
+
+パスを連結させてオブジェクトを参照したい場合は、 ``path()`` 組み込み関数を利用します。
+たとえばノードの種類毎に「リソース情報取得」を行なうジョブフローを用意しておき、
+ノードとノード種別を指定してそのジョブフローを実行したい場合、
+パスを動的に組み立ててジョブフローを参照することができます。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        |node|
+        |node_type = 'Linux'|
+        |job_name = 'リソース情報取得'|
+        [job = path(./ノード別定義, node_type, job_name)] ->
+        [job: node]
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        |node|
+        |node_type = 'Linux'|
+        |job_name = 'GetResourceInfo'|
+        [job = path(./DefinitionsByNodeType, node_type, job_name)] ->
+        [job: node]
+
+ここでデフォルト引数がそのまま ``path()`` 関数に渡された場合、 ``./ノード別定義/Linux/リソース情報取得``
+というジョブフローを変数 ``job`` で参照し、 ``node`` をパラメータとして渡して実行することになります。
+
+
+プロパティの参照と更新
+----------------------
+
+各 Kompira オブジェクトはシステムで定義された「プロパティ」を持っています。
+例えばオブジェクトの名称やパス、作成日時などがプロパティです。
+Kompira オブジェクトが持つプロパティの詳細については :ref:`lib-property` を参照してください。
+
+Kompira オブジェクトのプロパティを参照するにはドット記法 ``オブジェクト.プロパティ名``
+を用います。
+以下のジョブフローではパラメータ ``dir`` で指定したディレクトリにある Kompira オブジェクト
+を列挙し、そのプロパティである「所有者(owner)」，「更新日時(update)」，「型名(type_name)」，
+「表示名(display_name) 」をドット記法で参照して表示しています。 ::
+
+    | dir = / |
+    { for obj in dir |
+        [attr = {
+            owner = obj.owner,
+            updated = obj.updated,
+            type = obj.type_name,
+            name = obj.display_name
+        }] ->
+        print("%owner %updated <%type> %name" % attr)
+    }
+
+Kompira オブジェクトのプロパティ値を更新するには、
+出力ジョブ ``[値 >> オブジェクト.プロパティ]`` を用います。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        ["オブジェクトの説明文" >> obj.description]
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        ["Description of the Object" >> obj.description]
+
+.. note::
+    ただし、プロパティの中にはジョブフローからは更新できない書き込み不可なものも
+    ありますので注意してください。詳細は :ref:`lib-property` を参照してください。
+
+
+フィールドの参照と更新
+----------------------
+
+各 Kompira オブジェクトは型ごとに定義された「フィールド」を持っています。
+システムで定義された各型にどのようなフィールドが定義されているかは、
+``/system/types/`` 下にある各型の定義情報を見るとわかります。
+
+Kompiraオブジェクトが持つフィールドは ``オブジェクト[フィールド名]``
+または ``オブジェクト.フィールド名`` という記法で参照できます。
+
+.. note::
+    オブジェクトのプロパティにもドット記法でアクセスできることに注意してください。
+    プロパティと同名のフィールドをユーザが定義することもできますが、
+    ドット記法はプロパティ値を優先して参照します。
+
+たとえば、ノード情報オブジェクトには「ホスト名(hostname)」や「IPアドレス(ipaddr)」
+といったフィールドが定義されています。ジョブフローでこれらの値を参照するには
+以下のように記述します。 ::
+
+    |node = ./node|
+    print(node['hostname'], node.ipaddr)
+
+フィールドの値は辞書のように参照できるため、 ``%`` によるテンプレート展開も
+できます。 ::
+
+    |node = ./node|
+    print('%hostname: %ipaddr' % node)
+
+
+また、Kompira オブジェクトのフィールド値を更新するには、出力ジョブで
+``[値 >> オブジェクト[フィールド名]]`` または
+``[値 >> オブジェクト.フィールド名]`` という記法を用います。
+例えば Wiki ページ型の「Wiki テキスト」フィールド('wikitext') を更新するには、
+以下のように記述します。 ::
+
+    ['= Sample Wiki\n' >> ./wiki['wikitext']]
+
+式の結果を出力ジョブで書き込むこともできるので、以下のように参照したフィールド値
+を加工して再度書き込む、ということもできます。 ::
+
+    |wiki = ./wiki|
+    |types = /system/types|
+    ["= Type list\n" >> wiki.wikitext] ->
+    { for type in types |
+        [wiki.wikitext + "* $type: (" + type.description + ")\n" >> wiki.wikitext]
+    }
+
+上の例では ``/system/types`` にあるシステム標準の型オブジェクトについて、
+そのパスと説明の一覧を記載した Wiki ページを作成しています。
+
+
+メソッドの呼び出し
+------------------
+
+Kompira オブジェクトの中にはメソッドを備えているものがあります。
+オブジェクトのメソッドを呼び出すには、以下のような構文を用います。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [ <オブジェクト> . <メソッド名> : <パラメータ列> ... ]
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [ <object> . <method name> : <parameter list> ... ]
+
+例えば、オブジェクトの追加を行なうためにディレクトリ型のオブジェクトには
+``add`` というメソッドがあります。 ``add`` メソッドは ``name``, ``type_obj``,
+``data`` という3つのパラメータを指定して呼び出します。
+以下の例ではジョブフローと同じディレクトリに 'ENV' という名前で
+環境変数型(/system/types/Environment)オブジェクトを作成し、
+'environment' という名前の（辞書型）フィールドに ``{k1='value1', k2='value2'}``
+という初期データを与えています。 ::
+
+    [./.add: 'ENV', /system/types/Environment, {
+        environment={k1='value1', k2='value2'}
+    }]
+
+ここでは ``./`` という相対パス識別が、このジョブフローがあるディレクトリを示す
+Kompira オブジェクトを参照しています。オブジェクトの参照を変数で受け渡すことも
+できますので、以下のように書くこともできます。 ::
+
+    [dir = ./, type=/system/types/Environment] ->
+    [dir.add: 'ENV', type, {environment={k1='value1', k2='value2'}}]
+
+またパラメータ列ではパラメータ名を指定して値を渡すこともできます。 ::
+
+    [dir = ./, type=/system/types/Environment] ->
+    [dir.add: 'ENV', type_obj=type, data={environment={k1='value1', k2='value2'}}]
+
+
+
+イベントを待ち合わせる
+======================
+
+チャネルを用いて、ジョブの同期やイベントの待ち合わせ処理を
+ジョブフローで記述することができます。
+
+メッセージの送受信
+------------------
+
+作成したチャネルに対して、メッセージを送信するには ``send`` メソッドを用います。
+「/home/guest/テストチャネル」に新しいチャネルを作成して試してみましょう。
+
+チャネルに対してメッセージを送信するジョブフローは、以下のようになります。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [/home/guest/テストチャネル.send: 'こんにちは']
+        -> print('メッセージを送信しました')
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [/home/guest/TestChannel.send: 'Hello']
+        -> print('Sent a message.')
+
+次に、チャネルからメッセージを受信するジョブフローを以下のように定義します。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        </home/guest/テストチャネル>
+        -> [mesg = $RESULT]
+        -> print('メッセージ「$mesg」を受信しました。')
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        </home/guest/TestChannel>
+        -> [mesg = $RESULT]
+        -> print('Message "$mesg" was received.')
+
+上記の各ジョブフローを実行してみてください。受信側のジョブフロー実行の
+プロセスコンソールに以下のようにメッセージが出力されれば成功です。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        メッセージ「こんにちは」を受信しました。
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        Message "Hello" was received.
+
+送信側ジョブフローを複数回実行すると、チャネルにその分だけメッセージが
+溜まります。受信側のジョブフローを1回実行するたびに、そのチャネルから1
+つ分のメッセージを取り出して出力します。もし、チャネルのメッセージが空
+の場合、受信側のジョブフローは新しいメッセージが到着するまで待ちます。
+
+.. note::
+    ``kompira_sendevt`` コマンドを用いることで、外部のシステムから
+    任意の情報をチャネルに送信することができます。
+    たとえば監視システムからアラート情報をチャネルに送信することで、
+    障害発生時の手順をジョブフローで処理させることなども可能でしょう。
+    ``kompira_sendevt`` コマンドの利用方法については :doc:`coordination`
+    を参照してください。
+
+
+
+イベントジョブについて
+----------------------
+
+<と>で囲まれたジョブをイベントジョブと呼びます。イベントジョブは、他の
+ジョブと同じようにジョブフローの中で組み合わせて使用することができます。
+
+イベントジョブの形式は以下のとおりです。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        < <オブジェクト名> : <パラメータ列> ... >
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        < <object> : <parameter list> ... >
+
+オブジェクト名にはチャネル型（およびそれに類する型：メールチャネル型など）
+のオブジェクトを指定します。それ以外のイベント待ち合わせ不可能なオブジェクト
+を指定すると実行時エラーとなります。
+
+
+メッセージ受信のタイムアウト指定
+--------------------------------
+
+チャネルからのメッセージの到着を待ち、一定時間内に来なかったらタイムアウトして
+処理を先に進めるにはイベントジョブにパラメータ ``timeout`` を指定します。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        print('チャネルからメッセージを待ちます')
+        -> <./テスト用チャネル: timeout=10>
+        => { if $STATUS==0 |
+            then: [mesg=$RESULT]
+                  -> print('メッセージ「$mesg」を受信しました')
+            else: print('タイムアウトしました') }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        print('Wait for a message from channel.')
+        -> <./TestChannel: timeout=10>
+        => { if $STATUS==0 |
+            then: [mesg=$RESULT]
+                  -> print('Message "$mesg" was received.')
+            else: print('Timeout occurred.') }
+
+``timeout`` で指定した秒数の間にメッセージが到着しなかった場合、イベントジョブは
+失敗しますので ``=>`` で次のジョブと結合していることに注意してください。
+
+.. note::
+    メッセージからの到着を待っている時に、チャネルが削除されると、イベントジョブは失敗して $STATUS に -1 をセットします。
+    また、メールチャネルでは、イベントジョブに detect_error=true パラメータが渡されると、
+    メールのフェッチに失敗したり、無効化フラグが設定されている場合にも、$STATUS に -1 をセットします。
+
+
+複数チャネルからの選択的受信
+----------------------------
+
+``choice`` ブロックを使うことで、複数のチャネルからのメッセージの到着を待つ
+ことも可能です。この場合、先にメッセージ到着したチャネルについての処理
+が続行されます。
+
+choiceブロックの使用例
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        print('チャネル1とチャネル2からメッセージの受信を待ちます')
+        -> { choice |
+            <./チャネル1> -> [mesg=$RESULT]
+                -> print('チャネル1からメッセージ「$mesg」を受信しました')
+            <./チャネル2> -> [mesg=$RESULT]
+                -> print('チャネル2からメッセージ「$mesg」を受信しました')
+        }
+        -> print('OK')
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        print('Wait for message from channel1 and channel2.')
+        -> { choice |
+            <./Channel1> -> [mesg=$RESULT]
+                -> print('Message "$mesg" was received from Channel1.')
+            <./Channel2> -> [mesg=$RESULT]
+                -> print('Message "$mesg" was received from Channel2.')
+        }
+        -> print('OK')
+
+
+外部にアクセスする
+==================
+
+メールを送信する
+----------------
+
+メールの送信には、組み込み ``mailto`` ジョブを用います。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [subject = 'テストメール',
+         body = 'テストメールを送信します。\n受け取ったら破棄してください']
+        -> mailto(to='taro@example.com', from='hanako@example.com',
+                  subject=subject, body=body)
+        -> print('メールを送信しました')
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [subject = 'Test mail',
+         body = 'Send a test mail.']
+        -> mailto(to='taro@example.com', from='hanako@example.com',
+                  subject=subject, body=body)
+        -> print('Sent a mail.')
+
+``mailto`` ジョブの引数には、 ``to`` (あて先メールアドレス)、 ``from``
+(送信元メールアドレス)、 ``subject`` (メール表題)、 ``body`` (メール本文)を指定します。
+
+複数のアドレスにメールを送信する場合、以下のように ``to`` 引数にメールアドレ
+ス文字列のリストを渡して下さい。 ::
+
+    mailto(to=['taro@example.com', 'jiro@example.com'], from='hanako@example.com',
+           subject=subject, body=body)
+
+.. note::
+    Kompira はメール送信のときに、指定されたSMTPサーバに接続してメールを送信します。
+    メールがうまく送信できない場合、指定したSMTPサーバ型オブジェクトの設定が正しいかどうか、および、SMTPサーバ側での設定やログを確認してください。
+
+
+HTTP アクセスする
+-----------------
+
+Web サーバなどに HTTP アクセスするには、組み込み ``urlopen`` ジョブを用います。
+単純に ``urlopen()`` に URL だけを渡した場合は GET アクセスになります。 ::
+
+    |url = 'http://www.kompira.jp'|
+    urlopen(url)
+    => [status = $STATUS, result = $RESULT]
+    -> { if status != 0 |
+    then:
+        print('HTTP access failed.')
+    elif result.code != 200:
+        print('HTTP status code is %code.' % result)
+    else:
+        print(result.body)
+    }
+
+``urlopen()`` でアクセスに成功した場合の結果は辞書で返されます。
+``code`` には HTTP のステータスコードが、``body`` にはレスポンスの内容が格納されています。
+
+なお、バージョン 1.5.0 時点での Kompira は HTML を解析する機能は持っていないので、
+以下のような簡単なスクリプトジョブを ``html_parse`` という名前で作成しておきます。
+このスクリプトは標準入力に渡した HTML から、パラメータで指定した箇所をテキストで抜き出します。 ::
+
+    #! /usr/bin/python
+    import sys;
+    from lxml import html;
+    if __name__ == '__main__':
+        doc = html.fromstring(sys.stdin.read().decode("utf-8"))
+        for e in doc.xpath(sys.argv[1]):
+            print html.tostring(e, method="text", encoding="utf-8")
+
+さて、``urlopen()`` はパラメータ ``data`` に辞書データを渡すことで POST アクセスさせることもできます。
+例として、ネットワークインターフェースに付与された MAC アドレスの前半部分(OUI)から製品ベンダーを調べる、
+というジョブフローを考えます。OUI は IEEE という組織が管理しており、
+http://standards.ieee.org/develop/regauth/oui/public.html から検索することができます。
+このページにはフォームがあり、``x`` という名前の入力欄に OUI を入力するようになっています。
+また、検索すると ``/cgi-bin/ouisearch`` という CGI が実行されるようになっているので、
+OUI を ``x`` という名前でデータとしてその CGI に渡す POST アクセスをすればよいことになります。 ::
+
+    |oui = '00-00-00'|
+    urlopen('http://standards.ieee.org/cgi-bin/ouisearch', data={x=oui})
+    -> [./html_parse << $RESULT.body: '//pre']
+    -> print($RESULT)
+
+検索結果のページでは ``<pre>`` タグに結果がありますので、
+そこを抜き出すために ``//pre`` というパラメータを ``html_parse`` スクリプトに渡しています。
+このパラメータは XPath という XML 文書の部分指定をするための構文で指定します。
+
+このジョブフローを実行すると、以下のようにベンダー情報を外部の Web ページから取得できていることが分かります。 ::
+
+    [localhost] local: (/tmp/tmpxaL7DG //pre) < /tmp/tmpktOTMU
+    
+      OUI/MA-L                      Organization
+      company_id                    Organization
+                                        Address
+      
+      
+      00-00-00   (hex)              XEROX CORPORATION
+      000000     (base 16)          XEROX CORPORATION
+                                    M/S 105-50C
+                                    800 PHILLIPS ROAD
+                                    WEBSTER NY 14580
+                                    UNITED STATES
+
+
+プロセスを制御する
+==================
+
+ジョブフローを実行すると、その終了の時まで Kompira 上ではプロセスという
+実行単位で管理され、プロセスはジョブフローに記述されたジョブを連続的に
+順次実行することになります。
+ここではプロセスを制御する方法について説明します。
+
+プロセスの終了
+--------------
+
+ジョブフローの終端に到達するなどして継続すべきジョブが無くなった場合や、
+実行したコマンドが失敗した状態で ``->`` を使ってジョブを結合した場合などは、
+プロセスは自動的に終了します。
+
+そうした場合以外で、実行中のプロセスを明示的に終了させたいには ``exit`` ジョブ
+あるいは ``abort`` ジョブを用います。
+
+exit
+....
+
+実行中のプロセスを終了させるには、組み込み ``exit`` ジョブを用います。
+引数を指定せず ``exit()`` と呼出すと、プロセスをただちに正常終了します。 ::
+
+    exit()
+
+``exit`` ジョブの引数で終了ステータスコードを指定することもできます。
+以下の例では、パラメータ ``command`` で指定されたコマンドを実行したのち、
+結果（成功・失敗）にかかわらず標準エラー出力と標準出力を表示してから、
+コマンド実行結果をステータスコードとしてプロセスを終了します。 ::
+
+    |command|
+    [command]
+    => [status=$STATUS, stderr=$ERROR, stdout=$RESULT]
+    -> { if stderr | print(stderr) }
+    -> { if stdout | print(stdout) }
+    -> exit(status)
+
+``exit`` と ``return`` の違いに注意してください。
+例えば、メインジョブから呼び出されたサブジョブで ``exit`` ジョブを呼び出すと
+実行中のプロセスを終了させます（メインジョブに制御が戻らず即座に終了します）。
+一方、サブジョブで ``return`` ジョブを呼び出すと、プロセスを終了させるのでは
+なく、メインジョブに制御が戻り、サブジョブを呼び出した実行ジョブの直後から
+処理が継続されます。
+
+ただし、呼び出し元が存在しない場合、たとえば直接「実行ボタン」を押して実行
+したジョブフローから ``return`` ジョブを呼び出した場合は、その時点で継続する
+ジョブが無くなりますのでプロセスが終了します。
+
+abort
+.....
+
+ジョブを継続できない状態になった場合などに、組み込み ``abort`` ジョブを呼出すことで、
+実行中のプロセスを異常終了させることができます。
+以下の例ではパラメータで指定した URL に ``urlopen`` でアクセスした時に、
+HTTP アクセスに失敗したか、HTTP ステータスコードが 200 以外の場合にプロセスを異常終了させます。 ::
+
+    |url|
+    urlopen(url)
+    => [result = $RESULT, status = $STATUS]
+    -> { if status != 0 | abort('HTTP access failed.') }
+    -> { if result.code != 200 | abort('HTTP status code is %code.' % result) }
+    -> return(result.body)
+
+``abort()`` ジョブは自動的に終了ステータスコードを 1 にセットしてプロセスを終了
+させるため、 ``exit(status=1)`` とほぼ同じです。
+
+
+子プロセスの起動
+----------------
+
+Kompira が持つ複数プロセスの並行動作という特徴は、
+ジョブフローでは「子プロセス」を起動するという方法で利用することができます。
+
+子プロセスは起動した時点では親プロセス（子プロセスを起動したプロセスのこと）のコピーであり、
+ローカル変数や特殊変数は同じ値を持っていますが、プロセス間での共有や参照はできないので、
+子プロセスから親プロセスの変数を書き換えたりすることは出来ないことに注意してください（逆方向も同じ）。
+
+fork
+....
+
+``fork`` ブロックを用いて、複数の子プロセスを一度に起動することが可能です。
+以下では「処理Ａ」というサブジョブの実行結果を、「処理Ｂ」と「処理Ｃ」という
+サブジョブでそれぞれ並行して処理させるジョブフローの例になります。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        [./処理Ａ] -> [result = $RESULT] ->
+        { fork |
+            [./処理Ｂ: result] -> print('処理Ｂ終了')
+            [./処理Ｃ: result] -> print('処理Ｃ終了')
+        } -> print('すべての子プロセスが終了しました')
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        [./ProcessA] -> [result = $RESULT] ->
+        { fork |
+            [./ProcessB: result] -> print('ProcessB is finished.')
+            [./ProcessC: result] -> print('ProcessC is finished.')
+        } -> print('All child processes have terminated.')
+
+``fork`` ブロックの中でジョブ間を結合子で接続していない箇所がありますが、
+これが「ジョブフロー式」の区切りであり、上の例では ``fork`` ブロックに2つのジョブフロー式があることになります。
+この2つのジョブフロー式の部分がそれぞれ子プロセスとして並行に動作し、それらの実行が全て完了すると、
+親プロセスのジョブが継続して「すべての子プロセスが終了しました」とコンソールに出力されます。
+
+なおジョブフローで子プロセスを起動したとき、そのプロセスのプロセス詳細画面の
+「子プロセス一覧」タブには起動した子プロセスが表示されます。
+逆に、子プロセスは「プロセス一覧」画面には表示されないことに注意してください。
+
+
+pfor
+....
+
+``for`` ブロックの代わりに ``pfor`` ブロックを使うことで、
+繰り返し処理が並列プロセスとして一度に実行することができます。
+
+例えば管理対象のノードを「ノード一覧」で管理しており、
+管理対象すべてのノードに対して同じジョブ「構成情報収集」を実行したい場合、
+``for`` ブロックを用いて以下のように書けます（構成情報収集はパラメータで
+処理対象のノードを指定するものとします）。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+         |job = ./構成情報収集|
+         { for node in ./ノード一覧 |
+             [job: node]
+         } -> print("すべてのノードに対する処理が終了しました")
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+         |job = ./CollectConfigurationInformation|
+         { for node in ./NodeList |
+             [job: node]
+         } -> print("Processing of all nodes has ended.")
+
+もしこの「構成情報収集」ジョブがリモートノードに対して処理時間のかかるコマンドを
+投入しているような場合、このプロセスは「待ち状態」になっている割合が多くなります。
+結果的に、負荷は低いがすべてのノードに対する処理が終了するまでに長い時間がかかる、
+ということになります。
+
+こうしたときに ``for`` の代わりに ``pfor`` を使うと、各ノードごとに子プロセス
+を起動してその子プロセスで「構成情報収集」ジョブを実行することになります。
+そうすると、あるノードに対する処理で「待ち状態」になっていても、別のノードの処理
+を並列に実行できるため、全体でのジョブの実行効率を上げて処理時間を短縮できるよう
+になります。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+         |job = ./構成情報収集|
+         { pfor node in ./ノード一覧 |
+             [job: node]
+         } -> print("すべてのノードに対する処理が終了しました")
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+         |job = ./CollectConfigurationInformation|
+         { pfor node in ./NodeList |
+             [job: node]
+         } -> print("Processing of all nodes has ended.")
+
+親プロセスからの切り離し
+------------------------
+
+子プロセスを ``fork`` や ``pfor`` を使って起動した親プロセスはすべての子プロセスの終了を待つため、
+その間親プロセスは新たなジョブを動作させることはできません。
+しかし、子プロセスの終了を待たずに親プロセス側の処理を継続させたい、という場合もあります。
+そういう場合には ``detach()`` を用いて親プロセスから切り離すことで対応できます。
+
+detach
+......
+
+例えばチャネルからメッセージを受信するたびに同じジョブフローを実行したい、
+ということがしばしばあります。以下ではメッセージを受信するたびに「メッセージ処理」
+というジョブフローに、メッセージをパラメータとして渡して呼び出しています。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        |chan = /system/channels/Alert|
+        |proc = ./メッセージ処理|
+        { while true |
+            <chan>
+            -> [msg = $RESULT]
+            -> [proc: msg]
+        }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        |chan = /system/channels/Alert|
+        |proc = ./MessageProcessing|
+        { while true |
+            <chan>
+            -> [msg = $RESULT]
+            -> [proc: msg]
+        }
+
+チャネルから受信する複数のメッセージ間に関連性が無いときは、
+メッセージ処理を同時に実行させるようにすることで、
+メッセージが連続して到着したときに全体での処理効率の向上につながることがあります。
+そのためには、メッセージを受信するジョブフローと「メッセージ処理」を
+別のプロセスとして動作させる必要があります。
+そこで ``fork`` を用いて「メッセージ処理」を子プロセスで動作させるようにしてみます。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        |chan = /system/channels/Alert|
+        |proc = ./メッセージ処理|
+        { while true |
+            <chan>
+            -> [msg = $RESULT]
+            -> { fork | [proc: msg] }
+        }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        |chan = /system/channels/Alert|
+        |proc = ./MessageProcessing|
+        { while true |
+            <chan>
+            -> [msg = $RESULT]
+            -> { fork | [proc: msg] }
+        }
+
+しかし、これでは「メッセージ処理」のジョブが完了するまで親プロセスは待ってしまうため、
+メッセージ処理の最中に新しいメッセージが到着しても、同時に処理することはできません。
+そこで子プロセス側で ``detach()`` 組み込みジョブを用いて、
+子プロセスを親プロセスから切り離すようにします。
+
+.. ifconfig:: language == 'ja'
+
+    .. code::
+
+        |chan = /system/channels/Alert|
+        |proc = ./メッセージ処理|
+        { while true |
+            <chan>
+            -> [msg = $RESULT]
+            -> { fork | detach() -> [proc: msg] }
+        }
+
+.. ifconfig:: language != 'ja'
+
+    .. code::
+
+        |chan = /system/channels/Alert|
+        |proc = ./MessageProcessing|
+        { while true |
+            <chan>
+            -> [msg = $RESULT]
+            -> { fork | detach() -> [proc: msg] }
+        }
+
+親プロセス側は子プロセスの ``detach()`` により、処理完了を待つべき子プロセスがなくなるため、
+その時点で次のジョブを継続できることになります。
+すなわちチャネルから次のメッセージを受信を行ない、先に起動した「メッセージ処理」
+がまだ完了していなくても新しい「メッセージ処理」を起動できることになります。
+
+子プロセス側は ``detach()`` により子プロセスではなく通常のプロセスとなり、
+親プロセスの「子プロセス一覧」ではなく「プロセス一覧」画面に表示されるようになります。
+
+このように ``fork`` や ``pfor`` と ``detach()`` を組合せることで、
+多少複雑な並行処理でも簡単に記述することができます。

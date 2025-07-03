@@ -1,0 +1,29 @@
+{% load i18n %}
+{{ form.management_form }}
+<table id="dynamic-form-{{ form.prefix }}" class="table table-bordered table-striped table-sm edit-table table-operation-right">
+  <thead>
+    <tr>
+      <th>{% trans 'group'|capfirst %}</th>
+      <th>{% trans 'readable'|capfirst %}</th>
+      <th>{% trans 'writable'|capfirst %}</th>
+      <th>{% trans 'executable'|capfirst %}</th>
+      <th>{% trans 'priority'|capfirst %}</th>
+      <th class="table-operation">{% trans 'operation'|capfirst %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for f in form %}
+    <tr>
+      {{ f.id }}
+      <td>{{ f.non_field_errors }}{{ f.owner.errors }}{% if f.instance.pk %}{{ f.DELETE }}{% endif %}{{ f.owner }}</td>
+      <td>{{ f.readable }}</td>
+      <td>{{ f.writable }}</td>
+      <td>{{ f.executable }}</td>
+      <td>{{ f.priority.errors }}{{ f.priority }}</td>
+      <td class="table-operation"></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+  </tfoot>
+</table>

@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{% if field.name == 'use_oauth2' and object.access_token %}
+<!-- readonly 修飾子が実装されれば不要 -->
+<tr id="id_field-token_expires_at">
+  <th class="obj-display-name"><span class="toggle-name">{% trans 'Token expires at' %}</span><span class="toggle-name" style="display: none;">token_expires_at</span></th>
+  <td class="obj-value" style="overflow-wrap: anywhere">
+    {{ object.token_expires_at }} ({% if object.refresh_token %}{% trans 'with refresh token' %}{% else %}{% trans 'without refresh token'%}{% endif %})
+    <span style="float: right;">
+      <button id="id_clear_token-btn" {% if object_ability.writable %}class="btn btn-sm btn-outline-secondary action-modal"{% else %}class="btn btn-outline-secondary btn-sm" disabled{% endif %}
+      data-action="{{ object_property.abspath }}.clear_token" data-operation="{% trans 'clear token' %}">
+        <i class="fas fa-trash"></i> {% trans 'clear token'|capfirst %}
+      </button>
+    </span>
+  </td>
+</tr>
+{% endif %}

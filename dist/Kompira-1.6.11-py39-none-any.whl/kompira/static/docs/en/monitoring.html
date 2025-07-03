@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>7. Monitoring Kompira &#8212; Kompira 1.6.11 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8. Kompira REST API Reference" href="api_reference.html" />
+    <link rel="prev" title="6. Coordination with other systems" href="coordination.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api_reference.html" title="8. Kompira REST API Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="coordination.html" title="6. Coordination with other systems"
+             accesskey="P">previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/monitoring.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>Monitoring Kompira</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="kompira">
+<h1><span class="section-number">7. </span>Monitoring Kompira<a class="headerlink" href="#kompira" title="Permalink to this heading">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira development team</p>
+</dd>
+</dl>
+<section id="id1">
+<h2><span class="section-number">7.1. </span>Introduction<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>This document describes how to monitor the state of Kompira using a monitoring system such as Zabbix.</p>
+</section>
+<section id="zabbix">
+<h2><span class="section-number">7.2. </span>Monitoring using Zabbix<a class="headerlink" href="#zabbix" title="Permalink to this heading">¶</a></h2>
+<p>This document will explain how to acquire the number of Kompira’s running processes and the number of incidents being handled in Zabbix.</p>
+<p>There are various ways to monitor Zabbix, but here we will explain monitoring using Zabbix Agent’s “UserParameter” function and monitoring method by “external script”.</p>
+<p>This document introduces the monitoring method using Zabbix 2.4.</p>
+<section id="id2">
+<h3><span class="section-number">7.2.1. </span>Preperation<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<section id="kompira-jq-sh">
+<h4><span class="section-number">7.2.1.1. </span>kompira_jq.sh<a class="headerlink" href="#kompira-jq-sh" title="Permalink to this heading">¶</a></h4>
+<p>Whichever monitoring method you use, use the <code class="docutils literal notranslate"><span class="pre">kompira_jq.sh</span></code> script provided by Kompira.</p>
+<p>For monitoring by “external script”, execute <code class="docutils literal notranslate"><span class="pre">kompira_jq.sh</span></code> on the Zabbix server and on the Kompira server on which Zabbix Agent is installed for monitoring with, use “UserParameter”.</p>
+<p>Since <code class="docutils literal notranslate"><span class="pre">kompira_jq.sh</span></code> internally uses the curl and jq commands, please install the necessary packages on the Zabbix server or Kompira server according to the monitoring method so that these can be used.</p>
+<p>In the CentOS environment, jq can be installed from the EPEL repository and in the AWS environment from the amzn-main repository.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since kompira_jq.sh that comes with Kompira 1.4.6 or later has become a version compatible with REST-API, it is incompatible with option specification method and older versions.</p>
+</div>
+</section>
+<section id="id3">
+<h4><span class="section-number">7.2.1.2. </span>Kompira server’s host settings<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h4>
+<p>Since both monitoring methods access the Kompira server, it is necessary to register the Kompira server URL and REST API token as Zabbix “macros”.</p>
+<p>On Zabbix, set the REST API token with the following macro names on the “Host Setting” → “Macro” settings screen of the Kompira server.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Macro</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">{$KOMPIRA_URL}</span></code></p></td>
+<td><p>Kompira Server’s URL</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">{$KOMPIRA_TOKEN}</span></code></p></td>
+<td><p>REST API token</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="userparameter">
+<h3><span class="section-number">7.2.2. </span>Monitoring with UserParameter<a class="headerlink" href="#userparameter" title="Permalink to this heading">¶</a></h3>
+<p>This is the way Zabbix Agent gathers the value of the monitoring item by executing a preset command for the item specified from the Zabbix server.</p>
+<section id="zabbix-agent">
+<h4><span class="section-number">7.2.2.1. </span>Zabbix Agent settings<a class="headerlink" href="#zabbix-agent" title="Permalink to this heading">¶</a></h4>
+<p>It is necessary to prepare UserParameter’s setting files on the Kompira server where Zabbix Agent is installed. Please copy <a class="reference download internal" download="" href="_downloads/2f8cfcd645ac41de2d25d2bfd8cf7774/userparameter_kompira.conf"><code class="xref download docutils literal notranslate"><span class="pre">userparameter_kompira.conf</span></code></a> to <code class="docutils literal notranslate"><span class="pre">/etc/zabbix/zabbix_agentd.d</span></code></p>
+<p>Please restart the Zabbix Agent when the setup file is ready.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo service zabbix-agent restart
+Shutting down Zabbix agent:                                [  OK  ]
+Starting Zabbix agent:                                     [  OK  ]
+</pre></div>
+</div>
+</section>
+<section id="zabbix-server">
+<h4><span class="section-number">7.2.2.2. </span>Zabbix Server settings<a class="headerlink" href="#zabbix-server" title="Permalink to this heading">¶</a></h4>
+<p>For Zabbix Server, you need to set monitoring items using UserParameter, but you can immediately use standard monitoring items by importing <a class="reference download internal" download="" href="_downloads/b2e1eb262450c98c30d9e54affcda448/zbx_kompira_basic_templates.xml"><code class="xref download docutils literal notranslate"><span class="pre">zbx_kompira_basic_templates.xml</span></code></a>.</p>
+<p>A template named Template Kompira Server will be created, so apply this template to the Kompira server you want to monitor.</p>
+</section>
+<section id="id4">
+<h4><span class="section-number">7.2.2.3. </span>Monitoring items<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h4>
+<p>The following monitoring items can be used as standard.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Overview</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Kompira active incidents</p></td>
+<td><p>Number of active incidents</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kompira active processes</p></td>
+<td><p>Number of active processes</p></td>
+</tr>
+<tr class="row-even"><td><p>Kompira active schedulers</p></td>
+<td><p>Number of active schedules</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kompira active tasks</p></td>
+<td><p>Number of active tasks</p></td>
+</tr>
+<tr class="row-even"><td><p>Kompira jobflows</p></td>
+<td><p>Total number of job flows</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kompira license remain_days</p></td>
+<td><p>Number of remaining days of license</p></td>
+</tr>
+<tr class="row-even"><td><p>Kompira objects</p></td>
+<td><p>Total number of Kompira objects</p></td>
+</tr>
+<tr class="row-odd"><td><p>Memory usage of kompirad process</p></td>
+<td><p>Memory usage (kompirad)</p></td>
+</tr>
+<tr class="row-even"><td><p>Memory usage of kompira_jobmngrd process</p></td>
+<td><p>Memory usage (kompira_jobmngrd)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Number of kompirad process</p></td>
+<td><p>Number of processes (kompirad)</p></td>
+</tr>
+<tr class="row-even"><td><p>Number of kompira_jobmngrd process</p></td>
+<td><p>Number of processes (kompira_jobmngrd)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id5">
+<h3><span class="section-number">7.2.3. </span>Monitoring with external scripts<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<p>This is a method of collecting the value of the monitoring item by executing the external script on the Zabbix server.</p>
+<p>First, please copy the script provided by Kompira
+<code class="docutils literal notranslate"><span class="pre">/opt/kompira/bin/kompira_jq.sh</span></code>
+to the directory where the external script on the Zabbix server is located.
+By default it is:
+<code class="docutils literal notranslate"><span class="pre">/usr/lib/zabbix/externalscripts</span></code>.</p>
+<section id="id6">
+<h4><span class="section-number">7.2.3.1. </span>Number of processes<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h4>
+<p>When monitoring the number of processes using the external script <code class="docutils literal notranslate"><span class="pre">kompira_jq.sh</span></code>, create the Item with the following settings:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Kompira</span> <span class="pre">processes</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Type</p></td>
+<td><p>External check</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kompira_jq.sh[-s,{$KOMPIRA_URL},-t,{$KOMPIRA_TOKEN},-ac,/process]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Type of information</p></td>
+<td><p>Numeric (unsigned)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data type</p></td>
+<td><p>Decimal</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id7">
+<h4><span class="section-number">7.2.3.2. </span>Number of incidents<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h4>
+<p>To monitor the number of incidents using the external script <code class="docutils literal notranslate"><span class="pre">kompira_jq.sh</span></code>, create an Item with the following settings:</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Kompira</span> <span class="pre">incidents</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Type</p></td>
+<td><p>External check</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kompira_jq.sh[-s,{$KOMPIRA_URL},-t,{$KOMPIRA_TOKEN},-ac,/incident]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Type of information</p></td>
+<td><p>Numeric (unsigned)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data type</p></td>
+<td><p>Decimal</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">7. Monitoring Kompira</a><ul>
+<li><a class="reference internal" href="#id1">7.1. Introduction</a></li>
+<li><a class="reference internal" href="#zabbix">7.2. Monitoring using Zabbix</a><ul>
+<li><a class="reference internal" href="#id2">7.2.1. Preperation</a><ul>
+<li><a class="reference internal" href="#kompira-jq-sh">7.2.1.1. kompira_jq.sh</a></li>
+<li><a class="reference internal" href="#id3">7.2.1.2. Kompira server’s host settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#userparameter">7.2.2. Monitoring with UserParameter</a><ul>
+<li><a class="reference internal" href="#zabbix-agent">7.2.2.1. Zabbix Agent settings</a></li>
+<li><a class="reference internal" href="#zabbix-server">7.2.2.2. Zabbix Server settings</a></li>
+<li><a class="reference internal" href="#id4">7.2.2.3. Monitoring items</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">7.2.3. Monitoring with external scripts</a><ul>
+<li><a class="reference internal" href="#id6">7.2.3.1. Number of processes</a></li>
+<li><a class="reference internal" href="#id7">7.2.3.2. Number of incidents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="coordination.html"
+                          title="previous chapter"><span class="section-number">6. </span>Coordination with other systems</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="api_reference.html"
+                          title="next chapter"><span class="section-number">8. </span>Kompira REST API Reference</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/monitoring.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="api_reference.html" title="8. Kompira REST API Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="coordination.html" title="6. Coordination with other systems"
+             >previous</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 documentation</a> [<a href="../ja/monitoring.html">ja</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>Monitoring Kompira</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

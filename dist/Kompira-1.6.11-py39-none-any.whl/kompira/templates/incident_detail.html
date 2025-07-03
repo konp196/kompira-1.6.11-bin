@@ -1,0 +1,131 @@
+{% extends "main_view.html" %}
+{% load i18n core_extras %}
+
+{% block header_title %}{% trans 'incident detail'|capfirst %}{% endblock %}
+
+{% block page_main_title %}
+{% if object.id %}{{ object.name }}{% else %}{% trans 'create incident'|capfirst %}{% endif %}
+{% endblock %}
+{% block page_sub_title %}
+{% if object.id %}{% trans 'incident detail'|capfirst %}{% endif %}
+{% endblock %}
+
+{% block side_contents %}
+<section>
+  <h4>{% trans 'Incident information' %}</h4>
+  <table id="incident-info" class="table table-striped table-sm">
+    <tbody>
+      <tr>
+        <th>{% trans 'Incident status' %}</th>
+        <td id="incident-status">{% if object.id %}{% trans object.status %}{% else %}{% trans 'new'|capfirst %}{% endif %}</td>
+      </tr>
+{% if object.id %}
+      <tr>
+        <th>{% trans 'owner'|capfirst %}</th>
+        <td id="incident-owner">{{ object.owner }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'Created date' %}</th>
+        <td id="incident-created-time">{{ object.created_date }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'Closed date' %}</th>
+        <td id="incident-closed-date">{{ object.closed_date|default_if_none:"" }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'duration'|capfirst %}</th>
+        <td id="incident-duration">{{ object.duration|elapsed_datetime }}</td>
+      </tr>
+      <tr>
+        <th>{% trans 'Alert status' %}</th>
+        <td id="incident-alert-status">{{ object.alert_status|default_if_none:"" }}</td>
+      </tr>
+{% endif %}
+    </tbody>
+  </table>
+</section>
+{% endblock side_contents %}
+
+{% block section_contents %}
+{{ form.media.css }}
+  <div class="" id="summary">
+    <section class="incident-form">
+      <div class="well clearfix">
+        <form action="{% if object.id %}{{ object.abspath }}.update{% endif %}" method="post">
+          {% csrf_token %}
+          <div class="">
+            <table class="table table-striped table-sm edit-table table-label-left">
+              {{ form.as_table }}
+            </table>
+          </div>
+          <button id="id_save-btn" type="submit" class="submit-btn btn btn-secondary"><i class="fas fa-hdd"></i>{% trans 'save'|capfirst %}</button>
+        </form>
+        {{ form.media.js }}
+      </div>
+    </section>
+  </div>
+  <!-- 作業記録/アラートタブ(新規作成時は表示しない) -->
+  {% if object.id %}
+  <ul class="nav nav-tabs" id="proc-tab">
+    <li class="nav-item"><a class="nav-link active" href="#worklogs" data-toggle="tab">{% trans 'worklog'|capfirst %}</a></li>
+    <li class="nav-item"><a class="nav-link" href="#alerts" data-toggle="tab">{% trans 'alerts'|capfirst %}</a></li>
+  </ul>
+  <div class="tab-content mt-3">
+    <div class="tab-pane active" id="worklogs">
+      <section class="worklog-history">
+        <div class="contents-header clearfix">
+          {% with paginator=worklogs_paginator page_obj=worklogs_page_obj page_kwd='worklogs_page' url_hash='#worklogs' %}
+          {% include 'paginator_mini.html' %}
+          {% endwith %}
+          <h4>{% trans 'worklog history'|capfirst %}</h4>
+        </div>
+        <div>
+          {% for worklog in worklogs_object_list %}
+          <div class="incident-worklog">
+            <span class="worklog-username" style="font-weight: bold;"><a href="{{ worklog.user.abspath }}">{{ worklog.user.full_name|default:worklog.user }}</a></span> <span class="worklog-datetime" style="color: gray;">{{ worklog.created_date }}</span>
+            <pre class="well well-small" style="font-family: inherit;">{{ worklog.description }}</pre>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+    <div class="tab-pane" id="alerts">
+      <section class="alert-list">
+        <div class="contents-header clearfix">
+          {% with paginator=alerts_paginator page_obj=alerts_page_obj page_kwd='alerts_page' url_hash='#alerts' %}
+          {% include 'paginator_mini.html' %}
+          {% endwith %}
+          <h4>{% trans 'alert list'|capfirst %}</h4>
+        </div>
+        <table class="table table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>{% trans 'datetime'|capfirst %}</th>
+              <th>{% trans 'status'|capfirst %}</th>
+              <th>{% trans 'description'|capfirst %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for alert in alerts_object_list %}
+            <tr>
+              <td>{{ alert.created_date }}</td>
+              <td>{% trans alert.status %}</td>
+              <td>{{ alert.description }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+  {% include "js_paginator.html" %}
+  {% endif %}
+{% endblock %}
+
+{% block bottom_buttons %}
+{% if object.id %}
+{% with object_deletable=object.is_closed object_path=object.abspath object_type=model_verbose_name object_name=object.name %}
+{% include "bottom_button.html" %}
+{% endwith %}
+{% endif %}
+{% endblock bottom_buttons %}

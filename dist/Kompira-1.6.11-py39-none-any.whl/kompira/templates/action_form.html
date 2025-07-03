@@ -1,0 +1,71 @@
+{% load i18n %}
+<div class="modal hide" id="confirm-dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="action-form" action="" method="post">
+        {% csrf_token %}
+        <div class="extra-input d-none"></div>
+        <div class="modal-header">
+          <h5>{% trans 'are you sure?'|capfirst %}</h5>
+          <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+          <div class="warning alert alert-warning">
+            <span class="warning-label">{% trans 'warning:'|capfirst %}</span>
+            <span class="warning-text"></span>
+          </div>
+          <div class="message"></div>
+          <div class="original_message d-none">
+            {% trans "are you sure you want to [[operation]]?"|capfirst %}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="id_confirm-yes-btn" class="btn btn-primary">{% trans 'yes'|capfirst %}</button>
+          <button type="button" id="id_confirm-cancel-btn" class="btn btn-outline-secondary ml-3" data-dismiss="modal">{% trans 'cancel'|capfirst %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal hide" id="conn-test-dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="header-message"></h5>
+        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div id="body-message" class="text-break"></div>
+        <div id="body-reason" class="mt-2"><pre><code></code></pre></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="id_confirm-btn" class="btn btn-outline-secondary ml-3" data-dismiss="modal"><span id="button-text"></span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal hide" id="auth-code-dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form  enctype="multipart/form-data" action="{{ object_property.abspath }}.auth_code" method="post">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 id="header-message">{% trans 'Enter redirect URL' %}</h5>
+          <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+          <p>{% trans 'If the redirection fails, copy the URL of the redirection destination shown in the address bar into the input field.' %}</p>
+          <table class="table table-striped table-sm edit-table table-label-left">
+            {{ auth_form.as_table }}
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" id="id_auth-submit-btn" class="btn btn-primary">{% trans 'submit'|capfirst %}</button>
+          <button type="button" id="id_auth-cancel-btn" class="btn btn-outline-secondary ml-3" data-dismiss="modal">{% trans 'cancel'|capfirst %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+{% spaceless %}
+<td>{% with widget=widget.subwidgets.0 %}{% include widget.template_name %}{% endwith %}</td>
+<td>{% with widget=widget.subwidgets.1 %}{% include widget.template_name %}{% endwith %}</td>
+{% endspaceless %}

@@ -1,0 +1,47 @@
+{% extends "obj_edit.html" %}
+{% load static i18n %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include "lib/codemirror.html" %}
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript" src="{% static 'dependsOn-1.0.1/js/dependsOn-1.0.1.min.js' %}"></script>
+<script type="text/javascript">
+(function(){
+{% if user.username == 'admin' or object.libraryType == 'source' %}
+    var id_textarea = "id_sourceText";
+    kompira.editor.create(id_textarea, {codemirror: {mode: "python"}});
+    {% if user.username == 'admin' %}
+    $('#id_modulePath').dependsOn({
+        '#id_edit_form select': {
+            values: ['module']
+        }
+    }, {
+        hide: false
+    });
+    $('#id_sourceText').dependsOn({
+        '#id_edit_form select': {
+            values: ['source', 'safe_source']
+        }
+    }, {
+        hide: false,
+        onDisable: function() {
+            var cm = kompira.editor.get(id_textarea);
+            cm.setOption('readOnly', true);
+        },
+        onEnable: function() {
+            var cm = kompira.editor.get(id_textarea);
+            cm.setOption('readOnly', false);
+        }
+    });
+    {% endif %}
+{% else %}
+    $('#id_sourceText').attr('readonly', 'readonly');
+    $('#id_modulePath').attr('readonly', 'readonly');
+{% endif %}
+})();
+</script>
+{% endblock %}

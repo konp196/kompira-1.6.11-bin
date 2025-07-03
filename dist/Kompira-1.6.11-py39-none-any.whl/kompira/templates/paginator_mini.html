@@ -1,0 +1,26 @@
+{% load i18n static core_extras %}
+<div class="paginator float-right" data-page_kwd="{{ page_kwd|default:'page' }}" data-page_size="{{ page_obj.paginator.per_page }}" data-url_hash="{{ url_hash }}">
+  <ul class="pagination">
+    <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+      <a class="page-link page-first" href="{% if page_obj.has_previous %}?{% paginator_param_replace page_kwd 1 %}{{ url_hash }}{% else %}#{% endif %}" title="{% trans 'first page'|capfirst %}"><i class="fas fa-angle-double-left"></i></a>
+    </li>
+    <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+      <a class="page-link page-prev" href="{% if page_obj.has_previous %}?{% paginator_param_replace page_kwd page_obj.previous_page_number %}{{ url_hash }}{% else %}#{% endif %}" title="{% trans 'previous page'|capfirst %}"><i class="fas fa-angle-left"></i></a>
+    </li>
+    <li class="page-item">
+      <a class="page-link page-current" href="#" tabindex="-1" style="text-align: center;" title="Page {{ page_obj.number }} / {{ paginator.num_pages }}">
+        <span class="page-range">{{ page_obj.start_index }}-{{ page_obj.end_index }}</span> / <span class="page-count">{{ paginator.count }}</span>
+      </a>
+    </li>
+    <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+      <a class="page-link page-next" href="{% if page_obj.has_next %}?{% paginator_param_replace page_kwd page_obj.next_page_number %}{{ url_hash }}{% else %}#{% endif %}" title="{% trans 'next page'|capfirst %}"><i class="fas fa-angle-right"></i></a>
+    </li>
+    <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+      <a class="page-link page-last" href="{% if page_obj.has_next %}?{% paginator_param_replace page_kwd 'last' %}{{ url_hash }}{% else %}#{% endif %}" title="{% trans 'last page'|capfirst %}"><i class="fas fa-angle-double-right"></i></a>
+    </li>
+  </ul>
+</div>
+<div class="float-right">
+  <select class="page_size_selector selectpicker" data-width="85px" data-page_kwd="{{ page_kwd|default:'page' }}" data-style="btn-outline-secondary" id="id_{{ page_kwd|default:'page' }}_size_selector" title="">
+  </select>
+</div>

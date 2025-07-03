@@ -1,0 +1,3 @@
+[console_scripts]
+kompira_sendevt = kompira_sendevt.kompira_sendevt:main
+

@@ -1,0 +1,2828 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-23 08:30+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+
+#: kompira/core/authentication.py
+msgid "Contact an admin to unlock your account."
+msgstr "管理者に連絡して解除してもらってください。"
+
+#: kompira/core/authentication.py
+msgid "Please try again later."
+msgstr "しばらくしてから、もう一度お試しください。"
+
+#: kompira/core/exceptions.py
+msgid "Unknown user."
+msgstr "不明なユーザーです"
+
+#: kompira/core/exceptions.py
+msgid "Unknown group."
+msgstr "不明なグループです"
+
+#: kompira/core/exceptions.py
+msgid "Invalid operation."
+msgstr "無効な操作です"
+
+#: kompira/core/exceptions.py
+msgid "Directory error."
+msgstr "ディレクトリエラーです"
+
+#: kompira/core/exceptions.py
+msgid "Execution error."
+msgstr "実行ノード"
+
+#: kompira/core/exceptions.py
+#, python-brace-format
+msgid "Invalid attribute \"{attribute}\" in request."
+msgstr "リクエストの中の \"{attribute}\" は不正な属性です"
+
+#: kompira/core/exceptions.py
+#, python-brace-format
+msgid "Undefined view {view_class}"
+msgstr "{view_class} は未定義です"
+
+#: kompira/core/exceptions.py
+msgid "Filter error."
+msgstr "フィルタエラー"
+
+#: kompira/core/exceptions.py
+#, python-brace-format
+msgid "Invalid field \"{field}\" in request."
+msgstr "不正なフィールド修飾子 \"{field}\" です。"
+
+#: kompira/core/exceptions.py tests/test_api.py
+#, python-brace-format
+msgid "Object \"{object_path}\" is not found."
+msgstr "オブジェクト \"{object_path}\" が見つかりません。"
+
+#: kompira/core/field_render.py
+msgid "No object"
+msgstr "オブジェクトがありません"
+
+#: kompira/core/field_render.py
+msgid "No file"
+msgstr "ファイルがありません"
+
+#: kompira/core/field_render.py
+msgid "delete file &quot;[[target]]&quot;"
+msgstr "ファイル &quot;[[target]]&quot; を削除"
+
+#: kompira/core/field_render.py kompira/templates/action_button.html
+#: kompira/templates/bottom_button.html kompira/templates/channel_view.html
+#: kompira/templates/processes.html kompira/templates/selectable_list.html
+msgid "This operation cannot be undone!"
+msgstr "この操作は元に戻せません！"
+
+#: kompira/core/field_render.py kompira/filters/extends.py
+#: kompira/models/core.py kompira/models/task.py
+#: kompira/templates/dir/dir_dialog.html kompira/templates/group_list.html
+#: kompira/templates/incident_list.html kompira/templates/jobflow_view.html
+#: kompira/templates/processes.html kompira/templates/sched_list.html
+#: kompira/templates/task_list.html kompira/templates/user_list.html
+#: kompira/tests/core/test_utils.py kompira/views/forms/group.py
+msgid "name"
+msgstr "名称"
+
+#: kompira/core/field_render.py kompira/models/core.py kompira/models/task.py
+#: kompira/templates/jobflow_view.html
+msgid "value"
+msgstr "値"
+
+#: kompira/core/license_manager.py
+#, python-format
+msgid "license object is missing: %s"
+msgstr "ライセンスオブジェクトがありません: %s"
+
+#: kompira/core/license_manager.py
+#, python-format
+msgid "the number of %s has exceeded limit"
+msgstr "%s の数が制限を超えました。"
+
+#: kompira/core/license_manager.py
+#, python-format
+msgid "exceed the node limit: %s"
+msgstr "ノード数の制限を超えました: %s"
+
+#: kompira/core/middleware.py kompira/tests/views/extends/test_config.py
+#: kompira/tests/views/extends/test_form.py
+#: kompira/tests/views/extends/test_object.py
+#: kompira/tests/views/test_account.py kompira/tests/views/test_incident.py
+#: kompira/tests/views/test_schedule.py kompira/tests/views/test_task.py
+#: kompira_engine/engine_server.py
+#, python-format
+msgid "Permission denied: %s"
+msgstr "許可されていません: %s"
+
+#: kompira/core/middleware.py kompira/tests/views/extends/test_object.py
+#: kompira/views/core.py kompira/views/extends/directory.py
+msgid "view"
+msgstr "ビュー"
+
+#: kompira/core/middleware.py kompira/tests/views/extends/test_directory.py
+#: kompira/tests/views/extends/test_object.py
+#: kompira/views/extends/directory.py
+#, python-format
+msgid "Cannot %(operation)s: %(err_mesg)s (%(err_name)s)"
+msgstr "%(operation)sできません: %(err_mesg)s (%(err_name)s)"
+
+#: kompira/core/object.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "'%s' is not readable"
+msgstr "'%s' は読み取り不可です"
+
+#: kompira/core/object.py
+#, python-format
+msgid "'%s' is not writable"
+msgstr "'%s' は書き込み不可です"
+
+#: kompira/core/object.py
+#, python-format
+msgid "'%s' is not executable"
+msgstr "'%s' は実行不可です"
+
+#: kompira/core/object.py
+#, python-format
+msgid "'%s' property is not editable"
+msgstr "'%s' のプロパティは編集不可です"
+
+#: kompira/core/object.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "'%s' is read only"
+msgstr "'%s' は読み込み専用です"
+
+#: kompira/core/object.py
+#, python-format
+msgid "typ string must be one of 'e', 'g' or 'r', not '%s'"
+msgstr ""
+
+#: kompira/core/object.py
+#, python-format
+msgid "pattern must be string, not '%s'"
+msgstr ""
+
+#: kompira/core/object.py
+#, python-format
+msgid "mode string must be 'i' or '', not '%s'"
+msgstr ""
+
+#: kompira/core/virtual.py kompira/models/core.py
+#: kompira/models/extends/object.py kompira/tests/views/extends/test_object.py
+#, python-format
+msgid "Referred by %s"
+msgstr "「%s」によって参照されています。"
+
+#: kompira/core/virtual.py kompira/models/account.py kompira/models/process.py
+#: kompira/models/task.py kompira/tests/models/test_process.py
+#: kompira/tests/models/test_scheduler.py kompira/tests/models/test_task.py
+#: kompira/tests/views/test_account.py kompira/virtuals/account.py
+#: kompira_engine/tests/test_account.py
+msgid "you are not privileged user."
+msgstr "特権ユーザーではありません。"
+
+#: kompira/core/virtual.py
+msgid "you are not logged in."
+msgstr "ログインしていません。"
+
+#: kompira/filters/core.py kompira/tests/views/extends/test_object.py
+#: kompira/views/forms/fields.py
+msgid "Enter a hexadecimal code."
+msgstr "16進コードを入力してください。"
+
+#: kompira/filters/core.py
+msgid "Enter a valid boolean value (true or false)."
+msgstr "真偽値 (true または false) を入力してください。"
+
+#: kompira/filters/core.py
+#, python-format
+msgid "User \"%(user)s\" is not found."
+msgstr "ユーザー \"%(user)s\" は見つかりません"
+
+#: kompira/filters/core.py
+#, python-format
+msgid "Invalid object path \"%(obj_path)s\" - object does not exist."
+msgstr "不正なオブジェクトパス \"%(obj_path)s\" - オブジェクトが存在しません"
+
+#: kompira/filters/extends.py kompira/models/core.py
+#: kompira/views/forms/object.py
+msgid "display name"
+msgstr "表示名"
+
+#: kompira/filters/extends.py kompira/templates/dir/dir_dialog.html
+#: kompira/templates/incident_detail.html kompira/templates/incident_list.html
+#: kompira/templates/obj_base.html kompira/templates/task_detail.html
+#: kompira/templates/task_list.html kompira/views/extends/objects_operation.py
+#: kompira/views/forms/incident.py kompira/views/forms/object.py
+msgid "owner"
+msgstr "所有者"
+
+#: kompira/jobflow/object.py kompira_engine/tests/test_engine.py
+#, python-brace-format
+msgid "'{0}' failed: {1}"
+msgstr "'{0}' 失敗: {1}"
+
+#: kompira/jobflow/object.py kompira_engine/tests/test_engine.py
+#, python-brace-format
+msgid "Failed to exec method '{0}': {1}"
+msgstr "メソッド '{0}' の実行に失敗: {1}"
+
+#: kompira/library/builtin.py kompira_engine/opcodes.py
+#: kompira_engine/tests/test_engine.py
+#, python-format
+msgid "Object \"%s\" is not found"
+msgstr "オブジェクト \"%s\" が見つかりません"
+
+#: kompira/library/builtin.py kompira_engine/opcodes.py
+#, python-format
+msgid "assertion failure: %s"
+msgstr "アサーション失敗: %s"
+
+#: kompira/library/builtin.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "timeout should be integer or datetime: %s"
+msgstr "timeout は整数か日時型のいずれかにしてください: %s"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "Extend module"
+msgstr "拡張モジュール"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "Field names"
+msgstr "フィールド名の列"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "Field display names"
+msgstr "フィールド表示名の列"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "Field types"
+msgstr "フィールド型の列"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "TypeObject"
+msgstr "型オブジェクト"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "Type object of TypeObject"
+msgstr "型の型オブジェクト"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "Directory"
+msgstr "ディレクトリ"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "Type object of Directory"
+msgstr "ディレクトリの型オブジェクト"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "Root directory"
+msgstr "ルートディレクトリ"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "System directory"
+msgstr "システムディレクトリ"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "System types directory"
+msgstr "システム定義型ディレクトリ"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "Sort order"
+msgstr "ソート順"
+
+#: kompira/management/commands/create_initial_data.py
+msgid "Page size"
+msgstr "ページサイズ"
+
+#: kompira/models/account.py kompira/templates/gperm_table.html
+#: kompira/templates/group_view.html kompira/templates/task_detail.html
+#: kompira/templates/user_list.html kompira/templates/user_view.html
+msgid "group"
+msgstr "グループ"
+
+#: kompira/models/account.py
+msgid "groups"
+msgstr "グループ"
+
+#: kompira/models/account.py kompira/templates/group_view.html
+msgid "ldap group"
+msgstr "LDAPグループ"
+
+#: kompira/models/account.py
+msgid "Indicates whether or not the group is a ldap group."
+msgstr "LDAPグループかどうかを示す"
+
+#: kompira/models/account.py
+msgid "anonymous user cannot access."
+msgstr ""
+
+#: kompira/models/account.py kompira/templates/group_list.html
+#: kompira/templates/login.html kompira/templates/proc_detail.html
+#: kompira/templates/processes.html kompira/templates/sched_list.html
+#: kompira/templates/sched_view.html kompira/templates/task_detail.html
+#: kompira/templates/uperm_table.html kompira/templates/user_view.html
+#: kompira/views/forms/schedule.py
+msgid "user"
+msgstr "ユーザー"
+
+#: kompira/models/account.py kompira/templates/group_view.html
+msgid "users"
+msgstr "ユーザー"
+
+#: kompira/models/account.py
+msgid "username"
+msgstr "ユーザー名"
+
+#: kompira/models/account.py kompira/views/forms/group.py
+#: kompira/views/forms/user.py
+msgid "Required. 30 characters or fewer. Letters, digits and _ only. First character is letters and _ only."
+msgstr "この項目は必須です。記号以外の文字、数字、もしくは _ で30文字以下にしてください。先頭に半角数字は使用できません。"
+
+#: kompira/models/account.py
+msgid "Enter a valid username."
+msgstr "正しいユーザ名を入力してください。"
+
+#: kompira/models/account.py kompira/tests/views/test_account.py
+msgid "A user with that username already exists."
+msgstr "同じユーザ名が既に登録済みです。"
+
+#: kompira/models/account.py kompira/templates/user_view.html
+msgid "first name"
+msgstr "名"
+
+#: kompira/models/account.py kompira/templates/user_view.html
+msgid "last name"
+msgstr "姓"
+
+#: kompira/models/account.py
+msgid "email address"
+msgstr "Eメールアドレス"
+
+#: kompira/models/account.py
+msgid "staff status"
+msgstr "スタッフ状態"
+
+#: kompira/models/account.py
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: kompira/models/account.py kompira/templates/user_view.html
+msgid "active"
+msgstr "有効"
+
+#: kompira/models/account.py
+msgid "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
+msgstr ""
+
+#: kompira/models/account.py kompira/templates/user_view.html
+msgid "ldap user"
+msgstr "LDAPユーザー"
+
+#: kompira/models/account.py
+msgid "Indicates whether or not the user is a ldap user."
+msgstr "LDAPユーザかどうかを示す"
+
+#: kompira/models/account.py kompira/templates/user_view.html
+#: kompira/views/forms/user.py
+msgid "home"
+msgstr "ホーム"
+
+#: kompira/models/account.py kompira/templates/user_view.html
+#: kompira/views/forms/user.py
+msgid "environment"
+msgstr "環境変数"
+
+#: kompira/models/account.py
+msgid "The groups this user belongs to. A user will get all permissions granted to each of his/her group."
+msgstr "このユーザーが所属しているグループです。ユーザーは、所属するグループごとに与えられたすべての権限を取得します。"
+
+#: kompira/models/account.py
+#, python-brace-format
+msgid "{first_name} {last_name}"
+msgstr "{last_name} {first_name}"
+
+#: kompira/models/account.py
+#, python-format
+msgid "%s's e-mail address is not configured"
+msgstr ""
+
+#: kompira/models/core.py
+msgid "kompira object path"
+msgstr "Kompiraオブジェクトパス"
+
+#: kompira/models/core.py kompira/templates/incident_detail.html
+#: kompira/templates/obj_base.html kompira/templates/sched_view.html
+#: kompira/views/forms/object.py
+msgid "description"
+msgstr "説明"
+
+#: kompira/models/core.py
+msgid "object's owner"
+msgstr "オブジェクト所有者"
+
+#: kompira/models/core.py
+msgid "created time"
+msgstr "作成時刻"
+
+#: kompira/models/core.py
+msgid "updated time"
+msgstr "更新時刻"
+
+#: kompira/models/core.py kompira/tests/views/extends/test_directory.py
+#, python-format
+msgid "Too long name '%s...'"
+msgstr "「%s...」は長すぎる名前です。"
+
+#: kompira/models/core.py kompira/tests/views/extends/test_directory.py
+msgid "Empty name."
+msgstr "空の名前です。"
+
+#: kompira/models/core.py kompira/tests/views/extends/test_directory.py
+#, python-format
+msgid "Invalid name '%s'"
+msgstr "「%s」は不正な名前です。"
+
+#: kompira/models/core.py
+#, python-format
+msgid "Too long path %s."
+msgstr "パス文字列が長すぎます: %s"
+
+#: kompira/models/core.py kompira/models/extends/directory.py
+#: kompira/models/extends/object.py kompira/models/extends/type_object.py
+#: kompira/tests/views/extends/test_directory.py
+#: kompira/tests/views/extends/test_object.py
+#, python-format
+msgid "Already exists '%s'"
+msgstr "「%s」は既に存在します。"
+
+#: kompira/models/core.py
+msgid "type expression"
+msgstr ""
+
+#: kompira/models/core.py
+msgid "type qualifier"
+msgstr ""
+
+#: kompira/models/core.py
+msgid "key"
+msgstr ""
+
+#: kompira/models/core.py
+msgid "oid"
+msgstr ""
+
+#: kompira/models/core.py
+msgid "size"
+msgstr "サイズ"
+
+#: kompira/models/extends/config.py
+#, python-format
+msgid "'%s' is not allowed to change settings"
+msgstr "'%s' は設定変更できません"
+
+#: kompira/models/extends/directory.py
+msgid "Invalid cyclic directory."
+msgstr "ディレクトリが不正に循環します。"
+
+#: kompira/models/extends/directory.py
+#, python-format
+msgid "Invalid type object %s."
+msgstr "「%s」は不正な型オブジェクトです。"
+
+#: kompira/models/extends/directory.py kompira/models/extends/object.py
+#: kompira/models/extends/type_object.py
+#, python-format
+msgid "Integrity error: %s"
+msgstr "一貫性エラーです: %s"
+
+#: kompira/models/extends/directory.py
+#, python-brace-format
+msgid "Failed to move '{0}' ({1})"
+msgstr "「{0}」の移動に失敗しました （{1}）"
+
+#: kompira/models/extends/directory.py
+#, python-brace-format
+msgid "Failed to copy '{0}' ({1})"
+msgstr "「{0}」のコピーに失敗しました （{1}）"
+
+#: kompira/models/extends/license.py
+#: kompira/tests/views/extends/test_license.py
+#, python-format
+msgid "already expired: %s"
+msgstr "有効期限切れです: %s"
+
+#: kompira/models/extends/license.py
+#: kompira/tests/views/extends/test_license.py
+msgid "verification failure"
+msgstr "検証に失敗しました"
+
+#: kompira/models/extends/license.py
+#: kompira/tests/views/extends/test_license.py
+#, python-brace-format
+msgid "unmatched hardware id: {0} (the hardware ID of this server is {1})"
+msgstr "ハードウェア ID が正しくありません: {0} (このサーバのハードウェア ID は {1} です)"
+
+#: kompira/models/extends/object.py
+#, python-brace-format
+msgid "Some parent objects are not writable: {0}"
+msgstr ""
+
+#: kompira/models/extends/object.py
+#, python-brace-format
+msgid "Cannot delete some type objects because they are referenced: {protected}"
+msgstr ""
+
+#: kompira/models/extends/object.py
+#, python-format
+msgid "Lock error: %s"
+msgstr "ロックエラー: %s"
+
+#: kompira/models/extends/object.py
+msgid "Cannot rename root directory."
+msgstr "ルートディレクトリはリネームできません"
+
+#: kompira/models/extends/table.py
+#, python-brace-format
+msgid "Table type mismatch: {0} != {1}"
+msgstr "テーブルの型が一致しません: {0} != {1}"
+
+#: kompira/models/extends/text.py kompira/tests/views/extends/test_text.py
+#: kompira/views/extends/text.py
+#, python-brace-format
+msgid "Failed to text render: {0}: {1}"
+msgstr "テキストの表示に失敗： {0}: {1}"
+
+#: kompira/models/fields.py
+msgid "Invalid JSON text"
+msgstr "不正な JSON テキストです"
+
+#: kompira/models/incident.py
+msgid "OPENED"
+msgstr "未対応"
+
+#: kompira/models/incident.py
+msgid "WORKING"
+msgstr "対応中"
+
+#: kompira/models/incident.py
+msgid "CLOSED"
+msgstr "完了"
+
+#: kompira/models/incident.py
+msgid "Incident name"
+msgstr "インシデント名"
+
+#: kompira/models/incident.py kompira/templates/incident_list.html
+msgid "Device name"
+msgstr "デバイス名"
+
+#: kompira/models/incident.py kompira/templates/incident_list.html
+msgid "Service name"
+msgstr "サービス名"
+
+#: kompira/models/incident.py
+msgid "Opened time of incident"
+msgstr "インシデント開始時刻"
+
+#: kompira/models/incident.py
+msgid "Closed time of incident"
+msgstr "インシデント完了時刻"
+
+#: kompira/models/incident.py kompira/templates/incident_detail.html
+#: kompira/templates/incident_list.html kompira/views/forms/incident.py
+msgid "Incident status"
+msgstr "インシデント状態"
+
+#: kompira/models/incident.py
+msgid "Incident owner ID"
+msgstr "インシデント所有者ID"
+
+#: kompira/models/incident.py
+msgid "Incident"
+msgstr "インシデント"
+
+#: kompira/models/incident.py
+msgid "Incidents"
+msgstr "インシデント"
+
+#: kompira/models/incident.py
+msgid "Description of worklog"
+msgstr "作業記録"
+
+#: kompira/models/incident.py kompira/templates/incident_detail.html
+#: kompira/templates/incident_list.html
+msgid "Created date"
+msgstr "作成日時"
+
+#: kompira/models/incident.py
+msgid "User"
+msgstr "ユーザー"
+
+#: kompira/models/incident.py
+msgid "Worklog"
+msgstr "作業記録"
+
+#: kompira/models/incident.py
+msgid "Worklogs"
+msgstr "作業記録"
+
+#: kompira/models/incident.py
+msgid "Detail information"
+msgstr "詳細情報"
+
+#: kompira/models/incident.py
+msgid "Type of alert"
+msgstr "アラート種別"
+
+#: kompira/models/incident.py
+msgid "Alert"
+msgstr "アラート"
+
+#: kompira/models/incident.py
+msgid "Alerts"
+msgstr "アラート"
+
+#: kompira/models/process.py
+msgid "Process"
+msgstr "プロセス"
+
+#: kompira/models/process.py
+msgid "Processes"
+msgstr "プロセス"
+
+#: kompira/models/process.py
+msgid "NEW"
+msgstr "新規"
+
+#: kompira/models/process.py
+msgid "READY"
+msgstr "実行"
+
+#: kompira/models/process.py
+msgid "RUNNING"
+msgstr "実行"
+
+#: kompira/models/process.py kompira/models/task.py
+msgid "WAITING"
+msgstr "待ち"
+
+#: kompira/models/process.py
+msgid "ABORTED"
+msgstr "異常終了"
+
+#: kompira/models/process.py kompira/models/task.py
+msgid "DONE"
+msgstr "完了"
+
+#: kompira/models/process.py kompira/models/scheduler.py
+msgid "Job"
+msgstr "ジョブ"
+
+#: kompira/models/process.py
+msgid "Process user ID"
+msgstr "プロセスユーザーID"
+
+#: kompira/models/process.py
+msgid "Process started time"
+msgstr "プロセス開始時刻"
+
+#: kompira/models/process.py
+msgid "Process finished time"
+msgstr "プロセス終了時刻"
+
+#: kompira/models/process.py
+msgid "Process status"
+msgstr "プロセス状態"
+
+#: kompira/models/process.py
+msgid "Process schedule"
+msgstr "プロセススケジュール"
+
+#: kompira/models/process.py
+msgid "Invoker object"
+msgstr "起動オブジェクト"
+
+#: kompira/models/process.py
+msgid "Parent process"
+msgstr "親プロセス"
+
+#: kompira/models/process.py
+msgid "Process is suspeneded"
+msgstr "プロセスは一時停止中"
+
+#: kompira/models/process.py
+msgid "Current job"
+msgstr "現在のジョブ"
+
+#: kompira/models/process.py
+msgid "Execution line number"
+msgstr "実行中の行番号"
+
+#: kompira/models/process.py
+msgid "Process console message"
+msgstr "プロセスのコンソールメッセージ"
+
+#: kompira/models/process.py
+msgid "Process exit status"
+msgstr "プロセスの終了ステータス"
+
+#: kompira/models/process.py
+msgid "Process result"
+msgstr "プロセスの実行結果"
+
+#: kompira/models/process.py
+msgid "Process error"
+msgstr "プロセスエラー"
+
+#: kompira/models/process.py
+msgid "Configuration"
+msgstr "設定"
+
+#: kompira/models/process.py
+msgid "Configurations"
+msgstr "設定"
+
+#: kompira/models/process.py
+msgid "related process"
+msgstr "関連プロセス"
+
+#: kompira/models/process.py kompira/templates/proc_detail.html
+msgid "step mode"
+msgstr "ステップモード"
+
+#: kompira/models/process.py kompira/templates/proc_detail.html
+msgid "checkpoint mode"
+msgstr "チェックポイントモード"
+
+#: kompira/models/process.py
+msgid "Do nothing"
+msgstr "何もしない"
+
+#: kompira/models/process.py
+msgid "Sending mail at the time of process finished"
+msgstr "プロセス終了時にメール送信"
+
+#: kompira/models/process.py
+msgid "Sending mail at the time of process aborted"
+msgstr "プロセス異常終了時のみメール送信"
+
+#: kompira/models/process.py kompira/templates/proc_detail.html
+#: kompira/views/forms/process.py
+msgid "monitoring mode"
+msgstr "監視モード"
+
+#: kompira/models/process.py
+msgid "Snapshot"
+msgstr "スナップショット"
+
+#: kompira/models/process.py
+msgid "Snapshots"
+msgstr "スナップショット"
+
+#: kompira/models/process.py
+msgid "Snapshot data"
+msgstr "スナップショット"
+
+#: kompira/models/scheduler.py
+msgid "Schedule"
+msgstr "スケジュール"
+
+#: kompira/models/scheduler.py
+msgid "Schedules"
+msgstr "スケジュール"
+
+#: kompira/models/scheduler.py
+msgid "Schedule name"
+msgstr "スケジュール名"
+
+#: kompira/models/scheduler.py
+msgid "Description of schedule"
+msgstr "スケジュールの説明"
+
+#: kompira/models/scheduler.py
+msgid "Schedule user ID"
+msgstr "スケジュールユーザーID"
+
+#: kompira/models/scheduler.py
+msgid "Year number"
+msgstr "年"
+
+#: kompira/models/scheduler.py
+msgid "Month number (1-12)"
+msgstr "月 (1-12)"
+
+#: kompira/models/scheduler.py
+msgid "Day of the month (1-31)"
+msgstr "日 (1-31)"
+
+#: kompira/models/scheduler.py
+msgid "ISO week number (1-53)"
+msgstr "ISO週番号 (1-53)"
+
+#: kompira/models/scheduler.py
+msgid "number or name of weekday"
+msgstr "曜日名もしくは曜日番号"
+
+#: kompira/models/scheduler.py
+msgid "hour (0-23)"
+msgstr "時 (0-23)"
+
+#: kompira/models/scheduler.py
+msgid "minute (0-59)"
+msgstr "分 (0-59)"
+
+#: kompira/models/scheduler.py
+msgid "Schedule is disabled"
+msgstr "スケジュールの無効化"
+
+#: kompira/models/scheduler.py
+msgid "Schedule parameter"
+msgstr "スケジュールパラメータ"
+
+#: kompira/models/task.py
+msgid "ONGOING"
+msgstr "処理中"
+
+#: kompira/models/task.py
+msgid "CANCELED"
+msgstr "キャンセル"
+
+#: kompira/models/task.py
+msgid "Task name"
+msgstr "タスク名"
+
+#: kompira/models/task.py
+msgid "Task title"
+msgstr "タスクタイトル"
+
+#: kompira/models/task.py
+msgid "Task message"
+msgstr "タスクメッセージ"
+
+#: kompira/models/task.py
+msgid "Task action"
+msgstr "タスク動作"
+
+#: kompira/models/task.py
+msgid "Task status"
+msgstr "タスク状態"
+
+#: kompira/models/task.py
+msgid "owner of this task"
+msgstr "このタスクの所有者"
+
+#: kompira/models/task.py
+msgid "Created time of task"
+msgstr "タスク作成日時"
+
+#: kompira/models/task.py
+msgid "Closed time of task"
+msgstr "タスク完了日時"
+
+#: kompira/models/task.py
+msgid "assigned users"
+msgstr "割り当てユーザー"
+
+#: kompira/models/task.py
+msgid "assigned groups"
+msgstr "割り当てグループ"
+
+#: kompira/models/task.py
+msgid "Task"
+msgstr "タスク"
+
+#: kompira/models/task.py
+msgid "Tasks"
+msgstr "タスク"
+
+#: kompira/serializers/account.py
+msgid "Enter a valid name."
+msgstr ""
+
+#: kompira/serializers/core.py
+#, python-brace-format
+msgid "Invalid object path \"{obj_path}\" - object does not exist."
+msgstr ""
+
+#: kompira/serializers/core.py
+#, python-brace-format
+msgid "Incorrect type. Expected object path string, received {data_type}."
+msgstr ""
+
+#: kompira/serializers/core.py
+#, python-brace-format
+msgid "User \"{user}\" is not found."
+msgstr ""
+
+#: kompira/serializers/core.py
+#, python-brace-format
+msgid "Group \"{group}\" is not found."
+msgstr ""
+
+#: kompira/serializers/core.py
+#, python-brace-format
+msgid "\"{input}\" is not a valid permission data."
+msgstr ""
+
+#: kompira/serializers/core.py
+#, python-brace-format
+msgid "\"{input}\" is not a valid fields dictionary."
+msgstr ""
+
+#: kompira/serializers/core.py
+#, python-brace-format
+msgid "Invalid field name \"{field_name}\" - no such field."
+msgstr ""
+
+#: kompira/templates/403.html
+msgid "You do not have permission to view this page."
+msgstr "このページを表示する権限がありません"
+
+#: kompira/templates/404.html
+msgid "This page does not exist."
+msgstr "このページは存在しません"
+
+#: kompira/templates/action_button.html
+msgid "action"
+msgstr "アクション"
+
+#: kompira/templates/action_button.html kompira/templates/bottom_button.html
+#: kompira/templates/dir/dir_context_menu.html
+#: kompira/templates/dir/dir_context_operation.html
+#: kompira/templates/obj_form.html kompira/templates/sched_form.html
+msgid "edit"
+msgstr "編集"
+
+#: kompira/templates/action_button.html
+#: kompira/templates/dir/dir_context_menu.html
+#: kompira/templates/dir/dir_context_operation.html
+#: kompira/views/extends/objects_operation.py kompira/views/schedule.py
+msgid "copy"
+msgstr "コピー"
+
+#: kompira/templates/action_button.html
+msgid "delete &quot;[[target]]&quot;"
+msgstr " &quot;[[target]]&quot; を削除"
+
+#: kompira/templates/action_button.html kompira/templates/bottom_button.html
+#: kompira/templates/dir/dir_context_menu.html
+#: kompira/templates/dir/dir_context_operation.html
+#: kompira/tests/views/extends/test_object.py kompira/views/extends/object.py
+#: kompira/views/extends/objects_operation.py kompira/views/virtual.py
+msgid "delete"
+msgstr "削除"
+
+#: kompira/templates/action_form.html
+msgid "are you sure?"
+msgstr "本当によろしいですか？"
+
+#: kompira/templates/action_form.html
+msgid "warning:"
+msgstr "警告:"
+
+#: kompira/templates/action_form.html
+msgid "are you sure you want to [[operation]]?"
+msgstr "本当に[[operation]]しますか？"
+
+#: kompira/templates/action_form.html
+msgid "yes"
+msgstr "はい"
+
+#: kompira/templates/action_form.html kompira/templates/dir/dir_dialog.html
+#: kompira/templates/popup_editor.html kompira/templates/table_view.html
+#: kompira/templates/task_detail.html kompira/templates/uploader.html
+msgid "cancel"
+msgstr "キャンセル"
+
+#: kompira/templates/action_form.html
+msgid "Enter redirect URL"
+msgstr "リダイレクト URL の入力"
+
+#: kompira/templates/action_form.html
+msgid "If the redirection fails, copy the URL of the redirection destination shown in the address bar into the input field."
+msgstr "リダイレクトに失敗した場合、アドレスバーに表示されているリダイレクト先の URL を入力フィールドにコピーして下さい。"
+
+#: kompira/templates/action_form.html kompira/templates/form_view.html
+#: kompira/views/extends/form.py
+msgid "submit"
+msgstr "提出"
+
+#: kompira/templates/bottom_button.html
+msgid "delete [[type]] <span class=font-weight-bold>[[target]]</span>"
+msgstr "[[type]] <span class=font-weight-bold>[[target]]</span> を削除"
+
+#: kompira/templates/channel_view.html kompira/templates/incident_detail.html
+#: kompira/templates/proc_detail.html kompira/templates/processes.html
+#: kompira/templates/realm_view.html kompira/templates/task_detail.html
+#: kompira/templates/task_list.html
+msgid "status"
+msgstr "ステータス"
+
+#: kompira/templates/channel_view.html kompira/templates/realm_view.html
+#: kompira/templates/repository_view.html
+msgid "configuration"
+msgstr "設定"
+
+#: kompira/templates/channel_view.html
+msgid "message count"
+msgstr "メッセージ数"
+
+#: kompira/templates/channel_view.html
+msgid "clear all messages"
+msgstr "全てのメッセージを消去"
+
+#: kompira/templates/channel_view.html
+msgid "clear all"
+msgstr "全てクリア"
+
+#: kompira/templates/channel_view.html
+msgid "event count"
+msgstr "イベント数"
+
+#: kompira/templates/config_edit.html
+msgid "save config"
+msgstr "設定の保存"
+
+#: kompira/templates/config_view.html
+msgid "edit config"
+msgstr "設定の変更"
+
+#: kompira/templates/dir/dir_column_config.html
+#, python-format
+msgid "Edit this %(label)s"
+msgstr "この%(label)sを編集する"
+
+#: kompira/templates/dir/dir_column_config.html
+#: kompira/templates/incident_list.html
+msgid "Reset to defaults"
+msgstr "デフォルトに戻す"
+
+#: kompira/templates/dir/dir_context_menu.html
+msgid "open"
+msgstr "開く"
+
+#: kompira/templates/dir/dir_context_menu.html
+#: kompira/templates/dir/dir_context_operation.html
+#: kompira/tests/views/extends/test_object.py kompira/views/extends/object.py
+msgid "rename"
+msgstr "名前の変更"
+
+#: kompira/templates/dir/dir_context_menu.html
+#: kompira/templates/dir/dir_context_operation.html
+#: kompira/views/extends/objects_operation.py
+msgid "move"
+msgstr "移動"
+
+#: kompira/templates/dir/dir_context_menu.html
+#: kompira/templates/dir/dir_context_operation.html
+msgid "execute jobflow"
+msgstr "ジョブフロー実行"
+
+#: kompira/templates/dir/dir_context_menu.html
+#: kompira/templates/dir/dir_context_operation.html
+#: kompira/templates/table_view.html
+msgid "execute form"
+msgstr "フォーム実行"
+
+#: kompira/templates/dir/dir_context_menu.html
+#: kompira/templates/dir/dir_context_operation.html
+msgid "export"
+msgstr "エクスポート"
+
+#: kompira/templates/dir/dir_context_menu.html
+#: kompira/templates/dir/dir_context_operation.html
+msgid "import"
+msgstr "インポート"
+
+#: kompira/templates/dir/dir_context_menu.html
+#: kompira/templates/dir/dir_context_operation.html
+msgid "property"
+msgstr "プロパティ"
+
+#: kompira/templates/dir/dir_context_operation.html
+msgid "more actions"
+msgstr "その他"
+
+#: kompira/templates/dir/dir_dialog.html
+msgid "ok"
+msgstr ""
+
+#: kompira/templates/dir/dir_dialog.html kompira/templates/property.html
+msgid "Edit property"
+msgstr "プロパティの編集"
+
+#: kompira/templates/dir/dir_dialog.html kompira/templates/property.html
+msgid "Object information"
+msgstr "オブジェクト情報"
+
+#: kompira/templates/dir/dir_dialog.html kompira/templates/property.html
+msgid "User permission"
+msgstr "ユーザパーミッション"
+
+#: kompira/templates/dir/dir_dialog.html kompira/templates/property.html
+msgid "Group permission"
+msgstr "グループパーミッション"
+
+#: kompira/templates/dir/dir_dialog.html kompira/templates/popup_editor.html
+msgid "apply"
+msgstr "適用"
+
+#: kompira/templates/dir/dir_dialog.html
+msgid "type"
+msgstr "型"
+
+#: kompira/templates/dir/dir_dialog.html
+msgid "warning"
+msgstr "警告"
+
+#: kompira/templates/dir/dir_object_table.html
+msgid "No applicable object"
+msgstr "該当するオブジェクトはありません"
+
+#: kompira/templates/dir_search.html
+msgid "search results in "
+msgstr "検索結果: "
+
+#: kompira/templates/dir_search.html kompira/views/forms/incident.py
+#: kompira/views/forms/process.py kompira/views/forms/table.py
+msgid "search"
+msgstr "検索"
+
+#: kompira/templates/dir_view.html
+msgid "show keyboard shotcuts"
+msgstr "キーボードショートカットを見る"
+
+#: kompira/templates/dir_view.html kompira/templates/obj_base.html
+#: kompira/tests/views/extends/test_license.py
+#: kompira/tests/views/extends/test_object.py
+#: kompira/tests/views/extends/test_objects_operation.py
+#: kompira/views/forms/object_fields.py
+#, python-format
+msgid "The file size exceeds the maximum size (%(file_limit)s)."
+msgstr "ファイルの大きさが制限 (%(file_limit)s) を超えています。"
+
+#: kompira/templates/error_dialog.html
+msgid "Error occurred"
+msgstr "エラーが発生しました"
+
+#: kompira/templates/error_dialog.html
+msgid "Date:"
+msgstr ""
+
+#: kompira/templates/error_dialog.html
+msgid "Status code:"
+msgstr "ステータスコード:"
+
+#: kompira/templates/error_dialog.html
+msgid "Error detail:"
+msgstr "エラー詳細:"
+
+#: kompira/templates/error_dialog.html kompira/templates/login_base.html
+msgid "Close"
+msgstr "閉じる"
+
+#: kompira/templates/form_view.html
+msgid "channel"
+msgstr "チャネル"
+
+#: kompira/templates/form_view.html kompira/templates/jobflow_view.html
+#: kompira/templates/proc_detail.html
+msgid "jobflow"
+msgstr "ジョブフロー"
+
+#: kompira/templates/form_view.html
+msgid "Warning: no submit object"
+msgstr "警告: サブミットオブジェクトがありません"
+
+#: kompira/templates/form_view.html kompira/views/extends/channel.py
+msgid "send"
+msgstr "送信"
+
+#: kompira/templates/form_view.html kompira/templates/jobflow_view.html
+#: kompira/templates/script_view.html
+msgid "run"
+msgstr "実行"
+
+#: kompira/templates/forms/widgets/dynamic_array.html
+#: kompira/templates/gperm_table.html kompira/templates/group_list.html
+#: kompira/templates/sched_form.html kompira/templates/sched_list.html
+#: kompira/templates/uperm_table.html kompira/templates/user_list.html
+msgid "operation"
+msgstr "操作"
+
+#: kompira/templates/forms/widgets/dynamic_array.html
+msgid "sort"
+msgstr "ソート"
+
+#: kompira/templates/gperm_table.html kompira/templates/uperm_table.html
+msgid "readable"
+msgstr "読み取り"
+
+#: kompira/templates/gperm_table.html kompira/templates/uperm_table.html
+msgid "writable"
+msgstr "書き込み"
+
+#: kompira/templates/gperm_table.html kompira/templates/uperm_table.html
+msgid "executable"
+msgstr "実行"
+
+#: kompira/templates/gperm_table.html
+msgid "priority"
+msgstr "優先度"
+
+#: kompira/templates/group_list.html
+msgid "group list"
+msgstr "グループ一覧"
+
+#: kompira/templates/group_list.html kompira/templates/obj_form.html
+#: kompira/templates/sched_form.html kompira/templates/sched_list.html
+#: kompira/templates/user_list.html
+#: kompira/tests/views/extends/test_directory.py
+#: kompira/views/extends/directory.py kompira/views/group.py
+#: kompira/views/incident.py kompira/views/schedule.py kompira/views/user.py
+msgid "create"
+msgstr "新規作成"
+
+#: kompira/templates/group_view.html
+msgid "group config"
+msgstr "グループ設定"
+
+#: kompira/templates/group_view.html kompira/templates/user_view.html
+msgid "information"
+msgstr "情報"
+
+#: kompira/templates/group_view.html
+msgid "group name"
+msgstr "グループ名"
+
+#: kompira/templates/incident_detail.html
+msgid "incident detail"
+msgstr "インシデント詳細"
+
+#: kompira/templates/incident_detail.html
+msgid "create incident"
+msgstr "インシデントの新規作成"
+
+#: kompira/templates/incident_detail.html
+msgid "Incident information"
+msgstr "インシデント情報"
+
+#: kompira/templates/incident_detail.html kompira/templates/main_form.html
+msgid "new"
+msgstr "新規作成"
+
+#: kompira/templates/incident_detail.html kompira/templates/incident_list.html
+msgid "Closed date"
+msgstr "完了日時"
+
+#: kompira/templates/incident_detail.html kompira/templates/incident_list.html
+msgid "duration"
+msgstr "継続期間"
+
+#: kompira/templates/incident_detail.html kompira/templates/incident_list.html
+msgid "Alert status"
+msgstr "アラート状態"
+
+#: kompira/templates/incident_detail.html kompira/templates/main_form.html
+#: kompira/templates/obj_form.html kompira/templates/property.html
+#: kompira/templates/sched_form.html
+msgid "save"
+msgstr "保存"
+
+#: kompira/templates/incident_detail.html
+msgid "worklog"
+msgstr "作業記録"
+
+#: kompira/templates/incident_detail.html
+msgid "alerts"
+msgstr "アラート"
+
+#: kompira/templates/incident_detail.html
+msgid "worklog history"
+msgstr "作業記録の履歴"
+
+#: kompira/templates/incident_detail.html
+msgid "alert list"
+msgstr "アラート一覧"
+
+#: kompira/templates/incident_detail.html kompira/templates/task_list.html
+msgid "datetime"
+msgstr "日時"
+
+#: kompira/templates/incident_list.html
+msgid "incident list"
+msgstr "インシデント一覧"
+
+#: kompira/templates/incident_list.html
+msgid "active incidents"
+msgstr "未完了"
+
+#: kompira/templates/incident_list.html
+msgid "opened incidents"
+msgstr "未対応"
+
+#: kompira/templates/incident_list.html
+msgid "working incidents"
+msgstr "対応中"
+
+#: kompira/templates/incident_list.html
+msgid "closed incidents"
+msgstr "完了"
+
+#: kompira/templates/incident_list.html
+msgid "all incidents"
+msgstr "全て"
+
+#: kompira/templates/incident_list.html kompira/templates/processes.html
+#: kompira/templates/task_list.html
+msgid "ID"
+msgstr ""
+
+#: kompira/templates/incident_list.html
+msgid "Alert description"
+msgstr "アラート内容"
+
+#: kompira/templates/incident_list.html kompira/templates/task_list.html
+#, python-format
+msgid "No applicable %(model_verbose_name)s"
+msgstr "該当する%(model_verbose_name)sはありません"
+
+#: kompira/templates/incident_list.html
+#, python-format
+msgid "Create %(model_verbose_name)s"
+msgstr "%(model_verbose_name)sの新規作成"
+
+#: kompira/templates/jobflow_view.html kompira/templates/login_base.html
+#: kompira/templates/proc_detail.html kompira/views/extends/config.py
+msgid "config"
+msgstr "設定"
+
+#: kompira/templates/jobflow_view.html
+msgid "parameters"
+msgstr "パラメータ"
+
+#: kompira/templates/jobflow_view.html kompira/templates/script_view.html
+msgid "multiplicity"
+msgstr "多重度"
+
+#: kompira/templates/jobflow_view.html
+#: kompira/tests/views/extends/test_jobflow.py
+msgid "default monitoring mode"
+msgstr "デフォルト監視モード"
+
+#: kompira/templates/ldap_server_view.html
+#: kompira/templates/mail_channel_view.html
+#: kompira/templates/smtp_server_view.html
+msgid "Connection test"
+msgstr "接続テスト"
+
+#: kompira/templates/library_view.html
+msgid "document"
+msgstr "ドキュメント"
+
+#: kompira/templates/library_view.html
+msgid "error message"
+msgstr "エラーメッセージ"
+
+#: kompira/templates/library_view.html
+msgid "library type"
+msgstr "ライブラリ種別"
+
+#: kompira/templates/license_edit.html
+msgid "Please upload Kompira license file."
+msgstr "Kompiraライセンスファイルをアップロードしてください"
+
+#: kompira/templates/license_view.html
+msgid "license information"
+msgstr "ライセンス情報"
+
+#: kompira/templates/license_view.html
+msgid "license ID"
+msgstr "ライセンスID"
+
+#: kompira/templates/license_view.html
+msgid "edition"
+msgstr "エディション"
+
+#: kompira/templates/license_view.html
+msgid "hardware ID"
+msgstr "ハードウェアID"
+
+#: kompira/templates/license_view.html
+#, python-format
+msgid "The hardware ID of this server is %(hardware_id)s"
+msgstr "このサーバのハードウェア ID は %(hardware_id)s です"
+
+#: kompira/templates/license_view.html
+#: kompira/tests/views/extends/test_license.py
+msgid "expire date"
+msgstr "有効期限"
+
+#: kompira/templates/license_view.html
+#: kompira/tests/views/extends/test_license.py
+msgid "The number of registered nodes"
+msgstr "登録済みノード数"
+
+#: kompira/templates/license_view.html kompira/views/extends/license.py
+msgid "reset node count"
+msgstr "ノード数のリセット"
+
+#: kompira/templates/license_view.html kompira/templates/processes.html
+msgid "reset"
+msgstr "リセット"
+
+#: kompira/templates/license_view.html
+msgid "The number of jobflows"
+msgstr "ジョブフロー数"
+
+#: kompira/templates/license_view.html
+msgid "The number of scripts"
+msgstr "スクリプト数"
+
+#: kompira/templates/license_view.html
+msgid "licensee"
+msgstr "使用者"
+
+#: kompira/templates/license_view.html
+#: kompira/tests/views/extends/test_license.py
+msgid "signature"
+msgstr "署名"
+
+#: kompira/templates/license_view.html kompira/views/extends/license.py
+msgid "remove license file"
+msgstr "ライセンスファイルの削除"
+
+#: kompira/templates/license_view.html
+msgid "Remove license file"
+msgstr "ライセンスファイル削除"
+
+#: kompira/templates/license_view.html
+#: kompira/tests/views/extends/test_license.py
+msgid "No license files"
+msgstr "ライセンスファイル未登録"
+
+#: kompira/templates/license_view.html
+msgid "Kompira is running with temporary license. Click edit button to import your Kompira license file."
+msgstr "Kompiraは仮ライセンスで動作中です。Kompiraライセンスファイルをインストールするには、右下の編集ボタンをクリックしてください。"
+
+#: kompira/templates/license_view.html
+msgid "If you have no license files, please purchase Kompira license."
+msgstr "ライセンスファイルを取得していない場合には、Kompiraライセンスをご購入ください。"
+
+#: kompira/templates/lockout.html
+msgid "Account locked out"
+msgstr "アカウントがロックされました"
+
+#: kompira/templates/lockout.html
+msgid "Too many login attempts."
+msgstr "ログイン試行が一定回数を超えました。"
+
+#: kompira/templates/lockout.html
+msgid "Back to login screen"
+msgstr "ログイン画面に戻る"
+
+#: kompira/templates/login.html kompira/templates/logout.html
+msgid "login"
+msgstr "ログイン"
+
+#: kompira/templates/login.html
+#, python-format
+msgid "Welcome to %(brand_title)s"
+msgstr "%(brand_title)s へようこそ"
+
+#: kompira/templates/login.html
+msgid "password"
+msgstr "パスワード"
+
+#: kompira/templates/login_base.html
+msgid "file system"
+msgstr "ファイルシステム"
+
+#: kompira/templates/login_base.html
+msgid "help"
+msgstr "ヘルプ"
+
+#: kompira/templates/login_base.html
+msgid "user information"
+msgstr "ユーザ情報"
+
+#: kompira/templates/login_base.html kompira/views/user.py
+msgid "change password"
+msgstr "パスワード変更"
+
+#: kompira/templates/login_base.html
+msgid "logout"
+msgstr "ログアウト"
+
+#: kompira/templates/login_base.html
+msgid "keyboard shortcuts"
+msgstr "キーボードショートカット"
+
+#: kompira/templates/logout.html
+msgid "logged out"
+msgstr "ログアウトしました"
+
+#: kompira/templates/logout.html
+msgid "logged out."
+msgstr "ログアウトしました。"
+
+#: kompira/templates/mail_channel_view.html
+#: kompira/templates/repository_view.html
+msgid "log"
+msgstr "ログ"
+
+#: kompira/templates/mail_channel_view.html
+#: kompira/templates/smtp_server_view.html
+msgid "Start authorization"
+msgstr "承認フローを開始"
+
+#: kompira/templates/main_list.html
+msgid "active objects"
+msgstr "アクティブなオブジェクト"
+
+#: kompira/templates/main_list.html
+msgid "all objects"
+msgstr "全てのオブジェクト"
+
+#: kompira/templates/obj_base.html kompira/templates/task_detail.html
+msgid "attribute"
+msgstr "属性"
+
+#: kompira/templates/obj_base.html kompira/templates/task_detail.html
+msgid "created date"
+msgstr "作成日時"
+
+#: kompira/templates/obj_base.html
+msgid "updated date"
+msgstr "更新時刻"
+
+#: kompira/templates/obj_view.html
+msgid "object"
+msgstr "オブジェクト"
+
+#: kompira/templates/paginator_mini.html
+msgid "first page"
+msgstr "最初のページ"
+
+#: kompira/templates/paginator_mini.html
+msgid "previous page"
+msgstr "前のページ"
+
+#: kompira/templates/paginator_mini.html
+msgid "next page"
+msgstr "次のページ"
+
+#: kompira/templates/paginator_mini.html
+msgid "last page"
+msgstr "最後のページ"
+
+#: kompira/templates/proc_detail.html
+msgid "process detail"
+msgstr "プロセス詳細"
+
+#: kompira/templates/proc_detail.html
+msgid "process information"
+msgstr "プロセス情報"
+
+#: kompira/templates/proc_detail.html
+msgid "script path"
+msgstr "スクリプトパス"
+
+#: kompira/templates/proc_detail.html
+msgid "jobflow path"
+msgstr "ジョブフローパス"
+
+#: kompira/templates/proc_detail.html kompira/templates/processes.html
+msgid "suspended"
+msgstr "停止中"
+
+#: kompira/templates/proc_detail.html
+msgid "process id"
+msgstr "プロセスID"
+
+#: kompira/templates/proc_detail.html
+msgid "parent process"
+msgstr "親プロセス"
+
+#: kompira/templates/proc_detail.html
+msgid "started date"
+msgstr "開始日時"
+
+#: kompira/templates/proc_detail.html
+msgid "finished date"
+msgstr "完了日時"
+
+#: kompira/templates/proc_detail.html kompira/templates/processes.html
+msgid "elapsed time"
+msgstr "経過時間"
+
+#: kompira/templates/proc_detail.html
+msgid "invoker object"
+msgstr "起動オブジェクト"
+
+#: kompira/templates/proc_detail.html
+msgid "terminate"
+msgstr "中止"
+
+#: kompira/templates/proc_detail.html
+msgid "stop"
+msgstr "停止"
+
+#: kompira/templates/proc_detail.html
+msgid "continue"
+msgstr "続行"
+
+#: kompira/templates/proc_detail.html
+msgid "console"
+msgstr "コンソール"
+
+#: kompira/templates/proc_detail.html kompira/templates/script_view.html
+msgid "script"
+msgstr "スクリプト"
+
+#: kompira/templates/proc_detail.html
+msgid "result"
+msgstr "結果"
+
+#: kompira/templates/proc_detail.html
+msgid "child processes"
+msgstr "子プロセス"
+
+#: kompira/templates/proc_detail.html
+#, python-format
+msgid "Permission denied: '%(object_path)s' is not readable"
+msgstr "許可されていません: '%(object_path)s' は読み取り不可です"
+
+#: kompira/templates/proc_list.html kompira/templates/sched_view.html
+msgid "process list"
+msgstr "プロセス一覧"
+
+#: kompira/templates/processes.html
+#, python-format
+msgid "%(days)s days ago or later"
+msgstr "%(days)s日前から"
+
+#: kompira/templates/processes.html
+#, python-format
+msgid "%(days)s days ago or earlier"
+msgstr "%(days)s日前まで"
+
+#: kompira/templates/processes.html
+msgid "this month"
+msgstr "今月"
+
+#: kompira/templates/processes.html
+msgid "last month"
+msgstr "先月"
+
+#: kompira/templates/processes.html
+msgid "this year"
+msgstr "今年"
+
+#: kompira/templates/processes.html
+msgid "last year"
+msgstr "昨年"
+
+#: kompira/templates/processes.html
+msgid "active processes"
+msgstr "実行中"
+
+#: kompira/templates/processes.html
+msgid "done processes"
+msgstr "完了"
+
+#: kompira/templates/processes.html
+msgid "aborted processes"
+msgstr "異常終了"
+
+#: kompira/templates/processes.html
+msgid "all processes"
+msgstr "全て"
+
+#: kompira/templates/processes.html
+msgid "start time"
+msgstr "開始時刻"
+
+#: kompira/templates/processes.html
+msgid "finish time"
+msgstr "終了時刻"
+
+#: kompira/templates/processes.html
+msgid "No applicable process"
+msgstr "該当するプロセスはありません"
+
+#: kompira/templates/processes.html
+msgid "selected [[count]] processes and their child processes"
+msgstr "選択した [[count]] 個のプロセスおよびその子プロセス"
+
+#: kompira/templates/processes.html kompira/templates/selectable_list.html
+msgid "delete [[target]]"
+msgstr "[[target]]を削除"
+
+#: kompira/templates/processes.html
+msgid "[[count]] applicable processes and their child processes (exclude active)"
+msgstr "該当する [[count]] 個のプロセスおよびその子プロセス（実行中を除く）"
+
+#: kompira/templates/processes.html
+msgid "Delete processes"
+msgstr "プロセスを削除"
+
+#: kompira/templates/realm_view.html
+msgid "jobmanager status"
+msgstr "ジョブマネージャ状態"
+
+#: kompira/templates/realm_view.html
+msgid "hostname"
+msgstr "ホスト名"
+
+#: kompira/templates/realm_view.html
+msgid "pid"
+msgstr "プロセスID"
+
+#: kompira/templates/realm_view.html
+msgid "SSL"
+msgstr ""
+
+#: kompira/templates/realm_view.html
+msgid "version"
+msgstr "バージョン"
+
+#: kompira/templates/realm_view.html
+msgid "status clear"
+msgstr "ステータスクリア"
+
+#: kompira/templates/realm_view.html
+msgid "ACTIVE"
+msgstr "動作中"
+
+#: kompira/templates/realm_view.html
+msgid "DOWN"
+msgstr "ダウン"
+
+#: kompira/templates/repository_view.html
+msgid "branch"
+msgstr "ブランチ"
+
+#: kompira/templates/repository_view.html
+msgid "initialize"
+msgstr "初期化"
+
+#: kompira/templates/repository_view.html
+msgid "pull"
+msgstr "プル"
+
+#: kompira/templates/repository_view.html
+msgid "push"
+msgstr "プッシュ"
+
+#: kompira/templates/sched_form.html kompira/templates/sched_view.html
+msgid "schedule information"
+msgstr "スケジュール情報"
+
+#: kompira/templates/sched_form.html
+msgid "parameter"
+msgstr "パラメータ"
+
+#: kompira/templates/sched_form.html
+msgid "date"
+msgstr "日付"
+
+#: kompira/templates/sched_form.html
+msgid "time"
+msgstr "時刻"
+
+#: kompira/templates/sched_list.html
+msgid "schedule list"
+msgstr "スケジュール一覧"
+
+#: kompira/templates/sched_list.html
+msgid "active schedules"
+msgstr "有効"
+
+#: kompira/templates/sched_list.html
+msgid "all schedules"
+msgstr "全て"
+
+#: kompira/templates/sched_list.html kompira/templates/sched_view.html
+#: kompira/views/forms/schedule.py
+msgid "job"
+msgstr "ジョブ"
+
+#: kompira/templates/sched_list.html
+msgid "next datetime"
+msgstr "次の実行日時"
+
+#: kompira/templates/sched_list.html kompira/templates/sched_view.html
+msgid "NOT_SCHEDULED"
+msgstr "未登録"
+
+#: kompira/templates/sched_view.html
+msgid "schedule config"
+msgstr "スケジュール設定"
+
+#: kompira/templates/sched_view.html
+msgid "schedule status"
+msgstr "スケジュール状態"
+
+#: kompira/templates/sched_view.html
+msgid "scheduled datetime list"
+msgstr "実行予定日時一覧"
+
+#: kompira/templates/sched_view.html
+msgid "settings"
+msgstr "設定"
+
+#: kompira/templates/sched_view.html
+msgid "schedule date"
+msgstr "スケジュール日付"
+
+#: kompira/templates/sched_view.html
+msgid "year"
+msgstr "年"
+
+#: kompira/templates/sched_view.html
+msgid "month"
+msgstr "月"
+
+#: kompira/templates/sched_view.html
+msgid "day"
+msgstr "日"
+
+#: kompira/templates/sched_view.html
+msgid "schedule week"
+msgstr "週"
+
+#: kompira/templates/sched_view.html
+msgid "schedule day of week"
+msgstr "曜日"
+
+#: kompira/templates/sched_view.html
+msgid "schedule time"
+msgstr "スケジュール時刻"
+
+#: kompira/templates/sched_view.html
+msgid "hour"
+msgstr "時"
+
+#: kompira/templates/sched_view.html
+msgid "minute"
+msgstr "分"
+
+#: kompira/templates/sched_view.html
+msgid "disabled"
+msgstr "無効化"
+
+#: kompira/templates/script_view.html
+msgid "execution node"
+msgstr "実行ノード"
+
+#: kompira/templates/script_view.html
+msgid "execution account"
+msgstr "実行アカウント"
+
+#: kompira/templates/selectable_list.html
+#, python-format
+msgid "selected [[count]] %(model_verbose_name_plural)s"
+msgstr "選択した [[count]] 個の%(model_verbose_name_plural)s"
+
+#: kompira/templates/selectable_list.html
+#, python-format
+msgid "[[count]] applicable %(model_verbose_name_plural)s"
+msgstr "該当する [[count]] 個の%(model_verbose_name_plural)s"
+
+#: kompira/templates/selectable_list.html
+#, python-format
+msgid "[[count]] applicable %(model_verbose_name_plural)s (exclude active)"
+msgstr "該当する [[count]] 個の%(model_verbose_name_plural)s（アクティブなものを除く）"
+
+#: kompira/templates/selectable_list.html
+#, python-format
+msgid "Delete %(model_verbose_name_plural)s"
+msgstr "%(model_verbose_name_plural)sを削除"
+
+#: kompira/templates/table_view.html
+msgid "Warning: no type object"
+msgstr "警告: 型オブジェクトがありません"
+
+#: kompira/templates/table_view.html
+msgid "related object"
+msgstr "関連オブジェクト"
+
+#: kompira/templates/table_view.html kompira/views/extends/form.py
+#: kompira/views/extends/jobflow.py kompira/views/extends/script_job.py
+msgid "execute"
+msgstr "実行"
+
+#: kompira/templates/task_detail.html
+msgid "task detail"
+msgstr "タスク詳細"
+
+#: kompira/templates/task_detail.html
+msgid "closed date"
+msgstr "完了日時"
+
+#: kompira/templates/task_detail.html kompira/templates/task_list.html
+msgid "title"
+msgstr "タイトル"
+
+#: kompira/templates/task_detail.html
+msgid "to"
+msgstr "あて先"
+
+#: kompira/templates/task_detail.html
+msgid "message"
+msgstr "メッセージ"
+
+#: kompira/templates/task_list.html
+msgid "task list"
+msgstr "タスク一覧"
+
+#: kompira/templates/task_list.html
+msgid "active tasks"
+msgstr "未完了"
+
+#: kompira/templates/task_list.html
+msgid "all tasks"
+msgstr "全て"
+
+#: kompira/templates/token_field.html
+msgid "Token expires at"
+msgstr "トークン有効期限"
+
+#: kompira/templates/token_field.html
+msgid "with refresh token"
+msgstr "リフレッシュトークン有り"
+
+#: kompira/templates/token_field.html
+msgid "without refresh token"
+msgstr "リフレッシュトークン無し"
+
+#: kompira/templates/token_field.html kompira/views/oauth2.py
+msgid "clear token"
+msgstr "トークン消去"
+
+#: kompira/templates/type_view.html
+msgid "extend module"
+msgstr "拡張モジュール"
+
+#: kompira/templates/type_view.html
+msgid "type field"
+msgstr "型フィールド"
+
+#: kompira/templates/type_view.html
+msgid "field name"
+msgstr "フィールド名"
+
+#: kompira/templates/type_view.html
+msgid "field display name"
+msgstr "フィールド表示名"
+
+#: kompira/templates/type_view.html
+msgid "field type"
+msgstr "フィールド型"
+
+#: kompira/templates/type_view.html
+msgid "field qualifier"
+msgstr "フィールド修飾子"
+
+#: kompira/templates/uploader.html
+msgid "uploading..."
+msgstr "アップロード中・・・"
+
+#: kompira/templates/user_list.html
+msgid "user list"
+msgstr "ユーザー一覧"
+
+#: kompira/templates/user_list.html
+msgid "full name"
+msgstr "フルネーム"
+
+#: kompira/templates/user_list.html kompira/templates/user_view.html
+msgid "email"
+msgstr "Eメール"
+
+#: kompira/templates/user_view.html
+msgid "user config"
+msgstr "ユーザー設定"
+
+#: kompira/templates/user_view.html kompira/views/forms/user.py
+msgid "user name"
+msgstr "ユーザー名"
+
+#: kompira/templates/user_view.html
+msgid "REST API token"
+msgstr "REST API トークン"
+
+#: kompira/templates/user_view.html
+msgid "Click here to display token"
+msgstr "トークンを表示する"
+
+#: kompira/templates/user_view.html
+msgid "Click here to hide token"
+msgstr "トークンを非表示にする"
+
+#: kompira/templates/user_view.html kompira/tests/views/test_account.py
+#: kompira/tests/views/test_login.py
+msgid "Account is locked"
+msgstr "アカウントがロックされました"
+
+#: kompira/templates/user_view.html
+msgid "unlock account &quot;[[target]]&quot;"
+msgstr "アカウント &quot;[[target]]&quot; をロック解除"
+
+#: kompira/templates/user_view.html
+msgid "Unlock"
+msgstr "ロック解除"
+
+#: kompira/tests/views/extends/test_config.py kompira/views/extends/config.py
+msgid "Saved."
+msgstr "保存しました。"
+
+#: kompira/tests/views/extends/test_directory.py
+#: kompira/views/extends/directory.py
+#, python-format
+msgid "TypeObject '%s' not found!"
+msgstr "型オブジェクト '%s' が見つかりません！"
+
+#: kompira/tests/views/extends/test_directory.py
+#: kompira/views/extends/directory.py
+#, python-format
+msgid "User '%s' not found!"
+msgstr "ユーザ '%s' が見つかりません"
+
+#: kompira/tests/views/extends/test_form.py kompira/views/extends/form.py
+#, python-format
+msgid "invalid submit object: %s"
+msgstr "「%s」は不正なサブミットオブジェクトです。"
+
+#: kompira/tests/views/extends/test_license.py
+msgid "The submitted file is empty."
+msgstr ""
+
+#: kompira/tests/views/extends/test_license.py kompira/views/core.py
+#, python-format
+msgid "License error: %s"
+msgstr "ライセンスエラー: %s"
+
+#: kompira/tests/views/extends/test_mail_channel.py
+#: kompira/tests/views/extends/test_smtp_server.py
+#: kompira/views/forms/oauth2_based.py tests/test_api.py
+msgid "This field is required."
+msgstr ""
+
+#: kompira/tests/views/extends/test_object.py kompira/views/extends/object.py
+#, python-brace-format
+msgid "failed to update property: {0}"
+msgstr "プロパティの更新に失敗: {0}"
+
+#: kompira/tests/views/extends/test_object.py
+msgid "Enter a valid URL."
+msgstr "正しい URL を入力してください。"
+
+#: kompira/tests/views/extends/test_objects_operation.py
+#: kompira/views/extends/objects_operation.py
+#, python-brace-format
+msgid "Updated properties for {count} objects."
+msgstr "{count} 個のオブジェクトのプロパティを更新しました。"
+
+#: kompira/tests/views/extends/test_objects_operation.py
+#: kompira/views/extends/objects_operation.py
+#, python-brace-format
+msgid "{0} failed: {1}: {2}"
+msgstr "{0}に失敗しました: {1}: {2}"
+
+#: kompira/tests/views/extends/test_objects_operation.py
+#: kompira/views/extends/object.py kompira/views/extends/objects_operation.py
+msgid "update property"
+msgstr "プロパティの更新"
+
+#: kompira/tests/views/extends/test_objects_operation.py
+#: kompira/views/extends/objects_operation.py
+#, python-brace-format
+msgid "Deleted {result[0]} objects."
+msgstr "{result[0]} 個のオブジェクトを削除しました。"
+
+#: kompira/tests/views/extends/test_objects_operation.py
+#: kompira/views/extends/objects_operation.py
+#, python-brace-format
+msgid "Moved {count} objects to <a href=\"{target}\">{target}</a>."
+msgstr "{count} 個のオブジェクトを <a href=\"{target}\">{target}</a> に移動しました。"
+
+#: kompira/tests/views/extends/test_objects_operation.py
+#: kompira/views/extends/objects_operation.py
+#, python-brace-format
+msgid "Copied {count} objects to <a href=\"{target}\">{target}</a>."
+msgstr "{count} 個のオブジェクトを <a href=\"{target}\">{target}</a> にコピーしました。"
+
+#: kompira/tests/views/extends/test_objects_operation.py
+#: kompira/views/extends/objects_operation.py
+msgid "no related object"
+msgstr "関連オブジェクトがありません"
+
+#: kompira/tests/views/extends/test_objects_operation.py
+#: kompira/views/extends/objects_operation.py
+#, python-format
+msgid "'%s' takes no arguments."
+msgstr "'%s' は引数を取りません"
+
+#: kompira/tests/views/extends/test_objects_operation.py
+#: kompira/views/extends/objects_operation.py
+#, python-format
+msgid "Failed to execute objects: %s"
+msgstr "オブジェクトの処理に失敗： %s"
+
+#: kompira/tests/views/extends/test_text.py kompira/views/forms/text.py
+#, python-brace-format
+msgid "{invalid_extensions} cannot be set as an extension."
+msgstr "{invalid_extensions} は拡張子として設定することはできません。"
+
+#: kompira/tests/views/test_account.py kompira/views/user.py
+msgid "Change password."
+msgstr "パスワードを変更する。"
+
+#: kompira/tests/views/test_account.py kompira/views/forms/group.py
+msgid "A group with that name already exists."
+msgstr "同じグループ名が既に登録済みです。"
+
+#: kompira/tests/views/test_core.py kompira/views/core.py
+msgid "login failed"
+msgstr "ログインに失敗しました"
+
+#: kompira/tests/views/test_oauth2.py kompira/views/oauth2.py
+#, python-brace-format
+msgid "Failed to fetch an oauth2 token: {0}"
+msgstr "OAuth2トークンの取得に失敗: {0}"
+
+#: kompira/tests/views/test_process.py kompira/views/virtual.py
+#, python-brace-format
+msgid "Deleted {0} {1}."
+msgstr "{0} 個の{1}を削除しました。"
+
+#: kompira/tests/views/test_process.py kompira/views/virtual.py
+#, python-brace-format
+msgid "No {0} deleted."
+msgstr "削除された{0}はありません。"
+
+#: kompira/tests/views/test_schedule.py kompira/views/schedule.py
+#, python-brace-format
+msgid "User {0} does not have permission to execute the job {1}"
+msgstr "ユーザ {0} にはジョブ {1} を実行する権限がありません"
+
+#: kompira/tests/views/test_schedule.py kompira/views/forms/schedule.py
+#, python-format
+msgid "%s is out of range"
+msgstr "%s は範囲外です"
+
+#: kompira/tests/views/test_schedule.py kompira/views/forms/schedule.py
+#, python-format
+msgid "invalid schedule: %s"
+msgstr "不正なスケジュール： %s"
+
+#: kompira/utils/misc.py
+#, python-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d 日"
+
+#: kompira/views/column.py
+msgid "object path"
+msgstr "オブジェクトパス"
+
+#: kompira/views/core.py
+msgid "account is invalid"
+msgstr "アカウントは無効です"
+
+#: kompira/views/core.py
+msgid "Kompira engine is not running"
+msgstr "Kompiraエンジンが停止しています"
+
+#: kompira/views/extends/channel.py
+msgid "clear messages"
+msgstr "メッセージの消去"
+
+#: kompira/views/extends/channel.py
+msgid "recv"
+msgstr "受信"
+
+#: kompira/views/extends/form.py
+msgid "Submitted form."
+msgstr "フォームを送信しました。"
+
+#: kompira/views/extends/ldap_server.py kompira/views/extends/mail_channel.py
+#: kompira/views/extends/smtp_server.py
+msgid "test server connection"
+msgstr "サーバへのテスト接続"
+
+#: kompira/views/extends/object.py kompira/views/incident.py
+#: kompira/views/schedule.py
+msgid "update"
+msgstr "更新"
+
+#: kompira/views/extends/object.py kompira/views/extends/objects_operation.py
+#, python-brace-format
+msgid "{0} done: {1}"
+msgstr "{0}が完了しました: {1}"
+
+#: kompira/views/extends/object.py
+#, python-brace-format
+msgid "Renamed '{0}' to '{1}'."
+msgstr "「{0}」から「{1}」へ名前を変更しました"
+
+#: kompira/views/extends/objects_operation.py
+msgid "Import file"
+msgstr "インポートするファイル"
+
+#: kompira/views/extends/objects_operation.py
+msgid "Overwrite existing objects"
+msgstr "既存オブジェクトを上書きする"
+
+#: kompira/views/extends/objects_operation.py
+msgid "Update config data"
+msgstr "設定データを更新する"
+
+#: kompira/views/extends/objects_operation.py
+msgid "Export in zip format"
+msgstr "ZIP形式でエクスポートする"
+
+#: kompira/views/extends/objects_operation.py
+msgid "Exclude attachment files"
+msgstr "添付ファイルを含めない"
+
+#: kompira/views/extends/objects_operation.py
+msgid "Include virtual objects"
+msgstr "仮想オブジェクトを含める"
+
+#: kompira/views/extends/objects_operation.py
+msgid "Apply changes"
+msgstr "変更を適用する"
+
+#: kompira/views/extends/objects_operation.py
+#, python-brace-format
+msgid "{0} failed: {1}"
+msgstr "{0}に失敗しました: {1}"
+
+#: kompira/views/extends/objects_operation.py kompira/views/virtual.py
+msgid "delete objects"
+msgstr "オブジェクトの削除"
+
+#: kompira/views/extends/objects_operation.py
+msgid "move objects"
+msgstr "オブジェクトの移動"
+
+#: kompira/views/extends/objects_operation.py
+msgid "copy objects"
+msgstr "オブジェクトのコピー"
+
+#: kompira/views/extends/objects_operation.py
+msgid "export objects"
+msgstr "オブジェクトのエクスポート"
+
+#: kompira/views/extends/objects_operation.py
+msgid "import objects"
+msgstr "オブジェクトのインポート"
+
+#: kompira/views/extends/objects_operation.py
+msgid "execute objects"
+msgstr "オブジェクトの実行"
+
+#: kompira/views/extends/objects_operation.py
+#, python-format
+msgid "'%s' is not executable object."
+msgstr "'%s' は実行不可オブジェクトです"
+
+#: kompira/views/extends/objects_operation.py
+msgid "Validation error"
+msgstr "バリデーションエラー"
+
+#: kompira/views/extends/realm.py
+msgid "clear status"
+msgstr "ステータスのクリア"
+
+#: kompira/views/field.py
+#, python-format
+msgid "Deleted attached file of '%s'."
+msgstr "添付ファイル「%s」を削除しました"
+
+#: kompira/views/forms/channel.py
+#, python-brace-format
+msgid "invalid action_target: {errmsg}"
+msgstr "無効なアクションターゲットです: {errmsg}"
+
+#: kompira/views/forms/channel.py
+#, python-brace-format
+msgid "invalid action_type: {action_type}"
+msgstr "無効なアクション種別です: {action_type}"
+
+#: kompira/views/forms/directory.py kompira/views/forms/schedule.py
+#: kompira/views/forms/table.py
+msgid "create object"
+msgstr "オブジェクトの新規作成"
+
+#: kompira/views/forms/directory.py
+msgid "display-name / #type / @owner"
+msgstr "表示名 / #型 / @所有者"
+
+#: kompira/views/forms/directory.py
+msgid "search by object path"
+msgstr "オブジェクトパスで検索"
+
+#: kompira/views/forms/directory.py
+msgid "search by display name"
+msgstr "表示名で検索"
+
+#: kompira/views/forms/directory.py
+msgid "(filter by type)"
+msgstr "（型で絞り込み）"
+
+#: kompira/views/forms/directory.py
+msgid "(filter by owner)"
+msgstr "（所有者で絞り込み）"
+
+#: kompira/views/forms/directory.py
+msgid "any time"
+msgstr "期間指定なし"
+
+#: kompira/views/forms/directory.py
+#, python-brace-format
+msgid "Past {num} minutes"
+msgstr "{num} 分以内"
+
+#: kompira/views/forms/directory.py
+#, python-brace-format
+msgid "Past {num} hours"
+msgstr "{num} 時間以内"
+
+#: kompira/views/forms/directory.py
+#, python-brace-format
+msgid "Past {num} days"
+msgstr "{num} 日以内"
+
+#: kompira/views/forms/fields.py
+msgid "sort key"
+msgstr "ソートキー"
+
+#: kompira/views/forms/fields.py
+msgid "sort direction"
+msgstr "ソート方向"
+
+#: kompira/views/forms/fields.py
+msgid "ascending"
+msgstr "昇順"
+
+#: kompira/views/forms/fields.py
+msgid "descending"
+msgstr "降順"
+
+#: kompira/views/forms/fields.py kompira/views/forms/type_object.py
+msgid "type fields"
+msgstr "型フィールド"
+
+#: kompira/views/forms/fields.py
+msgid "Invalid field name."
+msgstr "不正なフィールド名です。"
+
+#: kompira/views/forms/fields.py
+msgid "Invalid field qualifier."
+msgstr "不正なフィールド修飾子です。"
+
+#: kompira/views/forms/fields.py
+#, python-format
+msgid "Item %(nth)s in the array did not validate: "
+msgstr ""
+
+#: kompira/views/forms/group.py kompira/views/forms/user.py
+msgid "This value may contain only letters, numbers and _ character. First character is letters and _ only."
+msgstr "記号以外の文字、数字、および、_ 以外は使用できません。先頭に半角数字は使用できません。"
+
+#: kompira/views/forms/incident.py
+msgid "add worklog"
+msgstr "作業記録の追加"
+
+#: kompira/views/forms/license.py
+msgid "license file"
+msgstr "ライセンスファイル"
+
+#: kompira/views/forms/license.py
+#, python-format
+msgid "Invalid license file: %s"
+msgstr "ライセンスファイルが不正です: %s"
+
+#: kompira/views/forms/object.py
+msgid "Apply to descendant objects"
+msgstr "変更を子孫オブジェクトにも適用する"
+
+#: kompira/views/forms/object_fields.py
+#, python-brace-format
+msgid "Dictionary must have distinct names. (duplicate key \"{0}\")"
+msgstr "辞書の要素名が重複しています。(重複キー \"{0}\")"
+
+#: kompira/views/forms/process.py
+msgid "modify config"
+msgstr "設定の変更"
+
+#: kompira/views/forms/process.py
+msgid "from this date"
+msgstr "この日から"
+
+#: kompira/views/forms/process.py
+msgid "to this date"
+msgstr "この日まで"
+
+#: kompira/views/forms/repository.py
+msgid "commit message"
+msgstr "コミットメッセージ"
+
+#: kompira/views/forms/script_job.py
+msgid "command line arguments"
+msgstr "コマンドライン引数"
+
+#: kompira/views/forms/type_object.py
+#, python-format
+msgid "Duplicated field name: %s"
+msgstr "フィールド名の重複：%s"
+
+#: kompira/views/forms/user.py
+msgid "Password"
+msgstr "パスワード"
+
+#: kompira/views/forms/user.py
+msgid "Enable REST API"
+msgstr "REST API 有効化"
+
+#: kompira/views/forms/user.py
+msgid "Ldap user"
+msgstr "LDAPユーザー"
+
+#: kompira/views/oauth2.py
+msgid "Redirect URL"
+msgstr "リダイレクト URL"
+
+#: kompira/views/oauth2.py
+msgid "enter authorization code"
+msgstr "認証コードの入力"
+
+#: kompira/views/oauth2.py
+msgid "Fetched and saved an oauth2 token"
+msgstr "OAuth2トークンの取得と保存に成功"
+
+#: kompira/views/oauth2.py
+msgid "No state parameters"
+msgstr "state パラメータがありません"
+
+#: kompira/views/oauth2.py
+#, python-brace-format
+msgid "Failed to redirect: {0}"
+msgstr "リダイレクトに失敗： {0}"
+
+#: kompira/views/user.py
+msgid "LDAP users cannot change their password here."
+msgstr "LDAPユーザーはここからパスワードを変更することはできません。"
+
+#: kompira/views/user.py
+msgid "cannot delete myself."
+msgstr "自分自身は削除できません。"
+
+#: kompira/views/user.py
+msgid "cannot change password"
+msgstr "パスワード変更できません。"
+
+#: kompira/views/user.py
+msgid "unlock account"
+msgstr "アカウントのロック解除"
+
+#: kompira_compiler/exceptions.py
+#, python-brace-format
+msgid "Compile parameter \"{name}\" error: {errors}."
+msgstr ""
+
+#: kompira_compiler/generator.py
+msgid "jobflow is too long"
+msgstr ""
+
+#: kompira_compiler/generator.py
+#, python-format
+msgid "parameter '%s' is multiply defined"
+msgstr ""
+
+#: kompira_compiler/generator.py
+#, python-format
+msgid "name '%s' is repeated"
+msgstr ""
+
+#: kompira_compiler/generator.py
+#, python-format
+msgid "%s outside loop"
+msgstr ""
+
+#: kompira_compiler/generator.py kompira_engine/opcodes.py
+#, python-format
+msgid "Variable \"%s\" is not defined"
+msgstr ""
+
+#: kompira_compiler/generator.py
+#, python-format
+msgid "Parameter '%s' is missing."
+msgstr ""
+
+#: kompira_compiler/lexer.py
+msgid "Unclosed pattern literal"
+msgstr ""
+
+#: kompira_compiler/lexer.py
+#, python-format
+msgid "Illegal character '%s' in pattern literal"
+msgstr ""
+
+#: kompira_compiler/lexer.py
+msgid "Unclosed binary literal"
+msgstr ""
+
+#: kompira_compiler/lexer.py
+#, python-format
+msgid "Illegal character '%s' in binary literal"
+msgstr ""
+
+#: kompira_compiler/lexer.py kompira_compiler/parser.py
+msgid "Unclosed string literal"
+msgstr ""
+
+#: kompira_compiler/lexer.py
+#, python-format
+msgid "Illegal character '%s' in string literal"
+msgstr ""
+
+#: kompira_compiler/lexer.py
+#, python-format
+msgid "Illegal character '%s'"
+msgstr ""
+
+#: kompira_compiler/parser.py
+#, python-format
+msgid "Syntax error: %s"
+msgstr ""
+
+#: kompira_compiler/parser.py
+msgid "Missing an arrow"
+msgstr ""
+
+#: kompira_compiler/parser.py kompira_engine/opcodes.py
+#, python-format
+msgid "Unknown special variable: %s"
+msgstr ""
+
+#: kompira_compiler/parser.py
+msgid "Incomplete expression"
+msgstr ""
+
+#: kompira_compiler/parser.py
+#, python-format
+msgid "Unexpected token: %s"
+msgstr ""
+
+#: kompira_compiler/parser.py
+msgid "Unclosed patten literal"
+msgstr ""
+
+#: kompira_engine/action_manager.py
+#, python-brace-format
+msgid "{action_jobflow} is not a Jobflow"
+msgstr "{action_jobflow} はジョブフローではありません"
+
+#: kompira_engine/action_manager.py
+#, python-brace-format
+msgid "{action_jobflow} is not executable"
+msgstr "{action_jobflow} は実行不可です"
+
+#: kompira_engine/action_manager.py
+#, python-brace-format
+msgid "{action_jobflow} has missing parameters ({require_params} required)"
+msgstr "{action_jobflow} はパラメータが不足しています ({require_params}個必要)"
+
+#: kompira_engine/action_manager.py
+#, python-brace-format
+msgid "{action_jobflow} has parameters for which no default values are specified ({nodefault_params})"
+msgstr "{action_jobflow} にはデフォルト値が指定されていないパラメータがあります ({nodefault_params})"
+
+#: kompira_engine/builtin.py
+#, python-brace-format
+msgid "no such field '{0}' in {1}"
+msgstr ""
+
+#: kompira_engine/builtin.py tests/test_jobflow.py
+#, python-brace-format
+msgid "{0}:{1} is not subscriptable"
+msgstr ""
+
+#: kompira_engine/builtin.py tests/test_jobflow.py
+#, python-brace-format
+msgid "{0}:{1} indicies must be integers, not {2}"
+msgstr ""
+
+#: kompira_engine/builtin.py tests/test_jobflow.py
+#, python-brace-format
+msgid "{0}:{1} index out of range"
+msgstr ""
+
+#: kompira_engine/builtin.py tests/test_jobflow.py
+#, python-brace-format
+msgid "{0}:{1} is not uploadable"
+msgstr ""
+
+#: kompira_engine/engine.py
+#, python-format
+msgid "could not create process \"%s\""
+msgstr "プロセス%sを生成できません"
+
+#: kompira_engine/engine_server.py kompira_engine/runtime.py
+#: kompira_engine/tests/test_engine.py
+msgid "terminated by user"
+msgstr "ユーザーによって強制終了されました"
+
+#: kompira_engine/opcodes.py
+#, python-format
+msgid "multiple values for keyword argument '%s'"
+msgstr ""
+
+#: kompira_engine/opcodes.py
+#, python-format
+msgid "Argument after * must be a sequence, not %s"
+msgstr ""
+
+#: kompira_engine/opcodes.py
+#, python-format
+msgid "Argument after ** must be a mapping, not %s"
+msgstr ""
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-brace-format
+msgid "Failed to update object: {0}: {1}"
+msgstr "オブジェクトの更新に失敗: {0}: {1}"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "Undefined attribute \"%s\""
+msgstr "未定義の属性 \"%s\""
+
+#: kompira_engine/opcodes.py
+#, python-brace-format
+msgid "Attribute error: invalid object \"{0}\": {1}"
+msgstr "属性エラー: 不正なオブジェクト \"{0}\": {1}"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "Failed to load attribute: %s"
+msgstr "属性のロードに失敗: %s"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "Undefined field \"%s\""
+msgstr "未定義のフィールド \"%s\""
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-brace-format
+msgid "Field error: invalid object \"{0}\": {1}"
+msgstr "フィールドエラー: 不正なオブジェクト \"{0}\": {1}"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "Failed to load field: %s"
+msgstr "フィールドのロードに失敗: %s"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-brace-format
+msgid "Undefined writable attribute \"{0}.{1}\""
+msgstr "未定義の書き込み可能属性 \"{0}.{1}\""
+
+#: kompira_engine/opcodes.py
+#, python-brace-format
+msgid "Failed to save attribute \"{0}.{1}\": {2}"
+msgstr "属性 \"{0}.{1}\" の保存に失敗: {2}"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-brace-format
+msgid "Undefined writable field \"{0}[{1}]\""
+msgstr "未定義の書き込み可能フィールド \"{0}[{1}]\""
+
+#: kompira_engine/opcodes.py
+#, python-brace-format
+msgid "Failed to save field \"{0}[{1}]\": {2}"
+msgstr "フィールド \"{0}[{1}]\" の保存に失敗: {2}"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "invalid job: '%s' is not executable"
+msgstr "不正なジョブ: '%s' は実行不可です"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "failed to call job: '%s' is not job object"
+msgstr "ジョブ呼び出しに失敗: '%s' はオブジェクトではありません"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "failed to call function: '%s' is not function object"
+msgstr "関数呼び出しに失敗: '%s' は関数オブジェクトではありません"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+msgid "Invalid argument for receiving event"
+msgstr "受信イベントの引数が不正です"
+
+#: kompira_engine/opcodes.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "Failed to receive message: %s is not a channel"
+msgstr "メッセージ受信に失敗: %s はチャネルではありません"
+
+#: kompira_engine/opcodes.py tests/test_jobflow.py
+#, python-format
+msgid "Failed to open session: already exists: %s"
+msgstr "セッションの開始に失敗: すでに存在します: %s"
+
+#: kompira_engine/opcodes.py
+#, python-format
+msgid "Failed to execute binary operation: %s"
+msgstr "2項演算の実行に失敗: %s"
+
+#: kompira_engine/opcodes.py
+#, python-format
+msgid "Failed to execute unary operation: %s"
+msgstr "単項演算の実行に失敗: %s"
+
+#: kompira_engine/runtime.py
+#, python-brace-format
+msgid "Failed to get result of {0} task: {1}: {2}"
+msgstr "タスク {0} の結果の取得に失敗: {1}: {2}"
+
+#: kompira_engine/runtime.py
+#, python-format
+msgid "aborted: %s"
+msgstr "異常終了: %s"
+
+#: kompira_engine/runtime.py
+#, python-brace-format
+msgid "invalid context variable '{0}': {1}: {2}"
+msgstr "不正なコンテクスト変数 '{0}': {1}: {2}"
+
+#: kompira_engine/runtime.py tests/test_jobflow.py
+#, python-format
+msgid "status code should be integer: %s"
+msgstr "ステータスコードが整数ではありません: %s"
+
+#: kompira_engine/runtime.py
+msgid "<stack frames>"
+msgstr ""
+
+#: kompira_engine/runtime.py
+msgid "<special variables>"
+msgstr ""
+
+#: kompira_engine/runtime.py
+#, python-format
+msgid "aborted at line %(line)s in %(code)s: %(mesg)s"
+msgstr ""
+
+#: kompira_engine/runtime.py
+#, python-format
+msgid "parent process(%s) aborted"
+msgstr "親プロセス (%s) が異常終了しました"
+
+#: kompira_engine/runtime.py
+msgid "stack overflow"
+msgstr "スタックオーバーフロー"
+
+#: kompira_engine/runtime.py kompira_engine/tests/test_engine.py
+#, python-format
+msgid "invalid jobflow code: %s"
+msgstr "不正なジョブフローコード: %s"
+
+#: kompira_engine/submit_data.py
+#, python-format
+msgid "no realm \"%s\" is defined"
+msgstr "管理領域「%s」は未定義です"
+
+#: kompira_engine/submit_data.py
+#, python-format
+msgid "realm \"%s\" is disabled"
+msgstr "管理領域「%s」は無効化されています"
+
+#: kompira_engine/submit_data.py
+#, python-format
+msgid "cannot find realm for host: %s"
+msgstr "ホスト%sは管理領域対象外です"
+
+#: kompira_engine/tests/test_engine.py tests/test_api.py
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""

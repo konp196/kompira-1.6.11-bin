@@ -1,0 +1,2695 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>2. 操作ガイド &#8212; Kompira 1.6.11 ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="3. Kompiraチュートリアル" href="tutorial.html" />
+    <link rel="prev" title="1. 管理ガイド" href="admin.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="tutorial.html" title="3. Kompiraチュートリアル"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="admin.html" title="1. 管理ガイド"
+             accesskey="P">前へ</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/usage.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>操作ガイド</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1><span class="section-number">2. </span>操作ガイド<a class="headerlink" href="#id1" title="この見出しへのパーマリンク">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">著者<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira 開発チーム</p>
+</dd>
+</dl>
+<section id="usage-introduction">
+<span id="id2"></span><h2><span class="section-number">2.1. </span>はじめに<a class="headerlink" href="#usage-introduction" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Kompiraが提供するWebユーザーインターフェースによってKompiraの機能を利用するための情報について記述します。</p>
+</section>
+<section id="login">
+<span id="id3"></span><h2><span class="section-number">2.2. </span>基本的な操作方法<a class="headerlink" href="#login" title="この見出しへのパーマリンク">¶</a></h2>
+<section id="id4">
+<h3><span class="section-number">2.2.1. </span>ログインとログアウト<a class="headerlink" href="#id4" title="この見出しへのパーマリンク">¶</a></h3>
+<p>以下のURLにアクセスすることで、Kompiraのログイン画面にアクセスすることができます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>https://&lt;Hostname or ipaddress of Kompira server&gt;/
+</pre></div>
+</div>
+<p>Kompiraログイン画面からユーザー名とパスワードを入力して、ログインしてください。</p>
+<p>デフォルトで使用可能なユーザー一覧は <a class="reference internal" href="#settings-user"><span class="std std-ref">ユーザー管理</span></a> を参照してください。</p>
+<p>ログインすると画面右上部にログインしたユーザー名が表示されます。
+ユーザ名をクリックするとドロップダウンメニューが表示されるので、その中から「ログアウト」を選択することでログアウトできます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ログイン情報はブラウザのCookieに保存されます。
+ログイン情報Cookieの有効期限は2週間となっており、有効期限を過ぎた場合は再度ログイン処理を行っていただく必要があります。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><a class="reference internal" href="#settings-system-config"><span class="std std-ref">システム設定</span></a> の最大ログイン試行回数が設定されている場合、ログインに一定回数以上失敗するとアカウントがロックされ、以降は同じ IP アドレスから、対象のユーザにログインすることができなくなります。
+アカウントロック期間が設定されている場合、最後にログイン失敗した時点から、その期間が経過するとアカウントロックは自動的に解除され、再びログインできるようになります。
+root など管理者権限を持つユーザは、ロックされたユーザの詳細画面から手動でロックを解除することも可能です。
+一般ユーザでもロックされていない別 IP アドレスからログインして、自分のユーザ詳細画面からロックを解除することもできます。</p>
+</div>
+</section>
+<section id="id5">
+<h3><span class="section-number">2.2.2. </span>メニュー操作<a class="headerlink" href="#id5" title="この見出しへのパーマリンク">¶</a></h3>
+<p>ログインした状態では画面上部のメニューから、ホーム、ファイルシステム、タスク一覧、インシデント一覧、<a class="reference internal" href="#processes"><span class="std std-ref">プロセス管理</span></a> 、<a class="reference internal" href="#scheduler"><span class="std std-ref">スケジューラ</span></a> 、<a class="reference internal" href="#settings"><span class="std std-ref">設定</span></a> 、ヘルプに移動することができます。</p>
+<p>メニュー左端に表示されているロゴ画像および &quot;Kompira&quot; 表記部分はホームへのリンクになっていて、ユーザごとにホームとして設定されているオブジェクト（通常はディレクトリ）のページに移動します。</p>
+<p>メニュー「ファイルシステム」はいくつかの代表的なディレクトリとその子オブジェクトへのショートカットになっています。</p>
+</section>
+<section id="id6">
+<h3><span class="section-number">2.2.3. </span>キーボード操作<a class="headerlink" href="#id6" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Kompira では表示しているページごとに対応する機能の一部について、キーボードで操作することもできます。
+共通的なキー操作を以下に示します。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>キーバインド</p></th>
+<th class="head"><p>操作</p></th>
+<th class="head"><p>備考</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">?</span></code></p></td>
+<td><p>ヘルプ表示</p></td>
+<td><p>キーボードショートカットの一覧をダイアログで表示</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">/</span></code></p></td>
+<td><p>検索ボックスにフォーカス</p></td>
+<td><p>検索ボックスがある場合</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">~</span></code></p></td>
+<td><p>ホームに移動</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">^</span></code></p></td>
+<td><p>親ディレクトリに移動</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Ctrl-Left</span></code></p></td>
+<td><p>前のページに移動</p></td>
+<td><p>複数ページ表示があるオブジェクトの場合</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Ctrl-Right</span></code></p></td>
+<td><p>次のページに移動</p></td>
+<td><p>複数ページ表示があるオブジェクトの場合</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-E</span></code></p></td>
+<td><p>オブジェクトの編集</p></td>
+<td><p>オブジェクトの詳細画面でそのオブジェクトが編集が可能な場合</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-S</span></code></p></td>
+<td><p>オブジェクトの保存</p></td>
+<td><p>オブジェクトの編集画面の場合</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="docutils literal notranslate"><span class="pre">Alt-E</span></code> など一部のキーバインドは OS やブラウザによっては <code class="docutils literal notranslate"><span class="pre">Alt-Shift-E</span></code> など実際のキー操作が異なる場合があります。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.6 で追加: </span>キーボード操作の説明を追加しました。</p>
+</div>
+</section>
+</section>
+<section id="kompira">
+<span id="file-system"></span><h2><span class="section-number">2.3. </span>Kompiraファイルシステム<a class="headerlink" href="#kompira" title="この見出しへのパーマリンク">¶</a></h2>
+<p>ジョブフロー定義やノード情報など、Kompiraで扱う情報定義はKompiraオブジェクトとして、
+Kompiraファイルシステム上で一元的に管理されます。</p>
+<p>以下では、Kompiraオブジェクトの種類によらない設定、値について説明します。</p>
+<section id="id7">
+<h3><span class="section-number">2.3.1. </span>オブジェクトの名称<a class="headerlink" href="#id7" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Kompiraオブジェクトの名称は、以下の規則内で自由に命名することができます。</p>
+<ul class="simple">
+<li><p>アルファベット、数字、アンダーバー(&quot;_&quot;)、日本語を使うことができる</p></li>
+<li><p>先頭の文字は数字以外でなければいけない</p></li>
+<li><p>アルファベットの大文字と小文字は区別される</p></li>
+<li><p>オブジェクトの名称の長さは128文字以内でなければいけない</p></li>
+<li><p>絶対パスの長さは1024文字以内でなければいけない</p></li>
+</ul>
+</section>
+<section id="file-system-property">
+<span id="id8"></span><h3><span class="section-number">2.3.2. </span>オブジェクトのプロパティ<a class="headerlink" href="#file-system-property" title="この見出しへのパーマリンク">¶</a></h3>
+<p>全てのKompiraオブジェクトにはプロパティが存在しており、オブジェクトの所有者もしくはルート権限を持つユーザーはプロパティの各項目を編集することができます。</p>
+<p>プロパティで設定できる項目の一覧を以下に示します。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>フィールド</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>表示名</p></td>
+<td><p>オブジェクトの表示に使用する名称。
+(オブジェクトの名称とは異なる)</p></td>
+</tr>
+<tr class="row-odd"><td><p>説明</p></td>
+<td><p>オブジェクトについての説明。</p></td>
+</tr>
+<tr class="row-even"><td><p>所有者</p></td>
+<td><p>オブジェクトの所有者。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ユーザーパーミッション</p></td>
+<td><p>ユーザーに与えるアクセス許可リスト。</p></td>
+</tr>
+<tr class="row-even"><td><p>グループパーミッション</p></td>
+<td><p>グループに与えるアクセス許可リスト。</p></td>
+</tr>
+</tbody>
+</table>
+<p>ユーザーパーミッション、グループパーミッションの項ではユーザー、グループごとにアクセス許可を設定することができます。</p>
+<p>全てのユーザーに対して共通のアクセス許可を設定したい場合、全てのユーザーが所属するotherグループを利用するとよいでしょう。</p>
+<p>プロパティの設定対象がディレクトリかテーブルの場合、プロパティ編集画面に、「変更を子孫オブジェクトにも適用する」チェックボックスが、
+所有者、および、ユーザーパーミッション、グループパーミッションの各項目にそれぞれ表示されます。
+ここにチェックを入れて保存することで、対応するプロパティ設定の変更内容が子孫オブジェクトにも反映されます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>プロパティを編集できるのはアクセス許可の設定に関わらず、常にオブジェクトの所有者もしくはルート権限を持つユーザーのみです。
+書き込み権限を持つユーザーはオブジェクトの内容を編集することはできますが、プロパティは編集できないことに注意してください。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>多数の子孫オブジェクトが含まれるディレクトリで、プロパティの変更を子孫オブジェクトにも適用する場合、
+完了するまでに長い時間がかかることがありますのでご注意ください。</p>
+</div>
+</section>
+<section id="file-system-permission">
+<span id="id9"></span><h3><span class="section-number">2.3.3. </span>オブジェクトのアクセス許可<a class="headerlink" href="#file-system-permission" title="この見出しへのパーマリンク">¶</a></h3>
+<p>全てのKompiraオブジェクトにはアクセス許可の設定が存在しています。</p>
+<p>以下にKompiraオブジェクトが持つアクセス許可種別の一覧を示します。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>許可種別</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>読み取り</p></td>
+<td><p>オブジェクトの内容を読み取ることができます。
+権限がないオブジェクトのパスに移動しようとするとエラーとなります。</p></td>
+</tr>
+<tr class="row-odd"><td><p>書き込み</p></td>
+<td><p>オブジェクトの内容を編集することができます。
+ディレクトリまたはテーブルオブジェクトにおいて書き込み許可を持たない場合、新規にオブジェクトを追加することはできません。</p></td>
+</tr>
+<tr class="row-even"><td><p>実行</p></td>
+<td><p>オブジェクトを実行することができます。
+実行可能なオブジェクト(ジョブフロー、スクリプトジョブ)でのみ有効な権限種別です。</p></td>
+</tr>
+</tbody>
+</table>
+<p>ルート権限を持つユーザーには、明示的に指定されていない場合でも全てのアクセスが許可されています。</p>
+<p>オブジェクトのアクセス許可設定は <a class="reference internal" href="#file-system-property"><span class="std std-ref">オブジェクトのプロパティ</span></a> から編集することができます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ディレクトリまたはテーブルオブジェクトにオブジェクトを追加する場合、
+アクセス許可の設定は継承されません。</p>
+</div>
+</section>
+</section>
+<section id="kompira-object">
+<span id="id10"></span><h2><span class="section-number">2.4. </span>Kompiraオブジェクト<a class="headerlink" href="#kompira-object" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Kompiraファイルシステム上で作成されるオブジェクトには、ジョブフローやノード情報など様々な種類のものがあります。
+これらは、やはりKompiraファイルシステム上のオブジェクトである型オブジェクトによって規定されています。
+あらかじめ用意されている型オブジェクトは、/system/typesで一覧を参照することができます。</p>
+<p>現バージョンでは、標準で以下に示す型オブジェクトが定義されています。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>型名</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TypeObject
+(型オブジェクト)</p></td>
+<td><p>型オブジェクトを既定するためのオブジェクトです。
+型オブジェクトを作成すると、作成した型のオブジェクトを作成できるようになります。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Directory
+(ディレクトリ)</p></td>
+<td><p>複数のオブジェクトを格納することができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-even"><td><p>License
+(ライセンス)</p></td>
+<td><p>ライセンスファイルを登録するためのオブジェクトです。
+システムで使用する特殊なオブジェクトであり、新規に作成することはありません。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Virtual
+(仮想オブジェクト)</p></td>
+<td><p>仮想オブジェクトを既定するためのオブジェクトです。
+プロセス一覧(/process)、タスク一覧(/task)は仮想オブジェクトとして定義されています。
+一般に使用することはありません。</p></td>
+</tr>
+<tr class="row-even"><td><p>Jobflow
+(ジョブフロー)</p></td>
+<td><p>ジョブフローの記述と実行をすることができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Channel
+(チャネル)</p></td>
+<td><p>メッセージを格納することができるキューを持つオブジェクトです。
+メッセージの送受信に利用することができます。</p></td>
+</tr>
+<tr class="row-even"><td><p>Wiki
+(Wikiページ)</p></td>
+<td><p>Creole形式のWikiページを作成をすることができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ScriptJob
+(スクリプトジョブ)</p></td>
+<td><p>スクリプトの記述と実行をすることができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-even"><td><p>Environment
+(環境変数)</p></td>
+<td><p>key-value形式の環境情報を格納することができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Template
+(テンプレート)</p></td>
+<td><p>タスクなどのメッセージで使用する
+テンプレートテキストを格納することができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-even"><td><p>Table
+(テーブル)</p></td>
+<td><p>同じ型の複数のオブジェクトを格納することができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Realm
+(管理領域)</p></td>
+<td><p>ジョブマネージャが管理する領域を既定するためのオブジェクトです。
+管理領域一覧オブジェクト以下で作成されることを前提としており、
+通常のディレクトリやテーブル以下に作成することはありません。</p></td>
+</tr>
+<tr class="row-even"><td><p>AttachedFile
+(添付ファイル)</p></td>
+<td><p>任意のファイルを保存することができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>NodeInfo
+(ノード情報)</p></td>
+<td><p>サーバのIPアドレスやSSHのポート番号など、
+ノードを特定するための情報を格納することができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-even"><td><p>AccountInfo
+(アカウント情報)</p></td>
+<td><p>リモートログインに必要なアカウント情報を格納することができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Repository
+(リポジトリ)</p></td>
+<td><p>バージョン管理システムと連携するための情報を定義するオブジェクトです。</p></td>
+</tr>
+<tr class="row-even"><td><p>MailChannel
+(メールチャネル)</p></td>
+<td><p>IMAPサーバからのメールを取り込むことができるチャネルです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Form
+(フォーム)</p></td>
+<td><p>ユーザ入力フォームを作成することができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-even"><td><p>Config
+(設定)</p></td>
+<td><p>設定フォームを作成することができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Library
+(ライブラリ)</p></td>
+<td><p>ジョブフローから呼び出し可能な Python のライブラリを定義するオブジェクトです。</p></td>
+</tr>
+<tr class="row-even"><td><p>MailTemplate
+(メールテンプレート)</p></td>
+<td><p>メール送信で使用する
+テンプレートテキストを格納することができるオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Text
+(テキスト)</p></td>
+<td><p>プレインテキストや HTML テキストなどテキスト情報を保持するオブジェクトです。</p></td>
+</tr>
+<tr class="row-even"><td><p>SystemInfo
+(システム情報型)</p></td>
+<td><p>Kompira のシステム情報を提供するオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>NodeType
+(ノード種別)</p></td>
+<td><p>リモートジョブで利用できる接続相手の情報を定義するオブジェクトです。</p></td>
+</tr>
+<tr class="row-even"><td><p>CustomStyle
+(カスタムスタイル)</p></td>
+<td><p>ブラウザで表示される画面の配色などを設定するオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>OAuth2Provider
+(OAuth2プロバイダ)</p></td>
+<td><p>OAuth2認証を行う場合のサービスプロバイダ情報を定義するオブジェクトです。</p></td>
+</tr>
+<tr class="row-even"><td><p>SmtpServer
+(SMTPサーバ)</p></td>
+<td><p>メール送信時に利用するSMTPサーバの情報を定義するオブジェクトです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>LdapServer
+(LDAPサーバ)</p></td>
+<td><p>ログインユーザをLDAP連携する場合に利用するLDAPサーバの情報を定義するオブジェクト
+です。</p></td>
+</tr>
+</tbody>
+</table>
+<p>各型オブジェクトはそれぞれのフィールドとその種別を定義しています。
+どのようなフィールドが定義されているかは、<a class="reference internal" href="library.html#builtin-type-object"><span class="std std-ref">組み込み型オブジェクト</span></a> を参照してください。</p>
+<p>以下では一部の代表的なKompiraオブジェクトをとりあげ、その使用方法を記述します。</p>
+<section id="kompira-object-directory">
+<span id="id11"></span><h3><span class="section-number">2.4.1. </span>ディレクトリ<a class="headerlink" href="#kompira-object-directory" title="この見出しへのパーマリンク">¶</a></h3>
+<p>ディレクトリは、複数の異なる型のオブジェクトを格納できるKompiraオブジェクトです。
+ディレクトリオブジェクトのページを開くと、そのディレクトリに格納されているオブジェクトの一覧が表示されます。</p>
+<p>格納されているオブジェクトの個数が多い場合は複数のページにわたって表示されます。
+オブジェクト一覧の右上に配置されたページネートボタンで、前後のページや先頭または最後のページに移動します。
+ページネートボタンの左側のメニューから、ページあたりに表示するオブジェクトの個数（ページサイズ）を変更できます。</p>
+<p>オブジェクト一覧のヘッダ行の列名が表示されている部分をクリックすることで、一覧表示のソート順を変更できます。
+同じ列を再度クリックすると昇順と降順が切り替わります。</p>
+<p>オブジェクトの一覧表示のソート順とページサイズについては、そのデフォルト値をディレクトリオブジェクトごとに設定することができます。
+オブジェクト一覧の右上に配置されたメニューボタンから「このディレクトリを編集する」を選ぶとディレクトリの編集画面に移動するので、そこで設定を保存してください。</p>
+<p>ディレクトリオブジェクトから、以下の操作を行うことができます。
+これらの操作はオブジェクト一覧の左上に配置されたボタンおよび「その他」メニューから行なえます。
+また、オブジェクト一覧の上でマウス右クリックすると表示されるコンテキストメニューから操作することもできます。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>操作</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>新規作成</p></td>
+<td><p>オブジェクトを作成します。
+作成する際は型オブジェクトを指定する必要があります。</p></td>
+</tr>
+<tr class="row-odd"><td><p>閲覧</p></td>
+<td><p>格納しているオブジェクトのページに移動します。</p></td>
+</tr>
+<tr class="row-even"><td><p>編集</p></td>
+<td><p>オブジェクトの内容を編集します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>名前の変更</p></td>
+<td><p>オブジェクトの名称を変更します。
+プロパティの表示名がオブジェクトの名称と等しい場合、
+表示名も同時に変更されます。</p></td>
+</tr>
+<tr class="row-even"><td><p>移動</p></td>
+<td><p>オブジェクトを移動します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>コピー</p></td>
+<td><p>オブジェクトを別のディレクトリにコピーします。</p></td>
+</tr>
+<tr class="row-even"><td><p>削除</p></td>
+<td><p>オブジェクトを削除します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>エクスポート</p></td>
+<td><p>選択したオブジェクトをエクスポートします。
+オブジェクト未選択時は、ディレクトリ以下のすべての
+オブジェクトをエクスポートします。</p></td>
+</tr>
+<tr class="row-even"><td><p>インポート</p></td>
+<td><p>ファイルから選択したディレクトリにオブジェクトをイン
+ポートします。ディレクトリ未選択時は現在のディレクト
+以下にオブジェクトをインポートします。</p></td>
+</tr>
+<tr class="row-odd"><td><p>プロパティ</p></td>
+<td><p>オブジェクトのプロパティを編集します。</p></td>
+</tr>
+<tr class="row-even"><td><p>検索</p></td>
+<td><p>ディレクトリ配下の子孫オブジェクトを検索します。</p></td>
+</tr>
+</tbody>
+</table>
+<p>ディレクトリオブジェクトの詳細画面では共通のキー操作に加えて以下のキー操作に対応しています。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>キーバインド</p></th>
+<th class="head"><p>操作</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">n</span></code></p></td>
+<td><p>オブジェクトの新規作成</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">#</span></code></p></td>
+<td><p>型オブジェクトの選択</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">j</span></code></p></td>
+<td><p>次のオブジェクト</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">k</span></code></p></td>
+<td><p>前のオブジェクト</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Space</span></code></p></td>
+<td><p>オブジェクトの選択切り替え</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span></code></p></td>
+<td><p>すべてのオブジェクトの選択切り替え</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Delete</span></code></p></td>
+<td><p>オブジェクトの削除</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">F2</span></code></p></td>
+<td><p>名前を変更</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p>オブジェクトのコピー</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">m</span></code></p></td>
+<td><p>オブジェクトの移動</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">p</span></code></p></td>
+<td><p>プロパティの編集</p></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.6 で追加: </span>キー操作の説明を追加しました。</p>
+</div>
+<section id="id12">
+<h4><span class="section-number">2.4.1.1. </span>オブジェクトの新規作成<a class="headerlink" href="#id12" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ディレクトリ画面でオブジェクトを新規作成することができます。</p>
+<ul class="simple">
+<li><p>最下行の「型」列で、新規作成したいオブジェクトの型を選択します。</p></li>
+<li><p>最下行の「名称」列にある入力フォームに、新規作成したいオブジェクトの名称を入力します。</p></li>
+<li><p>名称を入力したフォームの右側にある「＋」記号のボタンを押下すると、選択した型に応じた編集画面に移動します。</p></li>
+<li><p>編集画面で必要な情報を入力して「保存」ボタンを押下すると、オブジェクトが作成されます。</p></li>
+</ul>
+<p>なお、ディレクトリ型など一部の型では編集画面に移動することなくオブジェクトが新規作成されます。</p>
+</section>
+<section id="id13">
+<h4><span class="section-number">2.4.1.2. </span>オブジェクトの閲覧と編集<a class="headerlink" href="#id13" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ディレクトリ画面に一覧表示されているオブジェクトのリンクをクリックする、またはオブジェクトを1つ選択してエンターを押下するかメニューから「開く」を選ぶと、そのオブジェクトのページ（詳細画面）に移動します。</p>
+<p>オブジェクトを1つ選択してメニューから「編集」を選ぶと、そのオブジェクトの編集画面に直接移動することもできます。</p>
+</section>
+<section id="id14">
+<h4><span class="section-number">2.4.1.3. </span>オブジェクトの名前変更<a class="headerlink" href="#id14" title="この見出しへのパーマリンク">¶</a></h4>
+<p>オブジェクトを1つ選択してメニューから「名前の変更」を選ぶと、そのオブジェクトの名称を変更することができます。
+選択している行の「名称」列の上に入力フォームが現れて、オブジェクトの現在の名称が入力された状態で表示されます。
+新しい名称を入力してエンターを押下することで名前が変更されます。または、ESC キーでキャンセルできます。</p>
+</section>
+<section id="id15">
+<h4><span class="section-number">2.4.1.4. </span>オブジェクトの移動とコピー<a class="headerlink" href="#id15" title="この見出しへのパーマリンク">¶</a></h4>
+<p>オブジェクトを1つ以上選択してメニューから「移動」または「コピー」を選ぶと、選択したオブジェクトを移動またはコピーすることができます。
+移動先またはコピー先を選ぶダイアログが表示されるので、目的の場所を選択して「移動」または「コピー」ボタンを押下してください。</p>
+<p>なお、オブジェクトを1つだけ選択している場合はダイアログの名称フォームが入力可能になり、移動またはコピー先での新しい名前を指定することもできます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>対象となるオブジェクトの個数が非常に多いコピー操作では、コピー処理に長時間かかる場合がありますのでご注意ください。</p>
+</div>
+</section>
+<section id="id16">
+<h4><span class="section-number">2.4.1.5. </span>オブジェクトの削除<a class="headerlink" href="#id16" title="この見出しへのパーマリンク">¶</a></h4>
+<p>オブジェクトを1つ以上選択してメニューから「削除」を選ぶと、選択したオブジェクトを削除することができます。
+本当に削除するかを確認するダイアログが表示されるので、「削除」または「キャンセル」を選んでください。</p>
+</section>
+<section id="id17">
+<h4><span class="section-number">2.4.1.6. </span>オブジェクトのプロパティ編集<a class="headerlink" href="#id17" title="この見出しへのパーマリンク">¶</a></h4>
+<p>オブジェクトを1つ以上選択してメニューから「プロパティ」を選ぶと、選択したオブジェクトのプロパティを編集することができます。</p>
+<p>オブジェクトを1つだけ選択している場合は、そのオブジェクトのプロパティ編集画面に移動します。
+変更したいプロパティを編集してから「保存」ボタンを押下することで、そのオブジェクトのプロパティが更新されます。</p>
+<p>2つ以上の複数オブジェクトを選択した状態でプロパティメニューを選択すると、プロパティ編集のダイアログが表示されます。
+このダイアログでは、所有者とユーザーパーミッション、グループパーミッションを変更することができ、
+「変更を適用する」をチェックした項目を選択したオブジェクトに対して一括で反映することができます。
+なお、選択したオブジェクトにディレクトリやテーブルが含まれている場合、それらの子孫オブジェクトにはプロパティ変更は反映されません。</p>
+</section>
+<section id="id18">
+<h4><span class="section-number">2.4.1.7. </span>オブジェクトのインポート<a class="headerlink" href="#id18" title="この見出しへのパーマリンク">¶</a></h4>
+<p>メニューから「インポート」を選ぶと、エクスポートされた JSON ファイルを Kompira にインポートすることができます。
+ダイアログが表示されるのでインポートしたいファイルを選択したうえで「インポート」ボタンを押下するとインポート処理が開始されます。
+このとき、インポートで既存オブジェクトを上書きするかどうかを指定することもできます。</p>
+<p>なお、ディレクトリ画面で1つもオブジェクトを選択していないときはそのディレクトリにインポートされます。
+ディレクトリまたはテーブルを1つ選択していたときは、選択したディレクトリまたはテーブルの中にインポートされます。</p>
+<p>インポートできないオブジェクトを選択しているときや、2つ以上のオブジェクトを選択しているときはインポートできません。</p>
+<p>オブジェクトのインポートは、当該ディレクトリの所有者、もしくはルート権限を持つユーザのみ可能です。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>インポートする JSON ファイルが巨大な場合や、含まれるオブジェクトの個数が非常に多い場合などでは、インポート処理に長時間かかったりメモリを多く必要とする場合がありますのでご注意ください。</p>
+</div>
+</section>
+<section id="id19">
+<h4><span class="section-number">2.4.1.8. </span>オブジェクトのエクスポート<a class="headerlink" href="#id19" title="この見出しへのパーマリンク">¶</a></h4>
+<p>メニューから「エクスポート」を選ぶと、Kompira オブジェクトのデータを JSON ファイルとしてエクスポートすることができます。
+表示されたダイアログで「エクスポート」ボタンを押下するとエクスポート処理が開始されます。
+エクスポートファイルの準備が完了すると、ファイルの保存先を確認するシステムダイアログが表示されるので、保存したい場所を指定してください。
+このとき、エクスポート対象に仮想オブジェクトを含めるかを指定することもできます。プロセス情報やユーザ・グループなど仮想オブジェクトを含めたい場合はチェックしてください。</p>
+<p>オブジェクトのエクスポートは、当該ディレクトリの所有者、もしくはルート権限を持つユーザのみ可能です。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>エクスポート対象となるオブジェクトの個数が非常に多い場合や、含まれるフィールドデータのサイズが巨大な場合などでは、エクスポート処理に長時間かかったりメモリを多く必要とする場合がありますのでご注意ください。</p>
+</div>
+</section>
+<section id="id20">
+<h4><span class="section-number">2.4.1.9. </span>オブジェクトの検索<a class="headerlink" href="#id20" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ディレクトリ一覧画面の右上の検索ボックスに検索キーを入力して検索ボタンをクリックすると、検索結果の一覧画面に遷移します。</p>
+<p>検索キーの先頭に <code class="docutils literal notranslate"><span class="pre">#</span></code> を付けると、型の表示名で検索します。たとえば、検索キーに <code class="docutils literal notranslate"><span class="pre">#ジョブフロー</span></code> を指定すると、ジョブフロー型のオブジェクトを検索します。
+同様に <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> を付けると、所有者で検索します。たとえば、検索キーに <code class="docutils literal notranslate"><span class="pre">&#64;guest</span></code> を指定すると、 <code class="docutils literal notranslate"><span class="pre">guest</span></code> ユーザが所有するオブジェクトを検索します。
+先頭文字が <code class="docutils literal notranslate"><span class="pre">#</span></code> と <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> 以外の検索キーの場合は、指定された文字列が表示名に含まれるオブジェクトを検索します。
+<code class="docutils literal notranslate"><span class="pre">#</span></code> や <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> で始まる表示名を検索したい場合には、 <code class="docutils literal notranslate"><span class="pre">\#</span></code> や <code class="docutils literal notranslate"><span class="pre">\&#64;</span></code> のようにバックスラッシュを付けて検索します。</p>
+<p>複数の種類の検索キーを同時に指定した場合は、AND条件による検索となります。
+複数の検索キーは、基本的に空白によって区切られますが、連続する表示名の場合は、空白を含む1つの表示名として扱われます。
+例えば、 <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">display</span> <span class="pre">name</span> <span class="pre">&#64;root</span> <span class="pre">#ディレクトリ</span></code> と入力した場合、 <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">display</span> <span class="pre">name</span></code> という文字列を含む表示名で、かつ、
+所有者が <code class="docutils literal notranslate"><span class="pre">root</span></code> ユーザ、型がディレクトリであるようなオブジェクトを検索します。</p>
+<p>同じ種類の検索キーを複数指定した場合は、最後の検索キーが有効になります。</p>
+</section>
+</section>
+<section id="kompira-object-table">
+<span id="id21"></span><h3><span class="section-number">2.4.2. </span>テーブル<a class="headerlink" href="#kompira-object-table" title="この見出しへのパーマリンク">¶</a></h3>
+<p>テーブルはディレクトリと同様に複数のオブジェクトを格納できるKompiraオブジェクトです。
+ただし、格納できるオブジェクトの型が1つに限定されている点がディレクトリとは異なります。</p>
+<p>テーブルオブジェクトを作成する場合、初めに型オブジェクトと、その型オブジェクト内のフィールドを選択します。
+作成されたテーブルオブジェクトでは、ディレクトリオブジェクトで表示される情報に加えて作成時に選択したフィールド情報が表示されます。</p>
+<p>テーブルオブジェクトを使用することで、格納されているオブジェクトのフィールドを一括で閲覧することができます。</p>
+<p>テーブルオブジェクトの詳細画面ではディレクトリオブジェクトと同様のキー操作に対応しています。ただし <code class="docutils literal notranslate"><span class="pre">#</span></code> による型オブジェクトの選択は使えません。</p>
+<section id="id22">
+<h4><span class="section-number">2.4.2.1. </span>オブジェクトの検索<a class="headerlink" href="#id22" title="この見出しへのパーマリンク">¶</a></h4>
+<p>テーブルオブジェクトの詳細画面ではテーブルに含まれるオブジェクトを検索することができます。
+このとき検索対象として、オブジェクトが持つプロパティまたはフィールドから1つを選択する必要があります。</p>
+<p>検索対象のプロパティとしては、 <code class="docutils literal notranslate"><span class="pre">abspath</span></code>, <code class="docutils literal notranslate"><span class="pre">display_name</span></code>, <code class="docutils literal notranslate"><span class="pre">owner</span></code> から選択することができます。</p>
+<p>検索対象のフィールドとしては、テーブルに関連付けられた型オブジェクトで定義されたフィールドから選択することが出来ます。
+ただし、次に該当するフィールドについては検索対象として選択することが出来ません。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>以下いずれかの型のフィールド</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Password</span></code>, <code class="docutils literal notranslate"><span class="pre">Array&lt;Password&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">Dictionary&lt;Password&gt;</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>フィールド修飾子で非表示 (<code class="docutils literal notranslate"><span class="pre">invisible=true</span></code>) と設定されたフィールド</p></li>
+</ul>
+<p>検索ボックスに入力した値 (検索値) からどのようにオブジェクトを絞り込むかは、選択した検索対象によって検索の処理が異なります。
+検索対象としてプロパティを選択した場合は、以下のように検索されます。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>abspath (名称)</dt><dd><ul>
+<li><p>パスに検索値が含まれるオブジェクトが検索されます。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>display_name (表示名)</dt><dd><ul>
+<li><p>表示名に検索値が含まれるオブジェクトが検索されます。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>owner (所有者)</dt><dd><ul>
+<li><p>所有者の名称が検索値と一致するオブジェクトが検索されます。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>検索対象としてフィールドを選択した場合は、オブジェクトが持つフィールド値が検索条件に該当するときに、そのオブジェクトが検索されることになります。
+このとき、選択した <a class="reference internal" href="library.html#fields-types"><span class="std std-ref">フィールドの型</span></a> ごとに、検索値の入力形式と検索条件は以下のようになります。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>String, Enum, Text, LargeText, IPAddress, EMail, URL</dt><dd><ul>
+<li><p>入力形式: 任意の文字列</p></li>
+<li><p>検索条件: フィールド値の一部に検索値が含まれる</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Binary</dt><dd><ul>
+<li><p>入力形式: 16進表記</p></li>
+<li><p>検索条件: フィールド値の一部に検索値が含まれる</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Integer</dt><dd><ul>
+<li><p>入力形式: 整数値</p></li>
+<li><p>検索条件: フィールド値が検索値と一致する</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Float</dt><dd><ul>
+<li><p>入力形式: 浮動小数点</p></li>
+<li><p>検索条件: フィールド値が検索値と一致する</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Boolean</dt><dd><ul>
+<li><dl class="simple">
+<dt>入力形式:</dt><dd><ul>
+<li><p>True: <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>False: <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>検索条件: フィールド値の <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code> と検索値 (True, False) が一致する</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Object</dt><dd><ul>
+<li><p>入力形式: オブジェクトパス</p></li>
+<li><p>検索条件: フィールド値（オブジェクト）のパスと検索値が一致する</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Datetime</dt><dd><ul>
+<li><dl class="simple">
+<dt>入力形式(1): 以下のような <a class="reference internal" href="library.html#library-functions"><span class="std std-ref">datetime()</span></a> 関数で解析できる日時形式</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">YYYY-mm-dd</span> <span class="pre">HH:MM:SS</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YYYY-mm-dd</span> <span class="pre">HH:MM:SS.mmmmmm</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>検索条件(1)</dt><dd><ul>
+<li><p>[秒単位で指定した場合] フィールド値が検索値からの1秒間の範囲 (<code class="docutils literal notranslate"><span class="pre">YYYY-mm-dd</span> <span class="pre">HH:MM:SS.000000</span> <span class="pre">..</span> <span class="pre">YYYY-mm-dd</span> <span class="pre">HH:MM:SS.999999</span></code>) に含まれる</p></li>
+<li><p>[マイクロ秒単位で指定した場合] フィールド値が検索値と一致する</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>入力形式(2): <code class="docutils literal notranslate"><span class="pre">YYYY-mm-dd</span></code> のような <a class="reference internal" href="library.html#library-functions"><span class="std std-ref">date()</span></a> 関数で解析できる日時形式</p></li>
+<li><p>検索条件(2): フィールド値の日付部分が検索値と一致する</p></li>
+<li><dl class="simple">
+<dt>入力形式(3): 以下のような <a class="reference internal" href="library.html#library-functions"><span class="std std-ref">time()</span></a> 関数で解析できる日時形式</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">HH:MM:SS</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HH:MM:SS.mmmmmm</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>検索条件(3)</dt><dd><ul>
+<li><p>[秒単位で指定した場合] フィールド値の時刻部分が検索値からの1秒間の範囲 (<code class="docutils literal notranslate"><span class="pre">HH:MM:SS.000000</span> <span class="pre">..</span> <span class="pre">HH:MM:SS.999999</span></code>) に含まれる</p></li>
+<li><p>[マイクロ秒単位で指定した場合] フィールド値の時刻部分が検索値と一致する</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Date</dt><dd><ul>
+<li><p>入力形式: <code class="docutils literal notranslate"><span class="pre">YYYY-mm-dd</span></code> のような <a class="reference internal" href="library.html#library-functions"><span class="std std-ref">date()</span></a> 関数で解析できる日時形式</p></li>
+<li><p>検索条件: フィールド値が検索値と一致する</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Time</dt><dd><ul>
+<li><dl class="simple">
+<dt>入力形式: 以下のような <a class="reference internal" href="library.html#library-functions"><span class="std std-ref">time()</span></a> 関数で解析できる日時形式</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">HH:MM:SS</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HH:MM:SS.mmmmmm</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>検索条件</dt><dd><ul>
+<li><p>[秒単位で指定した場合] フィールド値が検索値からの1秒間の範囲 (<code class="docutils literal notranslate"><span class="pre">HH:MM:SS.000000</span> <span class="pre">..</span> <span class="pre">HH:MM:SS.999999</span></code>) に含まれる</p></li>
+<li><p>[マイクロ秒単位で指定した場合] フィールド値が検索値と一致する</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>File</dt><dd><ul>
+<li><p>入力形式: ファイル名</p></li>
+<li><p>検索条件: フィールド値（ファイル）のファイル名が検索値と一致する</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Array&lt;T&gt;</dt><dd><ul>
+<li><p><a class="reference internal" href="library.html#fields-types"><span class="std std-ref">型 T</span></a> に応じた検索処理になります。</p></li>
+<li><p>配列データに検索条件を満たす要素が1つでもあれば、そのオブジェクトが検索されます。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Dictionary&lt;T&gt;</dt><dd><ul>
+<li><p><a class="reference internal" href="library.html#fields-types"><span class="std std-ref">型 T</span></a> に応じた検索処理になります。辞書データのうち、キーは検索対象外であり、値が検索対象となります。</p></li>
+<li><p>辞書データに検索条件を満たす要素が1つでもあれば、そのオブジェクトが検索されます。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.9 で追加: </span>Float, Datetime, Date, Time フィールドでの検索に対応しました。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.9.post1 で追加: </span>Binary, Boolean, Integer, Object フィールドでの検索に対応しました。</p>
+</div>
+</section>
+</section>
+<section id="kompira-object-jobflow">
+<span id="id23"></span><h3><span class="section-number">2.4.3. </span>ジョブフロー<a class="headerlink" href="#kompira-object-jobflow" title="この見出しへのパーマリンク">¶</a></h3>
+<p>ジョブフローオブジェクトから、ジョブフローの記述と実行ができます。
+ジョブフローの記述方法については、<a class="reference internal" href="tutorial.html"><span class="doc">Kompiraチュートリアル</span></a> を参照してください。
+また、ジョブフロー言語の詳細については、<a class="reference internal" href="reference.html"><span class="doc">Kompira ジョブフロー言語リファレンス</span></a> が参考になります。</p>
+<p>ジョブフローオブジェクトの詳細画面では共通のキー操作に加えて以下のキー操作に対応しています。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>キーバインド</p></th>
+<th class="head"><p>操作</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-X</span></code></p></td>
+<td><p>ジョブフローの実行</p></td>
+</tr>
+</tbody>
+</table>
+<section id="kompira-object-jobflow-execution">
+<span id="id24"></span><h4><span class="section-number">2.4.3.1. </span>ジョブフローの実行<a class="headerlink" href="#kompira-object-jobflow-execution" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ジョブフローを記述し、保存すると、ジョブフローの実行ボタンが有効になります。
+実行ボタンを押すと、ジョブフローの実行を開始し、プロセス詳細画面に移ります。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>記述したジョブフローに文法エラーがある場合や、Kompiraエンジンが
+停止している場合は、ジョブフローの実行ボタンが無効になります。</p>
+</div>
+</section>
+<section id="kompira-object-jobflow-parameter">
+<span id="id25"></span><h4><span class="section-number">2.4.3.2. </span>パラメータの指定<a class="headerlink" href="#kompira-object-jobflow-parameter" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ジョブフローにパラメータが定義されている場合は、実行するときに各パラメータの値を画面上で入力して指定することができます。
+デフォルト値が定義されているパラメータは、ジョブフローの画面を表示した時点で入力欄にそのデフォルト値が入力された状態になっています。
+デフォルト値が定義されていないパラメータの入力欄は空になっていますが、空のパラメータがあるとジョブフローを実行することは出来ないため、全てのパラメータを入力してから実行するようにしてください。</p>
+<p>パラメータの入力欄にはジョブフローの記法での値または式を記述することができます。
+これは例えば、パラメータに文字列を与えたい場合は引用符で囲む必要があることになります。</p>
+<p>ジョブフローの画面を表示するとき、URL パラメータに「パラメータ名=式」という形式でジョブフローのパラメータを指定することもできます。
+たとえば /root/test_jobflow というジョブフローに foo と bar というパラメータが定義されていて、数値と文字列を指定したいとすると以下のような URL になります。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>https://&lt;kompira-server&gt;/root/test_jobflow?foo=100&amp;bar=&quot;hello&quot;
+</pre></div>
+</div>
+<p>パラメータ部分は URL エンコードする必要があり、利用する文字によっては %XX （XXは文字コードの16進数）と記述することに注意してください。
+たとえば、foo に 50+50 という式を、bar には &quot;#hashtag&quot; という記号を含む文字列を与えたいとすると、以下のような URL にしなければいけません。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>https://&lt;kompira-server&gt;/root/test_jobflow?foo=50%2b50&amp;bar=&quot;%23hashtag&quot;
+</pre></div>
+</div>
+</section>
+<section id="id26">
+<h4><span class="section-number">2.4.3.3. </span>オプションの指定<a class="headerlink" href="#id26" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ジョブフロー実行には以下のオプションが選択できます。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>オプション名</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ステップモード</p></td>
+<td><p>ジョブフローをデバッグする際に使用するモードです。
+コマンドの実行前にジョブフローが一時停止し、実行コマンドの
+内容を確認できます。</p></td>
+</tr>
+<tr class="row-odd"><td><p>チェックポイントモード</p></td>
+<td><p>ジョブフローの実行状態を随時保存するモードです。
+ジョブフロー実行中に万が一Kompiraサーバが異常終了した場合、
+保存されたチェックポイントの状態から、ジョブフロープロセスを
+再開できるようになります。</p></td>
+</tr>
+<tr class="row-even"><td><p>監視モード</p></td>
+<td><p>ジョブフローの実行監視モードを指定します。
+ジョブフローの完了時や異常終了時に、ジョブフローを実行した
+ユーザのメールアドレス宛にメールを送信して通知します。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="kompira-object-scriptjob">
+<span id="id27"></span><h3><span class="section-number">2.4.4. </span>スクリプトジョブ<a class="headerlink" href="#kompira-object-scriptjob" title="この見出しへのパーマリンク">¶</a></h3>
+<p>スクリプトジョブを作成すると Bash や Perl、Ruby、Python などの言語で記述された
+スクリプトをリモートのサーバ上で実行することができます。</p>
+<p>スクリプトジョブオブジェクトの詳細画面では共通のキー操作に加えて以下のキー操作に対応しています。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>キーバインド</p></th>
+<th class="head"><p>操作</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Alt-X</span></code></p></td>
+<td><p>スクリプトジョブの実行</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id28">
+<h4><span class="section-number">2.4.4.1. </span>スクリプトの編集<a class="headerlink" href="#id28" title="この見出しへのパーマリンク">¶</a></h4>
+<p>編集ボタンを押すと、スクリプトの編集画面に移ります。
+ソースのテキストエリアに、実行させるスクリプトを記述してください。</p>
+<p>Linuxなど、Unix系 OS でスクリプトを実行させる場合、スクリプトの先頭行に
+シバン(shebang)を記述してください。</p>
+<p>例</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+echo hello
+</pre></div>
+</div>
+<p>Windows系 OS でスクリプトを実行させる場合、拡張子を指定する必要があります。
+スクリプトの種類に応じて、以下の拡張子を指定してください。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>スクリプト</p></th>
+<th class="head"><p>拡張子</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>バッチファイル</p></td>
+<td><p>bat</p></td>
+</tr>
+<tr class="row-odd"><td><p>VBScript</p></td>
+<td><p>vbs</p></td>
+</tr>
+<tr class="row-even"><td><p>JScript</p></td>
+<td><p>js</p></td>
+</tr>
+<tr class="row-odd"><td><p>PowerShellスクリプト</p></td>
+<td><p>ps1</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id29">
+<h4><span class="section-number">2.4.4.2. </span>スクリプトの実行方法<a class="headerlink" href="#id29" title="この見出しへのパーマリンク">¶</a></h4>
+<p>実行ボタンを押すと、スクリプトの実行が開始され、プロセス詳細画面に移り
+ます。スクリプトの実行が完了すると、終了ステータス、標準出力、標準エラー
+出力の結果が、コンソールに表示されます。</p>
+<p>実行ボタンの右側にあるテキストフィールドにて、コマンドライン引数を入力
+することができます。空白で区切ることで複数のコマンドライン引数を渡せま
+す。</p>
+<p>実行ノードは、スクリプトが実行されるリモートのサーバを指定します。指定
+しなかった場合は、ジョブマネージャが動作しているローカルサーバ上でスク
+リプトが実行されます。</p>
+<p>実行アカウントは、リモートサーバにログインする場合のアカウント情報を指
+定します。</p>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.4.0 で追加: </span>スクリプトジョブをブラウザ上から直接実行できる機能を追加</p>
+</div>
+</section>
+</section>
+<section id="kompira-object-mail-channel">
+<span id="id30"></span><h3><span class="section-number">2.4.5. </span>メールチャネル<a class="headerlink" href="#kompira-object-mail-channel" title="この見出しへのパーマリンク">¶</a></h3>
+<p>メールチャネルは、外部の IMAP4/POP3 サーバと連携して、ジョブフローからメールを受信するためのオブジェクトです。
+以下のように、作成したメールチャネルオブジェクトに対して、ジョブフローのメッセージ受信機能を用いることで、メールを受信して処理することが可能になります。
+(以下の例では /home/guest/test_mchan に作成したメールチャネルからの受信を想定しています)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;/home/guest/test_mchan&gt; -&gt;
+[mail = mail_parse($RESULT)] -&gt;
+print(&#39;メール受信しました:&#39;, mail[&#39;Subject&#39;])
+</pre></div>
+</div>
+<section id="id31">
+<h4><span class="section-number">2.4.5.1. </span>メールチャネル設定方法<a class="headerlink" href="#id31" title="この見出しへのパーマリンク">¶</a></h4>
+<p>メールチャネルオブジェクトの編集画面で、以下の各項目を設定し、保存してください。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>設定項目</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>サーバ名</p></td>
+<td><p>接続する IMAP4/POP3 サーバのホスト名かIPアドレスを設定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>プロトコル</p></td>
+<td><p>メール受信のプロトコルとして、IMAP4 もしくは POP3 のいずれかを設定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>SSL</p></td>
+<td><p>SSL による通信を行う場合はチェックします。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ポート番号</p></td>
+<td><p>IMAP サーバのポート番号を設定します。指定しない場合デフォルトのポート番号が使用されます。</p></td>
+</tr>
+<tr class="row-even"><td><p>メールボックス</p></td>
+<td><p>受信するメールボックスを設定します。デフォルトは &quot;INBOX&quot; です。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ユーザ名</p></td>
+<td><p>IMAP4/POP3 サーバに接続するユーザー名を設定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>パスワード</p></td>
+<td><p>IMAP4/POP3 サーバに接続する際のパスワードを設定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>受信チェック間隔</p></td>
+<td><p>IMAP4/POP3 サーバに対して新着メッセージを確認する間隔を分単位で指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>接続タイムアウト</p></td>
+<td><p>IMAP4/POP3 サーバに対する接続タイムアウトを秒単位で指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>OAuth2使用</p></td>
+<td><p>OAuth2 を用いて認証する場合はチェックします。この場合、パスワードの設定は不要となります。</p></td>
+</tr>
+<tr class="row-even"><td><p>OAuth2プロバイダ</p></td>
+<td><p>OAuth2 のサービスプロバイダを選択します。OAuth2 認証を利用する場合には必須です。</p></td>
+</tr>
+<tr class="row-odd"><td><p>無効</p></td>
+<td><p>IMAP4/POP3 サーバへの接続を無効化します。</p></td>
+</tr>
+<tr class="row-even"><td><p>ログサイズ</p></td>
+<td><p>ログの最大サイズを指定します。最大サイズを超えた場合、古いログメッセージから削除されます。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id32">
+<h4><span class="section-number">2.4.5.2. </span>接続テスト<a class="headerlink" href="#id32" title="この見出しへのパーマリンク">¶</a></h4>
+<p>サーバ名の右側に配置された「接続テスト」ボタンをクリックすると、設定さ
+れた IMAP4/POP3 サーバに対して接続、ユーザ名とパスワードによる認証、お
+よび、メールボックスの確認を行います。</p>
+</section>
+<section id="oauth2">
+<span id="kompira-object-mail-channel-oauth2"></span><h4><span class="section-number">2.4.5.3. </span>OAuth2認証を利用する場合の設定手順<a class="headerlink" href="#oauth2" title="この見出しへのパーマリンク">¶</a></h4>
+<p>OAuth2認証を利用しての接続を行う場合、ユーザ名を設定し、接続先のメールサービスに対応しているOAuth2プロバイダを選択し、OAuth2使用をチェックします。</p>
+<p>その後、OAuth2使用の右横に表示されている「承認フロー開始」ボタンをクリックして、承認フローを開始します。
+OAuth2プロバイダの認証画面が別ウィンドウで表示されるので、設定したユーザ名でログインした後、内容を確認して承認ボタンをクリックします。
+リダイレクトに失敗して、ウィンドウ上に「このサイトにアクセスできません」と表示された場合には、ウィンドウのアドレスバー部分に表示されているURLをコピーし、
+もとのKompiraの画面に表示されているリダイレクトURL入力のダイアログボックスにペーストしてから「提出」ボタンをクリックします。
+Kompiraは入力されたリダイレクトURLに含まれる認可コードを用いて、アクセストークンを取得します。</p>
+<p>トークンの取得に成功すると、メールチャネルの画面上に新たにトークン有効期限が表示されます。</p>
+<p>プロバイダの設定を変更した場合などは、「トークン消去」ボタンをクリックして、Kompira内部に保存されたトークンを消去した後で、
+再度、「承認フロー開始」を行ってトークンを再取得してください。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>リフレッシュトークン付きの場合、期限切れのアクセストークンはメール送受信や接続テストの実行時に自動的にリフレッシュされて有効期限が延長されます。
+リフレッシュトークンは一般的にアクセストークンよりも長い有効期限が設定されていますが、リフレッシュトークンの期限が切れた場合は、トークンのリフレッシュに失敗します。
+その場合、「承認フロー開始」を行って、再度トークンを取得してください。
+リフレッシュ時には、リフレッシュトークンも更新されるため、定期的にメール送受信や接続テストを行うことで、リフレッシュトークンの有効期限切れを防ぐことが可能です。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ユーザーは、KompiraアプリケーションをOAuth2プロバイダに登録し、そこでの設定情報をもとにOAuth2プロバイダ型オブジェクトを定義しておく必要があります。
+アプリケーションの登録方法については、各OAuth2プロバイダの技術ドキュメントを参照してください。</p>
+</div>
+</section>
+</section>
+<section id="smtp">
+<span id="kompira-object-smtp-server"></span><h3><span class="section-number">2.4.6. </span>SMTPサーバ<a class="headerlink" href="#smtp" title="この見出しへのパーマリンク">¶</a></h3>
+<p>SMTPサーバは、メール送信時に利用するSMTPサーバの情報を定義するオブジェクトです。</p>
+<section id="id33">
+<h4><span class="section-number">2.4.6.1. </span>SMTPサーバ設定方法<a class="headerlink" href="#id33" title="この見出しへのパーマリンク">¶</a></h4>
+<p>SMTPサーバオブジェクトの編集画面で、以下の各項目を設定し、保存してください。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>設定項目</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ホスト名</p></td>
+<td><p>接続する SMTP サーバのホスト名かIPアドレスを設定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ポート番号</p></td>
+<td><p>SMTP サーバのポート番号を設定します。指定しない場合デフォルトのポート番号が使用されます。</p></td>
+</tr>
+<tr class="row-even"><td><p>ユーザ名</p></td>
+<td><p>認証が必要な SMTP サーバに接続する場合のユーザー名を設定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>パスワード</p></td>
+<td><p>認証が必要な SMTP サーバに接続する場合のパスワードを設定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>接続タイムアウト</p></td>
+<td><p>SMTP サーバに対する接続タイムアウトを秒単位で指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TLS使用</p></td>
+<td><p>TLS を用いて SMTP サーバに接続する場合にチェックします。</p></td>
+</tr>
+<tr class="row-even"><td><p>SSL使用</p></td>
+<td><p>SSL を用いて SMTP サーバに接続する場合にチェックします。</p></td>
+</tr>
+<tr class="row-odd"><td><p>OAuth2使用</p></td>
+<td><p>OAuth2 を用いて認証する場合はチェックします。この場合、パスワードの設定は不要となります。</p></td>
+</tr>
+<tr class="row-even"><td><p>OAuth2プロバイダ</p></td>
+<td><p>OAuth2 のサービスプロバイダを選択します。OAuth2 認証を利用する場合には必須です。</p></td>
+</tr>
+</tbody>
+</table>
+<p>「接続テスト」ボタンをクリックすると、SMTP サーバに対する接続確認を行います。
+また、ユーザー名とパスワードが設定されている場合は、ユーザー認証の確認も行います。</p>
+<p>OAuth2認証の設定手順については、メールチャネルと同様です。(<a class="reference internal" href="#kompira-object-mail-channel-oauth2"><span class="std std-ref">OAuth2認証を利用する場合の設定手順</span></a>)</p>
+</section>
+</section>
+<section id="ldap">
+<h3><span class="section-number">2.4.7. </span>LDAPサーバ<a class="headerlink" href="#ldap" title="この見出しへのパーマリンク">¶</a></h3>
+<p>LDAPサーバは、Kompira のログインアカウントをLDAPと連携するためのLDAPサーバと設定情報を定義するオブジェクトです。
+システム設定の LDAPサーバ (ldapServer) フィールドに、連携するLDAPサーバオブジェクトを指定します。</p>
+<section id="id34">
+<h4><span class="section-number">2.4.7.1. </span>LDAPサーバ設定方法<a class="headerlink" href="#id34" title="この見出しへのパーマリンク">¶</a></h4>
+<p>LDAPサーバオブジェクトの編集画面で、以下の各項目を設定し、保存してください。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>設定項目</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>サーバURL</p></td>
+<td><p>LDAPサーバのURLを指定します。(例: <a class="reference external" href="ldap://ldap.example.com">ldap://ldap.example.com</a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>接続タイムアウト</p></td>
+<td><p>LDAPサーバの接続タイムアウトを指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>STARTTLS使用</p></td>
+<td><p>LDAP サーバへの接続に STARTTLS を用いる場合にセットします。</p></td>
+</tr>
+<tr class="row-odd"><td><p>フォールバックログイン</p></td>
+<td><p>LDAPログイン失敗時に、直近にログインした際のパスワードによるログインを許可する場合にセットします。</p></td>
+</tr>
+<tr class="row-even"><td><p>セッション有効期間</p></td>
+<td><p>LDAPユーザでログインしたときのセッションの有効期間を時間単位で指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>バインドDN</p></td>
+<td><p>LDAP サーバへのバインド DN を指定します。空にした場合、匿名バインドを用います。</p></td>
+</tr>
+<tr class="row-even"><td><p>バインドパスワード</p></td>
+<td><p>LDAP サーバへのバインド時のパスワードを指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ユーザー検索DN</p></td>
+<td><p>ユーザ検索の基点となる DN を指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>ユーザー検索スコープ</p></td>
+<td><p>ユーザ検索の基点からのスコープを BASE, ONELEVEL, SUBTREE の中から指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ユーザー検索属性</p></td>
+<td><p>ユーザ検索の対象となるオブジェクトの属性中からユーザ名が格納されているものを指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>対象ユーザ</p></td>
+<td><p>LDAP連携するユーザ名のリストを指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>所属グループDN</p></td>
+<td><p>LDAP連携するユーザが所属するグループのDNを指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>グループ検索DN</p></td>
+<td><p>グループ検索の基点となる DN を指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>グループ検索スコープ</p></td>
+<td><p>グループ検索の基点からの検索対象のスコープを BASE, ONELEVEL, SUBTREE の中から指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>グループ検索クラス</p></td>
+<td><p>グループ検索の対象となるオブジェクト中からフィルタするクラス (objectClass) を指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>グループ種別</p></td>
+<td><p>グループ検索の対象となるグループの種類を指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>反映グループ</p></td>
+<td><p>LDAPユーザが所属するLDAPのグループをKompiraのグループに反映させるグループ名を指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ユーザデータ(名)</p></td>
+<td><p>ユーザオブジェクトの「名」にLDAPの値を反映させる場合に、対応するLDAPユーザの属性を指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>ユーザデータ(姓)</p></td>
+<td><p>ユーザオブジェクトの「姓」にLDAPの値を反映させる場合に、対応するLDAPユーザの属性を指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ユーザデータ(Email)</p></td>
+<td><p>ユーザオブジェクトの「Eメール」にLDAPの値を反映させる場合に、対応するLDAPユーザの属性を指定します。</p></td>
+</tr>
+</tbody>
+</table>
+<p>「接続テスト」ボタンをクリックすると、LDAP サーバに対する接続確認を行います。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>LDAPユーザでの初回ログインに成功すると、Kompiraのユーザー一覧 (/config/user) にLDAPユーザが新規に作成されます。
+作成されたLDAPユーザはLDAPサーバ上から削除されてもKompiraのユーザー一覧上には残されるので、必要に応じて削除してください。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>セッション有効期間の設定は、LDAPでログインしたユーザにのみに影響します。
+ローカルユーザでログインした場合は、常にシステムのデフォルトのセッション有効期間 (2週間=336時間) が適用されます。
+また、セッション有効期間を 0 に設定した場合、ブラウザを閉じたときにセッションが破棄されるようになります。
+空に設定した場合は、デフォルトのセッション有効期間が適用されます。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>グループ検索DNや、ユーザデータ（名、姓、Email）が指定されている場合、LDAPユーザでログインする度に、ユーザオブジェクトの
+対応フィールド（groups, first_name, last_name, email）が、LDAPサーバの最新の値に上書きされます。
+これらのフィールドの値を別途書き換えても、ログインする度にLDAPサーバの値で上書きされることに注意してください。
+ただし、ユーザーオブジェクトのグループフィールドに非LDAPグループを設定している場合、その値は保存されます。</p>
+</div>
+</section>
+</section>
+<section id="kompira-object-form">
+<span id="id35"></span><h3><span class="section-number">2.4.8. </span>フォーム<a class="headerlink" href="#kompira-object-form" title="この見出しへのパーマリンク">¶</a></h3>
+<p>フォームは、ユーザ入力フォームを作成することができるオブジェクトです。
+フォームは提出オブジェクトとして設定したオブジェクトの型によって、実行できる機能が異なります。</p>
+<ul class="simple">
+<li><p>提出オブジェクトとしてチャネル型オブジェクトが設定されている場合は、そのチャネルにフォームで入力したメッセージを送信することができます。</p></li>
+<li><p>提出オブジェクトとしてジョブフロー型オブジェクトが設定されている場合は、そのジョブフローをフォームで入力したパラメータで実行することができます。</p></li>
+</ul>
+<p>フォームオブジェクトの詳細画面では共通のキー操作に加えて以下のキー操作に対応しています。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>キーバインド</p></th>
+<th class="head"><p>操作</p></th>
+<th class="head"><p>備考</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p><code class="docutils literal notranslate"><span class="pre">Alt-S</span></code></p></td>
+<td><p>送信</p></td>
+<td><p>提出オブジェクトがチャネル型の場合</p></td>
+</tr>
+<tr class="row-odd"><td><p>実行</p></td>
+<td><p>提出オブジェクトがジョブフロー型の場合</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id36">
+<h4><span class="section-number">2.4.8.1. </span>フォーム設定方法<a class="headerlink" href="#id36" title="この見出しへのパーマリンク">¶</a></h4>
+<p>フォームオブジェクトの編集画面で、以下の各項目を設定し、保存してください。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>設定項目</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>提出オブジェクト</p></td>
+<td><p>このフォームから提出先となるチャネル型またはジョブフロー型のオブジェクトを設定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>型フィールド</p></td>
+<td><p>提出オブジェクトに提出するデータの構造を設定します。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id37">
+<h4><span class="section-number">2.4.8.2. </span>提出データの入力<a class="headerlink" href="#id37" title="この見出しへのパーマリンク">¶</a></h4>
+<p>フォームオブジェクトの詳細画面では、提出オブジェクトに提出するデータの入力欄（フォーム）が表示されます。
+各フィールドは定義したそのフィールド型に応じた入力インターフェースになっており、数値や文字列などの値を入力することができます。
+<a class="reference internal" href="#kompira-object-jobflow-parameter"><span class="std std-ref">パラメータの指定</span></a> で示したようにジョブフローのパラメータでは式を与えることが出来ましたが、フォームでは値だけが入力できて式は使えないことに注意してください。</p>
+<p>フォームオブジェクトの画面を表示するときに、URL パラメータに「フィールド名=値」という形式で提出データを指定することもできます。
+たとえば /root/test_form というフォームオブジェクトに foo という Integer 型フィールドと bar という String 型フィールドが定義されていて、数値と文字列を指定したいとすると以下のような URL になります。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>https://&lt;kompira-server&gt;/root/test_form?foo=100&amp;bar=hello
+</pre></div>
+</div>
+<p>ジョブフローでの式を与えるパラメータ指定とは異なり型に応じた値を指定するため、文字列を引用符で囲む必要はありません。</p>
+</section>
+<section id="id38">
+<h4><span class="section-number">2.4.8.3. </span>メッセージ送信<a class="headerlink" href="#id38" title="この見出しへのパーマリンク">¶</a></h4>
+<p>提出オブジェクトとしてチャネル型オブジェクトが設定されている場合は、入力フォームの下に送信ボタンが表示されます。</p>
+<p>フォームに値を入力して送信ボタンを押すと、入力された値が辞書型データとして提出オブジェクトに設定されたチャネルオブジェクトに送信されます。</p>
+</section>
+<section id="id39">
+<h4><span class="section-number">2.4.8.4. </span>ジョブフロー実行<a class="headerlink" href="#id39" title="この見出しへのパーマリンク">¶</a></h4>
+<p>提出オブジェクトとしてジョブフロー型オブジェクトが設定されている場合は、入力フォームの下に実行ボタンが表示されます。</p>
+<p>フォームに値を入力して実行ボタンを押すと、入力された値をパラメータとして提出オブジェクトに設定されたジョブフローオブジェクトを実行します。</p>
+</section>
+</section>
+<section id="kompira-object-repository">
+<span id="id40"></span><h3><span class="section-number">2.4.9. </span>リポジトリ<a class="headerlink" href="#kompira-object-repository" title="この見出しへのパーマリンク">¶</a></h3>
+<p>リポジトリオブジェクトを作成することで、Kompira のディレクトリと分散型バージョン管理システム (DVCS) 上のリポジトリを同期させることが可能です。
+リモートリポジトリから指定した Kompira ディレクトリにオブジェクトを取り込んだり、逆に、作成した Kompira オブジェクトをリモートリポジトリ上に保存したりすることができます。
+これによって、Kompira のジョブフローやスクリプトジョブなどのバージョン管理が可能になります。
+また、複数の Kompira 間でのジョブフローの共有なども簡単に行えるようになります。</p>
+<section id="id41">
+<h4><span class="section-number">2.4.9.1. </span>リポジトリ設定方法<a class="headerlink" href="#id41" title="この見出しへのパーマリンク">¶</a></h4>
+<p>リポジトリオブジェクトの編集画面で、以下の各項目を設定し、保存してください。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>設定項目</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>URL</p></td>
+<td><p>リモートリポジトリの URL を指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>リポジトリ種別</p></td>
+<td><p>リモートリポジトリの種別を指定します。(現バージョンでは git または mercurial のみ選択可能)</p></td>
+</tr>
+<tr class="row-even"><td><p>ポート番号</p></td>
+<td><p>リポジトリサーバのポート番号がデフォルトと異なる場合に指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ユーザ名</p></td>
+<td><p>リモートリポジトリにアクセスするアカウントのユーザ名を指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>パスワード</p></td>
+<td><p>リモートリポジトリにアクセスするアカウントのパスワードを指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>ディレクトリ</p></td>
+<td><p>同期対象となる Kompiraの ディレクトリオブジェクトを指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p>設定データを上書きする</p></td>
+<td><p>チェックするとリモートリポジトリからプルする際に Config 型オブジェクトの設定データも上書きします。</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>リモートリポジトリは、あらかじめ作成しておく必要があります。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.7 で追加: </span>設定項目「設定データを上書きする」が追加されました。</p>
+</div>
+</section>
+<section id="id42">
+<h4><span class="section-number">2.4.9.2. </span>初期化<a class="headerlink" href="#id42" title="この見出しへのパーマリンク">¶</a></h4>
+<p>Kompira サーバ上にローカルリポジトリを初期化して、リポジトリの内容を Kompira ディレクトリに取り込みます。
+初期化ボタンを押したとき、以下の処理が行なわれます。</p>
+<ul class="simple">
+<li><p>リモートリポジトリを複製してローカルリポジトリとして初期化します。</p></li>
+<li><p>ローカルリポジトリの内容を Kompira ディレクトリにインポートします。</p></li>
+</ul>
+<p>編集画面で必要なリポジトリ設定項目が入力されると、初期化ボタンが有効になります。</p>
+</section>
+<section id="id43">
+<h4><span class="section-number">2.4.9.3. </span>プッシュ<a class="headerlink" href="#id43" title="この見出しへのパーマリンク">¶</a></h4>
+<p>指定したブランチに Kompira ディレクトリの変更箇所をコミットして、リモートリポジトリにプッシュします。
+プッシュボタンを押したとき、以下の処理が行なわれます。</p>
+<ul class="simple">
+<li><p>ローカルリポジトリを選択したブランチに切り替えます。</p></li>
+<li><p>ローカルリポジトリに Kompira ディレクトリをディレクトリ形式でエクスポートします。</p></li>
+<li><p>ローカルリポジトリの変更箇所を入力されたコミットメッセージと共にコミットします。</p></li>
+<li><p>リモートリポジトリにプッシュします。</p></li>
+</ul>
+<p>変更箇所をコミットするとき、Kompira にログインしているユーザの姓名およびメールアドレスが Author として記録されます。
+ただし、姓名が未設定の場合はログインしている <code class="docutils literal notranslate"><span class="pre">{ユーザ名}</span></code> が、メールアドレスが未設定の場合は <code class="docutils literal notranslate"><span class="pre">{ユーザ名}&#64;{ホスト名}</span></code> が適用されます。</p>
+<p>プッシュボタンは初期化後に有効になります。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.6.9.post4 で変更: </span>プッシュ操作時に Kompira のログインユーザがコミットの Author として記録されるようになりました。</p>
+</div>
+</section>
+<section id="id44">
+<h4><span class="section-number">2.4.9.4. </span>プル<a class="headerlink" href="#id44" title="この見出しへのパーマリンク">¶</a></h4>
+<p>リモートリポジトリをプルして、指定したブランチの内容を Kompira ディレクトリに上書きで取り込みます。
+プルボタンを押したとき、以下の処理が行なわれます。</p>
+<ul class="simple">
+<li><p>リモートリポジトリからプルします。</p></li>
+<li><p>ローカルリポジトリを選択したブランチに切り替えます。</p></li>
+<li><p>ローカルリポジトリの内容を Kompira ディレクトリに上書きでインポートします。</p></li>
+</ul>
+<p>Kompira ディレクトリにインポートするとき「設定データを上書きする」がチェックされている場合は、Config 型オブジェクトの設定データも上書きします。</p>
+<p>プルボタンは初期化後に有効になります。</p>
+</section>
+</section>
+</section>
+<section id="processes">
+<span id="id45"></span><h2><span class="section-number">2.5. </span>プロセス管理<a class="headerlink" href="#processes" title="この見出しへのパーマリンク">¶</a></h2>
+<p>ジョブフローおよびスクリプトジョブの実行状態を管理するためのプロセスについて記述します。</p>
+<p>プロセスが作成されるのは、ジョブフローおよびスクリプトジョブが実行されたときです。
+実行の開始については <a class="reference internal" href="#kompira-object-jobflow"><span class="std std-ref">ジョブフロー</span></a> および <a class="reference internal" href="#kompira-object-scriptjob"><span class="std std-ref">スクリプトジョブ</span></a> を参照してください。</p>
+<section id="id46">
+<h3><span class="section-number">2.5.1. </span>プロセス一覧<a class="headerlink" href="#id46" title="この見出しへのパーマリンク">¶</a></h3>
+<p>プロセス一覧画面では、実行中もしくは過去に実行されたプロセスの一覧を確認することができます。</p>
+<p>デフォルトでは「実行中のプロセス」が選択された状態で、プロセスのステータスが
+NEW(新規)、READY(実行可能)、RUNNING(実行中)、WAITING(入力/コマンド完了待ち)のプロセスが表示されます。</p>
+<p>プロセスのステータスがDONE(実行完了)、もしくはABORTED(異常終了)のプロセスは既に終了したプロセスです。
+これらを確認したい場合は「全てのプロセス」を選択してください。</p>
+<p>既に実行が終了しているプロセスについては、一覧画面より削除をすることができます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>一般ユーザーは自身が実行したプロセスのみ閲覧することができます。
+ルート権限を持つユーザーは全てのプロセスを閲覧することができます。</p>
+</div>
+</section>
+<section id="id47">
+<h3><span class="section-number">2.5.2. </span>プロセス詳細<a class="headerlink" href="#id47" title="この見出しへのパーマリンク">¶</a></h3>
+<p>プロセス詳細画面では、プロセスの実行状況の確認と制御を行うことができます。</p>
+<p>プロセス詳細画面におけるボタン操作、表示されるタブについて次節以降に記述します。</p>
+<p>また、プロセス詳細画面では共通のキー操作に加えて以下のキー操作に対応しています。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>キーバインド</p></th>
+<th class="head"><p>操作</p></th>
+<th class="head"><p>備考</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">F6</span></code></p></td>
+<td><p>プロセスの中止</p></td>
+<td><p>確認ダイアログが表示されます</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">F7</span></code></p></td>
+<td><p>プロセスの停止</p></td>
+<td><p>スクリプトジョブでは対応していません</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">F8</span></code></p></td>
+<td><p>プロセスの続行</p></td>
+<td><p>スクリプトジョブでは対応していません</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CTRL-[</span></code></p></td>
+<td><p>前のタブに切り替え</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CTRL-]</span></code></p></td>
+<td><p>次のタブに切り替え</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">a</span></code></p></td>
+<td><p>テキスト選択切り替え</p></td>
+<td><p>コンソールタブまたは結果タブで操作できます</p></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.6 で追加: </span>プロセス詳細画面でキー操作が可能になりました。</p>
+</div>
+<section id="terminate">
+<h4><span class="section-number">2.5.2.1. </span>中止(Terminate)<a class="headerlink" href="#terminate" title="この見出しへのパーマリンク">¶</a></h4>
+<p>プロセスの実行を中止します。
+中止が選択されたプロセスはステータスがABORTED(異常終了)となり、再開することはできません。</p>
+<p>実行中の子プロセスが存在する場合、子プロセスのステータスもABORTED(異常終了)となります。</p>
+</section>
+<section id="suspend">
+<h4><span class="section-number">2.5.2.2. </span>停止(Suspend)<a class="headerlink" href="#suspend" title="この見出しへのパーマリンク">¶</a></h4>
+<p>プロセスの実行を一時的に停止します。</p>
+<p>実行中の子プロセスが存在する場合、子プロセスも停止状態となります。</p>
+</section>
+<section id="resume">
+<h4><span class="section-number">2.5.2.3. </span>続行(Resume)<a class="headerlink" href="#resume" title="この見出しへのパーマリンク">¶</a></h4>
+<p>停止状態のプロセスを再開します。</p>
+<p>停止中の子プロセスが存在する場合、子プロセスも再開します。</p>
+</section>
+<section id="id48">
+<h4><span class="section-number">2.5.2.4. </span>コンソール<a class="headerlink" href="#id48" title="この見出しへのパーマリンク">¶</a></h4>
+<p>プロセス実行時の出力です。</p>
+<p>ジョブフローの場合、print文のメッセージ、リモートコマンドの実行結果、エラー時のスタックトレース等が表示されます。</p>
+<p>スクリプトジョブの場合、スクリプトの終了ステータス、標準出力、標準エラー出力が表示されます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>コンソールバッファの最大サイズは64KBに制限されています。
+64KB以上の出力があった場合、確認できるメッセージは最新の64KB分のみであることに注意してください。</p>
+</div>
+</section>
+<section id="id49">
+<h4><span class="section-number">2.5.2.5. </span>ジョブフロー/スクリプト<a class="headerlink" href="#id49" title="この見出しへのパーマリンク">¶</a></h4>
+<p>実行されたジョブフローおよびスクリプトが表示されます。</p>
+<p>ジョブフローの場合は現在実行中の行も合わせて表示されます。</p>
+</section>
+<section id="id50">
+<h4><span class="section-number">2.5.2.6. </span>結果<a class="headerlink" href="#id50" title="この見出しへのパーマリンク">¶</a></h4>
+<p>プロセス終了時の結果 <code class="docutils literal notranslate"><span class="pre">$RESULT</span></code> の内容が JSON 形式で表示されます。</p>
+</section>
+<section id="id51">
+<h4><span class="section-number">2.5.2.7. </span>子プロセス<a class="headerlink" href="#id51" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ジョブフローが実行された場合のみ表示される画面で、子プロセスの一覧が確認できます。</p>
+<p>子プロセスは、forkやpfor構文を使用して子プロセスを作成するジョブフローを実行した時に作成されます。</p>
+</section>
+<section id="id52">
+<h4><span class="section-number">2.5.2.8. </span>設定<a class="headerlink" href="#id52" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ジョブフローが実行された場合のみ表示される画面で、プロセスの設定が確認できます。また、停止中には設定を変更することができます。</p>
+<p>ここで確認または変更できるのは、<a class="reference internal" href="#kompira-object-jobflow-execution"><span class="std std-ref">ジョブフローの実行</span></a> に示したジョブフロー実行に関するオプションです。</p>
+</section>
+</section>
+<section id="manage-process">
+<span id="id53"></span><h3><span class="section-number">2.5.3. </span>管理コマンドによるプロセス操作<a class="headerlink" href="#manage-process" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Kompira サーバ上において管理コマンド <code class="docutils literal notranslate"><span class="pre">/opt/kompira/bin/manage.py</span> <span class="pre">process</span> <span class="pre">[options...]</span></code> を用いて、Kompira プロセスに対して以下のような操作を行なうことができます。</p>
+<ul class="simple">
+<li><p>プロセスの一覧表示</p></li>
+<li><p>プロセスの個数表示</p></li>
+<li><p>プロセスの削除</p></li>
+<li><p>プロセスの中止</p></li>
+<li><p>プロセスの停止</p></li>
+<li><p>プロセスの続行</p></li>
+</ul>
+<p>このとき、操作の対象とするプロセスを絞り込む条件を指定することができます。</p>
+<ul class="simple">
+<li><p>プロセスの状態</p></li>
+<li><p>実行しているジョブフロー</p></li>
+<li><p>スケジュール起動のプロセスかどうか</p></li>
+<li><p>起動オブジェクトが指定されたプロセスかどうか</p></li>
+<li><p>実行したユーザ</p></li>
+<li><p>開始日時および終了日時</p></li>
+<li><p>実行時間</p></li>
+<li><p>コンソール出力に含まれる文字列</p></li>
+</ul>
+<section id="id54">
+<h4><span class="section-number">2.5.3.1. </span>プロセス操作オプション<a class="headerlink" href="#id54" title="この見出しへのパーマリンク">¶</a></h4>
+<p>Kompira プロセスに対して行う操作を指定するオプションを以下に示します。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>オプション</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-L</span></code>, <code class="docutils literal notranslate"><span class="pre">--list</span></code></p></td>
+<td><p>プロセスの一覧を表示します。デフォルトではアクティブ状態のプロセスを表示します。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-C</span></code>, <code class="docutils literal notranslate"><span class="pre">--count</span></code></p></td>
+<td><p>プロセスの個数を表示します。デフォルトでは全ての状態のプロセスの個数を表示します。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-D</span></code>, <code class="docutils literal notranslate"><span class="pre">--delete</span></code></p></td>
+<td><p>プロセスを削除します。アクティブ状態のプロセスは対象外となります。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-T</span></code>, <code class="docutils literal notranslate"><span class="pre">--terminate</span></code></p></td>
+<td><p>プロセスを中止します。既に終了しているプロセスは対象外となります。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-S</span></code>, <code class="docutils literal notranslate"><span class="pre">--suspend</span></code></p></td>
+<td><p>プロセスを停止します。既に終了しているまたは停止中のプロセスは対象外となります。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-R</span></code>, <code class="docutils literal notranslate"><span class="pre">--resume</span></code></p></td>
+<td><p>プロセスを続行します。既に終了しているまたは停止中でないプロセスは対象外となります。</p></td>
+</tr>
+</tbody>
+</table>
+<p>操作を指定するオプションはいずれか1つのみ指定可能で、複数指定した場合は最後のオプションが適用されます。
+上記のいずれも指定しなかった場合は、プロセスの一覧表示を行ないます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>大量のプロセスが処理対象となるような場合に、メモリや CPU などのリソース負荷が大きくなる場合がありますのでご注意ください。</p>
+</div>
+<p>プロセス情報の変更を伴う操作（削除、中止、停止、続行）が指定された場合は、実際に制御を適用するかの確認（yes/no の入力）が行なわれます。
+制御前の確認を行なわずに適用したい場合は <code class="docutils literal notranslate"><span class="pre">-y</span></code> オプションを指定してください。制御を適用せずに動作を確認したい場合は <code class="docutils literal notranslate"><span class="pre">--dry-run</span></code> オプションを指定してください。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>オプション</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-y</span></code>, <code class="docutils literal notranslate"><span class="pre">--noinput</span></code></p></td>
+<td><p>確認を行なわずに制御を適用する</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--dry-run</span></code></p></td>
+<td><p>変更を伴う処理を実際には適用しない</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id55">
+<h4><span class="section-number">2.5.3.2. </span>プロセス絞り込みオプション<a class="headerlink" href="#id55" title="この見出しへのパーマリンク">¶</a></h4>
+<p>操作対象とする Kompira プロセスを絞り込む条件を指定するオプションを以下に示します。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>オプション</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-i</span> <span class="pre">PID</span></code>, <code class="docutils literal notranslate"><span class="pre">--pid</span> <span class="pre">PID</span></code></p></td>
+<td><p>プロセス ID が <code class="docutils literal notranslate"><span class="pre">PID</span></code> であるプロセス（複数指定可能）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-a</span></code>, <code class="docutils literal notranslate"><span class="pre">--all</span></code></p></td>
+<td><p>全ての状態のプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--active</span></code></p></td>
+<td><p>アクティブ状態 (NEW, READY, RUNNING, WAITING のいずれか) のプロセス</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--finish</span></code></p></td>
+<td><p>終了状態 (ABORTED, DONE のいずれか) のプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--status</span> <span class="pre">{NEW,READY,RUNNING,WAITING,ABORTED,DONE}</span></code></p></td>
+<td><p>指定した状態のプロセス（複数指定可能）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--suspended</span></code></p></td>
+<td><p>停止中のプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--not-suspended</span></code></p></td>
+<td><p>停止中でないプロセス</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--parent</span> <span class="pre">PARENT</span></code></p></td>
+<td><p>親プロセス ID が <code class="docutils literal notranslate"><span class="pre">PARENT</span></code> であるプロセス（複数指定可能）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--anyones-child</span></code></p></td>
+<td><p>任意の親プロセスを持つプロセス</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--min-children</span> <span class="pre">MIN_CHILDREN</span></code></p></td>
+<td><p>子プロセスの個数が <code class="docutils literal notranslate"><span class="pre">MIN_CHILDREN</span></code> 以上あるプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--job</span> <span class="pre">JOB</span></code></p></td>
+<td><p>開始ジョブフローが <code class="docutils literal notranslate"><span class="pre">JOB</span></code> に正規表現でマッチするプロセス</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--current-job</span> <span class="pre">CURRENT_JOB</span></code></p></td>
+<td><p>実行中ジョブフローが <code class="docutils literal notranslate"><span class="pre">CURRENT_JOB</span></code> に正規表現でマッチするプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--scheduled</span></code></p></td>
+<td><p>スケジューラによって起動されたプロセス</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--not-scheduled</span></code></p></td>
+<td><p>スケジューラ以外で起動したプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--scheduler-id</span> <span class="pre">SCHEDULER_ID</span></code></p></td>
+<td><p>ID が <code class="docutils literal notranslate"><span class="pre">SCHEDULER_ID</span></code> のスケジュールによって起動されたプロセス（複数指定可能）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--scheduler-name</span> <span class="pre">SCHEDULER_NAME</span></code></p></td>
+<td><p>名称が <code class="docutils literal notranslate"><span class="pre">SCHEDULER_NAME</span></code> に正規表現でマッチするスケジュールによって起動されたプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--invoked</span></code></p></td>
+<td><p>起動オブジェクトが記録される方式で実行されたプロセス</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--not-invoked</span></code></p></td>
+<td><p>起動オブジェクトが記録されない方式で実行されたプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--invoker</span> <span class="pre">INVOKER</span></code></p></td>
+<td><p>起動オブジェクトが <code class="docutils literal notranslate"><span class="pre">INVOKER</span></code> (abspath) であるプロセス（複数指定可能）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--invoker-type</span> <span class="pre">INVOKER_TYPE</span></code></p></td>
+<td><p>起動オブジェクトの型が <code class="docutils literal notranslate"><span class="pre">INVOKER_TYPE</span></code> (abspath) であるプロセス（複数指定可能）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--user</span> <span class="pre">USER</span></code></p></td>
+<td><p>実行ユーザの名称が <code class="docutils literal notranslate"><span class="pre">USER</span></code> に一致するプロセス（複数指定可能）</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--started-since</span> <span class="pre">STARTED_SINCE</span></code></p></td>
+<td><p>開始日時が <code class="docutils literal notranslate"><span class="pre">STARTED_SINCE</span></code> 以降のプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--started-before</span> <span class="pre">STARTED_BEFORE</span></code></p></td>
+<td><p>開始日時が <code class="docutils literal notranslate"><span class="pre">STARTED_BEFORE</span></code> より前のプロセス</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--finished-since</span> <span class="pre">FINISHED_SINCE</span></code></p></td>
+<td><p>終了日時が <code class="docutils literal notranslate"><span class="pre">FINISHED_SINCE</span></code> 以降のプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--finished-before</span> <span class="pre">FINISHED_BEFORE</span></code></p></td>
+<td><p>終了日時が <code class="docutils literal notranslate"><span class="pre">FINISHED_BEFORE</span></code> より前のプロセス</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--elapsed-more</span> <span class="pre">ELAPSED_MORE</span></code></p></td>
+<td><p>経過時間（秒数）が <code class="docutils literal notranslate"><span class="pre">ELAPSED_MORE</span></code> 以上長いプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--elapsed-less</span> <span class="pre">ELAPSED_LESS</span></code></p></td>
+<td><p>経過時間（秒数）が <code class="docutils literal notranslate"><span class="pre">ELAPSED_LESS</span></code> より短いプロセス</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--console</span> <span class="pre">CONSOLE</span></code></p></td>
+<td><p>コンソール出力に <code class="docutils literal notranslate"><span class="pre">CONSOLE</span></code> を含むプロセス</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--head</span> <span class="pre">HEAD</span></code></p></td>
+<td><p>絞り込み結果の先頭 <code class="docutils literal notranslate"><span class="pre">HEAD</span></code> 件を処理対象とします</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--tail</span> <span class="pre">TAIL</span></code></p></td>
+<td><p>絞り込み結果の末尾 <code class="docutils literal notranslate"><span class="pre">TAIL</span></code> 件を処理対象とします</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-r</span></code>, <code class="docutils literal notranslate"><span class="pre">--reverse</span></code></p></td>
+<td><p>並び順を逆にします</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--order</span> <span class="pre">ORDER</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ORDER</span></code> で指定した順番で並べます</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>複数指定可能な絞り込みオプションを複数回指定した場合は、それらを OR 条件として絞り込みます。</p></li>
+<li><p>異なる種類の絞り込みオプションを複数指定した場合は、それらを AND 条件として絞り込みます。</p></li>
+<li><p>オプションの日時はジョブフローの <code class="docutils literal notranslate"><span class="pre">datetime()</span></code> 組み込み関数が認識できる形式で指定できます。</p></li>
+</ul>
+</section>
+<section id="id56">
+<h4><span class="section-number">2.5.3.3. </span>その他のオプション<a class="headerlink" href="#id56" title="この見出しへのパーマリンク">¶</a></h4>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>オプション</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--format</span> <span class="pre">{table,json,export}</span></code></p></td>
+<td><p>プロセスの一覧表示を行なうときの形式</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--datetime-format</span> <span class="pre">DATETIME_FORMAT</span></code></p></td>
+<td><p>日時情報を表示するときの形式</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="scheduler">
+<span id="id57"></span><h2><span class="section-number">2.6. </span>スケジューラ<a class="headerlink" href="#scheduler" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Kompira上に作成したジョブフローおよびスクリプトジョブをスケジューラに登録することで、定期的にジョブを実行させることができます。</p>
+<p>スケジューラで設定できる項目の一覧を以下に示します。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>フィールド</p></th>
+<th class="head"><p>デフォルト値</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>スケジュール名</p></td>
+<td><p>なし</p></td>
+<td><p>スケジュールの名称</p></td>
+</tr>
+<tr class="row-odd"><td><p>説明</p></td>
+<td><p>なし</p></td>
+<td><p>スケジュールについての説明</p></td>
+</tr>
+<tr class="row-even"><td><p>ユーザー</p></td>
+<td></td>
+<td><p>ジョブの実行ユーザー</p></td>
+</tr>
+<tr class="row-odd"><td><p>ジョブ</p></td>
+<td></td>
+<td><p>スケジューラにより実行されるジョブ</p></td>
+</tr>
+<tr class="row-even"><td><p>年</p></td>
+<td><p>*</p></td>
+<td><p>スケジュールを実行する年 (4桁の数字で指定)</p></td>
+</tr>
+<tr class="row-odd"><td><p>月</p></td>
+<td><p>*</p></td>
+<td><p>スケジュールを実行する月 (1-12を指定)</p></td>
+</tr>
+<tr class="row-even"><td><p>日</p></td>
+<td><p>*</p></td>
+<td><p>スケジュールを実行する日 (1-31を指定)</p></td>
+</tr>
+<tr class="row-odd"><td><p>ISO週番号</p></td>
+<td><p>*</p></td>
+<td><p>スケジュールを実行する週 (1-53を指定)
+ISO8601で定められた週番号</p></td>
+</tr>
+<tr class="row-even"><td><p>曜日名もしくは曜日番号</p></td>
+<td><p>*</p></td>
+<td><p>スケジュールを実行する曜日
+(0(月曜日)-6(日曜日)、
+または mon,tue,wed,thu,fri,sat,sunを指定)</p></td>
+</tr>
+<tr class="row-odd"><td><p>時</p></td>
+<td><p>*</p></td>
+<td><p>スケジュールを実行する時 (0-23を指定)</p></td>
+</tr>
+<tr class="row-even"><td><p>分</p></td>
+<td><p>*</p></td>
+<td><p>スケジュールを実行する分 (0-59を指定)</p></td>
+</tr>
+<tr class="row-odd"><td><p>スケジュールの無効化</p></td>
+<td><p>false
+(チェックなし)</p></td>
+<td><p>trueの場合(チェックがつけられている場合)、
+ジョブを実行しない</p></td>
+</tr>
+</tbody>
+</table>
+<section id="scheduler-format">
+<span id="id58"></span><h3><span class="section-number">2.6.1. </span>日時設定フィールドの書式<a class="headerlink" href="#scheduler-format" title="この見出しへのパーマリンク">¶</a></h3>
+<p>日時設定のフィールドには、以下のようにUnixのcronと同じ書式を用いること
+ができます。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>書式</p></th>
+<th class="head"><p>フィールド</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>*</p></td>
+<td><p>全て</p></td>
+<td><p>各値ごとに発火します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>*/a</p></td>
+<td><p>全て</p></td>
+<td><p>a間隔ごとに発火します。</p></td>
+</tr>
+<tr class="row-even"><td><p>a-b</p></td>
+<td><p>全て</p></td>
+<td><p>値がaからbの範囲にあるときに毎回発火します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>a-b/c</p></td>
+<td><p>全て</p></td>
+<td><p>値がaからbの範囲にあるときに、c間隔毎に発火します。</p></td>
+</tr>
+<tr class="row-even"><td><p>xth y</p></td>
+<td><p>日(Day)</p></td>
+<td><p>その月のx番目のy曜日に発火します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>last x</p></td>
+<td><p>日(Day)</p></td>
+<td><p>その月の最終のx曜日に発火します。</p></td>
+</tr>
+<tr class="row-even"><td><p>last</p></td>
+<td><p>日(Day)</p></td>
+<td><p>その月の最終日に発火します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>x,y,z</p></td>
+<td><p>全て</p></td>
+<td><p>条件xかyかzに発火します（上記の書式の任意の組み合わせが可能）</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>上記書式において、',', '/', '-'の隣に空白を入れないように注意してください。</p>
+</div>
+<p>例1: 毎年12月の最初の月曜日と最終金曜日の0時0分に発火:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Month: 12
+Day: 1st mon,last fri
+</pre></div>
+</div>
+<p>例2: 2012年の4月と8月の15-20の12時30分に発火:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Year: 2012
+Month: 4,8
+Day: 15-20
+Hour: 12
+Minute: 30
+</pre></div>
+</div>
+<p>例3: 平日に1時間毎に発火:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Day of week: mon-fri
+Hour: *
+</pre></div>
+</div>
+<p>例4: 毎年1月1日0時0分に発火:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Year: *
+</pre></div>
+</div>
+</section>
+</section>
+<section id="settings">
+<span id="id59"></span><h2><span class="section-number">2.7. </span>設定<a class="headerlink" href="#settings" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Kompira画面上部の「設定」より行える各種設定について記述します。</p>
+<section id="settings-user">
+<span id="id60"></span><h3><span class="section-number">2.7.1. </span>ユーザー管理<a class="headerlink" href="#settings-user" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Kompira上に登録されているユーザーの一覧を確認することができます。</p>
+<p>初期状態で用意されているユーザーを以下に示します。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ユーザー名</p></th>
+<th class="head"><p>パスワード</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>guest</p></td>
+<td><p>guest</p></td>
+<td><p>ゲスト用ユーザーです。</p></td>
+</tr>
+<tr class="row-odd"><td><p>root</p></td>
+<td><p>root</p></td>
+<td><p>ルートユーザーです。</p></td>
+</tr>
+<tr class="row-even"><td><p>admin</p></td>
+<td><p>admin</p></td>
+<td><p>管理用ユーザーです。
+アクセス許可設定とは無関係に全てのオブジェクトに対して
+アクセス可能です。
+デフォルトでは無効のユーザーとなっています。</p></td>
+</tr>
+</tbody>
+</table>
+<p>ユーザー名は、以下の規則内で自由に命名することができます。</p>
+<ul class="simple">
+<li><p>記号以外の文字、数字、アンダーバー(&quot;_&quot;)を使うことができる</p></li>
+<li><p>先頭の文字は数字以外でなければいけない</p></li>
+<li><p>アルファベットの大文字と小文字は区別される</p></li>
+<li><p>ユーザ名の長さは30文字以内でなければいけない</p></li>
+</ul>
+<p>ユーザーを新規作成すると/home/&lt;ユーザー名&gt;/ ディレクトリが作成され、自動的にホームとして設定されます。</p>
+<p>一般ユーザーは自身のユーザー情報のみ編集可能です。ただし、自身のグループや有効フィールドを変更することはできません。
+全てのユーザー情報を編集できるのはルート権限を持つユーザーに限定されています。</p>
+<p>ユーザーごとに設定できる項目の一覧を以下に示します。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>フィールド</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ユーザー名</p></td>
+<td><p>システムでユーザーの識別に使用する名称</p></td>
+</tr>
+<tr class="row-odd"><td><p>姓</p></td>
+<td><p>ユーザーの姓</p></td>
+</tr>
+<tr class="row-even"><td><p>名</p></td>
+<td><p>ユーザーの名</p></td>
+</tr>
+<tr class="row-odd"><td><p>Eメール</p></td>
+<td><p>ユーザーのメールアドレス</p></td>
+</tr>
+<tr class="row-even"><td><p>グループ</p></td>
+<td><p>ユーザーが所属するグループ</p></td>
+</tr>
+<tr class="row-odd"><td><p>有効</p></td>
+<td><p>false(チェックなし)の場合、
+ユーザーのログインを許可しない</p></td>
+</tr>
+<tr class="row-even"><td><p>LDAPユーザ</p></td>
+<td><p>true(チェックあり)の場合、LDAPユーザを表す</p></td>
+</tr>
+<tr class="row-odd"><td><p>ホーム</p></td>
+<td><p>ユーザーがログインしたときに最初に表示するページ</p></td>
+</tr>
+<tr class="row-even"><td><p>環境変数</p></td>
+<td><p>ジョブフロー実行時、自動的に変数として読み込まれる
+環境変数オブジェクト</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>guest、root、adminユーザーを削除することはできません。また、自分自身を削除することもできません。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>グループ、有効、LDAPユーザの各フィールドは、特権ユーザのみ変更することができます。
+ただし、組み込みユーザ(admin, root, guest) の LDAPユーザフィールドを変更することはできません。
+また、LDAPユーザのパスワードを変更することはできません(必要な場合はLDAPサーバ側でパスワード変更を行ってください)。</p>
+</div>
+<section id="id61">
+<h4><span class="section-number">2.7.1.1. </span>アカウントロックの解除<a class="headerlink" href="#id61" title="この見出しへのパーマリンク">¶</a></h4>
+<p>アカウントがロックされるとロックされたユーザの情報表示画面の下部に警告メッセージとともにアクセス元のIPアドレスの一覧が表示されます。
+合わせて表示されるロック解除ボタンを押すことで、当該ユーザのアカウントロックを解除できます。</p>
+<p>また、Kompiraサーバに端末ログインして、以下の管理コマンドを実行してロック解除することも可能です。</p>
+<p><code class="docutils literal notranslate"><span class="pre">axes_reset</span></code> は全てのアカウントロックを一斉に削除します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/kompira/bin/manage.py axes_reset
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">axes_reset_ip</span></code> は指定した IP アドレスからのアカウントロックを解除します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/kompira/bin/manage.py axes_reset_ip [ip ...]
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">axes_reset_username</span></code> は指定したユーザのアカウントロックを解除します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/kompira/bin/manage.py axes_reset_username [username ...]
+</pre></div>
+</div>
+<p>また、<code class="docutils literal notranslate"><span class="pre">axes_list_attempts</span></code> コマンドを実行するとログインに失敗した履歴の一覧が表示されます。
+（ロックを解除すると該当する履歴は削除されます）</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/kompira/bin/manage.py axes_list_attempts
+</pre></div>
+</div>
+</section>
+</section>
+<section id="settings-group">
+<span id="id62"></span><h3><span class="section-number">2.7.2. </span>グループ管理<a class="headerlink" href="#settings-group" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Kompira上に登録されているグループの一覧を確認することができます。</p>
+<p>初期状態で用意されているグループを以下に示します。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>グループ名</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>other</p></td>
+<td><p>Kompira上の全てのユーザが属するグループ</p></td>
+</tr>
+<tr class="row-odd"><td><p>wheel</p></td>
+<td><p>ルート特権を持つユーザが属するグループ</p></td>
+</tr>
+</tbody>
+</table>
+<p>グループ名は、以下の規則内で自由に命名することができます。</p>
+<ul class="simple">
+<li><p>記号以外の文字、数字、アンダーバー(&quot;_&quot;)を使うことができる</p></li>
+<li><p>先頭の文字は数字以外でなければいけない</p></li>
+<li><p>アルファベットの大文字と小文字は区別される</p></li>
+<li><p>グループ名の長さは30文字以内でなければいけない</p></li>
+</ul>
+<p>グループ情報を編集できるのはルート権限を持つユーザーに限定されています。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<ul class="simple">
+<li><p>otherとwheelグループを削除することはできません。</p></li>
+<li><p>otherグループに所属するユーザーの判定は設定にかかわらず、上記のとおりとなります。すなわち、otherグループに所属するユーザ設定は無視されます。</p></li>
+</ul>
+</div>
+</section>
+<section id="settings-realm">
+<span id="id63"></span><h3><span class="section-number">2.7.3. </span>管理領域設定<a class="headerlink" href="#settings-realm" title="この見出しへのパーマリンク">¶</a></h3>
+<p>管理領域とは、ジョブマネージャごとに管理するネットワーク領域のことです。</p>
+<p>Kompiraで複数のジョブマネージャを使用する際、ジョブマネージャAは192.168.1.*へのアクセス、
+ジョブマネージャBは192.168.2.*へのアクセスというように、各ジョブマネージャが管理する領域を定めることができます。</p>
+<p>管理領域ごとに設定できる項目の一覧を以下に示します。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>フィールド</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>表示名</p></td>
+<td><p>管理領域の表示名を指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p>説明</p></td>
+<td><p>管理領域の説明を記述します。</p></td>
+</tr>
+<tr class="row-even"><td><p>無効化</p></td>
+<td><p>対象管理領域を一時的に無効にする場合にセットします。</p></td>
+</tr>
+<tr class="row-odd"><td><p>範囲</p></td>
+<td><p>管理領域の範囲をIPアドレスやホスト名で指定します。
+複数指定することができ、またワイルドカード(*)も使用可能です。</p></td>
+</tr>
+</tbody>
+</table>
+<p>管理領域情報を編集できるのはルート権限を持つユーザーに限定されています。</p>
+<p>デフォルトでは、defaultという管理領域があり、その範囲は'*'と設定されています。
+この場合、管理領域がdefaultのジョブマネージャで全てのリモートコマンドを実行します。</p>
+<p>ジョブマネージャが1台のみの構成でKompiraを使用する場合、もしくはジョブマネージャごとに管理領域を
+設定しなくてもよいという場合、管理領域設定を変更する必要はありません。</p>
+<section id="id64">
+<h4><span class="section-number">2.7.3.1. </span>ジョブマネージャの状態確認<a class="headerlink" href="#id64" title="この見出しへのパーマリンク">¶</a></h4>
+<p>管理領域設定画面では、各管理領域に登録されているジョブマネージャの動作状況を確認することができます。</p>
+<p>ジョブマネージャ状態として、以下の項目が表示されます。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>値</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ホスト名</p></td>
+<td><p>ジョブマネージャが動作しているホストの名称</p></td>
+</tr>
+<tr class="row-odd"><td><p>プロセスID</p></td>
+<td><p>ジョブマネージャプロセス(kompira_jobmngrd)のプロセスID</p></td>
+</tr>
+<tr class="row-even"><td><p>バージョン</p></td>
+<td><p>ジョブマネージャのKompiraバージョン</p></td>
+</tr>
+<tr class="row-odd"><td><p>ステータス</p></td>
+<td><p>ジョブマネージャの動作状況('動作中'もしくは'ダウン')</p></td>
+</tr>
+</tbody>
+</table>
+<p>ステータスが「動作中」となっていれば、ジョブマネージャはKompiraと通信可能で、
+リモートコマンドが実行できる状態です。</p>
+</section>
+</section>
+<section id="settings-system-config">
+<span id="id65"></span><h3><span class="section-number">2.7.4. </span>システム設定<a class="headerlink" href="#settings-system-config" title="この見出しへのパーマリンク">¶</a></h3>
+<p>システム設定画面では、Kompira システム全体の設定を行います。</p>
+<p>設定項目の一覧を以下に示します。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>項目名 (キー名)</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>サーバURL (serverUrl)</p></td>
+<td><p>Kompira サーバの URL</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">管理者メールアドレス</div>
+<div class="line">(adminEmail)</div>
+</div>
+</td>
+<td><p>Kompira サーバの管理者のメールアドレスを設定します。
+メール送信時に、from アドレスのデフォルト値として使われます。</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">正常終了時メールテンプレート</div>
+<div class="line">(doneMailTemplate)</div>
+</div>
+</td>
+<td><p>ジョブフローが正常に終了した場合に送信するメールのテンプレートを選択します。</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">異常終了時メールテンプレート</div>
+<div class="line">(abortMailTemplate)</div>
+</div>
+</td>
+<td><p>ジョブフローが異常終了した場合に送信するメールのテンプレートを選択します。</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">SMTP サーバ (smtpServer)</div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><p>メール送信時の SMTP サーバを選択します。
+省略した場合は、localhost の SMTP サーバが使われます。</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">LDAP サーバ (ldapServer)</div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><p>LDAP連携に使用する LDAP サーバを選択します。
+省略した場合、LDAP連携は行いません。</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">最大ログイン試行回数</div>
+<div class="line">(loginFailureLimit)</div>
+</div>
+</td>
+<td><p>指定した回数で連続してログインに失敗した場合、アカウントをロックします。
+0以下の値や空に設定した場合、アカウントロックを行いません。</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">アカウントロック期間</div>
+<div class="line">(accountLockoutTime)</div>
+</div>
+</td>
+<td><p>アカウントをロックする期間を分単位で指定します。指定した期間が経過するとロックが自動的に解除されます。
+0以下の値や空に設定した場合、アカウントロックの自動解除は行いません。</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">コマンド表示可否</div>
+<div class="line">(showCommandEnabled)</div>
+</div>
+</td>
+<td><p>実行ジョブによるコマンドまたはスクリプトの実行時、セッションブロックの開始時、
+および再起動ジョブの実行時に、実行するコマンドやジョブの情報をコンソールに表示する場合はチェックします。</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">コマンド表示形式</div>
+<div class="line">(showCommandFormat)</div>
+</div>
+</td>
+<td><p>実行するコマンドやジョブの情報を表示する場合のフォーマットを指定します。</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">標準出力表示可否</div>
+<div class="line">(showStdoutEnabled)</div>
+</div>
+</td>
+<td><p>コマンド実行による標準出力をコンソールに表示する場合はチェックします。</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">標準出力表示フィルタ</div>
+<div class="line">(showStdoutFilter)</div>
+</div>
+</td>
+<td><p>標準出力のコンソールへの表示が許可されているとき、どれだけ表示するかを設定します。</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">標準エラー出力表示可否</div>
+<div class="line">(showStderrEnabled)</div>
+</div>
+</td>
+<td><p>コマンド実行による標準エラー出力をコンソールに表示する場合はチェックします。</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">標準エラー出力表示フィルタ</div>
+<div class="line">(showStderrFilter)</div>
+</div>
+</td>
+<td><p>標準エラー出力のコンソールへの表示が許可されているとき、どれだけ表示するかを設定します。</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">セッション表示可否</div>
+<div class="line">(showSessionEnabled)</div>
+</div>
+</td>
+<td><p>セッション実行中に受信した出力をコンソールに表示する場合はチェックします。</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">セッション表示フィルタ</div>
+<div class="line">(showSessionFilter)</div>
+</div>
+</td>
+<td><p>セッション出力のコンソールへの表示が許可されているとき、どれだけ表示するかを設定します。</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">編集時のパスワード非表示</div>
+<div class="line">(hidePasswordWhileEditing)</div>
+</div>
+</td>
+<td><p>チェックするとオブジェクト編集時にパスワードフィールドに設定されているパスワードが表示できなくなります。
+新たに入力したパスワードはオブジェクトを保存するまでは目のアイコンをクリックして表示することができます。</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">カスタムスタイル</div>
+<div class="line">(customStyle)</div>
+</div>
+</td>
+<td><p>ブラウザで表示される画面の配色などの設定を持つカスタムスタイルを選択します。
+複数の Kompira サーバを利用している際などに区別しやすくなります。</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">ブランドタグ</div>
+<div class="line">(brandTag)</div>
+<div class="line"><br /></div>
+</div>
+</td>
+<td><p>メニューバー左上などにあるブランド名表記に続けて表示されるブランドタグを文字列で設定できます。
+デフォルトは指定無しで、最大16文字設定できます。
+ブランドタグが指定されている場合は、ブランド名のあとに空白をあけて <code class="docutils literal notranslate"><span class="pre">[</span></code> と <code class="docutils literal notranslate"><span class="pre">]</span></code> に挟んで表示されます。</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>システム設定 (/system/config) は設定型オブジェクト (<a class="reference internal" href="library.html#type_object-Config"><code class="xref kompira kompira-type_object docutils literal notranslate"><span class="pre">Config</span></code></a>) ですので、ジョブフローから設定のデータ辞書に対して、キー名で参照することが可能です。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>パスワード非表示モードが有効な場合、パスワード辞書 (Dictionary&lt;Password&gt;) フィールドやパスワード配列 (Array&lt;Password&gt;) フィールドを含むオブジェクトを
+複数の場所から同時に編集すると、後から保存されたパスワードが未変更の場合、その値が常に反映されることは保証されません。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.8 で追加: </span>最大ログイン試行回数 (loginFailureLimit) とアカウントロック期間 (accountLockoutTime)、編集時のパスワード非表示 (hidePasswordWhileEditing) が追加されました。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.6.8 で変更: </span>コマンド表示可否 (showCommandEnabled) のデフォルト値が false に変更になりました。</p>
+</div>
+<section id="id66">
+<h4><span class="section-number">2.7.4.1. </span>コマンド表示形式<a class="headerlink" href="#id66" title="この見出しへのパーマリンク">¶</a></h4>
+<p>コマンド表示する際の表示形式を文字列で指定します。項目名を <code class="docutils literal notranslate"><span class="pre">{}</span></code> で囲って記述することで、実行時の情報が埋め込まれてコンソールに表示されます。コマンド表示形式のデフォルト値は以下の通りです。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[{username}@{hostname}]{sudomark} {command}
+</pre></div>
+</div>
+<p>コマンド表示形式では以下の項目を指定することができます。規定されていない項目名を指定した場合は無視されます。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>項目名</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>now</p></td>
+<td><p>現在日時</p></td>
+</tr>
+<tr class="row-odd"><td><p>jobtype</p></td>
+<td><p>ジョブの種別（&quot;COMMAND&quot;, &quot;SCRIPT&quot;, &quot;SESSION&quot;, &quot;REBOOT&quot; のいずれか）</p></td>
+</tr>
+<tr class="row-even"><td><p>conntype</p></td>
+<td><p>制御変数で指定された接続種別（&quot;ssh&quot;, &quot;windows/http&quot;, など）</p></td>
+</tr>
+<tr class="row-odd"><td><p>hostname</p></td>
+<td><p>制御変数で指定されたリモートホスト名またはIPアドレス（ローカルの場合は &quot;localhost&quot;）</p></td>
+</tr>
+<tr class="row-even"><td><p>port</p></td>
+<td><p>制御変数で指定されたポート番号（指定されてない場合は &quot;&quot;）</p></td>
+</tr>
+<tr class="row-odd"><td><p>username</p></td>
+<td><p>制御変数で指定されたリモートアクセス時のユーザ名（ローカルの場合は &quot;kompira&quot;）</p></td>
+</tr>
+<tr class="row-even"><td><p>sudomark</p></td>
+<td><p>通常は <code class="docutils literal notranslate"><span class="pre">$</span></code> となり、<code class="docutils literal notranslate"><span class="pre">__sudo__=true</span></code> の場合は <code class="docutils literal notranslate"><span class="pre">#</span></code> となります。</p></td>
+</tr>
+<tr class="row-odd"><td><p>command</p></td>
+<td><p>コマンドラインを示す文字列で、ジョブ種別ごとに異なります。ジョブ種別ごとの詳細なフォーマットは指定できません。</p></td>
+</tr>
+</tbody>
+</table>
+<p>このうち、項目 <code class="docutils literal notranslate"><span class="pre">command</span></code> はジョブ種別ごとに以下のように展開されます。</p>
+<ul>
+<li><p>コマンド実行の場合 (jobtype=&quot;COMMAND&quot;)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>実行ジョブに指定されたコマンドライン全体</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>スクリプトジョブ実行の場合 (jobtype=&quot;SCRIPT&quot;)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{script_job.abspath}.{script_jop[&quot;ext&quot;]}</span> <span class="pre">{args}</span></code></p></li>
+<li><p>ここで script_job は実行ジョブに渡されたスクリプトジョブオブジェクトを、args は実行ジョブに渡されたパラメータを意味します。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>セッションブロックの場合 (jobtype=&quot;SESSION&quot;)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;SESSION:</span> <span class="pre">{session_id}&gt;</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>再起動ジョブの場合 (jobtype=&quot;REBOOT&quot;)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">reboot</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>コマンド表示形式には Python3 の str.format() と同じ形式が利用できます。
+設定された表示形式の不正によりエラーが発生するような場合は、デフォルトの表示形式が適用されます。</p>
+</section>
+<section id="id67">
+<h4><span class="section-number">2.7.4.2. </span>コンソール表示フィルタ<a class="headerlink" href="#id67" title="この見出しへのパーマリンク">¶</a></h4>
+<p>標準出力表示フィルタ、標準エラー出力表示フィルタ、セッション表示フィルタは、
+共通の形式でコンソール表示に際してのフィルタ条件を設定することができます。</p>
+<p>設定された形式によって、いくつかのフィルタの種類があり、
+出力が得られたときにコンソールに表示するかどうかなどの振る舞いが異なります。</p>
+<p>フィルタが空の場合、無制限に表示されます。</p>
+<ul class="simple">
+<li><p>得られた出力をすべてコンソールに表示します。</p></li>
+</ul>
+<p>フィルタを &lt;数値&gt;&lt;単位&gt; という形式で設定すると、指定した量だけ表示されます。
+例えば <code class="docutils literal notranslate"><span class="pre">10L</span></code> と設定すると、先頭の 10 行分だけ表示されます。</p>
+<ul>
+<li><p>ジョブ開始時点から指定した数量まではコンソールに表示し、それ以降は抑止されて表示しなくなります。</p></li>
+<li><p>&lt;数値&gt; は整数で指定できます。</p></li>
+<li><p>&lt;単位&gt; は省略可能で、以下のいずれかが指定できます。大文字・小文字は区別しません。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">L</span></code>, <code class="docutils literal notranslate"><span class="pre">LINES</span></code> が指定された場合は行数でカウントします。出力がバイナリの場合は 0x0A で区切ってカウントします。</p></li>
+<li><p>単位を省略した時は文字数でカウントします。出力がバイナリの場合はバイト数でカウントします。</p></li>
+<li><p>規定されていない単位が指定された場合は、文字数またはバイト数でカウントします。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>&lt;数値&gt; に 0 (または負の値) を指定すると、まったく表示されなくなります。</p></li>
+<li><p>指定された数量に達したあとに1文字以上の出力を得た場合は、一度だけ <code class="docutils literal notranslate"><span class="pre">...</span></code> と改行をコンソールに表示します。</p></li>
+</ul>
+</section>
+</section>
+<section id="settings-system-startup">
+<span id="id68"></span><h3><span class="section-number">2.7.5. </span>スタートアップジョブフロー<a class="headerlink" href="#settings-system-startup" title="この見出しへのパーマリンク">¶</a></h3>
+<p>スタートアップディレクトリ (/system/startup) には、Kompira サーバ起動時
+に自動的に実行を開始するスタートアップジョブフローを登録することができ
+ます。複数のジョブフローが登録されている場合、名前順に実行されます。ス
+タートアップディレクトリの下には、ジョブフロー以外のオブジェクトも作成
+することができます。スタートアップディレクトリの下にサブディレクトリを
+作成し、その中にジョブフローを登録した場合、それらのジョブフローは実行
+されません。スタートアップジョブフローは、引数を持ちません。また、root
+ユーザーで実行されます。</p>
+</section>
+<section id="settings-license">
+<span id="id69"></span><h3><span class="section-number">2.7.6. </span>ライセンス管理<a class="headerlink" href="#settings-license" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Kompiraのライセンスを確認することができます。</p>
+<p>ライセンス管理画面で確認できる項目の一覧を以下に示します。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>フィールド</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ライセンスID</p></td>
+<td><p>ライセンスファイルの固有ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>エディション</p></td>
+<td><p>ライセンスの種類</p></td>
+</tr>
+<tr class="row-even"><td><p>ハードウェアID</p></td>
+<td><p>Kompiraサーバのハードウェア固有ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>有効期限</p></td>
+<td><p>ライセンスの有効期限</p></td>
+</tr>
+<tr class="row-even"><td><p>登録済みノード数</p></td>
+<td><div class="line-block">
+<div class="line">ジョブフローから接続したことのあるノードの数</div>
+<div class="line">リセットを選択することで接続の履歴を削除する</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>ジョブフロー数</p></td>
+<td><p>オブジェクトとして登録されているジョブフローの数</p></td>
+</tr>
+<tr class="row-even"><td><p>スクリプト数</p></td>
+<td><p>オブジェクトとして登録されているスクリプトジョブの数</p></td>
+</tr>
+<tr class="row-odd"><td><p>使用者</p></td>
+<td><p>ライセンスの使用者</p></td>
+</tr>
+<tr class="row-even"><td><p>署名</p></td>
+<td><p>ライセンスファイル署名</p></td>
+</tr>
+</tbody>
+</table>
+<p>登録済みノード数、ジョブフロー数、スクリプト数の欄にはライセンスに応じた上限数が合わせて表示されます。</p>
+<p>ライセンスファイルが未登録の場合、Kompiraは仮ライセンスとして動作します。仮ライセンスはKompiraインストールから1週間の間自由にお使い頂けるライセンスです。</p>
+<section id="id70">
+<h4><span class="section-number">2.7.6.1. </span>ライセンスの登録<a class="headerlink" href="#id70" title="この見出しへのパーマリンク">¶</a></h4>
+<p>ライセンス管理画面右側の編集ボタンを押すと、ライセンスファイルのアップロード画面に移動します。</p>
+<p>「ファイルを選択」を押してライセンスファイルを登録後、保存ボタンを押すことでライセンス登録が完了します。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ライセンスファイルは/var/opt/kompira/kompira.licに保存されます。
+上記パスにライセンスファイルを直接配置すれば、ライセンス管理画面に
+アクセスすることなくライセンスの登録をすることが可能です。</p>
+</div>
+</section>
+</section>
+</section>
+<section id="troubleshooting">
+<span id="id71"></span><h2><span class="section-number">2.8. </span>トラブルシューティング<a class="headerlink" href="#troubleshooting" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Kompiraをブラウザから操作してエラーが発生した場合の原因と対処方法を記述します。</p>
+<section id="jobflow-scriptjob">
+<h3><span class="section-number">2.8.1. </span>「Jobflow の数が制限を超えました。」「ScriptJob の数が制限を超えました。」と表示される<a class="headerlink" href="#jobflow-scriptjob" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Kompiraで作成できるジョブフロー、スクリプトジョブオブジェクトの数は、ライセンスによる制限があります。</p>
+<p>ライセンスが定める制限数を超えてオブジェクトを作成しようとすると、エラーメッセージが表示されて作成に失敗します。</p>
+<p>ライセンス管理ページより、オブジェクトの数を確認してください。</p>
+</section>
+<section id="id72">
+<h3><span class="section-number">2.8.2. </span>「Kompiraエンジンが停止しています」と表示される<a class="headerlink" href="#id72" title="この見出しへのパーマリンク">¶</a></h3>
+<p>kompiradプロセスが停止している場合に表示されるメッセージです。</p>
+<p>/var/log/kompira以下のログファイルを確認の上、kompiradプロセスの起動を行ってください。</p>
+<div class="admonition seealso">
+<p class="admonition-title">参考</p>
+<p><a class="reference internal" href="admin.html#process-daemon"><span class="std std-ref">Kompiraデーモンの起動・停止・状態確認</span></a>, <a class="reference internal" href="admin.html#file-log"><span class="std std-ref">Kompiraログ</span></a></p>
+</div>
+</section>
+<section id="id73">
+<h3><span class="section-number">2.8.3. </span>「データベース接続エラーです」と表示される<a class="headerlink" href="#id73" title="この見出しへのパーマリンク">¶</a></h3>
+<p>データベースに接続できない場合に表示されるメッセージです。</p>
+<p>下記コマンドにより、データベースプロセスの状態確認と再起動処理を行なうことができます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># systemctl status postgresql-&lt;pgver&gt;.service
+# systemctl restart postgresql-&lt;pgver&gt;.service
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;pgver&gt;</span></code> の部分はインストールされている PostgreSQL のバージョンに合わせてください。</p>
+</div>
+</section>
+<section id="id74">
+<h3><span class="section-number">2.8.4. </span>「内部エラーです」と表示される<a class="headerlink" href="#id74" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Kompira内部で予期しないエラーが発生した際に表示されます。</p>
+<p>/var/log/kompira以下のログファイルを確認の上、 <a class="reference external" href="mailto:support&#37;&#52;&#48;kompira&#46;jp">support<span>&#64;</span>kompira<span>&#46;</span>jp</a> までご連絡ください。</p>
+</section>
+<section id="kompira-dump-sh">
+<h3><span class="section-number">2.8.5. </span>kompira_dump.sh による情報収集とサポートへの問合せ<a class="headerlink" href="#kompira-dump-sh" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Kompira 上の問題を解決するために各種ログファイルや設定ファイルなど、
+様々な情報の確認が必要になる場合があります。</p>
+<p>Kompira サーバ上で <code class="docutils literal notranslate"><span class="pre">/opt/kompira/bin/kompira_dump.sh</span></code> を root 権限で実行すると、
+以下のように問題の解決に役立つ情報を自動的に収集します。
+なお、データベースのダンプを含むためサイズが大きくなる場合があります。
+スクリプトを実行する場所に十分に空き容量があることを確認してください。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo /opt/kompira/bin/kompira_dump.sh
+2014-11-18 15:18:52 # mkdir /home/ec2-user/kompira_dump-20141118-151852
+###
+### kompira_dump ver 1.0.0
+### dump started: 2014-11-18 15:18:52
+###
+========== system ==========
+2014-11-18 15:18:52 # mkdir /home/ec2-user/kompira_dump-20141118-151852/system
+2014-11-18 15:18:52 # cp -a /etc/os-release /etc/system-release ./
+2014-11-18 15:18:52 # printenv
+2014-11-18 15:18:52 # who -aH
+    :
+    :
+    :
+========== kompira ==========
+2014-11-18 15:19:09 # mkdir /home/ec2-user/kompira_dump-20141118-151852/kompira
+2014-11-18 15:19:09 # /opt/kompira/bin/kompirad --version
+2014-11-18 15:19:09 # /opt/kompira/bin/manage.py license_info
+2014-11-18 15:19:10 # /opt/kompira/bin/manage.py dumpdata -a
+2014-11-18 15:19:16 # cp -a /opt/kompira/kompira.conf ./
+2014-11-18 15:19:16 # cp -a /var/opt/kompira/kompira.lic ./
+2014-11-18 15:19:16 # tar -cf - /var/log/kompira
+tar: Removing leading `/&#39; from member names
+---------- kompira ----------
+###
+### dump finished: 2014-11-18 15:19:16
+###
+compressing...
+/home/ec2-user/kompira_dump-20141118-151852.tar.gz
+</pre></div>
+</div>
+<p>最後の行に収集結果をまとめたファイルが表示されます（上の例では
+kompira_dump-20141118-151852.tar.gz）ので、問題の状況と共に
+このファイルを添付して <a class="reference external" href="mailto:support&#37;&#52;&#48;kompira&#46;jp">support<span>&#64;</span>kompira<span>&#46;</span>jp</a> までお問い合わせください。</p>
+<p>なお、この .tar.gz ファイルは暗号化などの処理は行なっていないため、
+送付時にはお客様のセキュリティポリシーにしたがって必要な処理を行ってください。</p>
+<section id="id75">
+<h4><span class="section-number">2.8.5.1. </span>収集しない項目<a class="headerlink" href="#id75" title="この見出しへのパーマリンク">¶</a></h4>
+<p>kompira_dump.sh では以下のような秘密情報は収集しません。</p>
+<ul class="simple">
+<li><p>Kompira サーバに設定されたアカウント・パスワード情報</p></li>
+</ul>
+</section>
+<section id="id76">
+<h4><span class="section-number">2.8.5.2. </span>収集する項目<a class="headerlink" href="#id76" title="この見出しへのパーマリンク">¶</a></h4>
+<p>kompira_dump.sh では以下のような情報を収集します。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>システム情報</dt><dd><ul>
+<li><p>プロセス情報(ps ,top など)</p></li>
+<li><p>サービス情報(service, chkconfig など)</p></li>
+<li><p>インストール済みパッケージ情報(yum, rpm ,pip など)</p></li>
+<li><p>カーネル情報(sysctl, lsmod, /proc/{version,*info,*stat} など)</p></li>
+<li><p>ログファイル(/var/log/{dmesg,messages} など)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>ネットワーク情報</dt><dd><ul>
+<li><p>インターフェース情報(ip link, ip addr ,ip route など)</p></li>
+<li><p>ファイアーウォール情報(iptables -L など)</p></li>
+<li><p>ネットワーク状態(netstat, traceroute など)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Apache に関する情報</dt><dd><ul>
+<li><p>サービス状態 (service httpd status など)</p></li>
+<li><p>ログファイル (/var/log/httpd/)</p></li>
+<li><p>設定ファイル (/etc/httpd)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>RabbitMQ に関する情報</dt><dd><ul>
+<li><p>サービス状態 (service rabbitmq-server status)</p></li>
+<li><p>ログファイル (/var/log/rabbitmq/)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>PostgreSQL に関する情報</dt><dd><ul>
+<li><p>サービス状態 (service postgresql-&lt;pgver&gt; status)</p></li>
+<li><p>ログファイル (/var/lib/pgsql/&lt;pgver&gt;/data/{pg_log,pgstartup.log})</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Kompira に関する情報</dt><dd><ul>
+<li><p>バージョン (kompirad --version)</p></li>
+<li><p>ライセンス情報 (manage.py license_info など)</p></li>
+<li><p>データベースのダンプ (manage.py dumpdata -a)</p></li>
+<li><p>設定ファイル (/opt/kompira/kompira.conf)</p></li>
+<li><p>ログファイル (/var/log/kompira/)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Kompira データベースのダンプを含むため <strong>Kompira オブジェクトやジョブフロー上に
+記載されたノード情報、アカウント・パスワード情報は含まれる</strong> ことに注意してください。</p>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">2. 操作ガイド</a><ul>
+<li><a class="reference internal" href="#usage-introduction">2.1. はじめに</a></li>
+<li><a class="reference internal" href="#login">2.2. 基本的な操作方法</a><ul>
+<li><a class="reference internal" href="#id4">2.2.1. ログインとログアウト</a></li>
+<li><a class="reference internal" href="#id5">2.2.2. メニュー操作</a></li>
+<li><a class="reference internal" href="#id6">2.2.3. キーボード操作</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira">2.3. Kompiraファイルシステム</a><ul>
+<li><a class="reference internal" href="#id7">2.3.1. オブジェクトの名称</a></li>
+<li><a class="reference internal" href="#file-system-property">2.3.2. オブジェクトのプロパティ</a></li>
+<li><a class="reference internal" href="#file-system-permission">2.3.3. オブジェクトのアクセス許可</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object">2.4. Kompiraオブジェクト</a><ul>
+<li><a class="reference internal" href="#kompira-object-directory">2.4.1. ディレクトリ</a><ul>
+<li><a class="reference internal" href="#id12">2.4.1.1. オブジェクトの新規作成</a></li>
+<li><a class="reference internal" href="#id13">2.4.1.2. オブジェクトの閲覧と編集</a></li>
+<li><a class="reference internal" href="#id14">2.4.1.3. オブジェクトの名前変更</a></li>
+<li><a class="reference internal" href="#id15">2.4.1.4. オブジェクトの移動とコピー</a></li>
+<li><a class="reference internal" href="#id16">2.4.1.5. オブジェクトの削除</a></li>
+<li><a class="reference internal" href="#id17">2.4.1.6. オブジェクトのプロパティ編集</a></li>
+<li><a class="reference internal" href="#id18">2.4.1.7. オブジェクトのインポート</a></li>
+<li><a class="reference internal" href="#id19">2.4.1.8. オブジェクトのエクスポート</a></li>
+<li><a class="reference internal" href="#id20">2.4.1.9. オブジェクトの検索</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-table">2.4.2. テーブル</a><ul>
+<li><a class="reference internal" href="#id22">2.4.2.1. オブジェクトの検索</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-jobflow">2.4.3. ジョブフロー</a><ul>
+<li><a class="reference internal" href="#kompira-object-jobflow-execution">2.4.3.1. ジョブフローの実行</a></li>
+<li><a class="reference internal" href="#kompira-object-jobflow-parameter">2.4.3.2. パラメータの指定</a></li>
+<li><a class="reference internal" href="#id26">2.4.3.3. オプションの指定</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-scriptjob">2.4.4. スクリプトジョブ</a><ul>
+<li><a class="reference internal" href="#id28">2.4.4.1. スクリプトの編集</a></li>
+<li><a class="reference internal" href="#id29">2.4.4.2. スクリプトの実行方法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-mail-channel">2.4.5. メールチャネル</a><ul>
+<li><a class="reference internal" href="#id31">2.4.5.1. メールチャネル設定方法</a></li>
+<li><a class="reference internal" href="#id32">2.4.5.2. 接続テスト</a></li>
+<li><a class="reference internal" href="#oauth2">2.4.5.3. OAuth2認証を利用する場合の設定手順</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#smtp">2.4.6. SMTPサーバ</a><ul>
+<li><a class="reference internal" href="#id33">2.4.6.1. SMTPサーバ設定方法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ldap">2.4.7. LDAPサーバ</a><ul>
+<li><a class="reference internal" href="#id34">2.4.7.1. LDAPサーバ設定方法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-form">2.4.8. フォーム</a><ul>
+<li><a class="reference internal" href="#id36">2.4.8.1. フォーム設定方法</a></li>
+<li><a class="reference internal" href="#id37">2.4.8.2. 提出データの入力</a></li>
+<li><a class="reference internal" href="#id38">2.4.8.3. メッセージ送信</a></li>
+<li><a class="reference internal" href="#id39">2.4.8.4. ジョブフロー実行</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kompira-object-repository">2.4.9. リポジトリ</a><ul>
+<li><a class="reference internal" href="#id41">2.4.9.1. リポジトリ設定方法</a></li>
+<li><a class="reference internal" href="#id42">2.4.9.2. 初期化</a></li>
+<li><a class="reference internal" href="#id43">2.4.9.3. プッシュ</a></li>
+<li><a class="reference internal" href="#id44">2.4.9.4. プル</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#processes">2.5. プロセス管理</a><ul>
+<li><a class="reference internal" href="#id46">2.5.1. プロセス一覧</a></li>
+<li><a class="reference internal" href="#id47">2.5.2. プロセス詳細</a><ul>
+<li><a class="reference internal" href="#terminate">2.5.2.1. 中止(Terminate)</a></li>
+<li><a class="reference internal" href="#suspend">2.5.2.2. 停止(Suspend)</a></li>
+<li><a class="reference internal" href="#resume">2.5.2.3. 続行(Resume)</a></li>
+<li><a class="reference internal" href="#id48">2.5.2.4. コンソール</a></li>
+<li><a class="reference internal" href="#id49">2.5.2.5. ジョブフロー/スクリプト</a></li>
+<li><a class="reference internal" href="#id50">2.5.2.6. 結果</a></li>
+<li><a class="reference internal" href="#id51">2.5.2.7. 子プロセス</a></li>
+<li><a class="reference internal" href="#id52">2.5.2.8. 設定</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#manage-process">2.5.3. 管理コマンドによるプロセス操作</a><ul>
+<li><a class="reference internal" href="#id54">2.5.3.1. プロセス操作オプション</a></li>
+<li><a class="reference internal" href="#id55">2.5.3.2. プロセス絞り込みオプション</a></li>
+<li><a class="reference internal" href="#id56">2.5.3.3. その他のオプション</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scheduler">2.6. スケジューラ</a><ul>
+<li><a class="reference internal" href="#scheduler-format">2.6.1. 日時設定フィールドの書式</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#settings">2.7. 設定</a><ul>
+<li><a class="reference internal" href="#settings-user">2.7.1. ユーザー管理</a><ul>
+<li><a class="reference internal" href="#id61">2.7.1.1. アカウントロックの解除</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#settings-group">2.7.2. グループ管理</a></li>
+<li><a class="reference internal" href="#settings-realm">2.7.3. 管理領域設定</a><ul>
+<li><a class="reference internal" href="#id64">2.7.3.1. ジョブマネージャの状態確認</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#settings-system-config">2.7.4. システム設定</a><ul>
+<li><a class="reference internal" href="#id66">2.7.4.1. コマンド表示形式</a></li>
+<li><a class="reference internal" href="#id67">2.7.4.2. コンソール表示フィルタ</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#settings-system-startup">2.7.5. スタートアップジョブフロー</a></li>
+<li><a class="reference internal" href="#settings-license">2.7.6. ライセンス管理</a><ul>
+<li><a class="reference internal" href="#id70">2.7.6.1. ライセンスの登録</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting">2.8. トラブルシューティング</a><ul>
+<li><a class="reference internal" href="#jobflow-scriptjob">2.8.1. 「Jobflow の数が制限を超えました。」「ScriptJob の数が制限を超えました。」と表示される</a></li>
+<li><a class="reference internal" href="#id72">2.8.2. 「Kompiraエンジンが停止しています」と表示される</a></li>
+<li><a class="reference internal" href="#id73">2.8.3. 「データベース接続エラーです」と表示される</a></li>
+<li><a class="reference internal" href="#id74">2.8.4. 「内部エラーです」と表示される</a></li>
+<li><a class="reference internal" href="#kompira-dump-sh">2.8.5. kompira_dump.sh による情報収集とサポートへの問合せ</a><ul>
+<li><a class="reference internal" href="#id75">2.8.5.1. 収集しない項目</a></li>
+<li><a class="reference internal" href="#id76">2.8.5.2. 収集する項目</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="admin.html"
+                          title="前の章へ"><span class="section-number">1. </span>管理ガイド</a></p>
+  </div>
+  <div>
+    <h4>次のトピックへ</h4>
+    <p class="topless"><a href="tutorial.html"
+                          title="次の章へ"><span class="section-number">3. </span>Kompiraチュートリアル</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/usage.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="tutorial.html" title="3. Kompiraチュートリアル"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="admin.html" title="1. 管理ガイド"
+             >前へ</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/usage.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>操作ガイド</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

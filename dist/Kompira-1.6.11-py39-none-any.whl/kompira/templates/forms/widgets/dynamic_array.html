@@ -1,0 +1,31 @@
+{% load static %}
+{% load i18n %}
+
+{% spaceless %}
+<input type="hidden" name="{{ widget.name }}-TOTAL_FORMS" value="{{ widget.subwidgets|length }}" id="id_{{ widget.name }}-TOTAL_FORMS">
+<table id="dynamic-form-{{ widget.name }}" class="dynamic-array-widget table table-bordered table-sm edit-table table-operation-right ui-sortabe">
+  <thead>
+    <tr>
+      <th class="sortable-handle"></th>
+      {% for col_name in widget.col_names %}
+      <th>{% trans col_name|capfirst %}</th>
+      {% endfor %}
+      <th class="table-operation">{% trans 'operation'|capfirst %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for subwidget in widget.subwidgets %}
+    <tr class="array-item">
+      <td class="sortable-handle" title="{% trans 'sort'|capfirst %}"><i class="fas fa-align-justify"></i></td>
+      {% if subwidget.subwidgets %}
+      {% with widget=subwidget %}{% include widget.template_name %}{% endwith %}
+      {% else %}
+      <td class="edit-array-value">{% with widget=subwidget %}{% include widget.template_name %}{% endwith %}</td>
+      {% endif %}
+      <td class="table-operation"></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot></tfoot>
+</table>
+{% endspaceless %}

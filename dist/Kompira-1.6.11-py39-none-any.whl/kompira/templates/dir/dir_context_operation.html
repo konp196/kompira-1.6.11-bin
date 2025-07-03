@@ -1,0 +1,45 @@
+{% load i18n core_extras %}
+<div class="dir-operation btn-toolbar noprint">
+  <div class="btn-group">
+    <a class="btn btn-outline-secondary context-enabler context-query" tabindex="-1" data-target="single editable writable" data-query=".update">
+      <i class="fas fa-edit fa-fw" title="{% trans 'edit'|capfirst %}"></i><span class="d-none d-md-inline"> {% trans 'edit'|capfirst %}</span>
+    </a>
+    <a class="btn btn-outline-secondary context-enabler context-operation" tabindex="-1" {% if object_ability.writable %}data-target="any"{% else %}data-target="disabled"{% endif %} data-operation="delete_dialog">
+      <i class="fas fa-trash fa-fw" title="{% trans 'delete'|capfirst %}"></i><span class="d-none d-md-inline"> {% trans 'delete'|capfirst %}</span>
+    </a>
+    <a class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" href="#" tabindex="-1">{% trans 'more actions'|capfirst %} <span class="caret"></span></a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item context-enabler context-operation" tabindex="-1" {% if object_ability.writable %}data-target="single"{% else %}data-target="disabled"{% endif %} data-operation="rename_object">
+        <i class="fas fa-fw"></i>{% trans 'rename'|capfirst %}
+      </a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item context-enabler context-operation" tabindex="-1" {% if object_ability.writable %}data-target="any"{% else %}data-target="disabled"{% endif %} data-operation="move_dialog">
+        <i class="fas fa-fw"></i> {% trans 'move'|capfirst %}...
+      </a>
+      <a class="dropdown-item context-enabler context-operation" tabindex="-1" data-target="readable" data-operation="copy_dialog">
+        <i class="fas fa-fw"></i> {% trans 'copy'|capfirst %}...
+      </a>
+      <div class="dropdown-divider"></div>
+      {% if type_object_property.abspath == '/system/types/Table' and related_object %}
+      {% if related_object|getattr:'type_object'|getattr:'abspath' == '/system/types/Jobflow' %}
+      <a class="dropdown-item context-enabler context-operation" tabindex="-1" data-target={% if related_object|getitem:"executable" and not is_license_error and request.engine_is_running and related_object_ability.executable %}"any"{% else %}"disabled"{% endif %} data-operation="execute_jobflow_dialog" data-relobj="{{ related_object|getattr:'display_name' }}" data-invoker_id="{{ object.id }}">
+        <i class="fas fa-play fa-fw"></i> {% trans 'execute jobflow'|capfirst %}...
+      </a>
+      {% elif related_object|getattr:'type_object'|getattr:'abspath' == '/system/types/Form' %}
+      <a class="dropdown-item context-enabler context-operation" tabindex="-1" data-target={% if request.engine_is_running and related_object_ability.executable %}"any"{% else %}"disabled"{% endif %} data-operation="execute_form_dialog" data-relobj="{{ related_object|getattr:'display_name' }}" data-invoker_id="{{ object.id }}">
+        <i class="fas fa-play fa-fw"></i> {% trans 'execute form'|capfirst %}...
+      </a>
+      {% endif %}
+      {% endif %}
+      <a class="dropdown-item context-enabler context-operation" tabindex="-1" {% if object_ability.property_editable %}data-target=""{% else %}data-target="disabled"{% endif %} data-operation="export_dialog">
+        <i class="fas fa-arrow-down fa-fw"></i> {% trans 'export'|capfirst %}...
+      </a>
+      <a class="dropdown-item context-enabler context-operation" tabindex="-1" {% if object_ability.property_editable %}data-target="none_or single property-editable is-dir"{% else %}data-target="single property-editable is-dir"{% endif %} data-operation="import_dialog">
+        <i class="fas fa-arrow-up fa-fw"></i> {% trans 'import'|capfirst %}...
+      </a>
+      <a class="dropdown-item context-enabler context-operation" tabindex="-1" data-target="any property-editable" data-operation="edit_property">
+        <i class="fas fa-wrench fa-fw"></i> {% trans 'property'|capfirst %}
+      </a>
+    </div>
+  </div>
+</div>

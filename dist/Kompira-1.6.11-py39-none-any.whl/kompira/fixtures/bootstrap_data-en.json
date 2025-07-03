@@ -1,0 +1,556 @@
+[
+  {
+    "model": "kompira.baseobject",
+    "pk": 1,
+    "fields": {
+      "abspath": "/system/types/TypeObject",
+      "display_name": "TypeObject",
+      "description": "Type object of TypeObject",
+      "owner": 2,
+      "type_object": 1,
+      "parent_object": 5,
+      "created": "2025-04-22T23:30:29.561Z",
+      "updated": "2025-04-22T23:30:29.570Z"
+    }
+  },
+  {
+    "model": "kompira.baseobject",
+    "pk": 2,
+    "fields": {
+      "abspath": "/system/types/Directory",
+      "display_name": "Directory",
+      "description": "Type object of Directory",
+      "owner": 2,
+      "type_object": 1,
+      "parent_object": 5,
+      "created": "2025-04-22T23:30:29.563Z",
+      "updated": "2025-04-22T23:30:29.571Z"
+    }
+  },
+  {
+    "model": "kompira.baseobject",
+    "pk": 3,
+    "fields": {
+      "abspath": "/",
+      "display_name": "Root directory",
+      "description": "",
+      "owner": 2,
+      "type_object": 2,
+      "parent_object": 3,
+      "created": "2025-04-22T23:30:29.563Z",
+      "updated": "2025-04-22T23:30:29.563Z"
+    }
+  },
+  {
+    "model": "kompira.baseobject",
+    "pk": 4,
+    "fields": {
+      "abspath": "/system",
+      "display_name": "System directory",
+      "description": "",
+      "owner": 2,
+      "type_object": 2,
+      "parent_object": 3,
+      "created": "2025-04-22T23:30:29.565Z",
+      "updated": "2025-04-22T23:30:29.565Z"
+    }
+  },
+  {
+    "model": "kompira.baseobject",
+    "pk": 5,
+    "fields": {
+      "abspath": "/system/types",
+      "display_name": "System types directory",
+      "description": "",
+      "owner": 2,
+      "type_object": 2,
+      "parent_object": 4,
+      "created": "2025-04-22T23:30:29.566Z",
+      "updated": "2025-04-22T23:30:29.566Z"
+    }
+  },
+  {
+    "model": "kompira.baseobject",
+    "pk": 6,
+    "fields": {
+      "abspath": "/root",
+      "display_name": "root",
+      "description": "",
+      "owner": 2,
+      "type_object": 2,
+      "parent_object": 3,
+      "created": "2025-04-22T23:30:29.567Z",
+      "updated": "2025-04-22T23:30:29.567Z"
+    }
+  },
+  {
+    "model": "kompira.baseobject",
+    "pk": 7,
+    "fields": {
+      "abspath": "/home",
+      "display_name": "home",
+      "description": "",
+      "owner": 2,
+      "type_object": 2,
+      "parent_object": 3,
+      "created": "2025-04-22T23:30:29.569Z",
+      "updated": "2025-04-22T23:30:29.569Z"
+    }
+  },
+  {
+    "model": "kompira.baseobject",
+    "pk": 8,
+    "fields": {
+      "abspath": "/home/guest",
+      "display_name": "guest",
+      "description": "",
+      "owner": 3,
+      "type_object": 2,
+      "parent_object": 7,
+      "created": "2025-04-22T23:30:29.569Z",
+      "updated": "2025-04-22T23:30:29.569Z"
+    }
+  },
+  {
+    "model": "kompira.field",
+    "pk": 1,
+    "fields": {
+      "object": 1,
+      "name": "extend",
+      "display_name": "Extend module",
+      "type": "String",
+      "qual": null
+    }
+  },
+  {
+    "model": "kompira.field",
+    "pk": 2,
+    "fields": {
+      "object": 1,
+      "name": "fieldNames",
+      "display_name": "Field names",
+      "type": "Array",
+      "qual": null
+    }
+  },
+  {
+    "model": "kompira.field",
+    "pk": 3,
+    "fields": {
+      "object": 1,
+      "name": "fieldDisplayNames",
+      "display_name": "Field display names",
+      "type": "Array",
+      "qual": null
+    }
+  },
+  {
+    "model": "kompira.field",
+    "pk": 4,
+    "fields": {
+      "object": 1,
+      "name": "fieldTypes",
+      "display_name": "Field types",
+      "type": "Array",
+      "qual": null
+    }
+  },
+  {
+    "model": "kompira.field",
+    "pk": 5,
+    "fields": {
+      "object": 2,
+      "name": "extend",
+      "display_name": "Extend module",
+      "type": "String",
+      "qual": null
+    }
+  },
+  {
+    "model": "kompira.field",
+    "pk": 6,
+    "fields": {
+      "object": 2,
+      "name": "fieldNames",
+      "display_name": "Field names",
+      "type": "Array",
+      "qual": null
+    }
+  },
+  {
+    "model": "kompira.field",
+    "pk": 7,
+    "fields": {
+      "object": 2,
+      "name": "fieldDisplayNames",
+      "display_name": "Field display names",
+      "type": "Array",
+      "qual": null
+    }
+  },
+  {
+    "model": "kompira.field",
+    "pk": 8,
+    "fields": {
+      "object": 2,
+      "name": "fieldTypes",
+      "display_name": "Field types",
+      "type": "Array",
+      "qual": null
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 1,
+    "fields": {
+      "key": null,
+      "field": 1,
+      "value": ""
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 2,
+    "fields": {
+      "key": null,
+      "field": 2,
+      "value": "extend"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 3,
+    "fields": {
+      "key": null,
+      "field": 2,
+      "value": "fieldNames"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 4,
+    "fields": {
+      "key": null,
+      "field": 2,
+      "value": "fieldDisplayNames"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 5,
+    "fields": {
+      "key": null,
+      "field": 2,
+      "value": "fieldTypes"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 6,
+    "fields": {
+      "key": null,
+      "field": 3,
+      "value": "Extend module"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 7,
+    "fields": {
+      "key": null,
+      "field": 3,
+      "value": "Field names"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 8,
+    "fields": {
+      "key": null,
+      "field": 3,
+      "value": "Field display names"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 9,
+    "fields": {
+      "key": null,
+      "field": 3,
+      "value": "Field types"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 10,
+    "fields": {
+      "key": null,
+      "field": 4,
+      "value": "String"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 11,
+    "fields": {
+      "key": null,
+      "field": 4,
+      "value": "Array"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 12,
+    "fields": {
+      "key": null,
+      "field": 4,
+      "value": "Array"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 13,
+    "fields": {
+      "key": null,
+      "field": 4,
+      "value": "Array"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 14,
+    "fields": {
+      "key": null,
+      "field": 5,
+      "value": ""
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 15,
+    "fields": {
+      "key": null,
+      "field": 6,
+      "value": "orderBy"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 16,
+    "fields": {
+      "key": null,
+      "field": 6,
+      "value": "pageSize"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 17,
+    "fields": {
+      "key": null,
+      "field": 7,
+      "value": "Sort order"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 18,
+    "fields": {
+      "key": null,
+      "field": 7,
+      "value": "Page size"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 19,
+    "fields": {
+      "key": null,
+      "field": 8,
+      "value": "String"
+    }
+  },
+  {
+    "model": "kompira.stringdata",
+    "pk": 20,
+    "fields": {
+      "key": null,
+      "field": 8,
+      "value": "Integer#{\"default\": 25, \"min_value\": 10, \"max_value\": 1000}"
+    }
+  },
+  {
+    "model": "kompira.grouppermission",
+    "pk": 1,
+    "fields": {
+      "readable": true,
+      "writable": false,
+      "executable": false,
+      "owner": 1,
+      "object": 3,
+      "priority": 0
+    }
+  },
+  {
+    "model": "kompira.grouppermission",
+    "pk": 2,
+    "fields": {
+      "readable": true,
+      "writable": false,
+      "executable": false,
+      "owner": 1,
+      "object": 4,
+      "priority": 0
+    }
+  },
+  {
+    "model": "kompira.grouppermission",
+    "pk": 3,
+    "fields": {
+      "readable": true,
+      "writable": false,
+      "executable": false,
+      "owner": 1,
+      "object": 5,
+      "priority": 0
+    }
+  },
+  {
+    "model": "kompira.grouppermission",
+    "pk": 4,
+    "fields": {
+      "readable": true,
+      "writable": false,
+      "executable": false,
+      "owner": 1,
+      "object": 7,
+      "priority": 0
+    }
+  },
+  {
+    "model": "kompira.protectedobject",
+    "pk": 1,
+    "fields": {
+      "object": 3
+    }
+  },
+  {
+    "model": "kompira.group",
+    "pk": 1,
+    "fields": {
+      "is_ldap_group": false
+    }
+  },
+  {
+    "model": "kompira.group",
+    "pk": 2,
+    "fields": {
+      "is_ldap_group": false
+    }
+  },
+  {
+    "model": "kompira.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$7IXHsgW4Crv1hr1CHiNHpy$4tI+vFiSIh6kjzxXMHKM0yVUoBgTBzt3W7eDL0qKO+8=",
+      "last_login": null,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": true,
+      "is_active": false,
+      "is_ldap_user": false,
+      "home_directory": null,
+      "environment": null,
+      "groups": []
+    }
+  },
+  {
+    "model": "kompira.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$oikfB3J4ICl8CJCS1Nwc1s$5VnhnQ8Wyy/9G/Bh9pVBTPBo/jhT0B8Xx6GuOdLMffw=",
+      "last_login": null,
+      "username": "root",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "is_ldap_user": false,
+      "home_directory": 6,
+      "environment": null,
+      "groups": []
+    }
+  },
+  {
+    "model": "kompira.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$ckUyuNzADyFXpn60f25FhO$+xSDxfO34Lo+nfNbPjkIQTlFlISHpKxqzeYx+sktP/0=",
+      "last_login": null,
+      "username": "guest",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "is_ldap_user": false,
+      "home_directory": 8,
+      "environment": null,
+      "groups": []
+    }
+  },
+  {
+    "model": "kompira.protectedgroup",
+    "pk": 1,
+    "fields": {
+      "group": 1
+    }
+  },
+  {
+    "model": "kompira.protectedgroup",
+    "pk": 2,
+    "fields": {
+      "group": 2
+    }
+  },
+  {
+    "model": "kompira.protecteduser",
+    "pk": 1,
+    "fields": {
+      "user": 1
+    }
+  },
+  {
+    "model": "kompira.protecteduser",
+    "pk": 2,
+    "fields": {
+      "user": 2
+    }
+  },
+  {
+    "model": "kompira.protecteduser",
+    "pk": 3,
+    "fields": {
+      "user": 3
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "other",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "wheel",
+      "permissions": []
+    }
+  }
+]

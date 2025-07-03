@@ -1,0 +1,38 @@
+{% extends "obj_view.html" %}
+{% load i18n %}
+
+{% block extra_head %}
+{{ block.super }}
+{% include 'lib/tablesorter.html' %}
+{% endblock extra_head %}
+
+{% block section_contents %}
+<section>
+  <div class="section-contents wiki-contents wordbreak">
+    {{ wikitext|safe }}
+  </div><!-- /section-contents -->
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+ <script type="text/javascript">
+  $(function(){
+    var add_class = {
+      "table": "table table-bordered table-sm tablesorter",
+    };
+    var wiki_contents = $('div.wiki-contents');
+    for (var key in add_class) {
+      $(key, wiki_contents).addClass(add_class[key]);
+    }
+    $(".tablesorter", wiki_contents).each(function(){
+      table = $(this);
+      tr = $("tr", table).eq(0);
+      if ($("th", tr).length > 0) {
+        $("<thead>").append(tr).prependTo(table);
+        table.tablesorter();
+      }
+    });
+  })
+</script>
+{% endblock %}

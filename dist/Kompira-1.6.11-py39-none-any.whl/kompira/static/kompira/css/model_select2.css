@@ -1,0 +1,27 @@
+/*
+ * select2 のドロップダウンリストのスタイル調整
+ */
+.select2-container--open .select2-dropdown.select2-dropdown--above {
+    border-bottom: 1px solid #ced4da;
+}
+
+/*
+ * オブジェクトモデルを select2 の option にするときのスタイル
+ */
+.select2-results__option .model-option-first {
+    margin-right: 20px;
+    text-align: left;
+    font-weight: bold;
+    color: #444;
+}
+.select2-results__option .model-option-second {
+    margin-left: 20px;
+    font-size: 13px;
+    color: #AAA;
+}
+.select2-results__option.select2-results__option--highlighted .model-option-first {
+    color: #FFF;
+}
+.select2-results__option.select2-results__option--highlighted .model-option-second {
+    color: #CCC;
+}

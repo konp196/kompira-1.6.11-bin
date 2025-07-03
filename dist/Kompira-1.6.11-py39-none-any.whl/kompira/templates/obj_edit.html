@@ -1,0 +1,14 @@
+{% extends "obj_form.html" %}
+{% load static i18n %}
+
+{% block form_section %}
+<table class="table table-striped table-sm edit-table table-label-left">
+  {{ form.as_table }}
+</table>
+{% endblock %}
+
+{% block extra_js %}
+<!-- select2とjquery.formset.js の相性のため、js_field_form.html の内部で呼び出している field_array.js はform.media.js より先に読み込む必要がある -->
+{% include "js_field_form.html" %}
+{{ block.super }}
+{% endblock %}

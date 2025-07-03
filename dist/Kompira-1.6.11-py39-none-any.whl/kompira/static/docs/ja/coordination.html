@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>6. 他システムとの連携 &#8212; Kompira 1.6.11 ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="7. Kompira の監視" href="monitoring.html" />
+    <link rel="prev" title="5. Kompira 標準ライブラリ" href="library.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="monitoring.html" title="7. Kompira の監視"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="library.html" title="5. Kompira 標準ライブラリ"
+             accesskey="P">前へ</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/coordination.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">6. </span>他システムとの連携</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1><span class="section-number">6. </span>他システムとの連携<a class="headerlink" href="#id1" title="この見出しへのパーマリンク">¶</a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">著者<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Kompira 開発チーム</p>
+</dd>
+</dl>
+<section id="id2">
+<h2><span class="section-number">6.1. </span>はじめに<a class="headerlink" href="#id2" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Kompiraで他システムにデータを受け渡す、また他システムからデータを受け取るための方法、必要な設定等について説明します。</p>
+</section>
+<section id="kompira">
+<span id="sendevt"></span><h2><span class="section-number">6.2. </span>Kompiraへのイベント送信<a class="headerlink" href="#kompira" title="この見出しへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="admin.html#package-jobmngr"><span class="std std-ref">ジョブマネージャパッケージ</span></a> および <a class="reference internal" href="admin.html#package-sendevt"><span class="std std-ref">イベント送信パッケージ</span></a> に含まれる
+kompira_sendevtコマンドを用いることで、Kompiraに対してイベント情報を送信することができます。
+ここでは、kompira_sendevtを用いたKompiraへのイベント送信について説明します。</p>
+<p>kompira_sendevtスクリプトは、引数で指定された <code class="docutils literal notranslate"><span class="pre">&lt;keyword&gt;=&lt;value&gt;</span></code> の組を
+メッセージに詰めて、Kompiraサーバに送信します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/kompira/bin/kompira_sendevt [options] [&lt;key1&gt;=&lt;value1&gt; ...]
+</pre></div>
+</div>
+<p>key1とvalue1を結ぶ '=' の両側にスペースを入れないように注意してください。
+ジョブフローは、受信したメッセージを辞書型のデータとして参照することができます。</p>
+<p>引数が指定されなかった場合は、標準入力を1つのkeyとしてKompiraサーバに送信します。</p>
+<p>インストール時に --amqps-verify オプションを付けるなどして、SSL 証明書の検証が有効になっている Kompira サーバに kompira_sendevt でメッセージを送信するためにはその Kompira サーバが発行した SSL 証明書が必要になります。
+その場合は、以下について注意してください。</p>
+<ul class="simple">
+<li><p>事前に Kompira サーバから SSL 証明書を取得しておく必要があります。 <a class="reference internal" href="admin.html#ssl-certs"><span class="std std-ref">SSL 証明書管理</span></a> を参照してください。</p></li>
+<li><p>kompira_sendevt コマンドを実行するユーザが SSL 証明書を読み込める必要があります。証明書ファイルにアクセスできるユーザで実行するか、証明書ファイルのパーミッションを調整してください。</p></li>
+</ul>
+<section id="windows">
+<h3><span class="section-number">6.2.1. </span>Windows からのイベント送信<a class="headerlink" href="#windows" title="この見出しへのパーマリンク">¶</a></h3>
+<p><a class="reference internal" href="admin.html#package-sendevt-install-windows"><span class="std std-ref">Windowsへのインストール</span></a> に従って Windows にイベント送信パッケージをインストールすることで、
+Linuxの場合と同様に kompira_sendevt コマンドを用いて Windows からイベント送信を行うことができます。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>手順 <a class="reference internal" href="admin.html#package-sendevt-install-windows"><span class="std std-ref">Windowsへのインストール</span></a> に沿ってインストールした場合、
+kompira_sendevt コマンドは <code class="docutils literal notranslate"><span class="pre">C:\Kompira\Scripts\kompira_sendevt.exe</span></code> にインストールされます。</p>
+<p>また、Windows 環境ではデフォルトのログディレクトリが <code class="docutils literal notranslate"><span class="pre">C:\Kompira\Log</span></code> になりますので、事前に作成しておいてください。
+ログディレクトリが存在しない場合は kompira_sendevt コマンドを実行する時に警告が表示され、標準出力上にログが出力されます。</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.6.8 で変更: </span>Windows 環境でのデフォルトのログディレクトリが <code class="docutils literal notranslate"><span class="pre">C:\Kompira\Log</span></code> になりました。</p>
+</div>
+</section>
+<section id="kompira-sendevt">
+<span id="sendevt-option"></span><h3><span class="section-number">6.2.2. </span>kompira_sendevtのオプション<a class="headerlink" href="#kompira-sendevt" title="この見出しへのパーマリンク">¶</a></h3>
+<p>kompira_sendevtコマンドには以下のオプションがあります。
+コマンドラインで指定したオプションは、設定ファイルでの指定より優先されます。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>オプション</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-c,</span> <span class="pre">--config=CONF</span></code></p></td>
+<td><p>設定ファイルを指定します(CONFは設定ファイルのパス)。
+デフォルトでは <code class="docutils literal notranslate"><span class="pre">/opt/kompira/kompira.conf</span></code> (Windows環境では <code class="docutils literal notranslate"><span class="pre">C:\Kompira\kompira.conf</span></code>) が読み込まれます。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-s,</span> <span class="pre">--server=SERVER</span></code></p></td>
+<td><p>送信先のKompiraサーバのIPアドレス、もしくはサーバ名を指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-p,</span> <span class="pre">--port=PORT</span></code></p></td>
+<td><p>送信先Kompiraサーバのメッセージキューのポート番号を指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--user=USER</span></code></p></td>
+<td><p>送信先Kompiraメッセージキューのユーザー名を指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--password=PASSWORD</span></code></p></td>
+<td><p>送信先Kompiraメッセージキューのパスワードを指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--test-connection</span></code></p></td>
+<td><p>AMQP サーバへの接続テストを行ないます。データは送信しません。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ssl</span></code></p></td>
+<td><p>メッセージキューの接続にSSLを用います。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--ssl-verify</span></code></p></td>
+<td><p>SSLでサーバ証明書を検証します。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ssl-cacertfile=SSL_CACERTFILE</span></code></p></td>
+<td><p>SSLでサーバ証明書の検証に利用するCA証明書を指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--ssl-certfile=SSL_CERTFILE</span></code></p></td>
+<td><p>SSL接続するときの証明書ファイルを指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--ssl-keyfile=SSL_KEYFILE</span></code></p></td>
+<td><p>SSL接続するときの秘密鍵ファイルを指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--channel=CHANNEL</span></code></p></td>
+<td><p>メッセージを送信するチャネルのKompiraファイルシステム上のパスを指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--site-id=SITE_ID</span></code></p></td>
+<td><p>KompiraサイトIDを指定します。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--max-retry=MAX_RETRY</span></code></p></td>
+<td><p>イベントの送信を最大何回試みるかを指定します。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--retry-interval=RETRY_INTERVAL</span></code></p></td>
+<td><p>イベントの送信間隔を指定します(単位は秒)。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--dry-run</span></code></p></td>
+<td><p>実際にはデータを送信せずに、送信内容を標準出力に表示します。</p></td>
+</tr>
+</tbody>
+</table>
+<p>コマンドラインオプションで指定していない AMQP の接続に関するパラメータは設定ファイルのデフォルト値が適用されます。
+例えばユーザ名とパスワードは接続先のサーバ名が localhost の場合は guest/guest になり、それ以外では kompira/kompira になります。
+詳しくは <a class="reference internal" href="admin.html#file-settings"><span class="std std-ref">Kompira設定ファイル</span></a> を参照してください。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">バージョン 1.6.8 で変更: </span>設定ファイルが指定されていないとき、Windows 環境では <code class="docutils literal notranslate"><span class="pre">C:\Kompira\kompira.conf</span></code> が適用されるようになりました。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">バージョン 1.6.8 で追加: </span>新しいオプション --test-connection, --ssl-verify, --ssl-cacertfile, --ssl-certfile, --ssl-keyfile が追加されました。</p>
+</div>
+</section>
+</section>
+<section id="receive-mail">
+<span id="id3"></span><h2><span class="section-number">6.3. </span>Kompiraでのメール受信<a class="headerlink" href="#receive-mail" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Kompira_sendevtを用いて、Kompiraサーバが受信したメール内容をジョブフローで扱えるようにする方法を説明します。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>IMAP サーバを使用している場合、以下に紹介する方法の他に、メールチャネルを使用することでメール内容をジョブフローで扱うことができます。
+詳しくは <a class="reference internal" href="library.html#type_object-MailChannel"><code class="xref kompira kompira-type_object docutils literal notranslate"><span class="pre">MailChannel</span></code></a> を参照してください。</p>
+</div>
+<section id="linux">
+<h3><span class="section-number">6.3.1. </span>Linuxの設定<a class="headerlink" href="#linux" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Sendmail用のエイリアスである /etc/aliases ファイルに設定を記述することで、Kompiraサーバの特定のアカウント宛のメールに対して、任意のコマンドの実行を指定することができます。</p>
+<p>以下はkompiraサーバのkompiraアカウント宛にメールが送られた際、メールをkompira_sendevtに送る場合の設定です。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>kompira:    &quot;|LANG=ja_JP.UTF-8 /opt/kompira/bin/kompira_sendevt --channel=/system/channels/Mail&quot;
+</pre></div>
+</div>
+<p>/etc/aliasesに上記を記述した後、下記のコマンドを実行することで設定が反映されます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>% newaliases
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>お使いのシステムによっては smrsh を使用する必要がある場合があります。その場合、kompira_sendevt コマンドのシンボリックリンクを smrsh のディレクトリに作成してください。</p>
+</div>
+</section>
+<section id="id4">
+<h3><span class="section-number">6.3.2. </span>Kompiraの設定<a class="headerlink" href="#id4" title="この見出しへのパーマリンク">¶</a></h3>
+<p>kompira_sendevtは任意のチャネルに値を送ることができます。
+ここでは/system/channels/Mailというメールを受信する専用のチャネルを作成しておきましょう。</p>
+<p>以下はメール内容を受信し、内容を表示するジョブフロー例です。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;/system/channels/Mail&gt;
+-&gt; [mail = $RESULT]
+-&gt; mail_parse(mail)
+-&gt; [parsed_mail = $RESULT]
+-&gt; print(parsed_mail[&#39;Subject&#39;])
+-&gt; print(parsed_mail[&#39;Body&#39;])
+</pre></div>
+</div>
+<p>Kompiraの組み込みジョブであるmail_parseを使うことで、MIME形式のメールテキストをパースし、辞書形式で値を扱うことができるようになります。</p>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">6.4. </span>監視システムとの連携<a class="headerlink" href="#id5" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Kompiraは、ZabbixやNagiosなど外部の監視サーバと連携することが可能です。
+連携したい外部システムから、Kompiraのメッセージキュー（RabbitMQ）に対してイベント情報を送信することで、ジョブフローからそのイベントを受信できるようになります。</p>
+<p>ここでは、Zabbixを例にして、障害の発生をKompiraに通知する方法について説
+明します。</p>
+<section id="id6">
+<h3><span class="section-number">6.4.1. </span>イベント送受信の確認<a class="headerlink" href="#id6" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Zabbixが動作しているサーバに、Kompiraに対してイベント情報を送信するため
+のスクリプトを準備します。ここでは、kompira_sendevtを用いた方法について説
+明します。</p>
+<ol class="arabic simple">
+<li><p><strong>ZabbixサーバにKompiraエージェントをインストールする。</strong></p></li>
+</ol>
+<p>Kompiraマニュアル(<a class="reference internal" href="admin.html#package-sendevt"><span class="std std-ref">イベント送信パッケージ</span></a>)にしたがってKompiraのイベント送信パッケージを
+Zabbixが動作しているサーバにインストールします。
+(ジョブマネージャを動作させない場合、ジョブマネージャの起動設定は不要です。)</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>設定ファイルの変更</strong></p></li>
+</ol>
+<p>Zabbixサーバ側の/opt/kompira/kompira.confファイルの書き換えます。</p>
+<p>具体的には、[amqp-connection]セクションのserver項目に、Kompiraサーバの
+IPアドレス、もしくはホスト名を設定します。また、[event]セクションの
+channel項目が/system/channels/Alertに設定されていることも確認してくださ
+い。</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>メッセージの通知確認</strong></p></li>
+</ol>
+<p>この時点で、kompira_sendevtを実行して、Kompiraサーバに対して正しくイベントが通知できることを確認します。Zabbixサーバ側で、以下のコマンドを実行してください。:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ /opt/kompira/bin/kompira_sendevt test=hello
+</pre></div>
+</div>
+<p>次に、Kompiraにログインし、/system/channels/Alertのページを参照し、メッ
+セージ数が増えていることを確認してください。</p>
+<ol class="arabic simple" start="4">
+<li><p><strong>メッセージの受信方法</strong></p></li>
+</ol>
+<p>次に、/system/channels/Alertに到着したメッセージはジョブフローから読み
+出してみます。以下のようなジョブフローを定義して、実行してみてください。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;/system/channels/Alert&gt; -&gt; [message = $RESULT] -&gt; print(message.test)
+</pre></div>
+</div>
+<p>コンソールに、helloと表示されたら成功です。</p>
+</section>
+<section id="zabbix">
+<h3><span class="section-number">6.4.2. </span>Zabbixの設定<a class="headerlink" href="#zabbix" title="この見出しへのパーマリンク">¶</a></h3>
+<p>次に、Zabbixの設定を行います。</p>
+<p>Zabbixにログインし、「アクションの設定」メニューからアクションを新規に
+作成し、その中にアクションのオペレーションを新規に作成してください。オ
+ペレーションのタイプはリモートコマンドにします。</p>
+<p>リモートコマンドの内容はたとえば以下のようにします。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Zabbix server:python /opt/kompira/bin/kompira_sendevt status=&quot;{TRIGGER.STATUS}&quot;
+  severity=&quot;{TRIGGER.NSEVERITY}&quot; hostname=&quot;{HOSTNAME}&quot;
+  trigger_name=&quot;{TRIGGER.NAME}&quot; trigger_key=&quot;{TRIGGER.KEY}&quot;
+  detail=&quot;{TRIGGER.KEY}: {ITEM.LASTVALUE}&quot;
+</pre></div>
+</div>
+<p>ここでは、以下のようなキーを含む辞書データをKompiraに送るように設定しています。</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>キー名</p></th>
+<th class="head"><p>内容（値）</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>status</p></td>
+<td><p>トリガーの状態</p></td>
+</tr>
+<tr class="row-odd"><td><p>severity</p></td>
+<td><p>深刻度</p></td>
+</tr>
+<tr class="row-even"><td><p>hostname</p></td>
+<td><p>障害の発生したホスト名</p></td>
+</tr>
+<tr class="row-odd"><td><p>trigger_name</p></td>
+<td><p>トリガー名</p></td>
+</tr>
+<tr class="row-even"><td><p>trigger_key</p></td>
+<td><p>トリガーキー</p></td>
+</tr>
+<tr class="row-odd"><td><p>detail</p></td>
+<td><p>イベント詳細情報(トリガーキーとイベント値の組み)</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>あとは、ここで登録したアクションが、障害イベントをトリガーとしてキック
+されるように設定を行います。詳しくは、Zabbixのマニュアル等を参照してく
+ださい。</p>
+</section>
+</section>
+<section id="redmine">
+<h2><span class="section-number">6.5. </span>Redmineとの連携<a class="headerlink" href="#redmine" title="この見出しへのパーマリンク">¶</a></h2>
+<p>外部のチケッティングシステムとの連携例として、KompiraのジョブフローからRedmineに対してチケットを発行する方法について説明します。</p>
+<section id="id7">
+<h3><span class="section-number">6.5.1. </span>Redmineの設定<a class="headerlink" href="#id7" title="この見出しへのパーマリンク">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>REST APIの有効化</strong></p></li>
+</ol>
+<p>「管理」-&gt;「設定」-&gt;「認証」から、「RESTによるWebサービスを有効にする」チェックをつけて保存します。</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>プロジェクトの作成</strong></p></li>
+</ol>
+<p>「管理」-&gt;「プロジェクト」から「新しいプロジェクト」を選択し、プロジェクト「test」を作成します。</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>優先度の設定</strong></p></li>
+</ol>
+<p>「管理」-&gt;「列挙項目」でチケットの優先度に値を設定します。(例：「高」「中」「低」)</p>
+<p>また、どれか1つを「デフォルト値」と設定します。</p>
+<p>(※) デフォルト値を設定しない場合は、API呼び出しの際にpriority_idの値が必要となります。</p>
+<ol class="arabic simple" start="4">
+<li><p><strong>ユーザの作成</strong></p></li>
+</ol>
+<p>「管理」-&gt;「ユーザ」から「新しいユーザー」を選択し、任意のユーザを作成します。</p>
+<p>作成したユーザでログインし、「個人設定」ページにあるAPIアクセスキーを控えておきます。</p>
+</section>
+<section id="id8">
+<h3><span class="section-number">6.5.2. </span>チケットを発行する<a class="headerlink" href="#id8" title="この見出しへのパーマリンク">¶</a></h3>
+<p>Redmineのチケットを発行するには、必要な情報をjson形式のデータに変換し、POSTリクエストをRedmineのURLに送信します。</p>
+<p>そのためには、Kompiraの組み込みジョブであるurlopenに辞書型のデータを渡して呼び出します。</p>
+<p>具体的には以下のようなジョブフローを記述することで、Redmineに対してチケットを発行することができます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>|redmine_server = &#39;192.168.0.1&#39;|
+|redmine_key = &#39;1234567890abcdef1234567890abcdef12345678&#39;|
+|ticket_title = &#39;Task from Kompira&#39;|
+|project_name = &#39;test&#39;|
+
+[url = &#39;http://$redmine_server/issues.json?format=json&amp;key=$redmine_key&#39;]
+-&gt; [ticket = {issue = {subject = ticket_title, project_id = project_name}}]
+-&gt; urlopen(url=url, data=ticket, timeout=60, encode=&#39;json&#39;)
+</pre></div>
+</div>
+<p>「redmine_key」には「4. ユーザの作成」で確認したAPIアクセスキーを設定します。</p>
+<p>上記に加えて、チケットの優先度、説明、担当者、カテゴリなどの情報を含めることもできます。</p>
+<p>また、チケットの更新・削除、チケット情報の一覧の取得なども行うことができます。
+詳しくはRedmine API仕様を参照してください。</p>
+</section>
+</section>
+<section id="snmp">
+<h2><span class="section-number">6.6. </span>SNMPトラップの受信<a class="headerlink" href="#snmp" title="この見出しへのパーマリンク">¶</a></h2>
+<p>Linuxコマンドのsnmptrapd(8)とsnmptrap(1)を用いて、KompiraのジョブフローでSNMPトラップを受信する方法を説明します。</p>
+<section id="id9">
+<h3><span class="section-number">6.6.1. </span>環境<a class="headerlink" href="#id9" title="この見出しへのパーマリンク">¶</a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>IP Address</p></td>
+<td><p>OS</p></td>
+</tr>
+<tr class="row-even"><td><p>Kompiraサーバ</p></td>
+<td><p>192.168.213.100</p></td>
+<td><p>CentOS 6.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>SNMPエージェントサーバ</p></td>
+<td><p>192.168.213.101</p></td>
+<td><p>CentOS 6.5</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id10">
+<h3><span class="section-number">6.6.2. </span>Kompiraサーバの設定<a class="headerlink" href="#id10" title="この見出しへのパーマリンク">¶</a></h3>
+<p>KompiraサーバにはKompiraがインストール済みであるとします。</p>
+<ol class="arabic simple">
+<li><p><strong>snmptrapdをインストール</strong></p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ yum install net-snmp
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>/etc/snmp/snmptrapd.confを編集</strong></p></li>
+</ol>
+<p>SNMPトラップをハンドルするため、snmptrapd.confを編集します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>authCommunity     log,execute,net default
+traphandle default    /opt/kompira/bin/kompira_sendevt --channel=/system/channels/snmptrap
+</pre></div>
+</div>
+<p>ここでdefaultは「全てのOID」を表します。</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Kompiraにジョブフローを追加</strong></p></li>
+</ol>
+<p>「/system/channels/snmptrap」チャネルを作成し、このチャネルへのデータを待ち受けるジョブフローを作成、実行します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;/system/channels/snmptrap&gt; -&gt;
+print($RESULT)
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>snmptrapdを起動</strong></p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ service snmptrapd start
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3><span class="section-number">6.6.3. </span>SNMPエージェントサーバの設定<a class="headerlink" href="#id11" title="この見出しへのパーマリンク">¶</a></h3>
+<p>snmptrapコマンドをインストール</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ yum install net-snmp-utils
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3><span class="section-number">6.6.4. </span>SNMPトラップの送信<a class="headerlink" href="#id12" title="この見出しへのパーマリンク">¶</a></h3>
+<p>SNMPエージェントサーバ上でsnmptrapコマンドを実行します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ snmptrap -v 2c -c default 192.168.213.100 &#39;&#39; netSnmp.99999 netSnmp.99999.1 s &quot;hello world&quot;
+</pre></div>
+</div>
+<p>Kompiraサーバ側で正しく受信できた場合、/var/log/messagesに以下のようなログが表示されます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ tail -f /var/log/messages
+Dec 13 16:29:30 kompira-server snmptrapd[6110]: 2012-12-13 16:29:30 &lt;UNKNOWN&gt;
+[UDP: [192.168.213.101]:56313-&gt;[192.168.213.100]]:#012DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (590254) 1:38:22.54
+#011SNMPv2-MIB::snmpTrapOID.0 = OID: NET-SNMP-MIB::netSnmp.99999#011NET-SNMP-MIN::netSnmp.99999.1 = STRING: &quot;hello world&quot;
+</pre></div>
+</div>
+<p>また、Kompira上で実行していたジョブフロープロセスのコンソールには以下のような受信結果が表示されます。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;UNKNOWN&gt;
+UDP: [192.168.213.101]:56313-&gt;[192.168.213.100]
+DISMAN-EVENT-MIB::sysUpTimeInstance 0:0:18:39.04
+SNMPv2-MIB::snmpTrapOID.0 NET-SNMP-MIB::netSnmp.99999
+NET-SNMP-MIB::netSnmp.99999.1 &quot;hello world&quot;
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">6. 他システムとの連携</a><ul>
+<li><a class="reference internal" href="#id2">6.1. はじめに</a></li>
+<li><a class="reference internal" href="#kompira">6.2. Kompiraへのイベント送信</a><ul>
+<li><a class="reference internal" href="#windows">6.2.1. Windows からのイベント送信</a></li>
+<li><a class="reference internal" href="#kompira-sendevt">6.2.2. kompira_sendevtのオプション</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#receive-mail">6.3. Kompiraでのメール受信</a><ul>
+<li><a class="reference internal" href="#linux">6.3.1. Linuxの設定</a></li>
+<li><a class="reference internal" href="#id4">6.3.2. Kompiraの設定</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">6.4. 監視システムとの連携</a><ul>
+<li><a class="reference internal" href="#id6">6.4.1. イベント送受信の確認</a></li>
+<li><a class="reference internal" href="#zabbix">6.4.2. Zabbixの設定</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redmine">6.5. Redmineとの連携</a><ul>
+<li><a class="reference internal" href="#id7">6.5.1. Redmineの設定</a></li>
+<li><a class="reference internal" href="#id8">6.5.2. チケットを発行する</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#snmp">6.6. SNMPトラップの受信</a><ul>
+<li><a class="reference internal" href="#id9">6.6.1. 環境</a></li>
+<li><a class="reference internal" href="#id10">6.6.2. Kompiraサーバの設定</a></li>
+<li><a class="reference internal" href="#id11">6.6.3. SNMPエージェントサーバの設定</a></li>
+<li><a class="reference internal" href="#id12">6.6.4. SNMPトラップの送信</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="library.html"
+                          title="前の章へ"><span class="section-number">5. </span>Kompira 標準ライブラリ</a></p>
+  </div>
+  <div>
+    <h4>次のトピックへ</h4>
+    <p class="topless"><a href="monitoring.html"
+                          title="次の章へ"><span class="section-number">7. </span>Kompira の監視</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/coordination.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="monitoring.html" title="7. Kompira の監視"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="library.html" title="5. Kompira 標準ライブラリ"
+             >前へ</a> |</li>
+<li class="nav-item nav-item-0"><a href="index.html">Kompira 1.6.11 ドキュメント</a> [<a href="../en/coordination.html">en</a>|<a href="./kompira.pdf" target="_blank">pdf</a>] &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">6. </span>他システムとの連携</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2012, Kompira development team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>
