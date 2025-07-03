@@ -1,0 +1,1477 @@
+[
+    {
+        "objpath": "config",
+        "display_name": "Configuration directory",
+        "description": "",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/License",
+        "display_name": "License",
+        "description": "Type object of License",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [],
+            "fieldTypes": [],
+            "fieldNames": []
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "config/license",
+        "display_name": "License management",
+        "description": "Configuration for License file",
+        "owner": "root",
+        "typepath": "system/types/License",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/TypeObject",
+        "display_name": "TypeObject",
+        "description": "Type object of TypeObject",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Extend module",
+                "Field names",
+                "Field display names",
+                "Field types"
+            ],
+            "fieldTypes": [
+                "String",
+                "Array",
+                "Array",
+                "Array"
+            ],
+            "fieldNames": [
+                "extend",
+                "fieldNames",
+                "fieldDisplayNames",
+                "fieldTypes"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Directory",
+        "display_name": "Directory",
+        "description": "Type object of Directory",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Sort order",
+                "Page size"
+            ],
+            "fieldTypes": [
+                "String",
+                "Integer#{\"default\": 25, \"min_value\": 10, \"max_value\": 1000}"
+            ],
+            "fieldNames": [
+                "orderBy",
+                "pageSize"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Virtual",
+        "display_name": "Virtual",
+        "description": "Type object of Virtual",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Implementation module"
+            ],
+            "fieldTypes": [
+                "String"
+            ],
+            "fieldNames": [
+                "virtual"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Jobflow",
+        "display_name": "Jobflow",
+        "description": "Type object of Jobflow",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Source",
+                "Code",
+                "Parameters",
+                "Executable",
+                "Errors",
+                "Compiler version",
+                "Multiplicity",
+                "Default Checkpoint mode",
+                "Default Monitoring mode",
+                "Compiled Datetime"
+            ],
+            "fieldTypes": [
+                "LargeText",
+                "LargeText#{\"invisible\": true}",
+                "Dictionary#{\"invisible\": true}",
+                "Boolean#{\"invisible\": true}",
+                "Dictionary#{\"invisible\": true}",
+                "String#{\"invisible\": true}",
+                "Integer",
+                "Boolean",
+                "Enum#{\"enum\": [[\"NOTHING\", \"Do nothing.\"], [\"MAIL\", \"When the process is finished, a mail will be sent.\"], [\"ABORT_MAIL\", \"When the process is terminated abnormally, a mail will be sent.\"]]}",
+                "Datetime#{\"invisible\": true}"
+            ],
+            "fieldNames": [
+                "source",
+                "code",
+                "parameters",
+                "executable",
+                "errors",
+                "compilerVersion",
+                "multiplicity",
+                "defaultCheckpointMode",
+                "defaultMonitoringMode",
+                "compiledDatetime"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Channel",
+        "display_name": "Channel",
+        "description": "Type object of Channel",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Message queue",
+                "Event queue",
+                "Action type",
+                "Action target"
+            ],
+            "fieldTypes": [
+                "Array<Binary>#{\"invisible\": true}",
+                "Array<Binary>#{\"invisible\": true}",
+                "Enum#{\"enum\":[[\"NoAction\",\"No action\"],[\"ExecuteJobflow\",\"Execute Jobflow\"]],\"default\":\"NoAction\"}",
+                "Object#{\"object\":{\"switch\":\"$[action_type]\",\"case\":{\"NoAction\":[],\"ExecuteJobflow\":\"/system/types/Jobflow\"}}}"
+            ],
+            "fieldNames": [
+                "message_queue",
+                "event_queue",
+                "action_type",
+                "action_target"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Wiki",
+        "display_name": "Wiki",
+        "description": "Type object of Wiki",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Wiki text",
+                "Wiki style"
+            ],
+            "fieldTypes": [
+                "LargeText",
+                "Enum#{\"enum\": [\"Creole\", \"Markdown\", \"Textile\"], \"default\": \"Creole\"}"
+            ],
+            "fieldNames": [
+                "wikitext",
+                "style"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/ScriptJob",
+        "display_name": "ScriptJob",
+        "description": "Type object of ScriptJob",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Source",
+                "Extension",
+                "Multiplicity"
+            ],
+            "fieldTypes": [
+                "LargeText",
+                "String",
+                "Integer"
+            ],
+            "fieldNames": [
+                "source",
+                "ext",
+                "multiplicity"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Environment",
+        "display_name": "Environment",
+        "description": "Type object of Environment",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Environment"
+            ],
+            "fieldTypes": [
+                "Dictionary"
+            ],
+            "fieldNames": [
+                "environment"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Template",
+        "display_name": "Template",
+        "description": "Type object of Template",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Template"
+            ],
+            "fieldTypes": [
+                "LargeText"
+            ],
+            "fieldNames": [
+                "template"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Table",
+        "display_name": "Table",
+        "description": "Type object of Table",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Type object",
+                "Related object",
+                "Display fields",
+                "Sort order",
+                "Page size"
+            ],
+            "fieldTypes": [
+                "Object#{\"object\": \"/system/types/TypeObject\", \"no_empty\": true}",
+                "Object#{\"object\": [\"/system/types/Jobflow\", \"/system/types/Form\"]}",
+                "Array",
+                "String",
+                "Integer#{\"default\": 25, \"min_value\": 10, \"max_value\": 1000}"
+            ],
+            "fieldNames": [
+                "typeObject",
+                "relatedObject",
+                "displayList",
+                "orderBy",
+                "pageSize"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Realm",
+        "display_name": "Realm",
+        "description": "Type object of Realm",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Range",
+                "Disabled"
+            ],
+            "fieldTypes": [
+                "Array",
+                "Boolean"
+            ],
+            "fieldNames": [
+                "range",
+                "disabled"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/AttachedFile",
+        "display_name": "AttachedFile",
+        "description": "Type object of AttachedFile",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Attached file 1",
+                "Attached file 2",
+                "Attached file 3"
+            ],
+            "fieldTypes": [
+                "File",
+                "File",
+                "File"
+            ],
+            "fieldNames": [
+                "attached1",
+                "attached2",
+                "attached3"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/NodeInfo",
+        "display_name": "NodeInfo",
+        "description": "Type object of NodeInfo",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Node type",
+                "Connection type",
+                "Hostname",
+                "IP address",
+                "Port number",
+                "Shell",
+                "Use shell",
+                "Proxy",
+                "Account"
+            ],
+            "fieldTypes": [
+                "Object#{\"object\":\"/system/types/NodeType\"}",
+                "Enum#{\"enum\":\"$[nodetype][conntypes]\"}",
+                "String",
+                "IPAddress",
+                "Integer#{\"min_value\": 0, \"max_value\": 65535}",
+                "String",
+                "Boolean#{\"default\": false}",
+                "Object#{\"object\": \"/system/types/NodeInfo\"}",
+                "Object#{\"object\": \"/system/types/AccountInfo\"}"
+            ],
+            "fieldNames": [
+                "nodetype",
+                "conntype",
+                "hostname",
+                "ipaddr",
+                "port",
+                "shell",
+                "use_shell",
+                "proxy",
+                "account"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/AccountInfo",
+        "display_name": "AccountInfo",
+        "description": "Type object of AccountInfo",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Username",
+                "Password",
+                "SSH key file",
+                "SSH key passphrase"
+            ],
+            "fieldTypes": [
+                "String",
+                "Password",
+                "File",
+                "Password"
+            ],
+            "fieldNames": [
+                "user",
+                "password",
+                "keyfile",
+                "passphrase"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Repository",
+        "display_name": "Repository",
+        "description": "Type object of Repository",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "URL",
+                "Repository type",
+                "Port number",
+                "Username",
+                "Password",
+                "Directory",
+                "Update config data",
+                "Log"
+            ],
+            "fieldNames": [
+                "URL",
+                "repositoryType",
+                "port",
+                "username",
+                "password",
+                "directory",
+                "updateConfig",
+                "log"
+            ],
+            "fieldTypes": [
+                "URL",
+                "Enum#{\"enum\": [\"git\", \"mercurial\"]}",
+                "Integer#{\"min_value\": 0, \"max_value\": 65535}",
+                "String",
+                "Password",
+                "Object#{\"object\": \"/system/types/Directory\"}",
+                "Boolean",
+                "LargeText#{\"invisible\": true}"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/MailChannel",
+        "display_name": "MailChannel",
+        "description": "Type object of MailChannel",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Message queue",
+                "Event queue",
+                "Server name",
+                "Protocol",
+                "SSL",
+                "Port number",
+                "Username",
+                "Password",
+                "Timeout",
+                "Use OAuth2",
+                "OAuth2 provider",
+                "Refresh token",
+                "Access token",
+                "Token expires at",
+                "Mailbox",
+                "Receive mode",
+                "Interval",
+                "Action type",
+                "Action target",
+                "Log",
+                "Log size",
+                "Disabled"
+            ],
+            "fieldTypes": [
+                "Array<Binary>#{\"invisible\": true}",
+                "Array<Binary>#{\"invisible\": true}",
+                "String",
+                "Enum#{\"enum\": [\"IMAP4\", \"POP3\"], \"default\": \"IMAP4\"}",
+                "Boolean",
+                "Integer#{\"min_value\": 0, \"max_value\": 65535}",
+                "String",
+                "Password",
+                "Integer#{\"default\": 60, \"min_value\": 0}",
+                "Boolean",
+                "Object#{\"object\": \"/system/types/OAuth2Provider\"}",
+                "Password#{\"invisible\": true}",
+                "Password#{\"invisible\": true}",
+                "Datetime#{\"invisible\": true}",
+                "String#{\"default\": \"INBOX\"}",
+                "Enum#{\"enum\":{\"switch\":\"$[protocol]\",\"case\":{\"IMAP4\":[[\"ReceiveAllAndDelete\",\"Receive all mail, and delete received mail.\"],[\"ReceiveUnseenAndSetSeen\",\"Receive unread mail, and mark received mail as read.\"]],\"POP3\":[[\"ReceiveAllAndDelete\",\"Receive all mail, and delete received mail.\"]]}}}",
+                "Integer#{\"default\": 10, \"min_value\": 0}",
+                "Enum#{\"enum\":[[\"NoAction\",\"No action\"],[\"ExecuteJobflow\",\"Execute jobflow\"]],\"default\":\"NoAction\"}",
+                "Object#{\"object\":{\"switch\":\"$[action_type]\",\"case\":{\"NoAction\":[],\"ExecuteJobflow\":\"/system/types/Jobflow\"}}}",
+                "LargeText#{\"invisible\": true}",
+                "Integer#{\"default\": 65536}",
+                "Boolean#{\"default\": true}"
+            ],
+            "fieldNames": [
+                "message_queue",
+                "event_queue",
+                "serverName",
+                "protocol",
+                "SSL",
+                "port",
+                "username",
+                "password",
+                "timeout",
+                "use_oauth2",
+                "oauth2_provider",
+                "refresh_token",
+                "access_token",
+                "token_expires_at",
+                "mailbox",
+                "receive_mode",
+                "checkInterval",
+                "action_type",
+                "action_target",
+                "log",
+                "logSize",
+                "disabled"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Form",
+        "display_name": "Form",
+        "description": "Type object of Form",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Submit object",
+                "Field names",
+                "Field display names",
+                "Field types"
+            ],
+            "fieldTypes": [
+                "Object#{\"object\": [\"/system/types/Jobflow\", \"/system/types/Channel\"], \"no_empty\": true}",
+                "Array",
+                "Array",
+                "Array"
+            ],
+            "fieldNames": [
+                "submitObject",
+                "fieldNames",
+                "fieldDisplayNames",
+                "fieldTypes"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Config",
+        "display_name": "Config",
+        "description": "Type object of Config",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Field names",
+                "Field display names",
+                "Field types"
+            ],
+            "fieldTypes": [
+                "Array",
+                "Array",
+                "Array"
+            ],
+            "fieldNames": [
+                "fieldNames",
+                "fieldDisplayNames",
+                "fieldTypes"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Library",
+        "display_name": "Library",
+        "description": "Type object of Library",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Library type",
+                "Module path",
+                "Source text",
+                "Document",
+                "Executable"
+            ],
+            "fieldTypes": [
+                "Enum#{\"enum\": [\"source\", \"safe_source\", \"module\"], \"default\": \"source\"}",
+                "String",
+                "LargeText",
+                "LargeText#{\"invisible\": true}",
+                "Boolean#{\"invisible\": true}"
+            ],
+            "fieldNames": [
+                "libraryType",
+                "modulePath",
+                "sourceText",
+                "document",
+                "executable"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/MailTemplate",
+        "display_name": "MailTemplate",
+        "description": "Type object of MailTemplate",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Subject",
+                "Body"
+            ],
+            "fieldTypes": [
+                "String",
+                "LargeText"
+            ],
+            "fieldNames": [
+                "subject",
+                "body"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Text",
+        "display_name": "Text",
+        "description": "Type object of Text",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Text",
+                "Extension",
+                "Content type",
+                "Context"
+            ],
+            "fieldTypes": [
+                "LargeText",
+                "String",
+                "String",
+                "Object#{\"object\": \"/system/types/Environment\"}"
+            ],
+            "fieldNames": [
+                "text",
+                "ext",
+                "contentType",
+                "context"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/SystemInfo",
+        "display_name": "SystemInfo",
+        "description": "Type object of SystemInfo",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [],
+            "fieldTypes": [],
+            "fieldNames": []
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/NodeType",
+        "display_name": "NodeType",
+        "description": "Type object of NodeType",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldNames": [
+                "conntypes"
+            ],
+            "fieldDisplayNames": [
+                "Connection types"
+            ],
+            "fieldTypes": [
+                "Dictionary"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/CustomStyle",
+        "display_name": "CustomStyle",
+        "description": "Type object of CustomStyle",
+        "owner": "root",
+        "typepath": "/system/types/TypeObject",
+        "fields": {
+            "extend": "",
+            "fieldNames": [
+                "mainBackColor",
+                "menubarBackColor",
+                "menubarTextColor",
+                "invertMode"
+            ],
+            "fieldDisplayNames": [
+                "Main background color",
+                "Menu bar background color",
+                "Menu bar text color",
+                "Invert mode"
+            ],
+            "fieldTypes": [
+                "String#{\"pattern\":\"^(#[0-9A-Fa-f]{3}|#[0-9A-Fa-f]{6}|(rgb|hsl)\\\\(.+,.+,.+\\\\)|[A-Za-z]+)$\"}",
+                "String#{\"pattern\":\"^(#[0-9A-Fa-f]{3}|#[0-9A-Fa-f]{6}|(rgb|hsl)\\\\(.+,.+,.+\\\\)|[A-Za-z]+)$\"}",
+                "String#{\"pattern\":\"^(#[0-9A-Fa-f]{3}|#[0-9A-Fa-f]{6}|(rgb|hsl)\\\\(.+,.+,.+\\\\)|[A-Za-z]+)$\"}",
+                "Boolean"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/OAuth2Provider",
+        "display_name": "OAuth2 service provider",
+        "description": "Type object for OAuth2 service provider",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldNames": [
+                "client_id",
+                "client_secret",
+                "auth_endpoint",
+                "token_endpoint",
+                "scope",
+                "redirect_url"
+            ],
+            "fieldDisplayNames": [
+                "Client ID",
+                "Client secret",
+                "Authorization endpoint",
+                "Token endpoint",
+                "Scope",
+                "Redirect URL"
+            ],
+            "fieldTypes": [
+                "String",
+                "Password",
+                "URL",
+                "URL",
+                "Array",
+                "URL"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/SmtpServer",
+        "display_name": "SMTP server",
+        "description": "Type object for SMTP server",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldNames": [
+                "hostname",
+                "port",
+                "username",
+                "password",
+                "timeout",
+                "use_tls",
+                "use_ssl",
+                "use_oauth2",
+                "oauth2_provider",
+                "refresh_token",
+                "access_token",
+                "token_expires_at"
+            ],
+            "fieldDisplayNames": [
+                "Host name",
+                "Port number",
+                "User name",
+                "Password",
+                "Timeout",
+                "Use TLS",
+                "Use SSL",
+                "Use OAuth2",
+                "OAuth2 provider",
+                "Refresh token",
+                "Access token",
+                "Token expires at"
+            ],
+            "fieldTypes": [
+                "String",
+                "Integer#{\"min_value\": 0, \"max_value\": 65535}",
+                "String",
+                "Password",
+                "Integer#{\"default\": 60, \"min_value\": 0}",
+                "Boolean",
+                "Boolean",
+                "Boolean",
+                "Object#{\"object\": \"/system/types/OAuth2Provider\"}",
+                "Password#{\"invisible\": true}",
+                "Password#{\"invisible\": true}",
+                "Datetime#{\"invisible\": true}"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/LdapServer",
+        "display_name": "LDAP Server",
+        "description": "Type object for LDAP server",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldNames": [
+                "server_url",
+                "timeout",
+                "use_starttls",
+                "fallback_login",
+                "session_expiration",
+                "bind_dn",
+                "bind_password",
+                "user_search_dn",
+                "user_search_scope",
+                "user_search_attribute",
+                "target_users",
+                "required_group_dn",
+                "group_search_dn",
+                "group_search_scope",
+                "group_search_class",
+                "group_type",
+                "mirror_groups",
+                "user_data_first_name",
+                "user_data_last_name",
+                "user_data_email"
+            ],
+            "fieldDisplayNames": [
+                "Server URL",
+                "Timeout (in seconds)",
+                "Use STARTTLS",
+                "Fallback Login",
+                "Session Expiration (in hours)",
+                "Bind DN",
+                "Bind Password",
+                "User Search DN",
+                "User Search Scope",
+                "User Search Attribute",
+                "Target Users",
+                "Required Group DN",
+                "Group Search DN",
+                "Group Search Scope",
+                "Group Search Class",
+                "Group Type",
+                "Mirror Groups",
+                "User Data (First Name)",
+                "User Data (Last Name)",
+                "User Data (Email)"
+            ],
+            "fieldTypes": [
+                "URL#{\"schemes\": [\"ldap\", \"ldaps\"]}",
+                "Integer#{\"default\": 10}",
+                "Boolean#",
+                "Boolean#",
+                "Float#{\"default\": 0, \"min_value\": 0, \"max_value\": 10000000}",
+                "String#",
+                "Password#",
+                "String#",
+                "Enum#{\"enum\": [\"BASE\", \"ONELEVEL\", \"SUBTREE\"], \"default\": \"SUBTREE\"}",
+                "String#{\"default\": \"name\"}",
+                "Array#",
+                "Array#",
+                "String#",
+                "Enum#{\"enum\": [\"BASE\", \"ONELEVEL\", \"SUBTREE\"], \"default\": \"SUBTREE\"}",
+                "String#{\"default\": \"group\"}",
+                "Enum#{\"enum\": [\"PosixGroup\", \"GroupOfNames\", \"NestedGroupOfNames\", \"GroupOfUniqueNames\", \"NestedGroupOfUniqueNames\", \"ActiveDirectoryGroup\", \"NestedActiveDirectoryGroup\", \"OrganizationalRoleGroup\", \"NestedOrganizationalRoleGroup\"]}",
+                "Array#",
+                "String#{\"default\": \"givenName\"}",
+                "String#{\"default\": \"sn\"}",
+                "String#{\"default\": \"mail\"}"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    }
+]

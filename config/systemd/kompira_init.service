@@ -1,0 +1,12 @@
+[Unit]
+Description=Kompira-init
+After=network.target
+Before=$NEW_PG_SERVICE.service rabbitmq-server.service kompirad.service kompira_jobmngrd.service pacemaker.service
+
+[Service]
+ExecStart=$KOMPIRA_BIN/kompira_init.sh
+Restart=no
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target

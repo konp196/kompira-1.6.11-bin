@@ -1,0 +1,394 @@
+[
+  {
+    "id": 4333,
+    "owner": "root",
+    "fields": {
+      "orderBy": "abspath",
+      "pageSize": 25
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-06T20:48:39.956622+09:00",
+    "updated": "2023-03-13T12:49:43.782143+09:00",
+    "display_name": "ユーティリティ一覧",
+    "description": "",
+    "parent_object": "/system",
+    "objpath": "system/utilities",
+    "typepath": "/system/types/Directory"
+  },
+  {
+    "id": 4334,
+    "owner": "root",
+    "fields": {
+      "wikitext": "# 1. 標準ユーティリティ\r\n\r\nKompira Enterprise の利便性を向上させる補助的なジョブフロー類を提供します。\r\n\r\n- 標準ユーティリティは Fixpoint が開発・提供・保守します。\r\n- Kompira Enterprise 本体のサポート対象範囲に標準ユーティリティも含まれます。\r\n- Kompira Enterprise のバージョンアップに伴い標準ユーティリティが更新される場合があり、その際は標準ユーティリティのジョブフロー実装などは上書きされます。\r\n- 標準ユーティリティの変更履歴については [Changelog](./ChangeLog) を参照してください。\r\n\r\n# 2. ユーティリティカテゴリ\r\n\r\n標準ユーティリティはいくつかのカテゴリに分類して提供します。\r\n\r\n## 2.1. [メンテナンス](./maintenance/README)\r\n\r\nKompira サーバのメンテナンスを行なうユーティリティのカテゴリです。\r\n\r\n- [プロセスクリーナー](./maintenance/ProcessCleaner): 古いプロセスを一括削除します。\r\n\r\n",
+      "style": "Markdown"
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-07T14:12:38.251677+09:00",
+    "updated": "2023-03-13T12:48:36.173457+09:00",
+    "display_name": "README",
+    "description": "",
+    "parent_object": "system/utilities",
+    "objpath": "system/utilities/README",
+    "typepath": "/system/types/Wiki"
+  },
+  {
+    "id": 4335,
+    "owner": "root",
+    "fields": {
+      "orderBy": "abspath",
+      "pageSize": 25
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-07T14:13:26.924765+09:00",
+    "updated": "2023-03-09T10:04:11.892069+09:00",
+    "display_name": "common",
+    "description": "",
+    "parent_object": "system/utilities",
+    "objpath": "system/utilities/common",
+    "typepath": "/system/types/Directory"
+  },
+  {
+    "id": 4336,
+    "owner": "root",
+    "fields": {
+      "orderBy": "abspath",
+      "pageSize": 25
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-08T13:54:04.762359+09:00",
+    "updated": "2023-03-09T10:04:26.758100+09:00",
+    "display_name": "maintenance",
+    "description": "",
+    "parent_object": "system/utilities",
+    "objpath": "system/utilities/maintenance",
+    "typepath": "/system/types/Directory"
+  },
+  {
+    "id": 4337,
+    "owner": "root",
+    "fields": {
+      "wikitext": "## Ver.1.0.0 (2023/04/04)\r\n\r\n- 標準ユーティリティの初版リリース",
+      "style": "Markdown"
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-09T09:58:36.139688+09:00",
+    "updated": "2023-04-04T14:44:41.776894+09:00",
+    "display_name": "ChangeLog",
+    "description": "",
+    "parent_object": "system/utilities",
+    "objpath": "system/utilities/ChangeLog",
+    "typepath": "/system/types/Wiki"
+  },
+  {
+    "id": 4338,
+    "owner": "root",
+    "fields": {
+      "fieldNames": [],
+      "fieldDisplayNames": [],
+      "fieldTypes": []
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-09T10:03:53.066018+09:00",
+    "updated": "2023-03-09T10:03:53.092446+09:00",
+    "data": {},
+    "display_name": "Settings",
+    "description": "",
+    "parent_object": "system/utilities/common",
+    "objpath": "system/utilities/common/Settings",
+    "typepath": "/system/types/Config"
+  },
+  {
+    "id": 4339,
+    "owner": "root",
+    "fields": {
+      "orderBy": "",
+      "pageSize": 25
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-09T10:04:01.968918+09:00",
+    "updated": "2023-03-09T10:04:02.024431+09:00",
+    "display_name": "libraries",
+    "description": "",
+    "parent_object": "system/utilities/common",
+    "objpath": "system/utilities/common/libraries",
+    "typepath": "/system/types/Directory"
+  },
+  {
+    "id": 4340,
+    "owner": "root",
+    "fields": {
+      "orderBy": "",
+      "pageSize": 25
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-09T10:04:06.983162+09:00",
+    "updated": "2023-03-09T10:04:07.031891+09:00",
+    "display_name": "jobflows",
+    "description": "",
+    "parent_object": "system/utilities/common",
+    "objpath": "system/utilities/common/jobflows",
+    "typepath": "/system/types/Directory"
+  },
+  {
+    "id": 4341,
+    "owner": "root",
+    "fields": {
+      "orderBy": "abspath",
+      "pageSize": 25
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-09T10:04:59.743316+09:00",
+    "updated": "2023-03-09T10:04:59.780315+09:00",
+    "display_name": "jobflows",
+    "description": "",
+    "parent_object": "system/utilities/maintenance",
+    "objpath": "system/utilities/maintenance/jobflows",
+    "typepath": "/system/types/Directory"
+  },
+  {
+    "id": 4342,
+    "owner": "root",
+    "fields": {
+      "orderBy": "abspath",
+      "pageSize": 25
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-09T10:05:05.165117+09:00",
+    "updated": "2023-03-09T10:05:05.206236+09:00",
+    "display_name": "configs",
+    "description": "",
+    "parent_object": "system/utilities/maintenance",
+    "objpath": "system/utilities/maintenance/configs",
+    "typepath": "/system/types/Directory"
+  },
+  {
+    "id": 4343,
+    "owner": "root",
+    "fields": {
+      "wikitext": "# メンテナンスユーティリティ\r\nKompira サーバのメンテナンスを行なうためのユーティリティです。\r\n\r\n## ProcessCleaner (プロセスクリーナー)\r\n\r\nVersion: 1.0.0 (2023/04/04)\r\n\r\n古いプロセスを削除します。\r\n\r\n### 使い方\r\n\r\nフォーム [ProcessCleaner](./ProcessCleaner) から実行することができます。\r\n\r\n- パラメータ「プロセス保持日数」で指定した日数分のプロセスは削除せずに保持します。\r\n    - 実行した日から「プロセス保持日数」分過去の日付と基準時刻を合わせて「基準日時」として、それより前に終了したプロセスが削除対象となります。\r\n    - プロセス保持日数に 0 を指定すると実行した当日の基準時刻が基準日時になります。\r\n- パラメータ「詳細表示」をチェックすると削除対象のプロセスの情報を表示します。\r\n- パラメータ「Dry-Run」をチェックすると実際にはプロセスを削除しません。\r\n\r\n### 設定\r\n\r\nオブジェクト [ProcessCleaner](./configs/ProcessCleaner) でプロセスクリーナーの動作を設定することができます。\r\n\r\n- プロセス保持日数(retention_days): プロセスの保持日数を指定します (パラメータが優先されます)。\r\n    - デフォルトでは 365 日となっていますので、保持したい日数に変更してください。\r\n- 基準時刻(reference_time): 削除対象のプロセスを絞り込む時刻を指定します。\r\n- 追加クエリ(extra_query): 削除対象のプロセスを絞り込む追加クエリを指定します。\r\n    - Process オブジェクトの [find()](/.static/docs/ja/library.html#method-ProcessRoot.find) メソッドのパラメータを指定できます。\r\n- 削除単位個数(chunk_limit): 高負荷防止のため削除対象となったプロセスを指定した個数ごとに削除します(1～100000)。\r\n- 最大ループ回数(loop_max): 削除処理を最大何回繰り返すか指定します。\r\n- ループ間スリープ時間(loop_wait): 高負荷防止のため削除処理ごとに挿入するスリープ時間を秒数で指定します(0.0～10.0)。\r\n- タイムアウト(timeout): この時間（秒数）が経過したらループ回数や削除対象が残っていても終了します(1～3600)。\r\n- 詳細表示(verbose): チェックすると削除対象のプロセスの情報を表示します (パラメータが優先されます)。\r\n\r\n\r\n### スケジュール\r\n\r\nジョブフロー [ProcessCleaner](./jobflows/ProcessCleaner) を [スケジューラ](/scheduler) に登録して、定期的に実行させることができます。\r\n\r\n- 日次的あるいは週次的なスケジュール設定をお勧めします。\r\n    - 日次での設定例: 毎日 2:00 に実行 (時=2)\r\n    - 週次での設定例: 毎週月曜日の 1:00 に実行 (曜日='mon', 時=1)\r\n",
+      "style": "Markdown"
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-09T10:05:33.545509+09:00",
+    "updated": "2023-04-04T14:45:29.612386+09:00",
+    "display_name": "README",
+    "description": "",
+    "parent_object": "system/utilities/maintenance",
+    "objpath": "system/utilities/maintenance/README",
+    "typepath": "/system/types/Wiki"
+  },
+  {
+    "id": 4344,
+    "owner": "root",
+    "fields": {
+      "submitObject": "system/utilities/maintenance/jobflows/ProcessCleaner",
+      "fieldNames": [
+        "retention_days",
+        "verbose",
+        "dry_run"
+      ],
+      "fieldDisplayNames": [
+        "プロセス保持日数",
+        "詳細表示",
+        "Dry-Run"
+      ],
+      "fieldTypes": [
+        "Integer#{\"default\":365,\"min_value\":0,\"help_text\":\"指定した日数分のプロセスは削除せずに保持します。実行した日から「プロセス保持日数」分過去の日付と基準時刻を合わせて「基準日時」として、それより前に終了したプロセスが削除対象となります。プロセス保持日数に 0 を指定すると実行した当日の基準時刻が基準日時になります。\"}",
+        "Boolean#{\"default\":false,\"help_text\":\"チェックすると削除対象のプロセスの情報を表示します。\"}",
+        "Boolean#{\"default\":false,\"help_text\":\"チェックしている場合は実際にはプロセスを削除しません。\"}"
+      ]
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-09T10:09:20.017631+09:00",
+    "updated": "2023-03-23T18:53:14.011985+09:00",
+    "display_name": "プロセスクリーナー",
+    "description": "",
+    "parent_object": "system/utilities/maintenance",
+    "objpath": "system/utilities/maintenance/ProcessCleaner",
+    "typepath": "/system/types/Form"
+  },
+  {
+    "id": 4345,
+    "owner": "root",
+    "fields": {
+      "fieldNames": [
+        "retention_days",
+        "reference_time",
+        "extra_query",
+        "chunk_limit",
+        "loop_max",
+        "loop_wait",
+        "timeout",
+        "verbose"
+      ],
+      "fieldDisplayNames": [
+        "プロセス保持日数",
+        "基準時刻",
+        "追加クエリ",
+        "削除単位個数",
+        "最大ループ回数",
+        "ループ間スリープ時間(秒)",
+        "タイムアウト(秒)",
+        "詳細表示"
+      ],
+      "fieldTypes": [
+        "Integer#{\"default\":365,\"min_value\":0,\"help_text\":\"指定した日数分のプロセスは削除せずに保持します。実行した日から「プロセス保持日数」分過去の日付と基準時刻を合わせて「基準日時」として、それより前に終了したプロセスが削除対象となります。プロセス保持日数に 0 を指定すると実行した当日の基準時刻が基準日時になります。\"}",
+        "Time#{\"default\":\"00:00:00\",\"help_text\":\"削除対象のプロセスを絞り込む時刻を指定します。\"}",
+        "Dictionary#{\"default\":{},\"help_text\":\"削除対象のプロセスを絞り込む追加クエリを指定します。\"}",
+        "Integer#{\"default\":1000,\"min_value\":1,\"max_value\":100000,\"help_text\":\"高負荷防止のため削除対象となったプロセスを指定した個数ごとに削除します(1～100000)。\"}",
+        "Integer#{\"default\":100,\"min_value\":1,\"help_text\":\"削除処理を最大何回繰り返すか指定します。\"}",
+        "Float#{\"default\":1,\"min_value\":0,\"max_value\":10,\"help_text\":\"高負荷防止のため削除処理ごとに挿入するスリープ時間を秒数で指定します(0.0～10.0)。\"}",
+        "Integer#{\"default\":300,\"min_value\":1,\"max_value\":3600,\"help_text\":\"この時間（秒数）が経過したらループ回数や削除対象が残っていても終了します(1～3600)。\"}",
+        "Boolean#{\"default\":false,\"help_text\":\"チェックすると削除対象のプロセスの情報を表示します。\"}"
+      ]
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": false,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-10T09:50:10.648146+09:00",
+    "updated": "2023-04-04T16:50:00.112914+09:00",
+    "data": {
+      "retention_days": 365,
+      "reference_time": "00:00:00",
+      "extra_query": {},
+      "chunk_limit": 1000,
+      "loop_max": 100,
+      "loop_wait": 1.0,
+      "timeout": 300,
+      "verbose": false
+    },
+    "display_name": "ProcessCleaner",
+    "description": "ユーティリティ ProcessCleaner の設定",
+    "parent_object": "system/utilities/maintenance/configs",
+    "objpath": "system/utilities/maintenance/configs/ProcessCleaner",
+    "typepath": "/system/types/Config"
+  },
+  {
+    "id": 4353,
+    "owner": "root",
+    "fields": {
+      "source": "#---------------------------------------------------------------\r\n# copyright: (C) 2023 Fixpoint inc.\r\n# name: ProcessCleaner\r\n# description: 古いプロセスを削除します\r\n# version: 1.0.0\r\n# updated: 2023/03/14\r\n# author: @takahashi\r\n# history:\r\n#   1.0.0: 2023/03/14: Initial release\r\n#\r\n# parameters:\r\n#   retention_days: プロセスの保持日数\r\n#     - 指定した日数分のプロセスは削除せずに保持する。\r\n#     - 実行した日から「プロセス保持日数」分過去の日付と基準時刻を合わせて「基準日時」として、\r\n#       それより前に終了したプロセスが削除対象となる。\r\n#     - プロセス保持日数に 0 を指定すると実行した当日の基準時刻が基準日時になる。\r\n#   extra_query: 削除対象プロセスを絞り込む追加クエリ\r\n#   verbose: true のとき削除対象のプロセス詳細を表示する\r\n#   dry_run: true のときはプロセスを削除しない\r\n#   config: 設定オブジェクト\r\n#\r\n# config: ../configs/ProcessCleaner\r\n#   retention_days: プロセスの保持日数 (パラメータが優先される)\r\n#   reference_time: 削除対象を絞り込む基準時刻\r\n#   extra_query: 削除対象プロセスを絞り込む追加クエリ (パラメータが優先される)\r\n#   chunk_limit: 一度に削除する最大プロセス数\r\n#   loop_max: chunk_limit ごとの削除処理を繰り返す最大回数\r\n#   loop_wait: 削除処理の間に挿入するスリープ時間\r\n#   timeout: 処理全体のタイムアウト(秒数)\r\n#   verbose: true のとき削除対象のプロセス詳細を表示する (パラメータが優先される)\r\n#\r\n# result:\r\n#   found: 削除対象となったプロセスの個数\r\n#   deleted: 実際に削除したプロセスの個数\r\n#\r\n# memo:\r\n#   削除処理の高負荷防止対策:\r\n#     - 削除対象となったプロセスを一定個数 (chunk_limit) ごとに削除する\r\n#     - 一定個数削除ごとに loop_wait 秒の sleep() 挿入により他プロセスに動作を譲る\r\n#     - 一定時間が経過した場合は終了する\r\n#\r\n# requires:\r\n#   kompira >= v1.6.8\r\n#---------------------------------------------------------------\r\n|retention_days = null|\r\n|extra_query = null|\r\n|verbose = null|\r\n|dry_run = false|\r\n|config = ../configs/ProcessCleaner|\r\n\r\n# 設定の読み込み\r\n[config_data = config.data] ->\r\n{ if retention_days == null |\r\n    [retention_days = config_data['retention_days']]\r\n} ->\r\n{ if extra_query == null |\r\n    [extra_query = config_data['extra_query']]\r\n} ->\r\n{ if verbose == null |\r\n    [verbose = config_data['verbose']]\r\n} ->\r\n[reference_time = config_data['reference_time']] ->\r\n[chunk_limit = config_data['chunk_limit']] ->\r\n[loop_max = config_data['loop_max']] ->\r\n[loop_wait = config_data['loop_wait']] ->\r\n[timeout = config_data['timeout']] ->\r\nprint(\"%date [ProcessCleaner]: config=$config\" % {date = now()}) ->\r\nprint(\"%date [ProcessCleaner]: $retention_days, $reference_time, $chunk_limit, $loop_max, $loop_wait, $timeout\" % {date = now()}) ->\r\n\r\n# 基準日時の計算\r\n[reference_datetime = datetime(now().date, reference_time)] ->\r\n[finished_before = reference_datetime - timedelta(days=retention_days)] ->\r\n\r\n# 削除対象プロセスの絞り込み\r\n[deleted_count = 0] ->\r\n[query = {\r\n    'finished_time__lt': finished_before,\r\n    'order_by': 'finished_time'\r\n}] ->\r\n{ if extra_query |\r\n    { for key in extra_query |\r\n        [extra_query[key] >> query[key]]\r\n    }\r\n} ->\r\nprint(\"%date [ProcessCleaner]: Find processes to be deleted: query=$query\" % {date = now()}) ->\r\n[found_count = length(/process.find(**query))] ->\r\n{ if found_count == 0 |\r\nthen:\r\n    # 削除対象のプロセスなし\r\n    print(\"%date [ProcessCleaner]: No processes to be deleted\" % {date = now()})\r\nelse:\r\n    # 削除対象のプロセスがある場合は chunk_limit 個数ごとに削除する\r\n    print(\"%date [ProcessCleaner]: Start deleting processes: found_count=$found_count\" % {date = now()}) ->\r\n    [chunk_limit >> query['limit']] ->\r\n    [timelimit = now() + timedelta(seconds=timeout)] ->\r\n    [loop = 1] ->\r\n    { while loop <= loop_max |\r\n        print(\"%date [ProcessCleaner]: -------- Loop #$loop (max=$loop_max) --------\" % {date = now()}) ->\r\n        { if now() >= timelimit |\r\n        then:\r\n            print(\"%date [ProcessCleaner]: Time limit exceeded: timelimit=$timelimit\" % {date = now()}) ->\r\n            break\r\n        elif loop > 1 and not dry_run:\r\n            print(\"%date [ProcessCleaner]: Wait for $loop_wait seconds and start selecting processes.\" % {date = now()}) ->\r\n            sleep(loop_wait)\r\n        } ->\r\n        print(\"%date [ProcessCleaner]: Select processes to be deleted: query=$query\" % {date = now()}) ->\r\n        [chunk_processes = /process.find(**query)] ->\r\n        [chunk_count = length(chunk_processes)] ->\r\n        print(\"%date [ProcessCleaner]: $chunk_count applicable processes found.\" % {date = now()}) ->\r\n        { if chunk_count == 0 |\r\n            break\r\n        } ->\r\n        { if verbose |\r\n            { for p in chunk_processes |\r\n                print(\"%date [ProcessCleaner]:\" % {date = now()}, p.pid, p.status, p.started_time, p.finished_time, p.parent, p.schedule, p.job)\r\n            }\r\n        } ->\r\n        { if not dry_run |\r\n        then:\r\n            # 削除対象プロセスの１チャンク分を一括削除する\r\n            [t0 = now()] ->\r\n            [deleted = chunk_processes.delete()] ->\r\n            [t1 = now(), elapsed = t1 - t0] ->\r\n            print(\"%date [ProcessCleaner]: Deleted $deleted processes (elapsed=$elapsed)\" % {date = now()}) ->\r\n            [deleted_count = deleted_count + deleted]\r\n        else:\r\n            [deleted_count = deleted_count + chunk_count] ->\r\n            [deleted_count >> query['offset']]\r\n        } ->\r\n        { if chunk_count < chunk_limit |\r\n            break\r\n        } ->\r\n        [loop = loop + 1]\r\n    } ->\r\n    print(\"%date [ProcessCleaner]: Finished deleting processes: deleted_count=$deleted_count\" % {date = now()})\r\n} ->\r\nreturn({found=found_count, deleted=deleted_count})\r\n",
+      "multiplicity": null,
+      "defaultCheckpointMode": false,
+      "defaultMonitoringMode": "NOTHING"
+    },
+    "user_permissions": {},
+    "group_permissions": {
+      "other": {
+        "readable": true,
+        "writable": false,
+        "executable": true,
+        "priority": 0
+      }
+    },
+    "created": "2023-03-07T14:15:59.834868+09:00",
+    "updated": "2023-04-04T14:46:35.589363+09:00",
+    "display_name": "プロセスクリーナー",
+    "description": "指定した保持期間より前に完了したプロセスを削除します。",
+    "parent_object": "system/utilities/maintenance/jobflows",
+    "objpath": "system/utilities/maintenance/jobflows/ProcessCleaner",
+    "typepath": "/system/types/Jobflow"
+  }
+]

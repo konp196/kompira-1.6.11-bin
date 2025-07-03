@@ -1,0 +1,2281 @@
+[
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "a10/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) A10",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/A10",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "accedian/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Accedian",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Accedian",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "adtran_os/telnet": "TELNET",
+                "adtran_os/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Adtran OS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Adtran_OS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "alcatel_aos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Alcatel AOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Alcatel_AOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "alcatel_sros/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Alcatel SR OS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Alcatel_SR_OS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "allied_telesis_awplus/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Allied Telesis AWPlus",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Allied_Telesis_AWPlus",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "apresia_aeos/telnet": "TELNET",
+                "apresia_aeos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Apresia AEOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Apresia_AEOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "arista_eos/telnet": "TELNET",
+                "arista_eos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Arista EOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Arista_EOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "aruba_os/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Aruba OS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Aruba_OS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "aruba_osswitch/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Aruba OS Switch",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Aruba_OS_Switch",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "aruba_procurve/telnet": "TELNET",
+                "aruba_procurve/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Aruba Procurve",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Aruba_Procurve",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "avaya_ers/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Avaya ERS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Avaya_ERS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "avaya_vsp/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Avaya VSP",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Avaya_VSP",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "broadcom_icos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Broadcom ICOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Broadcom_ICOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "brocade_fastiron/telnet": "TELNET",
+                "brocade_fastiron/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Brocade FastIron",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Brocade_FastIron",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "brocade_fos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Brocade FOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Brocade_FOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "brocade_netiron/telnet": "TELNET",
+                "brocade_netiron/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Brocade NetIron",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Brocade_NetIron",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "brocade_nos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Brocade NOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Brocade_NOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "brocade_vdx/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Brocade VDX",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Brocade_VDX",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "brocade_vyos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Brocade VyOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Brocade_VyOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "calix_b6/telnet": "TELNET",
+                "calix_b6/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Calix B6",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Calix_B6",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cdot_cros/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) C-DOT CROS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/C_DOT_CROS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "centec_os/telnet": "TELNET",
+                "centec_os/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Centec OS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Centec_OS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "checkpoint_gaia/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) CheckPoint GAIA",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/CheckPoint_GAIA",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "ciena_saos/telnet": "TELNET",
+                "ciena_saos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Ciena SAOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Ciena_SAOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cisco_asa/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "Cisco ASA",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Cisco_ASA",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cisco_ftd/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Cisco FTD",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Cisco_FTD",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cisco_ios/telnet": "TELNET",
+                "cisco_ios/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "Cisco IOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Cisco_IOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cisco_nxos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Cisco NX-OS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Cisco_NX_OS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cisco_s300/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Cisco S300",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Cisco_S300",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cisco_tp/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Cisco TP",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Cisco_TP",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cisco_wlc/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Cisco WLC",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Cisco_WLC",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cisco_xe/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Cisco IOS-XE",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Cisco_IOS_XE",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cisco_xr/telnet": "TELNET",
+                "cisco_xr/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Cisco IOS-XR",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Cisco_IOS_XR",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "cloudgenix_ion/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) CloudGenix ION",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/CloudGenix_ION",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "coriant/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Coriant",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Coriant",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "dell_dnos6/telnet": "TELNET"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Dell DNOS6",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Dell_DNOS6",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "dell_dnos9/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Dell DNOS9",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Dell_DNOS9",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "dell_force10/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Dell Force10",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Dell_Force10",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "dell_isilon/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Dell Isilon",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Dell_Isilon",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "dell_os10/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Dell OS10",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Dell_OS10",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "dell_os6/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Dell OS6",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Dell_OS6",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "dell_os9/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Dell OS9",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Dell_OS9",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "dell_powerconnect/telnet": "TELNET",
+                "dell_powerconnect/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Dell PowerConnect",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Dell_PowerConnect",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "dlink_ds/telnet": "TELNET",
+                "dlink_ds/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) D-Link DS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/D_Link_DS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "eltex/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Eltex",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Eltex",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "eltex_esr/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Eltex ESR",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Eltex_ESR",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "endace/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Endace",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Endace",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "enterasys/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Enterasys",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Enterasys",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "ericsson_ipos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Ericsson IPOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Ericsson_IPOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "extreme/telnet": "TELNET",
+                "extreme/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Extreme",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Extreme",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "extreme_ers/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Extreme ERS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Extreme_ERS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "extreme_exos/telnet": "TELNET",
+                "extreme_exos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Extreme EXOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Extreme_EXOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "extreme_netiron/telnet": "TELNET",
+                "extreme_netiron/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Extreme NetIron",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Extreme_NetIron",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "extreme_nos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Extreme NOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Extreme_NOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "extreme_slx/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Extreme SLX",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Extreme_SLX",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "extreme_vdx/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Extreme VDX",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Extreme_VDX",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "extreme_vsp/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Extreme VSP",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Extreme_VSP",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "extreme_wing/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Extreme Wing",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Extreme_Wing",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "f5_ltm/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) F5 LTM",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/F5_LTM",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "f5_tmsh/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) F5 TMSH",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/F5_TMSH",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "flexvnf/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) FlexVNF",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/FlexVNF",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "fortinet/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Fortinet",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Fortinet",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "hp_comware/telnet": "TELNET",
+                "hp_comware/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) HP Comware",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/HP_Comware",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "hp_procurve/telnet": "TELNET",
+                "hp_procurve/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "HP ProCurve",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/HP_ProCurve",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "huawei/telnet": "TELNET",
+                "huawei/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Huawei",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Huawei",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "huawei_olt/telnet": "TELNET",
+                "huawei_olt/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Huawei OLT",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Huawei_OLT",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "huawei_smartax/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Huawei SmartAX",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Huawei_SmartAX",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "huawei_vrpv8/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Huawei VRPv8",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Huawei_VRPv8",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "ipinfusion_ocnos/telnet": "TELNET",
+                "ipinfusion_ocnos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) IP Infusion OcNOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/IP_Infusion_OcNOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "juniper/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Juniper",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Juniper",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "juniper_junos/telnet": "TELNET",
+                "juniper_junos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Juniper Junos",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Juniper_Junos",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "juniper_screenos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "Juniper ScreenOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Juniper_ScreenOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "keymile/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Keymile",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Keymile",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "keymile_nos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Keymile NOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Keymile_NOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "mellanox/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Mellanox",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Mellanox",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "mellanox_mlnxos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Mellanox MLNXOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Mellanox_MLNXOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "mikrotik_routeros/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) MikroTik RouterOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/MikroTik_RouterOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "mikrotik_switchos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) MikroTik SwitchOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/MikroTik_SwitchOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "mrv_lx/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) MRV LX",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/MRV_LX",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "mrv_optiswitch/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) MRV OptiSwitch",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/MRV_OptiSwitch",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "netapp_cdot/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) NetApp cDOT",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/NetApp_cDOT",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "netgear_prosafe/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) NETGEAR ProSAFE",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/NETGEAR_ProSAFE",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "netscaler/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) NetScaler",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/NetScaler",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "nokia_sros/telnet": "TELNET",
+                "nokia_sros/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Nokia SROS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Nokia_SROS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "oneaccess_oneos/telnet": "TELNET",
+                "oneaccess_oneos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) OneAccess OneOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/OneAccess_OneOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "paloalto_panos/telnet": "TELNET",
+                "paloalto_panos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) PaloAlto PAN-OS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/PaloAlto_PAN_OS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "pluribus/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Pluribus",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Pluribus",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "quanta_mesh/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Quanta Mesh",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Quanta_Mesh",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "rad_etx/telnet": "TELNET",
+                "rad_etx/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Rad ETX",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Rad_ETX",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "raisecom/telnet": "TELNET"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Raisecom",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Raisecom",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "raisecom_roap/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Raisecom Roap",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Raisecom_Roap",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "ruckus_fastiron/telnet": "TELNET",
+                "ruckus_fastiron/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Ruckus FastIron",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Ruckus_FastIron",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "ruijie_os/telnet": "TELNET",
+                "ruijie_os/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Ruijie OS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Ruijie_OS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "sixwind_os/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Sixwind OS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Sixwind_OS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "sophos_sfos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Sophos SFOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Sophos_SFOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "supermicro_smis/telnet": "TELNET",
+                "supermicro_smis/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Supermicro SMIS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Supermicro_SMIS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "tplink_jetstream/telnet": "TELNET",
+                "tplink_jetstream/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) TP-Link JetStream",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/TP_Link_JetStream",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "ubiquiti_edge/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Ubiquiti Edge",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Ubiquiti_Edge",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "ubiquiti_edgerouter/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Ubiquiti EdgeRouter",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Ubiquiti_EdgeRouter",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "ubiquiti_edgeswitch/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Ubiquiti EdgeSwitch",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Ubiquiti_EdgeSwitch",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "ubiquiti_unifiswitch/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Ubiquiti UniFi Switch",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Ubiquiti_UniFi_Switch",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "vyatta_vyos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Vyatta VyOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Vyatta_VyOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "vyos/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) VyOS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/VyOS",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "watchguard_fireware/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) Watchguard Fireware",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Watchguard_Fireware",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "yamaha/telnet": "TELNET",
+                "yamaha/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "Yamaha",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/Yamaha",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "zte_zxros/telnet": "TELNET",
+                "zte_zxros/ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "(beta) ZTE ZXROS",
+        "description": "",
+        "objpath": "system/nodetypes/Devices/ZTE_ZXROS",
+        "typepath": "system/types/NodeType"
+    }
+]

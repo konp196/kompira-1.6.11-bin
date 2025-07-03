@@ -1,0 +1,11 @@
+$KOMPIRA_LOG_DIR/audit-*.log {
+    daily
+    rotate 365
+    compress
+    delaycompress
+    dateext
+    notifempty
+    missingok
+    nocreate
+    su root kompira
+}

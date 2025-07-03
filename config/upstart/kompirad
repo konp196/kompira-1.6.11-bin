@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# kompirad          Start/Stop the kompira daemon.
+#
+# chkconfig: 2345 99 016
+#
+
+case "$1" in
+    start)
+        initctl emit start_kompirad
+        ;;
+    stop)
+        initctl emit stop_kompirad
+        ;;
+    restart)
+        initctl emit start_kompirad
+        initctl emit stop_kompirad
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|restart}"
+        exit 2
+esac
+exit $?

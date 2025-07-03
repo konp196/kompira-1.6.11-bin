@@ -1,0 +1,947 @@
+[
+    {
+        "updated": "2014-11-17T10:36:39.541227", 
+        "display_name": "test", 
+        "created": "2014-11-17T10:36:38.077993", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": ".", 
+        "id": 49, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:39.549933", 
+        "display_name": "config", 
+        "created": "2014-11-17T10:36:38.097466", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/config", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test", 
+        "id": 50, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:39.560322", 
+        "display_name": "scenario", 
+        "created": "2014-11-17T10:36:38.116021", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/scenario", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test", 
+        "id": 51, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:39.682678", 
+        "display_name": "test_linux_server", 
+        "created": "2014-11-17T10:36:38.145702", 
+        "group_permissions": {}, 
+        "typepath": "system/types/NodeInfo", 
+        "owner": "root", 
+        "objpath": "test/config/test_linux_server", 
+        "fields": {
+            "account": "test/config/test_linux_user", 
+            "shell": "", 
+            "hostname": "", 
+            "ipaddr": "", 
+            "conntype": "ssh", 
+            "proxy": null, 
+            "port": null, 
+            "use_shell": true
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/config", 
+        "id": 52, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:39.828985", 
+        "display_name": "test_win_server", 
+        "created": "2014-11-17T10:36:38.174698", 
+        "group_permissions": {}, 
+        "typepath": "system/types/NodeInfo", 
+        "owner": "root", 
+        "objpath": "test/config/test_win_server", 
+        "fields": {
+            "account": "test/config/test_win_user", 
+            "shell": "", 
+            "hostname": "", 
+            "ipaddr": "", 
+            "conntype": "", 
+            "proxy": null, 
+            "port": null, 
+            "use_shell": true
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/config", 
+        "id": 53, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:39.879766", 
+        "display_name": "test_linux_user", 
+        "created": "2014-11-17T10:36:38.200479", 
+        "group_permissions": {}, 
+        "typepath": "system/types/AccountInfo", 
+        "owner": "root", 
+        "objpath": "test/config/test_linux_user", 
+        "fields": {
+            "password": "", 
+            "keyfile": {
+                "path": "", 
+                "name": ""
+            }, 
+            "user": ""
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/config", 
+        "id": 54, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:39.925407", 
+        "display_name": "test_win_user", 
+        "created": "2014-11-17T10:36:38.229853", 
+        "group_permissions": {}, 
+        "typepath": "system/types/AccountInfo", 
+        "owner": "root", 
+        "objpath": "test/config/test_win_user", 
+        "fields": {
+            "password": "", 
+            "keyfile": {
+                "path": "", 
+                "name": ""
+            }, 
+            "user": ""
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/config", 
+        "id": 55, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:39.934232", 
+        "display_name": "jobflow", 
+        "created": "2014-11-17T10:36:38.250672", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/jobflow", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test", 
+        "id": 56, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:40.005296", 
+        "display_name": "config", 
+        "created": "2014-11-17T10:36:38.276723", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Config", 
+        "owner": "root", 
+        "objpath": "test/config/config", 
+        "fields": {
+            "fieldDisplayNames": [
+                "レポート先メール", 
+                "並列数", 
+                "繰り返し数"
+            ], 
+            "fieldTypes": [
+                "EMail#", 
+                "Integer#{ \"default\": 100 }", 
+                "Integer#{ \"default\": 100 }"
+            ], 
+            "fieldNames": [
+                "report_to", 
+                "parallel_num", 
+                "iteration_num"
+            ]
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/config", 
+        "id": 57, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:40.223004", 
+        "display_name": "send_report", 
+        "created": "2014-11-17T10:36:38.306916", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/jobflow/send_report", 
+        "fields": {
+            "source": "| result |\r\n| config = ../config/config.data |\r\n\r\n[test_num = result['ok_num'] + result['ng_num']] ->\r\n[time = result['end'] - result['start']] ->\r\n[subject = '[Kompira] 自動テスト結果@%test_server: 失敗=%ng_num, 成功=%ok_num, テスト数=$test_num' % result] ->\r\n[to_addr = config['report_to']] ->\r\n[detail = ''] ->\r\n{ for test_name in result['results'] |\r\n  json_parse(result['results'][test_name]) ->\r\n  [test_result = $RESULT[0], test_proc = $RESULT[1]] ->\r\n  [detail = detail + '* $test_name ($test_proc) ---> $test_result\\n'] ->\r\n  { if test_result != 'OK' |\r\n    path(test_proc) ->\r\n    { for p in $RESULT.children |\r\n      { if p.status == 'DONE' | continue } ->\r\n      [console = p.console] ->\r\n      [detail = detail + \"\"\"---- $p\r\n$console\r\n----\r\n\"\"\"]\r\n    }\r\n  }\r\n} ->\r\n[body = \"\"\"【概要】\r\n* テスト実行サーバ: %test_server\r\n* 開始/終了日時: %start - %end ($time)\r\n* 失敗: %ok_num\r\n* 成功: %ng_num\r\n* テスト数: $test_num\r\n----------------------------------------------------------------\r\n【テスト結果】\r\n$detail\r\n\"\"\" % result] ->\r\nmailto(to = to_addr, subject = subject, body = body) ->\r\nprint('**** 結果レポートメールを $to_addr に送信しました ****')", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/jobflow", 
+        "id": 58, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:40.242556", 
+        "display_name": "type", 
+        "created": "2014-11-17T10:36:38.329147", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/type", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test", 
+        "id": 59, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:39.530113", 
+        "display_name": "TestResult", 
+        "created": "2014-11-17T10:36:38.347890", 
+        "group_permissions": {}, 
+        "typepath": "system/types/TypeObject", 
+        "owner": "root", 
+        "objpath": "test/type/TestResult", 
+        "fields": {
+            "fieldDisplayNames": [
+                "テスト実行サーバ", 
+                "開始日時", 
+                "終了日時", 
+                "結果", 
+                "OK数", 
+                "NG数"
+            ], 
+            "fieldNames": [
+                "test_server", 
+                "start", 
+                "end", 
+                "results", 
+                "ok_num", 
+                "ng_num"
+            ], 
+            "extend": "", 
+            "fieldTypes": [
+                "String#", 
+                "Datetime#", 
+                "Datetime#", 
+                "Dictionary#", 
+                "Integer#{\"default\": 0}", 
+                "Integer#{\"default\": 0}"
+            ]
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/type", 
+        "id": 60, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:40.251214", 
+        "display_name": "result", 
+        "created": "2014-11-17T10:36:38.367924", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/result", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test", 
+        "id": 61, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:40.407797", 
+        "display_name": "RunTest", 
+        "created": "2014-11-17T10:36:38.396077", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/RunTest", 
+        "fields": {
+            "source": "print('**** テストを開始します ****') ->\r\n[test_dir = ./scenario, result_dir = ./result] ->\r\n[para = ./config/config.data['parallel_num']] ->\r\n[iter = ./config/config.data['iteration_num']] ->\r\n['hostname'] ->\r\n[hostname = $RESULT] ->\r\n[start_dt = now()] ->\r\n[year = start_dt.year, month = start_dt.month, day = start_dt.day] ->\r\n[result_name = 'result_$year$month$day'] ->\r\npath(result_dir, result_name) =>\r\n{ if $STATUS == 0 | [$RESULT.delete] } ->\r\n[result_dir.add: result_name, ./type/TestResult] ->\r\n[result = $RESULT] ->\r\n[hostname >> result.test_server] ->\r\n[start_dt >> result.start] ->\r\n[./jobflow/run_test: test_dir, result, para, iter] ->\r\n[end_dt = now()] ->\r\n[end_dt >> result.end] ->\r\n[./jobflow/send_report: result] ->\r\nprint('**** テストが完了しました ****')", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test", 
+        "id": 62, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:40.602142", 
+        "display_name": "run_test", 
+        "created": "2014-11-17T10:36:38.424539", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/jobflow/run_test", 
+        "fields": {
+            "source": "| test_dir |\r\n| result |\r\n| para = 1 |\r\n| iter = 1 |\r\n\r\n[ok_num = 0, ng_num = 0] ->\r\n# 初期化処理\r\n{ for init in test_dir |\r\n  { if init.name == 'initialize' and init.type_object == /system/types/Jobflow |\r\n    print('**** 初期化処理 $init を実行します ****') ->\r\n    { fork | [init] } =>\r\n    { if $STATUS != 0 |\r\n      print('failed to run $init') ->\r\n      return()\r\n    }\r\n  }\r\n} ->\r\n# テスト実行\r\n{ for test in test_dir |\r\n  { case test.name | 'test*': [] else: continue } ->\r\n  { if test.type_object == /system/types/Directory | \r\n    [./run_test: test, result, para, iter]\r\n  } ->\r\n  { if test.type_object != /system/types/Jobflow | continue } ->\r\n  [dt = now()] ->\r\n  print('* [$dt] run $test ...') ->\r\n  { fork |\r\n    { pfor i in para |\r\n      [pid = current().pid] ->\r\n      { for j in iter |\r\n        [test: pid]\r\n      }\r\n    }\r\n  } =>\r\n  [ status = $STATUS, proc = $RESULT[0] ] ->\r\n  { if status == 0 |\r\n    then: print('---> OK') ->\r\n          [json_dump(['OK', proc]) >> result['results'][test.abspath]] ->\r\n          [ok_num = ok_num + 1]\r\n    else: print('---> NG') ->\r\n          [json_dump(['NG', proc]) >> result['results'][test.abspath]] ->\r\n          [ng_num = ng_num + 1]\r\n  }\r\n} ->\r\n[ok_num + result['ok_num'] >> result['ok_num']] ->\r\n[ng_num + result['ng_num'] >> result['ng_num']]", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/jobflow", 
+        "id": 63, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:40.751894", 
+        "display_name": "_test_ok", 
+        "created": "2014-11-17T10:36:38.450407", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/_test_ok", 
+        "fields": {
+            "source": "| pid |\r\n\r\nprint('OK')", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 64, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:40.907631", 
+        "display_name": "_test_ng", 
+        "created": "2014-11-17T10:36:38.477037", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/_test_ng", 
+        "fields": {
+            "source": "| pid |\r\n\r\nabort('NG')", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 65, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:41.063665", 
+        "display_name": "test_win_command", 
+        "created": "2014-11-17T10:36:38.503861", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_win_command", 
+        "fields": {
+            "source": "| pid |\r\n| __node__ = /test/config/test_win_server |\r\n\r\n['ver'] ->\r\nprint($RESULT) ->\r\n['more' << 'this is test message $pid']\r\n-> assert($RESULT == 'this is test message $pid\\r\\n')\r\n", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 66, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:41.218959", 
+        "display_name": "test_linux_command", 
+        "created": "2014-11-17T10:36:38.529915", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_linux_command", 
+        "fields": {
+            "source": "| pid |\r\n| __node__ = /test/config/test_linux_server |\r\n\r\n['id'] ->\r\nprint($RESULT) ->\r\n['cat' << 'test data $pid'] ->\r\nassert($RESULT == 'test data $pid')\r\n", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 67, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:41.380861", 
+        "display_name": "test_win_putget", 
+        "created": "2014-11-17T10:36:38.555872", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_win_putget", 
+        "fields": {
+            "source": "| pid |\r\n| __node__ = /test/config/test_win_server |\r\n\r\n['mkdir C:\\\\KompiraTest'] =>\r\n[tmp_file = \"test_win_putget_$pid.data\"] ->\r\n{ __node__ = null | ['dd bs=1024 count=1024 if=/dev/urandom of=/tmp/$tmp_file'] } ->\r\nput('/tmp/$tmp_file', 'C:\\\\KompiraTest\\\\$tmp_file') ->\r\nprint($RESULT) ->\r\nget('C:\\\\KompiraTest\\\\$tmp_file', '/tmp/$tmp_file.new') ->\r\nprint($RESULT) ->\r\n{ __node__ = null | ['diff /tmp/$tmp_file /tmp/$tmp_file.new'] }\r\n\r\n\r\n", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 68, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:41.542428", 
+        "display_name": "test_linux_putget", 
+        "created": "2014-11-17T10:36:38.582431", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_linux_putget", 
+        "fields": {
+            "source": "| pid |\r\n| __node__ = /test/config/test_linux_server |\r\n\r\n['mkdir /tmp/kompira_test'] =>\r\n[tmp_file = \"test_linux_put_get_$pid.data\"] ->\r\n{ __node__ = null | ['dd bs=1024 count=1024 if=/dev/urandom of=/tmp/$tmp_file'] } ->\r\nput('/tmp/$tmp_file', '/tmp/kompira_test') ->\r\nprint($RESULT) ->\r\nget('/tmp/kompira_test/$tmp_file', '/tmp/$tmp_file.new') ->\r\nprint($RESULT) ->\r\n{ __node__ = null | ['diff /tmp/$tmp_file /tmp/$tmp_file.new'] }\r\n\r\n\r\n", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 69, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:41.698900", 
+        "display_name": "test_urlopen", 
+        "created": "2014-11-17T10:36:38.608311", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_urlopen", 
+        "fields": {
+            "source": "| pid |\r\n| valid_url = 'http://httpbin.org' |\r\n# | unknown_url = 'http://10.99.99.99' |\r\n\r\nurlopen(valid_url) ->\r\nprint($RESULT['code'])\r\n# 実行時間がかかるため削除\r\n# urlopen(unknown_url) =>\r\n# []\r\n", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 70, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:41.721494", 
+        "display_name": "test_library_call", 
+        "created": "2014-11-17T10:36:38.627092", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_library_call", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 71, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:41.832095", 
+        "display_name": "lib", 
+        "created": "2014-11-17T10:36:38.653283", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Library", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_library_call/lib", 
+        "fields": {
+            "sourceText": "def split(s):\r\n    return s.split()\r\n\r\ndef error():\r\n    raise RuntimeError(\"error test\")\r\n", 
+            "libraryType": "", 
+            "modulePath": ""
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_library_call", 
+        "id": 72, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:41.994248", 
+        "display_name": "test_library_call", 
+        "created": "2014-11-17T10:36:38.682130", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_library_call/test_library_call", 
+        "fields": {
+            "source": "| pid |\r\n\r\n[./lib.split: 'this is test message'] ->\r\nassert($RESULT == ['this', 'is', 'test', 'message']) ->\r\n[result = ./lib.split('this is test message')] ->\r\nassert(result == ['this', 'is', 'test', 'message']) ->\r\n[./lib.error] => assert($STATUS != 0)\r\n", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_library_call", 
+        "id": 73, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.014066", 
+        "display_name": "test_upload_download", 
+        "created": "2014-11-17T10:36:38.700959", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_upload_download", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 74, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.082468", 
+        "display_name": "attach", 
+        "created": "2014-11-17T10:36:38.726826", 
+        "group_permissions": {}, 
+        "typepath": "system/types/AttachedFile", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_upload_download/attach", 
+        "fields": {
+            "attached1": {
+                "path": "test/scenario/test_upload_download/attach/attached1_25.file", 
+                "name": "test_upload_dowload_3005165.dat"
+            }, 
+            "attached3": {
+                "path": "", 
+                "name": ""
+            }, 
+            "attached2": {
+                "path": "", 
+                "name": ""
+            }
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_upload_download", 
+        "id": 75, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.225384", 
+        "display_name": "test_upload_download", 
+        "created": "2014-11-17T10:36:38.755855", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_upload_download/test_upload_download", 
+        "fields": {
+            "source": "| pid |\r\n\r\n['mkdir /tmp/kompira_test'] =>\r\n[__dir__ = '/tmp/kompira_test'] ->\r\n[test_file = 'test_upload_dowload_$pid.dat'] ->\r\n['dd bs=1024 count=1024 if=/dev/urandom of=$test_file'] ->\r\n[./upload_download: test_file] ->\r\n['diff $test_file $test_file.new']\r\n", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_upload_download", 
+        "id": 76, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.399454", 
+        "display_name": "test_local_command", 
+        "created": "2014-11-17T10:36:38.781784", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_local_command", 
+        "fields": {
+            "source": "| pid |\r\n\r\n['whoami'] -> print($RESULT) ->\r\n['cat' << 'this is a test message $pid'] ->\r\nassert($RESULT == 'this is a test message $pid')\r\n", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 77, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.419616", 
+        "display_name": "test_win_script", 
+        "created": "2014-11-17T10:36:38.800542", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_win_script", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 78, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.460669", 
+        "display_name": "script", 
+        "created": "2014-11-17T10:36:38.830407", 
+        "group_permissions": {}, 
+        "typepath": "system/types/ScriptJob", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_win_script/script", 
+        "fields": {
+            "source": "@ECHO off\r\nECHO Hello World!", 
+            "ext": "bat", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_win_script", 
+        "id": 79, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.628615", 
+        "display_name": "test_win_script", 
+        "created": "2014-11-17T10:36:38.859100", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_win_script/test_win_script", 
+        "fields": {
+            "source": "| pid |\r\n| __node__ = /test/config/test_win_server |\r\n\r\n[./script] ->\r\nassert($RESULT == 'Hello World!\\r\\n') ->\r\n[./script: \"test\",  \"パラメータ\"] ->\r\nassert($RESULT == 'Hello World!\\r\\n') ->\r\n[./script << \"テスト入力\\n\" * 1024 : \"test\",  \"パラメータ\"] ->\r\nassert($RESULT == 'Hello World!\\r\\n')", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_win_script", 
+        "id": 80, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.649614", 
+        "display_name": "test_linux_script", 
+        "created": "2014-11-17T10:36:38.878042", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_linux_script", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 81, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.685952", 
+        "display_name": "script", 
+        "created": "2014-11-17T10:36:38.904585", 
+        "group_permissions": {}, 
+        "typepath": "system/types/ScriptJob", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_linux_script/script", 
+        "fields": {
+            "source": "#!/bin/sh\r\n\r\necho Hello World!", 
+            "ext": "sh", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_linux_script", 
+        "id": 82, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.837227", 
+        "display_name": "test_linux_script", 
+        "created": "2014-11-17T10:36:38.930495", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_linux_script/test_linux_script", 
+        "fields": {
+            "source": "| pid |\r\n| __node__ = /test/config/test_linux_server |\r\n\r\n[./script] ->\r\nassert($RESULT == 'Hello World!') ->\r\n[./script: 'テスト', 'param'] ->\r\nassert($RESULT == 'Hello World!') ->\r\n[./script << '入力メッセージ\\n' * 1024 : 'テスト', 'param'] ->\r\nassert($RESULT == 'Hello World!')", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_linux_script", 
+        "id": 83, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.856385", 
+        "display_name": "test_local_script", 
+        "created": "2014-11-17T10:36:38.949318", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_local_script", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 84, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:42.892499", 
+        "display_name": "script", 
+        "created": "2014-11-17T10:36:38.975269", 
+        "group_permissions": {}, 
+        "typepath": "system/types/ScriptJob", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_local_script/script", 
+        "fields": {
+            "source": "#!/bin/sh\r\n\r\necho Hello World!", 
+            "ext": "sh", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_local_script", 
+        "id": 85, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:43.041072", 
+        "display_name": "test_local_script", 
+        "created": "2014-11-17T10:36:39.002560", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_local_script/test_local_script", 
+        "fields": {
+            "source": "| pid |\r\n\r\n[./script] ->\r\nassert($RESULT == 'Hello World!') ->\r\n[./script: 'テスト', 'param'] ->\r\nassert($RESULT == 'Hello World!') ->\r\n[./script << '入力メッセージ\\n' * 1024 : 'テスト', 'param'] ->\r\nassert($RESULT == 'Hello World!')", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_local_script", 
+        "id": 86, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:43.060125", 
+        "display_name": "test_channel_sendrecv", 
+        "created": "2014-11-17T10:36:39.021489", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_channel_sendrecv", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 87, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:43.092926", 
+        "display_name": "chan", 
+        "created": "2014-11-17T10:36:39.047378", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Channel", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_channel_sendrecv/chan", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_channel_sendrecv", 
+        "id": 88, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:43.251261", 
+        "display_name": "test_channel_sendrecv", 
+        "created": "2014-11-17T10:36:39.076747", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_channel_sendrecv/test_channel_sendrecv", 
+        "fields": {
+            "source": "| pid |\r\n\r\n[./chan.send: \"this is test message from $pid\"] ->\r\n<./chan> ->\r\nprint($RESULT)", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_channel_sendrecv", 
+        "id": 89, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:43.399571", 
+        "display_name": "initialize", 
+        "created": "2014-11-17T10:36:39.102674", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_channel_sendrecv/initialize", 
+        "fields": {
+            "source": "[null >> ./chan['message_queue']]", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_channel_sendrecv", 
+        "id": 90, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:43.419867", 
+        "display_name": "test_multiplicity_jobflow", 
+        "created": "2014-11-17T10:36:39.121549", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_multiplicity_jobflow", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 91, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:43.447271", 
+        "display_name": "counter", 
+        "created": "2014-11-17T10:36:39.147697", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Environment", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_multiplicity_jobflow/counter", 
+        "fields": {
+            "environment": {
+                "counter": "-1"
+            }
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_multiplicity_jobflow", 
+        "id": 92, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:43.584137", 
+        "display_name": "initialize", 
+        "created": "2014-11-17T10:36:39.176567", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_multiplicity_jobflow/initialize", 
+        "fields": {
+            "source": "[0 >> ./counter['environment']['counter']]", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_multiplicity_jobflow", 
+        "id": 93, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:43.738432", 
+        "display_name": "enter", 
+        "created": "2014-11-17T10:36:39.202680", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_multiplicity_jobflow/enter", 
+        "fields": {
+            "source": "| counter = ./counter['environment'] |\r\n\r\n[count = int(counter['counter'])] ->\r\n[count = count + 1] ->\r\n[count >> counter['counter']]", 
+            "multiplicity": 1
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_multiplicity_jobflow", 
+        "id": 94, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:43.893492", 
+        "display_name": "leave", 
+        "created": "2014-11-17T10:36:39.228961", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_multiplicity_jobflow/leave", 
+        "fields": {
+            "source": "| counter = ./counter['environment'] |\r\n\r\n[count = int(counter['counter'])] ->\r\n[count = count - 1] ->\r\n[count >> counter['counter']]", 
+            "multiplicity": 1
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_multiplicity_jobflow", 
+        "id": 95, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:44.050488", 
+        "display_name": "test_multiplicity_jobflow", 
+        "created": "2014-11-17T10:36:39.254754", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_multiplicity_jobflow/test_multiplicity_jobflow", 
+        "fields": {
+            "source": "| pid |\r\n| multiplicity = ./test_multiplicity_jobflow['multiplicity'] |\r\n\r\n[./enter] ->\r\nprint('enter: $pid') ->\r\nassert(int(./counter['environment']['counter']) <= multiplicity) ->\r\n[./leave] ->\r\nprint('leave: $pid')\r\n", 
+            "multiplicity": 3
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_multiplicity_jobflow", 
+        "id": 96, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:44.070069", 
+        "display_name": "test_multiplicity_script", 
+        "created": "2014-11-17T10:36:39.273713", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Directory", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_multiplicity_script", 
+        "fields": {}, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario", 
+        "id": 97, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:44.208723", 
+        "display_name": "initialize", 
+        "created": "2014-11-17T10:36:39.299831", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_multiplicity_script/initialize", 
+        "fields": {
+            "source": "['mkdir /tmp/kompira_test'] =>\r\n['echo 0 > /tmp/kompira_test/counter']", 
+            "multiplicity": null
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_multiplicity_script", 
+        "id": 98, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:40:45.574014", 
+        "display_name": "test_multiplicity_script", 
+        "created": "2014-11-17T10:36:39.326081", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_multiplicity_script/test_multiplicity_script", 
+        "fields": {
+            "source": "| pid |\r\n| multiplicity = ./test_multiplicity_script['multiplicity'] |\r\n| counter = '/tmp/kompira_test/counter' |\r\n\r\n[./count: counter, '+'] ->\r\nprint('enter: $pid') ->\r\n['cat $counter'] ->\r\nassert(int($RESULT) <= multiplicity) ->\r\n[./count: counter, '-'] ->\r\nprint('leave: $pid')\r\n", 
+            "multiplicity": 3
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_multiplicity_script", 
+        "id": 99, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:44.417374", 
+        "display_name": "お読み下さい", 
+        "created": "2014-11-17T10:36:39.351852", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Wiki", 
+        "owner": "root", 
+        "objpath": "test/README", 
+        "fields": {
+            "wikitext": "= Kompira テスト\r\n\r\n[[./RunTest|テスト実行]] ジョブフローは、[[./scenario|テストシナリオ]] ディレクトリ配下にある test で始まるジョブフローを指定された並列度と繰り返し数で実行を行います。一連のテストシナリオの実行が完了すると、レポートメールを指定されたメールアドレスへ送付します。\r\n\r\ntest で始まるディレクトリがある場合、そのディレクトリを再帰的に辿ってテストシナリオを実行します。\r\n\r\nディレクトリに initialize という名前のジョブフローがある場合、テストシナリオの実行に先だって、そのジョブフローを実行します。\r\n\r\n== 設定\r\n[[./config/config|設定]] でテスト実行の各設定を行います。\r\n\r\n|= 設定項目 |= 意味 |\r\n| レポート先メール | レポート送信先のメールアドレスを指定します |\r\n| 並列数 | 各テストジョブフローの並列実行数を指定します |\r\n| 繰り返し数 | 各テストジョブフローの繰り返し数を指定します |", 
+            "style": "Creole"
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test", 
+        "id": 100, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:39:50.688436", 
+        "display_name": "count", 
+        "created": "2014-11-17T10:36:39.380541", 
+        "group_permissions": {}, 
+        "typepath": "system/types/ScriptJob", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_multiplicity_script/count", 
+        "fields": {
+            "source": "#!/bin/sh\r\n\r\nsign=$2\r\ncount=`cat $1`\r\ncount=`expr $count $sign 1`\r\necho $count > $1\r\n", 
+            "ext": "sh", 
+            "multiplicity": 1
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_multiplicity_script", 
+        "id": 101, 
+        "description": ""
+    }, 
+    {
+        "updated": "2014-11-17T10:36:44.639795", 
+        "display_name": "upload_download", 
+        "created": "2014-11-17T10:36:39.433674", 
+        "group_permissions": {}, 
+        "typepath": "system/types/Jobflow", 
+        "owner": "root", 
+        "objpath": "test/scenario/test_upload_download/upload_download", 
+        "fields": {
+            "source": "| test_file |\r\n\r\n[__dir__ = '/tmp/kompira_test'] ->\r\nupload(from_path=test_file, to_object=./attach, to_field='attached1') ->\r\ndownload(from_file=./attach.attached1, to_path='$test_file.new')", 
+            "multiplicity": 1
+        }, 
+        "user_permissions": {}, 
+        "parent_object": "test/scenario/test_upload_download", 
+        "id": 103, 
+        "description": ""
+    }
+]

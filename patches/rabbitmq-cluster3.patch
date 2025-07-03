@@ -1,0 +1,52 @@
+--- /usr/lib/ocf/resource.d/heartbeat/rabbitmq-cluster	2023-01-31 19:14:17.428751062 +0900
++++ /usr/lib/ocf/resource.d/heartbeat/rabbitmq-cluster	2023-01-31 19:34:17.564440301 +0900
+@@ -135,13 +135,20 @@
+ 				({internal_user, A, B, C, D}) -> {internal_user, A, B, C, D}
+ 			end,
+ 
++			Upgrade2 = fun
++				({internal_user, A, B, C}) -> {internal_user, A, B, C, rabbit_password_hashing_md5, #{}};
++				({internal_user, A, B, C, D}) -> {internal_user, A, B, C, D, #{}};
++				({internal_user, A, B, C, D, E}) -> {internal_user, A, B, C, D, E}
++			end,
++
+ 			Downgrade = fun
+ 				({internal_user, A, B, C}) -> {internal_user, A, B, C};
+ 				({internal_user, A, B, C, rabbit_password_hashing_md5}) -> {internal_user, A, B, C};
+ 				%% Incompatible scheme, so we will loose user's password ('B' value) during conversion.
+ 				%% Unfortunately, this case will require manual intervention - user have to run:
+ 				%%    rabbitmqctl change_password <A> <somenewpassword>
+-				({internal_user, A, B, C, _}) -> {internal_user, A, B, C}
++				({internal_user, A, B, C, _}) -> {internal_user, A, B, C};
++				({internal_user, A, B, C, _, _}) -> {internal_user, A, B, C}
+ 			end,
+ 
+ 			%% Check db scheme first
+@@ -150,9 +157,12 @@
+ 				%% Version < 3.6.0
+ 				{internal_user,'_','_','_'} ->
+ 					Restore(rabbit_user, Downgrade, \"$BaseDataDir/users.erl\");
+-				%% Version >= 3.6.0
++				%% 3.6.0 <= Version < 3.8.10
+ 				{internal_user,'_','_','_','_'} ->
+-					Restore(rabbit_user, Upgrade, \"$BaseDataDir/users.erl\")
++					Restore(rabbit_user, Upgrade, \"$BaseDataDir/users.erl\");
++				%% 3.8.10 <= Version
++				{internal_user,'_','_','_','_','_'} ->
++					Restore(rabbit_user, Upgrade2, \"$BaseDataDir/users.erl\")
+ 			end,
+ 
+ 			NoOp = fun(X) -> X end,
+@@ -526,8 +536,10 @@
+ 			UsersSelectPattern = case WildPattern of
+ 				%% Version < 3.6.0
+ 				{internal_user,'_','_','_'} -> {internal_user, '\\\$1', '_', '_'};
+-				%% Version >= 3.6.0
+-				{internal_user,'_','_','_','_'} -> {internal_user, '\\\$1', '_', '_', '_'}
++				%% 3.6.0 <= Version < 3.8.10
++				{internal_user,'_','_','_','_'} -> {internal_user, '\\\$1', '_', '_', '_'};
++				%% 3.8.10 <= Version
++				{internal_user,'_','_','_','_','_'} -> {internal_user, '\\\$1', '_', '_', '_', '_'}
+ 			end,
+ 			Backup(rabbit_user, UsersSelectPattern, {'/=', '\\\$1', <<\"guest\">>}, \"$BaseDataDir/users.erl\"),
+ 

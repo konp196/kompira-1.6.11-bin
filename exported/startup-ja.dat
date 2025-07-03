@@ -1,0 +1,874 @@
+[
+    {
+        "objpath": "user",
+        "display_name": "ユーザー向け",
+        "description": "ユーザー向けディレクトリ",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "task",
+        "display_name": "タスク一覧",
+        "description": "タスク管理のための仮想ファイルシステム",
+        "owner": "root",
+        "typepath": "system/types/Virtual",
+        "fields": {
+            "virtual": "kompira.virtuals.task"
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "incident",
+        "display_name": "インシデント一覧",
+        "description": "インシデント管理のための仮想ファイルシステム",
+        "owner": "root",
+        "typepath": "system/types/Virtual",
+        "fields": {
+            "virtual": "kompira.virtuals.incident"
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "process",
+        "display_name": "プロセス一覧",
+        "description": "プロセス管理のための仮想ファイルシステム",
+        "owner": "root",
+        "typepath": "system/types/Virtual",
+        "fields": {
+            "virtual": "kompira.virtuals.process"
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "scheduler",
+        "display_name": "スケジューラ",
+        "description": "Kompiraスケジューラ用仮想ファイルシステム",
+        "owner": "root",
+        "typepath": "system/types/Virtual",
+        "fields": {
+            "virtual": "kompira.virtuals.scheduler"
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "config/user",
+        "display_name": "ユーザー管理",
+        "description": "ユーザー管理のための仮想ファイルシステム",
+        "owner": "root",
+        "typepath": "system/types/Virtual",
+        "fields": {
+            "virtual": "kompira.virtuals.account"
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "config/group",
+        "display_name": "グループ管理",
+        "description": "グループ管理のための仮想ファイルシステム",
+        "owner": "root",
+        "typepath": "system/types/Virtual",
+        "fields": {
+            "virtual": "kompira.virtuals.account"
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "config/realms",
+        "display_name": "管理領域設定",
+        "description": "ジョブマネージャ毎の管理領域設定",
+        "owner": "root",
+        "typepath": "system/types/Table",
+        "fields": {
+            "typeObject": "system/types/Realm",
+            "relatedObject": null,
+            "displayList": ["range", "disabled"]
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "config/realms/default",
+        "display_name": "デフォルト領域",
+        "description": "デフォルトの管理領域",
+        "owner": "root",
+        "typepath": "system/types/Realm",
+        "fields": {
+            "disabled": false,
+            "range": [
+                "*"
+            ]
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/channels",
+        "display_name": "チャネル一覧",
+        "description": "",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/channels/Alert",
+        "display_name": "Alert",
+        "description": "アラート受信用のチャネル",
+        "owner": "root",
+        "typepath": "system/types/Channel",
+        "fields": {
+            "message_queue": null,
+            "event_queue": null
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/channels/Never",
+        "display_name": "Never",
+        "description": "タイムアウト専用のチャネル",
+        "owner": "root",
+        "typepath": "system/types/Channel",
+        "fields": {
+            "message_queue": null,
+            "event_queue": null
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/info",
+        "display_name": "システム情報",
+        "description": "",
+        "owner": "root",
+        "typepath": "system/types/SystemInfo",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/libraries",
+        "display_name": "ライブラリ一覧",
+        "description": "",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/templates",
+        "display_name": "テンプレート一覧",
+        "description": "",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/templates/ProcessDone",
+        "display_name": "プロセス正常終了テンプレート",
+        "description": "",
+        "owner": "root",
+        "typepath": "system/types/MailTemplate",
+        "fields": {
+            "body": "以下のジョブフロープロセスの実行が正常に終了しました。\r\n\r\n---\r\nジョブフロー： %{jobflow}\r\nプロセス： %{process}\r\n開始日時： %{started_time}\r\n終了日時： %{finished_time}\r\n---",
+            "subject": "[Kompiraサーバ] ジョブフロープロセス %{jobflow} 正常終了"
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/templates/ProcessAborted",
+        "display_name": "プロセス異常終了テンプレート",
+        "description": "",
+        "owner": "root",
+        "typepath": "system/types/MailTemplate",
+        "fields": {
+            "body": "以下のジョブフロープロセスが異常終了しました。\r\n\r\n---\r\nジョブフロー： %{jobflow}\r\nプロセス： %{process}\r\n開始日時： %{started_time}\r\n終了日時： %{finished_time}\r\n---\r\n\r\n",
+            "subject": "[Kompiraサーバ] ジョブフロープロセス %{jobflow} 異常終了"
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/config",
+        "display_name": "システム設定",
+        "description": "",
+        "owner": "root",
+        "typepath": "system/types/Config",
+        "fields": {
+            "fieldDisplayNames": [
+                "サーバURL",
+                "管理者メールアドレス",
+                "正常終了時メールテンプレート",
+                "異常終了時メールテンプレート",
+                "SMTPサーバ",
+                "LDAPサーバ",
+                "最大ログイン試行回数",
+                "アカウントロック期間(分)",
+                "コマンド表示可否",
+                "コマンド表示形式",
+                "標準出力表示可否",
+                "標準出力表示フィルタ",
+                "標準エラー出力表示可否",
+                "標準エラー出力表示フィルタ",
+                "セッション表示可否",
+                "セッション表示フィルタ",
+                "編集時のパスワード非表示",
+                "カスタムスタイル",
+                "ブランドタグ"
+            ],
+            "fieldTypes": [
+                "URL#",
+                "EMail#",
+                "Object#{\"object\": \"/system/types/MailTemplate\", \"default\": \"/system/templates/ProcessDone\"}",
+                "Object#{\"object\": \"/system/types/MailTemplate\", \"default\": \"/system/templates/ProcessAborted\"}",
+                "Object#{\"object\": \"/system/types/SmtpServer\", \"default\": \"/system/smtp_servers/Default\"}",
+                "Object#{\"object\": \"/system/types/LdapServer\", \"default\": \"/system/ldap_servers/Default\"}",
+                "Integer#{\"default\": 3, \"min_value\": 0}",
+                "Integer#{\"min_value\": 0, \"max_value\": 1000000}",
+                "Boolean#{\"default\": false}",
+                "String#{\"default\": \"[{username}@{hostname}]{sudomark} {command}\"}",
+                "Boolean#{\"default\": true}",
+                "String#{\"default\": \"32768\"}",
+                "Boolean#{\"default\": true}",
+                "String#{\"default\": \"\"}",
+                "Boolean#{\"default\": true}",
+                "String#{\"default\": \"\"}",
+                "Boolean#",
+                "Object#{\"object\": \"/system/types/CustomStyle\", \"default\": \"/system/styles/Default\"}",
+                "String#{\"max_length\": 16}"
+            ],
+            "fieldNames": [
+                "serverUrl",
+                "adminEmail",
+                "doneMailTemplate",
+                "abortMailTemplate",
+                "smtpServer",
+                "ldapServer",
+                "loginFailureLimit",
+                "accountLockoutTime",
+                "showCommandEnabled",
+                "showCommandFormat",
+                "showStdoutEnabled",
+                "showStdoutFilter",
+                "showStderrEnabled",
+                "showStderrFilter",
+                "showSessionEnabled",
+                "showSessionFilter",
+                "hidePasswordWhileEditing",
+                "customStyle",
+                "brandTag"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "writable": false,
+                "executable": true,
+                "readable": true
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "writable": false,
+                "priority": 0,
+                "executable": false,
+                "readable": true
+            }
+        }
+    },
+    {
+        "objpath": "system/startup",
+        "display_name": "スタートアップ",
+        "description": "スタートアップジョブフロー用ディレクトリ",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/packages",
+        "display_name": "パッケージ情報",
+        "description": "",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "user/app",
+        "display_name": "ユーザーアプリケーション",
+        "description": "ユーザーアプリケーション用ディレクトリ",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "user/lib",
+        "display_name": "ユーザーライブラリ",
+        "description": "ユーザーライブラリ用ディレクトリ",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "user/data",
+        "display_name": "ユーザーデータ",
+        "description": "ユーザーデータ用ディレクトリ",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "user/data/nodes",
+        "display_name": "ノード",
+        "description": "ノード用ディレクトリ",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "user/data/accounts",
+        "display_name": "アカウント",
+        "description": "アカウント用ディレクトリ",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "owner": "root",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "ノード種別",
+        "description": "",
+        "objpath": "system/nodetypes",
+        "typepath": "system/types/Directory"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "typeObject": "system/types/NodeType",
+            "relatedObject": null,
+            "displayList": [
+                "conntypes"
+            ]
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "Servers",
+        "description": "",
+        "objpath": "system/nodetypes/Servers",
+        "typepath": "system/types/Table"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "local": "Local"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "Local",
+        "description": "",
+        "objpath": "system/nodetypes/Servers/Local",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "ssh": "SSH"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "SSH",
+        "description": "",
+        "objpath": "system/nodetypes/Servers/SSH",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "conntypes": {
+                "windows/https": "WS-Man HTTPS",
+                "windows/https-ignore-validation": "WS-Man HTTPS (サーバ証明書の検証エラー無視)",
+                "windows/http": "WS-Man HTTP (メッセージ暗号化あり)",
+                "windows/http-unencrypted": "(非推奨) WS-Man HTTP (メッセージ暗号化なし)",
+                "winrs": "(非推奨) winrs"
+            }
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "Windows",
+        "description": "",
+        "objpath": "system/nodetypes/Servers/Windows",
+        "typepath": "system/types/NodeType"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "typeObject": "system/types/NodeType",
+            "relatedObject": null,
+            "displayList": [
+                "conntypes"
+            ]
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "Devices",
+        "description": "",
+        "objpath": "system/nodetypes/Devices",
+        "typepath": "system/types/Table"
+    },
+    {
+        "owner": "root",
+        "fields": {
+            "typeObject": "system/types/CustomStyle",
+            "relatedObject": null,
+            "displayList": [
+                "mainBackColor",
+                "menubarBackColor",
+                "menubarTextColor",
+                "invertMode"
+            ]
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "カスタムスタイル一覧",
+        "description": "",
+        "objpath": "system/styles",
+        "typepath": "system/types/Table"
+    },
+    {
+        "owner": "root",
+        "fields": {
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        },
+        "display_name": "デフォルト",
+        "description": "",
+        "parent_object": "system/styles",
+        "objpath": "system/styles/Default",
+        "typepath": "system/types/CustomStyle"
+    },
+    {
+        "objpath": "system/smtp_servers",
+        "display_name": "SMTPサーバ",
+        "description": "SMTPサーバ用テーブル",
+        "owner": "root",
+        "typepath": "/system/types/Table",
+        "fields": {
+            "typeObject": "system/types/SmtpServer",
+            "relatedObject": null,
+            "displayList": ["hostname", "port", "username", "use_tls", "use_ssl", "use_oauth2", "oauth2_provider"]
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/smtp_servers/Default",
+        "display_name": "デフォルトSMTPサーバ",
+        "description": "デフォルトのSMTPサーバ設定",
+        "owner": "root",
+        "typepath": "/system/types/SmtpServer",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/oauth2_providers",
+        "display_name": "OAuth2プロバイダ一覧",
+        "description": "OAuth2プロバイダ用テーブル",
+        "owner": "root",
+        "typepath": "/system/types/Table",
+        "fields": {
+            "typeObject": "system/types/OAuth2Provider",
+            "relatedObject": null,
+            "displayList": ["client_id", "scope"]
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/ldap_servers",
+        "display_name": "LDAPサーバ",
+        "description": "LDAPサーバ用テーブル",
+        "owner": "root",
+        "typepath": "/system/types/Table",
+        "fields": {
+            "typeObject": "system/types/LdapServer",
+            "relatedObject": null,
+            "displayList": ["server_url", "bind_dn", "user_search_dn"]
+        },
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/ldap_servers/Default",
+        "display_name": "デフォルトLDAPサーバ",
+        "description": "デフォルトのLDAPサーバ設定",
+        "owner": "root",
+        "typepath": "/system/types/LdapServer",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    }
+]

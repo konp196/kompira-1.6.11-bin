@@ -1,0 +1,21 @@
+/var/log/httpd/*log {
+    daily
+    rotate 30
+    compress
+    delaycompress
+    dateext
+    notifempty
+    missingok
+    sharedscripts
+    postrotate
+        if /usr/bin/systemctl is-active pacemaker > /dev/null 2>&1; then
+            for httpd_pidfile in /var/run/httpd-res_httpd.pid /var/run/httpd.pid; do
+                if [ -f \$httpd_pidfile ] && [ "\$(readlink -f /proc/\$(<\$httpd_pidfile)/exe)" == "/usr/sbin/httpd" ]; then
+                    /usr/sbin/httpd -f /etc/httpd/conf/httpd.conf -c "PidFile \$httpd_pidfile" -k graceful > /dev/null 2>&1 || true
+                fi
+            done
+        elif /usr/bin/systemctl is-active httpd > /dev/null 2>&1; then
+            /usr/bin/systemctl reload httpd.service > /dev/null 2>&1 || true
+        fi
+    endscript
+}

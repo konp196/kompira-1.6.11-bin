@@ -1,0 +1,16 @@
+--- a/usr/lib/ocf/lib/heartbeat/apache-conf.sh	2019-02-12 12:06:00.599352516 +0900
++++ b/usr/lib/ocf/lib/heartbeat/apache-conf.sh	2019-02-12 12:06:48.763236087 +0900
+@@ -13,10 +13,13 @@
+ #
+ 
+ source_envfiles() {
++	restore_opts=$(set +o)
++	set -a
+ 	for f; do
+ 		[ -f "$f" -a -r "$f" ] &&
+ 			. "$f"
+ 	done
++	$restore_opts
+ }
+ 
+ apachecat() {

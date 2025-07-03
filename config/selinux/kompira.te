@@ -1,0 +1,81 @@
+policy_module(kompira, 1.0.0)
+
+require {
+        type unconfined_service_t;
+        type var_run_t;
+        type memcached_t;
+        type rabbitmq_t;
+        type httpd_t;
+        type httpd_log_t;
+        type httpd_modules_t;
+        type httpd_sys_content_t;
+}
+
+#==================================================
+# kompira domain
+#==================================================
+type kompira_var_t;
+type kompira_opt_t;
+type kompira_module_t;
+type kompira_repository_t;
+type kompira_licence_t;
+type kompira_secret_t;
+type kompira_config_t;
+type kompira_log_t;
+typealias httpd_sys_content_t alias kompira_http_content_t;
+
+files_type(kompira_var_t)
+files_type(kompira_opt_t)
+files_type(kompira_repository_t)
+files_type(kompira_module_t)
+files_security_file(kompira_licence_t)
+files_security_file(kompira_secret_t)
+files_config_file(kompira_config_t)
+logging_log_file(kompira_log_t)
+
+#============= memcached_t ==============
+allow memcached_t var_run_t:sock_file create;
+
+#============= httpd_t ==============
+allow httpd_t self:capability net_admin;
+allow httpd_t unconfined_service_t:unix_stream_socket connectto;
+files_write_generic_pid_sockets(httpd_t)
+
+#------------- httpd_t -> kompira_opt_t -------------
+read_files_pattern(httpd_t, kompira_opt_t, kompira_opt_t)
+read_lnk_files_pattern(httpd_t, kompira_opt_t, kompira_opt_t)
+
+#------------- httpd_t -> kompira_repository_t -------------
+manage_dirs_pattern(httpd_t, kompira_repository_t, kompira_repository_t)
+manage_files_pattern(httpd_t, kompira_repository_t, kompira_repository_t)
+manage_lnk_files_pattern(httpd_t, kompira_repository_t, kompira_repository_t)
+
+#------------- httpd_t -> kompira_licence_t -------------
+manage_files_pattern(httpd_t, kompira_licence_t, kompira_licence_t)
+filetrans_pattern(httpd_t, kompira_var_t, kompira_licence_t, file, "kompira.lic")
+
+#------------- httpd_t -> kompira_secret_t -------------
+allow httpd_t kompira_secret_t:file read_file_perms;
+
+#------------- httpd_t -> kompira_config_t -------------
+allow httpd_t kompira_config_t:file read_file_perms;
+
+#------------- httpd_t -> kompira_log_t -------------
+manage_dirs_pattern(httpd_t, kompira_log_t, kompira_log_t)
+manage_files_pattern(httpd_t, kompira_log_t, kompira_log_t)
+
+#------------- httpd_t -> kompira_module_t -------------
+allow httpd_t kompira_module_t:dir list_dir_perms;
+mmap_exec_files_pattern(httpd_t, kompira_module_t, kompira_module_t)
+read_files_pattern(httpd_t, kompira_module_t, kompira_module_t)
+read_lnk_files_pattern(httpd_t, kompira_module_t, kompira_module_t)
+
+#============= rabbitmq_t ==============
+allow rabbitmq_t self:process execmem;
+allow rabbitmq_t tmpfs_t:file execute;
+fs_manage_tmpfs_files(rabbitmq_t)
+fs_read_cgroup_files(rabbitmq_t)
+files_rw_etc_files(rabbitmq_t)
+
+#------------- rabbitmq_t -> kompira_opt_t -------------
+read_lnk_files_pattern(rabbitmq_t, kompira_opt_t, kompira_opt_t)

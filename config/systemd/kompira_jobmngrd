@@ -1,0 +1,9 @@
+PYTHONIOENCODING=UTF-8
+LANG=$LOCALE_LANG
+PATH=$KOMPIRA_BIN:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin
+http_proxy=$PROXY_URL
+https_proxy=$PROXY_URL
+HTTP_PROXY=$PROXY_URL
+HTTPS_PROXY=$PROXY_URL
+no_proxy=localhost,127.0.0.1
+

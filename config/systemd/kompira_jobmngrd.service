@@ -1,0 +1,17 @@
+[Unit]
+Description=Kompira-jobmanager
+After=rabbitmq-server.service kompirad.service
+${comment_if_jobmngrd_mode}Requires=rabbitmq-server.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/kompira_jobmngrd
+ExecStart=$KOMPIRA_BIN/kompira_jobmngrd
+User=$KOMPIRA_USER
+Group=$KOMPIRA_GROUP
+Restart=always
+LimitCORE=infinity:infinity
+
+[Install]
+WantedBy=multi-user.target
+

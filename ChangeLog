@@ -1,0 +1,4866 @@
+2025-04-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* audit.log のログ出力を抑制するルール /etc/audit/rules.d/kompira.rules を追加しました。(#2504)
+
+2025-04-16  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Postgresql-12 環境でアップデートに失敗する問題を修正しました。(#2538)
+
+	* インストール時に LANG が C/C.UTF-8 の場合はエラーになるようにしました。(#2536)
+
+	* install.sh で --locale-lang を指定したときにインストールに失敗する場合がある問題を修正しました。(#2536)
+
+2025-04-16  Hasan Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Deep path dataをJSON形式でエクスポートした後、別のディレクトリへインポートできるようにしました。(#2512, #2520)
+
+2025-04-16  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* [merge-v2] manage.py collectstatic 時に --clear オプションを追加して、古い static ファイルが残らないようにしました。(#228)
+
+	* [merge-v2] javascript-catalog のエンドポイントを /.jsi18n/ から /.jsi18n.js に変更しました。(#228)
+
+2025-04-15  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* rabbitmq のリポジトリを packagecloud.io から rabbitmq.com に変更しました。(#2516)
+
+	* Kompira 用 SELinux ポリシー定義を導入してポリシー拒否 (audit.log への AVC メッセージ) の発生を低減できるようにしました。(#2504)
+
+2025-03-25  Hasan Mahamudul  <hasan@fixpoint.co.jp>
+
+	* export_data または export_dir を使用してエクスポートする際、エクスポートパスの一覧からネストされた子孫を削除するようにしました。(#2523, #2524)
+
+2025-02-17  Hasan Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Type オブジェクトのフィールドクオリファイアに複数の '#' が含まれていても、テーブル作成時にそのType オブジェクトを参照できるようにしました。(#2509)
+
+2025-02-05  Hasan Mahamudul  <hasan@fixpoint.co.jp>
+
+	* 長い名前のオブジェクトも、export_dir と import_dir を使用してエクスポートおよびインポートできるようにしました。(#1974)
+	
+2025-02-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* インストーラの対象 OS として RHEL9 系および AmazonLinux2023 に対応しました。(#2482)
+
+	* バイナリ版インストールパッケージに Python 3.9 でコンパイルした wheel パッケージを含むようにしました。(#2482)
+
+2025-01-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* HTTP レスポンスヘッダの Server: にサーバのバージョン情報が載らないようにしました。(#2505)
+
+2025-01-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Python 3.9 に対応しました。(#2483)
+
+	* [テスト環境] データベース接続を環境変数 DATABASE_URL で指定できるようにしました。(#2481)
+
+2025-01-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Directory.find() メソッドで文字列型フィールドに対する検索で前後の空白が無視されてしまう問題を修正しました。(#2501)
+
+	* テーブル画面／プロセス画面／インシデント画面で入力した検索値が strip されないようにしました。(#2501)
+
+2024-12-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* [merge-v2] kompira.models.extends.library.Library を v2.0 に合わせる形でリファクタしました。
+
+2024-12-16  Hasan Mahamudul  <hasan@fixpoint.co.jp>
+
+	* [httpd] LimitRequestLine の設定値を 32KB に変更しました。(#2486)
+	
+2024-12-16  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ライブラリ間で参照がある複数のライブラリをインポートすると実行できない場合がある問題を修正しました。(#2000)
+
+	* オブジェクトの名前変更やコピーした後にライブラリを再コンパイルするようにしました。(#2487)
+
+2024-12-13  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* /etc/yum/vars/releasever ファイルで $releasever 変数が固定された環境で postgresql-17 のインストールに失敗する問題を修正しました。(#2480)
+
+	* Configオブジェクトの data プロパティで fieldNames, fieldTypes, fieldDisplayNames フィールドにアクセスできてしまう問題を修正しました。(#2488)
+
+2024-12-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* スケジュールオブジェクトの next_run_time を参照すると、タイムゾーン情報が含まれていない日時情報 (naive datetime) になっている問題を修正しました。(#2491)
+
+2024-12-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 配下にライブラリオブジェクトを含むディレクトリをリネームや移動するとライブラリ関数の呼び出しに失敗する場合がある問題を修正しました。(#2485)
+
+2024-11-14  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* RHEL でのインストール時に有効化する YUM リポジトリを修正しました。(#2478)
+
+	* オフラインインストール後にオンラインで冗長構成セットアップするとエラーになる場合がある問題を修正しました。(#2478)
+
+	* [AlmaLinux8] インストール時に GPG KEY が古い場合に自動的に更新するようにしました。(#2478)
+
+2024-11-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* install.sh の --postgresql-version オプションで latest を指定できるようにしました。(#2476)
+
+	* [RHEL7] RHEL7でpostgresql-15をインストールできるようにしました。(#2476)
+
+	* [RHEL7] アーカイブされた epel-release-7 をインストールできるようにしました。(#2476)
+
+2024-11-11  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* /etc/sysconfig/clock が存在する環境でインストールに失敗する場合がある問題を修正しました。(#2474)
+
+2024-11-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* [QA_KE-138] ユーザの姓名を設定しメールアドレスを設定せずにリポジトリ連携するとcommitログのメールアドレスが「姓名@ホスト名」になる問題を修正しました。(#2470)
+
+	* Directory.find() におけるフィールド値の並び替えの仕様についてドキュメントに説明を追加しました。(#2419)
+
+	* チャネルオブジェクトに対するイベント待ちジョブで権限チェックがなされていない問題を修正しました。(#2440)
+
+2024-11-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* マニュアル「1.5.4. Kompira画像ファイル」に記載された名前の画像ファイルを置き換えても反映されない問題を修正しました。(#2449)
+
+	* マニュアル「3.6.2. プロパティの参照と更新」にある脱字を修正しました。(#2463)
+
+	* 冗長構成で httpd のログローテーションが動作しない場合がある問題を修正しました。(#2462)
+
+2024-11-05  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* [merge-v2] mailto() に指定したアドレスリスト (TO:. CC:, BCC: など) が不正な (RFC 2822 に準拠していない) 形式であった場合は、mailto() のエラーとなるようにました。(#195)
+
+2024-11-01  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* PostgreSQL 13 以上のインストールに対応しました。新規インストール時はその時点で対応する最新版がインストールされます。(#2456)
+
+	* 既存の Kompira 1.6 環境のアップデート時に PostgreSQL のメジャーバージョンをアップグレードできるようになりました。(#2456)
+
+	* install.sh にオプション --postgresql-version <ver> が追加され、インストールする PostgreSQL のバージョンを指定できるようになりました。(#2456)
+
+2024-10-11  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* [merge-v2] タイムゾーンの処理に利用していた pytz モジュールを backports.zoneinfo モジュールに置き換えました。
+
+	* [merge-v2] pickle_load(permissive=True) で削除済みオブジェクトをロードしようとすると null になるが、その場合にログに出力するようにしました。(#189)
+
+	* ディレクトリをリネームや移動した時に配下のライブラリオブジェクトのモジュール名が追従していない問題を修正しました。(#2373)
+
+2024-08-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* import_dir において .gitignore ファイルがあるとエラーになる場合がある問題を修正しました。(#2446)
+
+	* リポジトリ連携の push 時に .gitignore/.hgignore を削除対象外にしました。(#2446)
+
+	* install.sh でのデータバックアップ対象からプロセス情報を削減しました。(#2437)
+
+2024-08-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ブラウザ画面からのライセンス更新時に Permission エラーになる場合がある問題を修正しました。(#2447)
+
+	* django-axes の冗長なログ出力を無効化しました。(#2448)
+
+2024-08-02  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* [merge-v2] ジョブフロ―の設定が実行後のプロセス詳細の設定画面に反映されな問題を修正しました。#2436)
+
+2024-05-31  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* フィールド値検索のクエリを改善しました。検索条件によっては検索時間が短縮されます。(#2428)
+
+2024-05-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 型オブジェクトのフィールド定義を Array<T> や Dictionary<T> から T に変更してから検索するとオブジェクトが重複して得られる場合がある問題を修正しました。(#2421)
+
+2024-05-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* setuptools-70.0.0 がリリースされて Kompira のインストールに失敗するようになった問題を修正しました。(#2425)
+
+2024-05-22  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 入れ子になったテーブルの find に失敗する問題を修正しました。(#2032)
+
+	* Directory.glob() でフィールド値による並び替えを指定できない問題を修正しました。(#2418)
+
+2024-05-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Directory.find() メソッドでフィールド値による並び順を複数指定できるようになりました。(#2419)
+
+	* フィールド値でオブジェクトを並び替えしたときに当該フィールドのデータを持たないオブジェクトが一覧に含まれない問題を修正しました。(#2419)
+
+2024-05-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* REST API から Array/Dictionary フィールドなどソート不可なフィールドを order_by 指定した場合にエラーを返すようにしました。(#1456)
+
+2024-05-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成ではサポート範囲外のバージョンの rabbitmq-server にアップデートしないようにしました。(#2405)
+
+2024-05-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* kompira_jobmngrd の設定項目 agent.pool_size に設定できる値について 1..80 の制限を加えました。(#2410)
+
+2024-05-01  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* リポジトリオブジェクトでのプッシュ操作時に Kompira のログインユーザをコミットの Author として記録するようにしました。(#2412)
+
+	* リポジトリオブジェクトで mercurial へのプッシュ操作に失敗する場合がある問題を修正しました。(#2403)
+
+2024-04-25  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Textオブジェクトに不正な拡張子が設定できないように実装しました。(#2367)
+
+2024-04-25  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* SEGV などでクラッシュした時に Core ファイルを出力できるように対応しました。(#2397)
+
+	* KE2.0 での性能改善を部分的に移植しました。(#2408)
+
+2024-04-17  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* [merge-v2] ジョブマネージャでワーカを増やすと Errno 24 エラーでジョブフローが異常終了する場合がある問題を修正しました。(#112)
+
+2024-04-09  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 依存フィールドを定義したオブジェクトを保存したときに例外ログが記録される場合がある問題を修正しました。(#2388)
+
+2024-04-09  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* ジョブフローオブジェクトにパラメータ値がある場合、フォームオブジェクトの作成・編集時にフィールド修飾子が自動的に埋め込まれるように実装しました。(#2379)
+
+2024-04-02  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* ジョブフローオブジェクトにパラメータがある場合、フォームオブジェクトの作成・編集時にフィールドタイプが自動的に選択されるように実装しました。(#2378)
+
+2024-03-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* SSH鍵ファイルを利用した場合のコマンド実行に時間がかかる問題を修正しました。(#2381)
+
+2024-03-22  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ジョブマネージャのワーカがアイドル状態にもかかわらずコマンド実行できなくなる場合がある問題を修正しました。(#2370)
+
+2024-03-21  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* フォーム編集画面でジョブフローオブジェクトを選択したときにそのパラメータ定義に従ってフィールド名と表示名が自動的に埋め込まれる機能を追加しました。(#1874)
+
+2024-03-11  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* オブジェクトAPIにおいて、クエリパラメータにinvisibleフィールドを含めることで、不可視フィールドを取得する機能を実装しました。(#2377)
+
+2024-03-08  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* authorization_url を取得する際に InsecureTransportError を try-except で処理しました。(#2329)
+
+2024-03-07  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* no_empty フィールド修飾子を File 型フィールドにも適用できるように実装しました。(#1820)
+
+2024-03-05  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* オブジェクトフォームで 'use_oauth2' がTrueであり、'oauth2_provider' が指定されていない場合に、'oauth2_provider' フィールドが必要であることが表示されるように実装しました。(#2267)
+
+2024-02-19  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Array<Boolean>とDictionary<Boolean>フィールドにおいて、チェックボックスがデフォルトでチェックされた状態で表示されてしまうバグを修正しました。(#2345)
+	
+2024-02-15  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 正常な manage.py migrate でエラーログが記録される場合がある問題を修正しました。(#2358)
+
+2024-02-08  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* テーブル詳細画面でブール値を検索した際のデフォルトエラーメッセージを更新しました。(#2357)
+
+2024-01-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* マニュアル (reference) の typo を修正しました。(#2355)
+
+2024-01-24  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Directory.add で Dictionary 型フィールドのキーにオブジェクトを渡すと新規追加できるが上書きできない問題を修正しました。(#2332)
+
+2024-01-23  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* オブジェクト保存時やフォーム投稿時に Array<Boolean> 型フィールドの値を正しく保存できない問題を修正しました。(#2352)
+
+2024-01-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 古い pgdg-redhat-repo がインストールされているとアップデートに失敗する場合がある問題を修正しました。(#2350)
+
+	* Amazon Linux2 環境でのアップデート時にデータベースが初期化されてしまう問題を修正しました。(#2349)
+
+	* install.sh で --with-gdb オプションが指定された場合だけ python3 の debuginfo をインストールするようにしました。(#2348)
+
+2024-01-17  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* mailto() で拡張子の無いファイルを添付するとエラーになる場合がある問題を修正しました。(#2343)
+
+2024-01-11  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Array<Boolean>, Dictionary<Boolean> フィールドでの検索対応をテーブル詳細画面に実装しました。(#2317)
+
+2024-01-11  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* テーブル画面で添付ファイルフィールドでソートしようとすると内部エラーになる問題を修正しました。(#2335)
+
+2024-01-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 古い pgdg リポジトリが有効だとアップデートに失敗する問題を修正しました。(#2338)
+
+2024-01-09  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Binary フィールドでの検索対応をテーブル詳細画面に実装しました。(#2317)
+	
+2024-01-09  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* セッションブロックで内部タイムアウトが発生して異常終了する場合がある問題を修正しました。(#2333)
+
+	* セッションクローズ時に session ストリームの最後のメッセージが出力されない場合がある問題を修正しました。(#2333)
+
+2023-12-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Kompira インストール時に python-memcached-1.60 がインストールされると正常に動作しない問題を修正しました。(#2334)
+
+2023-11-20  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Array<Float>, Dictionary<Float> フィールドでの検索対応をテーブル詳細画面に実装しました。(#2322)
+
+2023-11-20  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Array<Integer>, Dictionary<Integer> フィールドでの検索対応をテーブル詳細画面に実装しました。(#2324)
+
+2023-11-20  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Array<Object>, Dictionary<Object> フィールドでの検索対応をテーブル詳細画面に実装しました。(#2326)
+
+2023-11-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ライブラリや組み込み関数の呼び出し形式によらず、エラー発生時の挙動をなるべく統一するよう変更しました。(#2309)
+
+	* 関数呼び出し中に例外が発生したとき例外情報のコンソールへの出力をやめてログに出力するようにしました。(#2309)
+
+2023-11-01  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* テーブル詳細画面で T が Integer, Float, Boolean, Object のいずれかである Array<T> および Dictionary<T> 型フィールドでの検索は対応していないことを document に追加しました。(#2315)
+
+2023-10-31  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ライブラリ関数の実行中にプロセスを強制終了すると kompirad.log に例外ログが記録される場合がある問題を修正しました。(#2299)
+
+	* テスト環境で利用する werkzeug のバージョンを 3.0 未満に制限するようにしました。(#2306)
+
+2023-10-30  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Float フィールドでの検索対応をテーブル詳細画面に実装しました。(#2308)
+
+2023-10-27  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* owner で検索した際に一致するものがない場合、テーブルは空になるように機能が実装されました。(#2303)
+
+2023-10-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成のセットアップおよびアップデートの終了時に pacemaker の開始とリソースの安定を待つようにしました(再)(#2233)
+
+2023-10-25  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ライブラリオブジェクトで random.seed 関数が汚染されると以後の非同期処理が正常に動作しない問題を修正しました(再)(#2263)
+
+2023-10-24  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成で Kompira 環境を作成しなおすアップデートができるように修正しました(#2295)
+
+2023-10-20  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Datetime, Date, Time フィールドでの検索対応をテーブル詳細画面に実装しました。(#2269)
+	
+2023-10-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* KEアップデート時にRPMパッケージのアップデートに失敗する場合がある問題を修正しました(#2291)
+
+2023-10-17  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* MIRACLE LINUX で setup_cluster.sh に失敗する問題を修正しました(#2289)
+
+	* ライブラリオブジェクトで random.seed 関数が汚染されると以後の非同期処理が正常に動作しない問題を修正しました(#2263)
+
+2023-10-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* リモートノードに RSA 鍵を利用して SSH アクセスできない場合がある問題を修正しました。(#2199)
+
+2023-10-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* put()/get() ジョブで転送するファイル名に一部の記号を含む場合に正しく転送できない場合がある問題を修正しました。(#2249)
+
+	* put()/get() ジョブでワイルドカードを指定したときに正しく転送できない場合がある問題を修正しました。(#2249)
+
+	* put()/get() ジョブで転送先で転送するファイルのファイル名に転送先で利用できない文字が含まれる場合は、転送処理全体を失敗としてユーザにエラーを返すようにしました。(#2249)
+
+2023-10-02  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 非表示フィールドのみ変更される場面ではオブジェクトの更新日時は更新されないようになりました。(#2062)
+
+2023-09-28  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* Array<T> 型と Dictionary<T> 型はデフォルト値をサポートし、オブジェクトの詳細画面やジョブフローで参照できるようになりました。(#2243)
+
+2023-09-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* オフラインインストール時に外部HTTPアクセスしている問題を修正しました(#2257)
+
+2023-08-24  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* 管理コマンド manage.py export_dir および import_dir に代表フィールドを読み書きするときの改行コードを指定する --linesep オプションを追加しました(#2236)
+
+2023-08-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* マニュアルにメールチャネルの受信モードのデフォルトについて追記しました(#2225)
+
+2023-08-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成のセットアップおよびアップデートの終了時に pacemaker の開始とリソースの安定を待つようにしました(#2233)
+
+	* インストール開始時および kompirad 起動時に可能であれば rabbitmq-server の機能フラグを有効化するようにしました(#2217)
+
+2023-08-02  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 言語ファイル(*.po)にソース行番号を含めないようにしました(#2235)
+
+2023-07-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ジョブマネージャの Worker._after_fork() で例外が起きていた問題を修正しました(#2219)
+
+2023-07-27  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* スケジュール詳細画面に設定された実行ユーザを表示するようにしました。(#2228)
+
+2023-07-25  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* スケジュール詳細画面で設定されたユーザにジョブを実行する権限がない場合は警告が表示されるようにしました。(#1710)
+	
+2023-07-24  Hasan Md Mahamudul  <hasan@fixpoint.co.jp>
+
+	* install.sh でロケール情報を取得するため setup_utils.sh に get_locale_info()を追加しました(#2215)
+
+	* SSH 接続元によっては LC_CTYPE が不正になり install.sh に失敗する問題を修正しました(#2215)
+
+2023-07-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* REST API で root など組み込みユーザのユーザ名を変更できてしまう問題を修正しました(#2173)
+
+	* REST APIでオブジェクト一覧を取得したとき Config 型に .data が含まれない問題を修正しました(#1388)
+
+2023-07-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* タスクを含むエクスポートデータのインポートに失敗する場合がある問題を修正しました(#2188)
+
+2023-06-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ライセンスオブジェクトを更新したときに不要な WARNING ログが記録されないように修正しました(#2177)
+
+	* REST API で不正な Accept ヘッダを指定すると内部エラーとなる問題を修正しました(#2149)
+
+	* Wikiオブジェクト編集画面のTexttile記法のリンクを https://textile-lang.com に変更しました(#2179)
+
+2023-06-29  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* アップデート時にDBバックアップ処理に失敗する場合がある問題を修正しました(#2201)
+
+	* アップデート時にライセンスチェック処理に失敗する場合がある問題を修正しました(#2200)
+
+	* アップデート後に rabbitmq-server の起動に失敗する場合がある問題を修正しました(#2194)
+
+	* 冗長構成では rabbitmq-server のローリングアップデートに対応するために、マイナーバージョンが +1 づつしか更新しないように変更しました(#2194)
+
+	* 冗長構成で rabbitmq-server がマイナーバージョンアップした場合は、rabbitmqctl enable_feature_flag all コマンドにより rabbitmq-server の機能をすべて有効化する手順をマニュアルに追記しました(#2194)
+
+	* install.sh --extra でオフラインパッケージを作成するとき、rabbitmq-server の利用可能な各マイナーバージョンの最新版をパッケージに含めるようにしました(#2194)
+
+	* install.sh にオプション --skip-rabbitmq-update と --rabbitmq-version を追加しました(#2194)
+
+2023-06-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* django モデルの定義更新に伴い migration を更新しました(#2197)
+
+2023-06-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* プロセス、インシデント、タスクを削除するときにもダイアログを表示して確認するように変更しました(#2187)
+
+	* ユーザを削除しようとしたときの確認ダイアログにユーザ名が表示されない問題を修正しました(#2187)
+
+	* ジョブフローおよびフォーム画面でURLによるパラメータの指定方法をマニュアルに追記しました(#2097)
+
+	* リモートコマンド実行時のエンコーディングを指定できる __encoding__ 制御変数についてマニュアルに追記しました(#2156)
+
+	* ユーザ名およびグループ名の制約条件をドキュメントに追記しました(#2189)
+
+2023-06-15  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* HTML タグの lang 属性がブラウザの言語設定に合うように修正しました(#2185)
+
+	* スケジュール編集画面での日時ピッカーのロケールをブラウザの言語設定に合わせるように修正しました(#2185)
+
+	* 時刻ピッカーについてはロケールによらず 24 時間制になるように変更しました(#2185)
+
+2023-06-14  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Enum 依存フィールドで値と表示名が適切に表示されない場合がある問題を修正しました(#2181)
+
+2023-06-09  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* CI環境のchromeを最新版にアップデートするとテストに失敗する問題を修正しました(#2183)
+
+2023-06-02  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* コマンド出力の末尾がログに記録されない場合がある問題を修正しました(#2176)
+
+2023-05-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Amazon Linux 2 でインストールに失敗する問題を修正しました(#2171)
+
+2023-05-18  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* システム定義の型オブジェクトと同じ名称の型オブジェクトを作るとその型のオブジェクトを適切に扱えない問題を修正しました(#2169)
+
+2023-05-10  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* [x = x] のような代入ジョブが未定義変数チェックをすり抜ける問題を修正しました(#2167)
+
+2023-05-01  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Azure環境では Microsoft リポジトリをアップデートするようにしました(#1967)
+
+	* rabbitmq-server-3.11.14-1/erlang-25.3-1 でインストールに失敗する問題を修正しました(#2164)
+
+2023-04-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* パーミッション情報が無いデータをインポートした場合に親オブジェクトのパーミッションを継承するようにしました(#2042)
+
+	* パーミッション情報が無い型オブジェクトを含むJSONファイルをインポートすると正しく表示されない問題を修正しました(#2042)
+
+2023-04-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* pattern() 関数でパターンに文字列以外を渡すとエラーになるようになりました(#1846)
+
+2023-04-25  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* POP3 の CAPA コマンドに対応していないメールサーバで接続に失敗する問題を修正しました(#2150)
+
+2023-04-25  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ジョブマネージャでのドライバインポート失敗時にログが出力されるようにしました(#2138)
+
+2023-04-24  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* イベントジョブで glob/simple パターンのガードを指定していて文字列以外を受信したときに内部エラーになる問題を修正しました(#1846)
+
+	* 正規表現パターンまたは glob パターンで、match(s) メソッドに文字列以外を渡した場合は false を返すようにしました(#1846)
+
+	* プロセス一覧の絞り込みで不正な日付を指定するとサーバーエラーになる問題を修正しました(#2127)
+
+2023-04-18  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ヘルプのテキスト型オブジェクトの説明にある Jinja2 へのリンクが切れていたのを修正しました(#2054)
+
+	* ライブラリの souceText をジョブフローで更新しても関数を呼び出せない場合がある問題を修正しました(#2148)
+
+	* safe_source タイプのライブラリを更新したときのドキュメント作成でエラーが発生して実行不可になる場合がある問題を修正しました(#2117)
+
+2023-04-05  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* オフラインパッケージにビルド時に用いるRPMパッケージも追加するようにしました(#2089)
+
+2023-04-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* LazyArray.delete() をワーカプロセスで非同期処理するようにしました(#2121)
+
+2023-04-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ガード条件付きイベントジョブがセッションクローズで正しく異常終了しない場合がある問題を修正しました(#2122)
+
+2023-03-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* LazyArray 型でのデータ操作が遅延評価になるように改善しました(#2119)
+
+2023-03-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* オブジェクトのコピー時にコピー操作元ディレクトリの書き込み権限をチェックしていましたが、読み込み権限のチェックに変更しました(#2094)
+
+	* 書き込み禁止のディレクトリに対してオブジェクトの移動やコピーが出来てしまう問題を修正しました(#2094)
+
+	* winrs 連携でコマンドの stdout/stderr 出力が BOM 付き UTF-8 であっても適切にデコードできるように修正しました(#2081)
+
+2023-03-22  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 編集画面でパスワードフィールドのパスワードを再表示できないようにする設定を追加しました(#2084)
+
+	* オブジェクトプロパティ編集画面からのパーミッション設定時に重複エラーとなる 問題を修正しました(#2101)
+
+	* ファイルフィールドを持つフォームオブジェクトを削除できない問題を修正しました(#2100)
+
+	* ファイルと辞書のフィールドを持つ型のオブジェクトの編集時に辞書の追加・削除ボタンが消える時がある問題を修正しました(#2093)
+
+2023-03-22  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 特権でないユーザが find() メソッドで全ての仮想オブジェクトを検索できてしまう問題を修正しました(#2096)
+
+2023-03-13  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 検索結果など遅延評価配列を示す新しいデータ型として LazyArray 型を導入しました(#2018)
+
+	* ジョブフローで LazyArray.delete() メソッドを使って検索結果オブジェクトの一括削除ができるようになりました(#2018)
+
+	* プロセス一覧画面で「この日から」「この日まで」とプロセスの実行期間を指定して絞り込めるようになりました(#2018)
+
+	* プロセス一覧画面、インシデント一覧画面、タスク一覧画面で、チェックしたオブジェクトを削除するときに確認ダイアログを表示するようになりました(#2018)
+
+	* プロセス一覧画面、インシデント一覧画面、タスク一覧画面で、絞り込み条件に該当する全てのオブジェクトを削除できるようになりました(#2018)
+
+	* 一覧画面で絞り込み条件に該当するデータが無い場合に「該当する○○はありません」と表示するようになりました(#2018)
+
+	* プロセス一覧などポーリングで自動更新している画面で Ajax のエラー発生時にエラーダイアログを表示をするようになりました(#2018)
+
+	* アップデート後の kompirad 起動時に標準ユーティリティをインポートするように対応しました(#2098)
+
+2023-02-27  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* グループのjsonデータを別サーバにインポートするとグループ追加に失敗するようになる問題を修正しました(#2085)
+
+2023-02-22  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* REST API においてディレクトリやテーブルの子オブジェクトの読み込み権限が無くてもデータ取得できてしまう問題を修正しました(#2079)
+
+2023-02-15  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* REST API からパスワードフィールドが読み取れないように変更しました(#1919)
+
+2023-02-09  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* システム設定の「コマンド表示可否」(showCommandEnabled) のデフォルト値が false に変更になりました(#2037)
+
+2023-02-07  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* アカウントロック機能を追加しました(#2024)
+
+2023-02-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* v3.8.0 より古いバージョンの rabbitmq-server は非対応になりました(#1236)
+
+	* rabbitmq-server を SSL 接続できるようにセットアップするようになりました(#1236)
+
+	* rabbitmq-server は外部からの非 SSL での接続がデフォルトでは出来なくなりました(#1236)
+
+	* rabbitmq-server は外部からの guest ユーザでのアクセスがデフォルトでは禁止になりました(#1236)
+
+	* kompira_jobmngrd, kompira_sendevt をデフォルトで SSL 接続するようになりました(#1236)
+
+	* AMQPS においてオプションで SSL 証明書によるクライアントとサーバの相互検証できるようになりました(#1236)
+
+	* ジョブマネージャが SSL 接続しているか管理領域のテーブルで確認できるようになりました(#1236)
+
+	* SSL 管理用のスクリプト /opt/kompira/bin/ssl_utils.sh を追加しました(#1236)
+
+2023-01-19  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* LDAPサーバ連携機能を追加しました
+
+2023-01-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ジョブマネージャモードでインストールすると kompira_jobmngrd の起動に失敗する問題を修正しました(#2060)
+
+2023-01-06  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 一般ユーザがグループオブジェクトに対するREST APIのGETリクエストで403エラーとなる問題を修正しました(#2056)
+
+2022-12-26  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* ユーザー設定で一般ユーザが is_acitve/groups フィールドを変更できないようにしました(#2021)
+
+2022-12-21  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* REST API で ユーザオブジェクトを PATCH リクエストで更新するとパスワードが壊れる問題を修正しました(#2048)
+
+2022-12-20  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* rootユーザが別ユーザの編集画面に遷移すると右上のユーザ表示がそのユーザ名に変わってしまう(#2046)
+
+2022-12-16  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* URLフィールドで対応するスキームを指定する schemes 修飾子を追加しました(#2039)
+
+2022-12-14  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* フィールド値によるソート順を指定したテーブルが削除できない問題を修正しました(#2036)
+
+	* オブジェクト新規作成時に親オブジェクトのパーミッションを引き継がない問題を修正しました(#2009)
+
+	* ディレクトリ／テーブルの新規作成時に親オブジェクトのソート順とページサイズを引き継がない問題を修正しました(#2009)
+
+2022-12-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 長さ制限を超えた修飾子を持つ型フィールドを持つオブジェクトを作成すると内部エラーになる問題を修正しました(#1998)
+
+	* 型オブジェクトの編集画面でフィールド定義の入力欄に長さ制限を設けました(#1998)
+
+2022-11-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* httpd 停止時にエラーログが記録される問題を修正しました(#2017)
+
+2022-11-29  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* kompirad, kompira_jobmngrd の各プロセスのタイトルが状況に合わせて更新されるように修正しました(#2016)
+
+2022-11-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* setup_cluster.sh に失敗する問題を修正しました(#2019)
+
+	* setup_cluster.sh に --token パラメータをしても設定更新されない問題を修正しました(#2003)
+
+2022-11-25  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* install.sh の --with-gdb オプションでデバッグツールのインストールに失敗する問題を修正しました(#1978)
+
+2022-10-31  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* source ライブラリの関数の呼び出すがハングする問題を修正しました(#1975)
+
+2022-10-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* イベントジョブに受信したメッセージを削除せずに参照するための新しいキーワード引数  peek_mode が追加されました(#1972)
+
+	* チャネル型に新しいメソッド pop_message, peek_message, delete_message, clear_messages が追加されました(#1972)
+
+	* チャネル型の message_queue に対するアクセスで pickle 化されたバイナリではなく通常のデータが参照できるようにしました(#1972)
+
+2022-10-20  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* User オブジェクトの enable_restapi に false を書き込んでも auth_token が null にセットされない問題を修正しました(#1995)
+
+2022-10-13  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* チャネルオブジェクトに対するイベントジョブでディープマッチのガード条件を指定すると異常終了する場合がある問題を修正しました(#1993)
+
+2022-10-12  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 同じジョブフローに対して REST API からパラメータを変えて連続的に実行するとパラメータが正しく渡らない問題を修正しました(#1990)
+
+2022-10-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成セットアップ時の Corosync のトークンタイムアウトのデフォルトを 30 秒に変更しました(#1986)
+
+2022-10-06  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* インポート時に設定オブジェクトのデータを上書きするオプションを追加しました(#1905)
+
+2022-10-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Django 3.2 系に対応するなど各種 Python ライブラリをアップデートしました(#1819)
+
+	* SSL関連のライブラリアップデートに伴い、リモート端末への Legacy TLS (v1.0/v1.1) での接続が非推奨になりました(#1956)
+
+2022-10-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成のセットアップで pgsqlms の構成に失敗する場合がある問題を修正しました(#1981)
+
+2022-10-03  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 添付ファイル移行ツール (tools/convert_files.py) を追加しました。
+
+	* ZIP形式のインポート・エクスポートに対応しました。
+
+2022-09-26  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* ディレクトリ形式エクスポートで添付ファイルを実ファイル形式で出力できるようにオプションを追加しました(#1808)
+
+	* export_dir と import_dir により添付ファイルの内容が破損してしまう問題を修正しました(#1973)
+
+2022-09-14  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* クラウド上の一部の OS でオフラインパッケージの作成に失敗する問題を修正しました(#1968)
+
+2022-09-09  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* Amazon Linux 2 に対応しました。(#1965)
+
+2022-09-02  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* インストーラ(install.sh)にインストールのみ実施するオプションを追加しました(#1959)
+
+2022-09-01  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* マニュアル上でのインデックスおよびクロスリファレンスを改善しました。(#1509)
+
+2022-09-01  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* setup_cluster.sh を実行するディレクトリによっては sync_master.sh, setup_utils.sh が更新されない問題を修正しました
+
+	* --proxy オプション付きで setup_cluster.sh を実行すると冗長構成セットアップに失敗する問題を修正しました。(#1957)
+
+2022-08-17  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 冗長構成で rabbitmq-cluster リソースエージェントの言語設定を修正しました。 (#1594)
+
+2022-08-10  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* REST-API でのオブジェクト一覧取得時の order_by で指定できる属性に parent_object, description を追加しました。(#1945)
+
+2022-08-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* マニュアル「言語リファレンス」に、ジョブフローの文字数制限やフローのチェイン数制限についてマニュアルに追記しました。(#1886)
+
+	* マニュアル「操作ガイド」に、キーボード操作、ディレクトリ画面での操作方法、フォームオブジェクトの説明、などを加えました。(#1941)
+
+2022-08-03  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* .secret_key ファイルのパーミッションを変更しました
+
+2022-08-02  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* シークレットキー更新時にバックアップを取るようにしました(#1942)
+
+2022-08-02  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* プロセス詳細画面で CTRL-[ と CTRL-] でタブを切り替えられるようにしました(#1847)
+
+	* プロセス詳細画面で F6, F7, F8 キーでプロセスの中止、停止、再開をできるようにしました(#1847)
+
+2022-08-01  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 冗長構成の更新インストール時に install.sh で pcs cluster start を実行するように変更(#1934)
+
+2022-07-29  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* systemctl stop で failed にならないように暫定対処しました(#1939)
+
+2022-07-26  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 冗長構成でパスワードフィールド用の secret key が同期されない問題を修正しました(#1923)
+
+2022-07-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* マニュアル「管理ガイド」にローカルノードについての説明を追加しました。またネットワーク機器の制限事項の説明を一部修正しました。(#1814)
+
+	* 組み込み型オブジェクトの型名表記に抜けがあったのを修正しました(#1814)
+
+	* マニュアルに組み込み関数の結果の型を追記しました($1873)
+
+	* プロセス詳細画面で 'a' キーを押下することでコンソールバッファを全選択／選択解除する機能を追加しました(#1847)
+
+2022-07-25  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* マニュアル「3.8.1 メールを送信する」の警告部分を内容を現バージョンに合わせて書き換えて注釈としました(#1903)
+
+	* マニュアルで組み込み型オブジェクトについて説明が不足しているものがあったので追記しました(#1902)
+
+2022-07-22  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* コンソールの自動スクロールの位置判定を修正しました(#1875)
+
+	* コンソールバッファの高さを自動調整するようにしました
+
+2022-07-22  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* OAuth2認証でKompira自体にリダイレクト機能を持たせるようにしました(#1910)
+
+2022-07-22  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成のアップデート時に rabbitmq.conf をシングル構成用に書き換えてしまう問題を修正しました(#1870)
+
+2022-07-21  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* バージョンアップ時のKompiraオブジェクトの自動マイグレーション機能を追加しました(#1880)
+
+2022-07-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* メールチャネルでメール受信時にメールサーバからメールを削除しない機能を追加しました(#1303)
+
+	* いくつかの型オブジェクトでポート番号に指定できる値を 0 から 65535 の範囲に制限しました
+
+2022-07-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 依存フィールドになっている Enum 型フィールドで表示名が表示されない問題を修正しました(#1916)
+
+2022-07-13  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* メールチャネル受信失敗時にジョブフローでの検知できるようにしました(#1368)
+
+2022-07-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* チャネルおよびメールチャネルにアクション機能を追加しました(#1729)
+
+2022-07-08  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* メール送受信において OAuth2 認証に対応しました
+
+2022-07-01  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* プロセスオブジェクトに起動オブジェクトを示すフィールド invoker を追加しました(#1885)
+
+2022-06-29  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Favicon 画像を SVG 形式に変更しました(#1893)
+
+2022-06-24  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* メールチャネルおよびSMTPサーバに接続確認を行う機能を追加しました(#1805)
+
+2022-06-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* チェックポイントモードで再開したプロセスでprintによるコンソール出力が出来なくなる場合がある問題を修正しました(#1887)
+
+2022-06-13  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* データベースアクセス方法を改善して、ブラウザ画面表示や一部のジョブフロー動作の応答性を向上しました(#1877)
+
+2022-06-09  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 複数 SMTP サーバの設定に対応しました(#1487)
+
+2022-06-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* カスタムスタイル機能に対応しました(#1060)
+
+	* システム設定にブランドタグ (brandTag) を追加して、ブランド表記をカスタマイズできるようになりました
+
+	* メニューバーにブランドロゴ画像を表示するようになりました
+
+	* ログイン画面/ログアウト画面のデザインを見直しました
+
+	* 設定メニューの項目が空になる場合がある問題を修正しました(#1868)
+
+2022-05-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Windows へのファイル送信(PUT)でサイズが大きい場合に失敗する問題を修正しました(#1869)
+
+	* Windows からのファイル転送(GET)に時間がかかる問題を改善しました(#1633)
+
+2022-04-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Windows 連携において稀に内部エラーが発生する場合がある問題を修正しました(#1835)
+
+	* Windows に対するスクリプトジョブ実行でリモートに転送したスクリプトが残る場合がある問題を修正しました(#1837)
+
+2022-04-25  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* コンソールに実行したコマンドラインなどジョブ情報を表示する機能に対応しました(#1629)
+
+	* コマンド実行時のコンソール出力を制御する機能に対応しました(#1563)
+
+2022-04-21  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* タイムスタンプが変更されていない場合でもジョブフロー再コンパイル時にはキャッシュリロードするように修正しました(#1826)
+
+	* オブジェクトのプロパティ保存時にリダイレクトループすることがある問題を修正しました(#1855)
+
+2022-04-15  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* Dataテーブルの id を biginteger 型に拡張しました(#1817)
+
+	* テーブルからのフォーム実行で表示されるダイアログの幅を大きくしました
+
+2022-04-13  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 特権ユーザが他ユーザが所有するオブジェクトのプロパティを変更できなくなってしまう問題を修正しました(#1838)
+
+	* プロパティ編集でグループパーミッションだけを空にして保存するとバリデーションエラーとなる問題を修正しました(#1839)
+
+	* プロパティを一括変更する機能を追加しました(#1296)
+
+2022-04-13  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ユーザ操作に対して内部エラーが発生したときに監査ログが記録されない場合がある問題を修正しました(#1843)
+
+2022-04-01  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 視認性改善のためボタンのスタイル変更と、一部のボタンのテキスト表記を改善しました(#1821)
+
+2022-03-22  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* RHEL8.5 を新規に Minimal インストールすると ipcalc コマンドが存在せずに setup_cluster.sh に失敗する問題を修正しました(#1822)
+
+2022-03-16  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 古い Windows と連携時に CredSSP 認証する場合に失敗することがある問題を修正しました(#1829)
+
+2022-02-01  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* パッケージから LICENSE.pdf ファイルの同梱を取り除き README.md からのライセンス利用規約のリンクを修正しました(#1815)
+
+2022-01-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* find() メソッドで order_by の指定方法によってエラーになる場合がある問題を修正しました(#1811)
+
+	* ドキュメントに find() メソッドでの order_by, offset, limit パラメータの説明を追加しました
+
+	* ドキュメントにディレクトリ型およびテーブル型での orderBy, pageSize フィールドの説明を追加しました
+
+2022-01-25  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* REST API で設定オブジェクトのデータ(data属性)を PUT/PATCH で更新できない問題を修正(#1712)
+
+2022-01-24  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* RSAキー認証によるSSHアクセスに失敗する場合がある問題を修正しました(#1802)
+
+2022-01-24  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* コンソールのメールアドレス出力時に>が末尾に含まれていると余分なセミコロンが表示される問題を修正(#1772)
+
+2022-01-18  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 冗長構成で rsyncd による添付ファイル同期を廃止しました(#1756)
+
+2022-01-17  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 型オブジェクトのフィールド修飾子で型の合わないデフォルト値を指定したときに不正に適用される場合がある問題を修正しました(#1789)
+
+2022-01-07  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 大きな添付ファイルをアップロードする際にメモリエラーとなる問題を修正しました
+
+	* PostgreSQL のスロークエリのロギングを有効化しました
+
+2022-01-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* マニュアルにプロセス詳細画面の結果タブと設定タブの説明を追加しました(#1688)
+
+2022-01-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成でも httpd のログローテートできるように修正しました。(#1766)
+
+	* httpd のログについて日次で30個分ローテートする設定に変更しました。(#1766)
+
+	* テーブル画面の検索で同一オブジェクトが複数回表示される場合がある問題を修正しました(#1777)
+
+2021-12-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ディレクトリの find() メソッドで検索値を配列で指定した場合に期待した結果が得られない場合がある問題を修正しました(#1775)
+
+2021-12-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 動作確認が取れていないNW機器のノード種別情報も (beta) として追加しました(#1722)
+
+2021-12-24  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* PostgreSQL のスロークエリのロギングを無効化しました(#1770)
+
+	* ローカル接続で shell に空文字列を指定すると Permission denied が発生する問題を修正しました(#1764)
+
+2021-12-23  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* パターンと文字列を類似比較演算子で評価すると異常終了する問題を修正しました(#1760)
+
+2021-12-22  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ノード種別型 /system/types/NodeType を追加しました(#1722)
+
+	* 標準のノード種別情報を /system/nodetypes/ に追加しました(#1722)
+
+	* Netmiko を v3.4.0 にアップデートしました(#1558)
+
+2021-12-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* SSH または TELNET によるネットワーク機器(Cisco IOS など5機種)との連携に対応しました(#1722)
+
+	* ネットワーク機器に対応する接続種別 (conntype) を5機種8種類を追加しました(#1722)
+
+	* Windows 機器との連携に用いる接続種別 (conntype) を4種類に拡張しました(#1731)
+
+2021-12-21  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* プロセス詳細画面でジョブフロー終了時のプロセスステータスなど一部の文字列が翻訳されていない問題を修正しました(#1753)
+
+2021-12-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* object, directory または enum フィールド修飾子で、依存フィールドおよび参照フィールドの指定ができるようになりました(#940,#1744)
+
+	* object, directory または enum フィールド修飾子で、"switch" および "case" によってパターンに応じて適用する修飾子を指定できるようになりました(#1744)
+
+	* Object フィールドの選択肢がタイムアウトでエラーになる問題を修正しました(#1738)
+
+2021-12-20  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* テーブルに関連付けたフォームの配列/辞書フィールドで操作の削除ボタンが消える問題を修正しました(#1748)
+
+	* フォームのURLに Array<Object> に渡すパラメータを渡すと 500 内部エラーが発生する問題を修正しました(#1686)
+
+2021-12-15  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* テーブルの関連オブジェクトのフォームのEmailフィールドでaやcといった文字が入力できない問題を修正しました(#1740)
+
+2021-12-09  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* ファイルアップロード時にプログレスバーを表示するようにしました
+
+	* アップロードファイルサイズの制限を1GBに引き上げました(#1737)
+
+2021-11-30  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 制限を超えるサイズのファイルを添付しようとした場合に事前エラーチェックするよう修正しました(#1596)
+
+2021-11-29  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Netmiko で SCP によるファイル転送に対応しました(#1730)
+
+2021-11-24  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* REST API で添付ファイルフィールドのデータ登録・更新ができない問題を修正しました(#1728)
+
+	* 添付ファイルフィールドに添付されたファイルをDB上に保存するように変更しました
+
+2021-11-16  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Objectフィールドの修飾子で絞り込みと並び順軟に指定できるようになりました(#1660)
+
+	* ディレクトリの find() メソッドでオブジェクトを検索するときに内部エラーになる場合がある問題を修正しました(#1726)
+
+2021-11-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* マニュアル-管理ガイドにオフラインインストール手順の説明を追加しました(#1725)
+
+	* RHEL8環境でオフラインパッケージが作成できない場合がある問題を修正しました(#1723)
+
+2021-10-29  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* REST-API でテーブルへのオブジェクト作成ができない問題を修正しました(#1702)
+
+	* name パラメータ無しで Directory オブジェクトに POST すると 500 エラーになる問題を修正しました(#1719)
+
+2021-10-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* プロセス管理コマンド manage.py process の使い方をマニュアルに追加しました。またいくつかフィルタオプションを追加しました(#1708)
+
+2021-10-28  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 添付ファイルフィールドをAPIでGETしようとすると内部エラーが発生する問題を修正しました(#1592)
+
+2021-10-27  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* オブジェクトに対する REST-API でパーミッションがチェックされない場合がある問題を修正しました(#1701)
+
+2021-10-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 管理コマンドの実行可能ユーザを root ユーザまたは kompira グループに所属するユーザに制限するようにしました(#1705)
+
+2021-10-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* システムパッケージ情報(PIP,Web)を閲覧および管理する機能を追加しました(#1697)
+
+	* オフラインパッケージの作成とオフラインインストールに失敗する場合がある問題を修正しました(#1699)
+
+2021-10-22  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* upload 組み込みジョブが Array<File> と Dictionary<File> 型のフィールドに対応しました(#1690)
+
+2021-10-21  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* ライブラリ呼び出し時のメモリサイズ・ファイル数制限をデフォルトで無制限にしました(#1679)
+
+2021-10-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成アップデート時にリソース設定が更新されるよう修正しました(#1687)
+
+	* コマンド失敗時に終了ステータスコードが$STATUSにセットされず常に1となる問題を修正しました(#1682)
+
+2021-10-20  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* マニュアルの使用ポート一覧の冗長構成の記載を現状に合わせて更新しました(#1674)
+
+	* Configオブジェクトの「設定の編集」時のパーミッションエラーメッセージとマニュアルの記載を改善しました(#1676)
+
+2021-10-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 監査ログ機能に対応しました(#1520)
+
+2021-09-13  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 入力フォームでフィールドと help_text の間に余計な空白が空いてしまう問題を修正しました(#1570)
+
+2021-09-09  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* ドキュメントでの冗長構成の管理コマンドの出力表示を現在のバージョンに合わせて修正しました(#1654)
+
+2021-09-07  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* CentOS Stream 8 に対応しました (#1606)
+
+2021-09-06  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* ジョブフロー数が多い状態でKompiraをアップデートインストールするとkompiradが起動しなくなる可能性がある問題を修正しました(#1639)
+
+	* ジョブフロー実行時にジョブフローオブジェクトのコンパイラバージョンが現行と異なる場合にはオブジェクトを再コンパイルするようにしました(#1651)
+
+2021-09-02  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* オブジェクト検索画面で検索条件に空白を含むときに表示件数を指定すると空白文字が+に置き換わる問題を修正しました(#1661)
+
+2021-09-01  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* netmiko でタイムアウト時に切断済みコネクションにデータを送信しようとして失敗することがある問題を修正しました(#1534)
+
+	* winrs でのコマンド実行時に引用符を含んでいるとエラーになる場合がある問題を修正しました(#1637)
+
+2021-08-31  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* ジョブフローキャッシュ機構を導入しました(#1652)
+
+	* ジョブフローからプロセス一覧など仮想オブジェクト配下の一覧をフィルタ機能付きで取得する find メソッドを追加しました(#1626)
+
+2021-08-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* メールチャネルで最後に受信したメールをイベントジョブで受け取れない場合がある問題を修正しました(#1649)
+
+2021-08-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* メールチャネルでのメール受信やスケジュールの起動ができない問題を修正しました(#1648)
+
+2021-08-05  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* sourceライブラリの呼び出しのオーバヘッドを削減しました(#1642)
+
+2021-08-04  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* print組み込み関数で'delim'以外のキーワード引数が渡されたらエラーメッセージを出してSTATUS=1を返すように修正しました(#1643)
+
+2021-08-02  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 関数呼び出しで runtime というキーが含まれたキーワード引数を渡すとエラーとなる問題を修正しました(#1645)
+
+	* updateメソッドで「user」という名前のフィールドの値を更新しようとするとエラーとなる問題を修正しました(#1039)
+
+2021-07-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* winrs 接続では接続キャッシュを利用しないように変更しました(#1635)
+
+2021-07-21  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 冗長構成セットアップ/インストールスクリプトのヘルプメッセージとマニュアルの記述を更新しました(#1232)
+
+2021-07-20  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* LANGがC.UTF-8の環境でinstall.shに失敗する問題を修正(#1601)
+
+2021-07-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 制御変数 __use_cache__ を追加しました。接続キャッシュの利用を制御できるようになりました(#1623)
+
+2021-07-14  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* プロセスオブジェクト属性の記載漏れ(exit_status, result, error)をマニュアルに追記しました(#1619)
+
+2021-07-13  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* __sudo__=true のローカル実行コマンドジョブを中止したときに以後のコマンドジョブの実行に失敗する場合がある問題を修正しました(#1508)
+
+	* SSH の exec リクエストに対応していない機種と連携できない問題を修正しました(#1607)
+
+2021-07-09  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* メッセージを含んだチャネル（やバイナリ辞書・配列フィールドを含んだオブジェクト）がコピーできない場合がある問題を修正しました(#1610)
+
+	* バイナリフィールドで不正な入力値を保存しようとすると他のバイナリフィールドの入力フォームの値がクリアされてしまう問題を修正しました(#1618)
+
+	* バイナリ辞書・配列フィールドの値が表示されない問題を修正しました(#1468)
+
+2021-07-08  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 空の修飾子のenum型フィールドを持つオブジェクトを作成すると内部エラーになる問題を修正しました(#1554)
+
+2021-07-07  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* チャネルリストでのイベントジョブで要素数が多いときに内部エラーが発生することがある問題を修正しました(#1612)
+
+2021-07-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* kompira_jobmngrd の動作に kompira.conf の設定を反映できない項目がある問題を修正しました(#1614)
+
+2021-07-02  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* manage.py のコマンドに compile_library を追加しました (Ver.1.5からの移植) (#1605)
+
+2021-06-18  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* VM上の冗長構成でマスタ側のVMを強制終了するとマスタを正しくフェイルバックできない問題を修正しました(#1590)
+
+2021-06-15  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 同梱のKompira利用規約 (LICENSE.pdf) を更新しました
+
+2021-06-11  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ファイルが添付されていないファイルフィールドをダウンロードしたとき 204 NoContent を返すようにしました(#1591)
+
+	* 添付ファイルの名前にマルチバイト文字が含まれているとダウンロード時に期待したファイル名にならない問題を修正しました(#1589)
+
+2021-06-03  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* ディレクトリ一覧画面から表示名での検索ができない問題を修正しました(#1568)
+
+2021-06-02  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* API/ブラウザ操作で maximum recursion depth exceeded が発生することがある問題を修正しました(#1565)
+
+2021-05-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ローカルコマンド実行時に適切にタイムアウトしない場合がある問題を修正しました(#1572)
+
+2021-05-20  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 文字列系フィールドを保存したときに前後の空白が削除されてしまう問題を修正しました(#1564)
+
+	* 新たに strip、key_strip フィールド修飾子を導入しました。
+
+2021-04-23  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* winrs で内部エラー発生時にコマンドジョブが終了しない場合がある問題を修正しました(#1545)
+
+2021-04-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* リモートジョブでの標準入力の処理を見直して負荷を軽減しました(#1541)
+
+2021-04-21  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* 読み込み権限のあるフォームオブジェクトを閲覧できない場合がある問題を修正しました(#1499)
+
+2021-04-20  Kenta Hattori  <hattori@fixpoint.co.jo>
+
+	* CentOS8.3での冗長構成のセットアップに失敗する問題を修正しました(#1537)
+
+2021-04-19  Kenta Hattori  <hattori@fixpoint.co.jp>
+
+	* プロセス一覧取得 API で attrs パラメータによる属性指定ができない問題を修正しました(#1483)
+
+2021-04-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* コマンド実行に伴い kompira_jobmngrd が多数のファイルをオープンしている問題を修正しました(#1527)
+
+2021-04-15  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* APIで仮想オブジェクトの詳細情報に認証トークン無しでアクセスできてしまう問題を修正しました(#1485)
+
+2021-04-13  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* チャネルからのデータ受信時に$STATUS=0にセットされない問題を修正しました(#1533)
+
+2021-03-16  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* REST-API で JSON 形式パラメータが厳密にエスケープされていなくてもエラーにならないよう緩和しました(#1524)
+
+	* json_dump, json_load にいくつかのオプションを指定できるようにしました(#1525)
+
+	* manage.py process コマンドでオプションによっては例外が発生する問題を修正しました(#1526)
+
+2021-03-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 型オブジェクトの extend フィールドで拡張モジュールを指定しても機能しない問題を修正しました(#1522)
+
+2021-03-11  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ライブラリローダが無限再帰してインポートできない場合がある問題を修正しました(#1523)
+
+	* ライブラリで map() の結果を返すと "<map object at ...>" といった文字列が返ってしまう問題を修正しました(#1501)
+
+2021-03-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 静的ファイルのディレクトリ構成(kompira/static配下)を見直しました(#1521)
+
+2021-03-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Configオブジェクトの型フィールドの名称によってはKompiraオブジェクトの属性値を上書きしてしまう問題を修正しました(#1519)
+
+2021-03-05  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 長いコマンドラインやスクリプトの引数を渡せない問題を修正しました(#1518)
+
+	* "Meta" という文字列がフィールドの名前として使えない問題を修正しました(#1515)
+
+2021-03-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* サイズの大きいスクリプトジョブが実行できない問題を修正しました(#1517)
+
+2021-03-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 日本語を含む ps1 スクリプトのスクリプトジョブ実行に失敗する問題を修正しました(#1512)
+
+	* 空文字列のコマンドジョブを実行すると応答がなくなる問題を修正しました(#1511)
+
+	* Group一覧取得API／User一覧取得APIがエラーになる問題を修正しました(#1484)
+
+2021-02-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Time型フィールドの値が編集画面を開くと空になってしまう問題を修正しました(#1514)
+
+2021-02-16  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* CentOS8/RHEL8 においてアップデートに失敗する問題を修正しました(#1507)
+
+	* CodeMirror エディタのメニューのスタイルを改善しました
+
+2021-02-15  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* ライセンス利用規約を ver.8.0 に更改
+
+2021-02-12  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* オブジェクトに拡張子をつけてブラウザアクセスすると内部エラーとなる問題を修正(#1505)
+
+	* オブジェクトのフィールドを画面上から検索するとInternal Server Errorになる問題を修正(#1500)
+
+2021-02-09  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* CentOS7/RHEL7 においても新しい rabbitmq-server がインストールされるようにしました(#1497)
+
+	* ログイン画面のパスワード入力欄に autocomplete="off" 属性を付けるようにしました(#1498)
+
+	* オンラインヘルプマニュアルのデッドリンクを修正しました(#1488)
+
+2021-02-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* pip が古すぎてインストールに失敗する問題を修正しました(#1503)
+
+	* Netmiko でプロンプトを誤認識してコマンド実行が完了しない場合がある問題を修正しました(#1475)
+
+	* Netmiko で UTF-8 エンコードでない機器に接続したときにデコードエラーが生じる場合がある問題を修正しました(#1486)
+
+2021-02-05  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* ログイン画面のパスワードのinputフィールドをautocomplete="off"にしました (#1498)
+
+2021-01-29  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* インストール時に自動生成される秘密鍵に特殊記号が含まれないようにしました(#1492の暫定対処)
+
+2021-01-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* コマンドの出力が多いときにコンソールに表示されない場合がある問題を修正しました(#1496)
+
+2021-01-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 標準エラー出力の量が多いとジョブマネージャとの接続が切れてしまう問題を修正しました(#1379)
+
+2021-01-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* コマンド実行結果の標準エラー出力をバイナリで受信するとプロセスが完了しない問題を修正しました(#1494)
+
+2021-01-26  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* /config, /task, /incident, /scheduler, /process をインポート時の保護領域に追加しました
+
+2021-01-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成で v1.6.2 に install.sh のみでアップデートすると暗号化フィールド用のシークレットキーファイルが同期されない問題を修正しました(#1481)
+
+	* v1.6.2にアップデートすると Array<Password> と Dicrionary<Password> フィールドのデータが空になる問題を修正しました(#1479)
+
+	* 冗長構成で v1.6.2 にアップデート後に kompirad が起動できない問題を修正しました(#1478)
+
+	* CentOS7系の冗長構成で非ASCII文字をパスに含む添付ファイルオブジェクトを表示できない問題を修正しました(#1477)
+
+2021-01-07  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* 配列フィールドを10個以上にして保存すると2つ目以降のフィールドが消えてしまう問題を修正(#1482)
+
+2020-12-25  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* インポート時にシステム領域を保護できるように修正しました(#1205)
+
+2020-12-24  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* kompira_sendevt/kompira_jobmngrdインストール時のガードを追加(#1430)
+
+	* 存在しない型オブジェクトを関連付けたテーブルをインポートするとそのテーブルを開くことができない問題を修正(#1473)
+
+
+2020-12-22  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* ファイル配列とファイル辞書のフィールドをサポートしました
+
+2020-12-15  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* オフラインインストール用パッケージ作成オプション--extraをinstall.shに追加
+
+2020-12-11  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* jobmngr モードでインストールしたとき kompira_sendevt が実行できない問題を修正(#1461)
+
+2020-12-08  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* bin パッケージで kompira_site 配下がコンパイルされておらずソースが含まれている問題を修正(#1457)
+
+	* ifブロックの条件判定式において未定義変数のチェックがされない問題を修正(#1458)
+
+2020-12-04  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* スケジュールのコピーに対応しました(#533)
+
+2020-12-02  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* サロゲートペアを含む文字列を表示しようとするとエラーになりプロセスの表示や中止ができなくなる問題を修正(#1455)
+
+2020-11-26  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* ライセンスファイルを更新するlicense_update管理コマンドを追加しました(#942)
+
+2020-11-25  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* Library, Jobflow, ScriptJobオブジェクトの各ビューを修正しました
+
+	* ジョブフロー数制限超過状態のときに警告メッセージを表示するように変更しました(#778)
+
+	* urlopenのdataパラメータでbinaryに対応しました(#1431)
+
+2020-11-19  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* 仮想オブジェクト型などシステム内部利用の型のオブジェクトを作成できないように変更しました(#1427)
+
+	* sleep関数でFloatも受け付けるように拡張しました(#1452)
+
+2020-11-18  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* QueueManagerのclose処理でAttributeErrorになるケースを修正
+
+2020-11-10  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* safe_sourceライブラリ間のインポートにおいてジョブフローの呼び出し順序によってはUndefined attribute errorとなる問題を修正(#1441)
+
+2020-11-09  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* engine.pyのruntie_tableアクセスまわりにロックを追加(v1.5.5.post10の修正を一部取り込み)
+
+2020-11-02  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* ユーザ情報のディレクトリに移動するとメニューバーのユーザ名がそのユーザになってしまう問題を修正しました(#1451)
+
+	* サマータイム切り替わりの前後でAmbiguousTimeErrorが発生しInternal Server Errorとなる問題を修正しました(#1450)
+
+2020-10-30  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* オブジェクト配列や辞書で相対パスでエクスポートしたデータをインポートすることができない問題を修正しました(#1449)
+
+2020-10-29  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Windowsノードの reboot() 時に $STATUS=-1 となる問題を修正しました(#1448)
+
+2020-10-28  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* テーブル一覧の画面が微妙に切れる問題を修正しました(#1435)
+
+2020-10-26  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* メールチャネルで無効化に設定しているにもかかわらず初回だけメールフェッチしてしまう問題を修正しました(#1444)
+
+2020-10-22  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* not foundページのメッセージが表示されない問題を修正しました。(#1434)
+	* マニュアルにinstall.shではVer1.6へのメジャーバージョンアップができないことを明記しました。(#1432)
+	* テーブル表示において、配列や辞書フィールドでのソートを禁止しました(#1433)
+	* スケジュール削除時の確認ダイアログに英語が混じっている問題を修正しました(#1440)
+
+2020-10-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Windows ノードに対するファイル転送時にエラーになる問題を修正しました(#1437)
+
+2020-10-12  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* and/or 論理演算子の短絡評価に対応しました。(#168)
+
+2020-10-07  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* ディレクトリ一覧の画面を5分以上開いていると、型選択肢が表示されなくなる問題を修正しました(#1429: タイムアウトを1時間に延長)
+
+2020-10-06  Kenta Hattori  <hattori@hattori-dev-centos8.dev.fixpoint.co.jp>
+
+	* README.mdのハードウェア要件の記載を修正しました。
+
+2020-10-06  Kenta Hattori  <hattori@fixpoint.co.jp>
+
+	* システム情報のログインユーザが正しく表示されない問題を修正しました(#1428)
+
+2020-10-05  Kenta Hattori  <hattori@fixpoint.co.jp>
+
+	* スケジュール設定の編集でパラメータを削除できない問題を修正しました(#1425)
+
+2020-09-30  Kenta Hattori  <hattori@fixpoint.co.jp>
+
+	* v1.6.1 をリリースしました
+
+2020-08-14  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* v1.6.0.beta1 をリリースしました
+
+2020-06-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* スケジューラで毎日0時0分実行が登録できない問題を修正しました (#1414)
+
+2020-06-11  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 同時起動スケジュールが多数あると後方のスケジュールがいつまでも起動しない場合がある問題を修正しました (#1417)
+
+2020-06-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* parsedatetime ライブラリのアップデートによりインストールに失敗する問題を修正しました (#1415)
+
+2020-04-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* pgdg-redhat リポジトリの変更によりインストールに失敗する問題を修正しました (#1411)
+
+2020-04-02  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* インポート後にライブラリが実行不可になる場合がある問題を修正しました (#1398)
+
+2020-03-18  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* インストール時およびextraパッケージ作成時に追加のrpmパッケージやpipモジュールを指定できるようにしました (#1408)
+
+2020-03-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ライブラリ関数内で例外が発生したときにジョブフローが無限待ちになる場合がある問題を修正しました (#1405)
+
+2020-03-02  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* メール送信時のSMTPSプロトコルに対応 (#1402)
+
+2020-02-25  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 正規表現マッチ中にプロセスを中止するとデッドロックすることがある問題を修正しました (#1400)
+
+2020-02-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ip link コマンドで MAC アドレスが取得できないときインストールに失敗する問題を修正しました (#1399)
+
+	* proxy パスワードに記号を含む場合にインストーラが正しく処理できないことがある問題を修正しました (#1394)
+
+2020-02-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* mail_parse() でパースされたヘッダの文字が欠落していることがある問題を修正しました (#1397)
+
+	* 高負荷時に kompira_jobmngrd で AMQP の FRAME_ERROR が発生することがある問題を修正しました (#1393)
+
+2020-02-11  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* virtualenv のアップデートに伴い kompira がインストールが失敗する問題を修正しました (#1389)
+
+2020-02-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 不要なライセンスチェックを抑制してオーバーヘッドを低減しました (#1383)
+
+2020-02-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 子要素を含むオブジェクトの名前変更および移動時のパフォーマンスを改善しました (#1381)
+
+2020-01-31  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* データベースのロック制御を見直して VACUUM 処理と競合しないように改善しました (#1378)
+
+2020-01-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* リダイレクト時の Location を絶対 URL から相対 URL に変更しました (#1376)
+
+	* 不正なパスを含む URL でアクセスした画面からリダイレクトしたときにアクセスエラーになることがある問題を修正しました (#1371)
+
+2020-01-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* メールヘッダに含まれるエンコード情報が不正なときに mail_parse() がエラーになる問題を修正しました (#1374)
+
+	* スケジューラの起動頻度が高いとデータベース接続エラーが発生することがある問題を修正しました (#1373)
+
+	* 繰り返し回数の非常に多いイテレートを実行するとメモリ使用量が増大する問題を改善しました (#1372)
+
+2019-12-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* LANG が設定されていない環境で kompira_sendevt を実行すると No handlers could be found for logger "kompira" とエラーになる問題を修正しました (#1349)
+
+	* ライブラリオブジェクトの関数内で sys.exit()/os._exit() した場合ジョブフロープロセスを終了させるようにしました (#1370)
+
+2019-11-25  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* [v155] kompira_jobmngrd 単体のインストールに失敗する問題を修正しました (#1366)
+
+2019-11-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* テーブルの children ビューでは子要素数の annotation を廃止してクエリ速度を改善しました (#1364)
+
+	* ディレクトリのViewとAPIViewで子要素に関する annotation を使い分けることでクエリ速度を改善しました (#1365)
+
+2019-11-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 日本語名のテーブルに含まれるオブジェクトの名前を変更するとエラーが表示される問題を修正しました (#1362)
+
+2019-11-05  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 添付ファイルを持つオブジェクトの削除に時間がかかる場合がある問題を改善しました (#1321)
+
+2019-10-31  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 設定オブジェクトのフィールド表示名をクリックすると表示名が消える問題を修正しました (#1359)
+
+	* ライブラリオブジェクトをインポートしたときにエラーが表示されることがある問題を修正しました (#1360)
+
+2019-10-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 書き込みできない場所に対する manage.py export_dir コマンドを異常終了するように変更しました (#1358)
+
+2019-10-29  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ブラウザからのオブジェクト検索に日本語を指定すると失敗する問題を修正しました (#1357)
+
+	* [155a] テーブルでの検索時に annotate() + distinct(fields) is not implemented. というエラーが発生する問題を修正しました (#1356)
+
+	* データベースアクセスを調整してパフォーマンスを改善しました
+
+2019-10-24  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ライブラリからライブラリを呼び出した際に、呼び出された側のライブラリのモジュール内変数の値が None になってしまう問題を修正しました (#1337)
+
+2019-10-23  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* postgresql のログ出力先を /var/log/postgresql/postgresql.log に変更しました (#1346)
+
+	* ライセンス切れ状態では kompira のインストールに失敗するように変更しました (#1355)
+
+2019-10-16  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* [v155a] パフォーマンス劣化の要因となった atfork ライブラリの修正版を同梱するようにしました (#1338)
+
+	* [v155a] source ライブラリ呼び出し時にメモリリークしていた問題を修正しました (#1350)
+
+	* urlopen のレスポンスに HTTP バージョンを含めるようにしました (#1353)
+
+	* pacemaker が stop しているときに sync_master すると失敗することがある問題を修正しました (#1347)
+
+	* ジョブフロー数が多い時に kompirad 起動時にタイムアウトする問題を修正しました (#1352)
+
+	* 上書きインポート時にフィールド定義の変更が反映されない問題を修正しました (#1344)
+
+	* パフォーマンス向上のためにデータベースにインデックスを追加しました
+
+2019-08-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* abort() にバイナリデータを渡すと abort 自体に失敗してしまい try でキャッチできない問題を修正しました (#1343)
+
+	* ワーカプロセス数を 8 から 32 に増加しました
+
+2019-08-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 正規表現のマッチ中に他プロセスにディスパッチできるようにしました (#1339)
+
+2019-08-15  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* プロセス管理用コマンド manage.py process を追加しました (#1334)
+
+2019-08-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ディレクトリのツリー表示時にメモリ不足になる場合がある問題を修正しました (#1328)
+
+	* find メソッドで type_object および owner に対してルックアップ 'in' が利用できるようになりました (#1329)
+
+2019-08-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* エクスポート操作をログに出力するようにしました (#1327)
+
+2019-08-05  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* sshノードに対する sudo でパスワードが間違えている場合に正しく認識できないことがある問題を修正しました (#1325)
+
+2019-08-02  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 否定条件を複数組み合わせた場合の find 結果が正しくない問題を修正しました (issue #1318)
+
+	* DBアクセス処理中に停止(=suspend)すると、kompirad がデッドロックすることがある問題を修正しました (#1317)
+
+	* getで日本語パス+ワイルドカード指定するとエラーになる問題を修正しました (#1313)
+
+	* jsTree ライブラリを v3.3.8 にアップデートしました
+
+2019-07-18  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Codemirror ライブラリを最新にしてエディタ機能を強化しました
+
+2019-07-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Windows サーバに対する PUT/GET リモートタスクを機能強化しました (issue #1316)
+
+2019-06-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ライブラリオブジェクトでエンコード宣言の記述が無いと文字列リテラルが化ける問題を修正しました (#1314)
+
+	* winrmの戻り値が負の値を取るとジョブフローが終了しない問題を修正しました (issue #1312)
+
+2019-06-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* オブジェクト編集時に画面遷移確認される画面が増えました
+
+	* ショートカットキーを利用できる画面が増えました
+
+	* テーブル画面での検索機能を改善しました (issue #1306)
+
+	* 操作したオブジェクトに自動的にフォーカスされるようになりました (issue #1308)
+
+	* ディレクトリとテーブルにデフォルトのソート順とページサイズを保持するようにしました (issue #882)
+
+2019-06-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* APIアクセス時にライセンスオブジェクトの extra_properties が展開されない問題を修正しました (issue #1309)
+
+2019-06-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Datetime型フィールドでデフォルト値での相対指定できるようになりました (#1055)
+
+2019-06-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 文字列フィールドでmin_length=1を指定しても、０文字が入力できてしまう問題を修正しました (issue #1307)
+
+2019-06-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* sourceライブラリの呼び出した関数内でpythonが落ちるとプロセスが実行中のまま進まなくなる問題を修正しました (issue #1282)
+
+2019-05-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Windowsサーバに対してreboot()すると再起動完了前にジョブが正常終了してしまうことがある問題を修正しました (issue #1298)
+
+	* Windowsサーバに対してreboot()するとジョブが異常終了する問題を修正しました (issue #1297)
+
+2019-05-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ライブラリ保存時にUnicodeEncodeErrorが出る場合がある問題を修正しました (issue #1293)
+
+2019-03-29  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* try ブロックで異常をキャッチしたときプロセスの情報が更新されない問題を修正しました (issue #1291)
+
+	* try ブロックを抜けたところでジョブが終了するとプロセスの実行行番号が 0 になる問題を修正しました (issue #1290)
+
+2019-03-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* コンソール出力とログ出力の改行の扱いに差異がある問題を修正しました (issue #1289)
+
+2019-03-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* proxy 環境下でのインストールに失敗することがある問題を修正しました (issue #1288)
+
+2019-03-14  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* urlopenでの POST 時に文字列データを渡すとエラーになる問題を修正しました (issue #1285)
+
+	* 終了待ちしている子プロセスが削除されると、forkブロックやpforブロックが終了しない問題を修正しました (issue #1287)
+
+2019-03-13  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* pforのプロセス数が0の場合、ジョブフローがスタックする問題を修正しました (issue #1280)
+
+2019-03-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* リモートログイン失敗時にエラーメッセージを $ERROR 変数にセットするようにしました (issue #1252)
+
+	* SSHで踏み台ログイン失敗時のエラーメッセージを分かりやすく改善しました (issue #1286)
+
+2019-03-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* __sudo__ = true かつ __use_shell__ = false のとき __dir__ は指定できないので、分かりやすくエラーメッセージを改善しました (issue #1262)
+
+	* mktemp が無い環境でのスクリプトジョブ実行に失敗する問題を修正しました (issue #1152)
+
+	* winrm 接続時のタイムアウト制御の挙動を改善しました (issue #1221)
+
+2019-02-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成でハートビート用インターフェースが自動起動しない場合がある問題を修正しました (issue #1281)
+
+2019-02-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* RHUI 環境における冗長構成スクリプトの動作を改善しました (issue #1269)
+
+2019-02-14  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* upload()メソッド実行時に存在しないフィールドを指定すると無限待ちに陥る問題を修正しました (issue #1278)
+
+2019-02-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成の HTTP サービスで環境変数の設定が適用されない問題を修正しました (issue #1277)
+
+	* 冗長構成においてHTTPアクセスできない場合がある問題を修正しました (issue #1276)
+
+	* 冗長構成におけるhttpd監視対象URLをリダイレクト不要なものに変更しました (issue #1266)
+
+2019-02-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* コンテクストが指定されていないテキストオブジェクトをレンダリングしたときは、プレースホルダは展開せずに残すようにしました (issue #1274)
+
+	* フィールド値を書き換えてもオブジェクトの更新日時が更新されない場合がある問題を修正しました (issue #1275)
+
+2019-02-01  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* タスクのcloseを呼び出しても完了日時がNoneのままになる問題を修正しました (issue #1268)
+
+	* 特権でないユーザがインシデントを正しく作成できない問題を修正しました (issue #1272)
+
+	* 複数グループに所属するユーザが一覧で複数表示されてしまう問題を修正しました (issue #1271)
+
+	* チャネルの削除とメッセージの送受信を同時にすると、DBがデッドロックすることがある問題を再修正しました (issue #1255)
+
+2019-01-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ディレクトリ形式インポート時にユーザ定義型のオブジェクトがインポートできない問題を修正しました (issue #1263)
+
+	* Windows にインストールした kompira_sendevt で日本語データを送信できない問題を修正しました (issue #1261)
+
+	* リポジトリ連携ライブラリをインポートした時点で環境変数 LANG が en_US になる問題を修正しました (issue #1265)
+
+2018-12-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成セットアップ時に VIP を割り当てる NIC を指定できるようにしました (issue #1260)
+
+2018-12-21  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Windows へのファイル put で正常にファイル転送できない場合がある問題を修正しました (issue #1257)
+
+2018-12-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* オブジェクトインポート時に更新日時も取り込めるようになりました (issue #1182)
+
+2018-12-17  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 新しいインシデントを REST-API で作成できるようになりました (issue #1231)
+
+	* インシデント一覧画面に検索機能を追加しました (issue #1245)
+
+	* インシデント一覧画面のフィルター機能を強化しました (issue #1244)
+
+	* プロセス一覧画面に検索機能を追加しました
+
+	* 特権ユーザは元のパスワードを入力せずにパスワードを変更できるようになりました
+
+	* 画面右上のユーザメニューに「ユーザ情報」と「パスワード変更」へのリンクを追加しました
+
+	* セッションブロックでリモートから切断したときにジョブマネージャのセッションが終了しない場合がある問題を修正しました (issue #1250)
+
+	* REST API でスケジューラを登録するとき、日時週などに不正な値を指定してもエラーにならない問題を修正しました (issue #1248)
+
+	* datetimeオブジェクトのformat()メソッドが異常終了する問題を修正しました (issue #1241)
+
+	* dateオブジェクトのweekdayプロパティが正しい値を返さない問題を修正しました (issue #1242)
+
+	* リポジトリ連携で空テーブルや空ディレクトリが作成されない問題を修正しました (issue #1138)
+
+	* リポジトリオブジェクトで mercurial に加えて git リポジトリと連携できるようになりました (issue #686)
+
+	* ライブラリオブジェクトから別のライブラリオブジェクトの関数を呼び出せるようにしました
+
+	* 特定の名称を持つライブラリオブジェクトを正常に呼び出せない問題を修正しました (issue #1218)
+
+	* ライブラリオブジェクトの関数を JSON-RPC で呼び出すことができるようにしました (issue #1135)
+
+	* チャネルの削除とメッセージの送受信を同時にすると、DBがデッドロックすることがある問題を修正しました (issue #1255)
+
+2018-11-15  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* mailto に charset 引数を追加して送信時の文字コードを指定できるようにしました (issue #1202)
+
+2018-11-14  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* メールチャネル(IMAP)でログイン時に CRAM-MD5 認証に対応しました (issue #1160)
+
+	* メールチャネルで長すぎる行を含むメールのフェッチに失敗することがある問題を修正しました (issue #1220)
+
+	* mailto でメールを送信する際に本文に長すぎる行を含んでいると、メール配送中に改行が挿入され文字化けする場合がある問題を修正しました (issue #1105)
+
+2018-11-13  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* kompirad ワーカプロセスのメモリ制限デフォルト値を 1GB -> 4GB に拡張しました (issue #1237)
+
+	* 認証を経由せずに Kompira API で GET アクセスできてしまうことがある問題を修正しました (issue #1239)
+
+2018-10-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* sendevt モードでのインストール時に失敗することがある問題を修正しました (issue #1227)
+
+	* CentOS6 系でのテストに失敗することがある問題を改善しました (issue #1228)
+
+2018-10-25  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* [experimental] ジョブフローの辞書型にキー一覧を取得する get_keys() メソッドを追加しました。
+
+	* [experimental] ジョブフローで浮動小数点を扱えるように float() 組み込み関数を追加しました。 (issue #853)
+
+	* [experimental] ジョブフローの文字列型に format(), join(), find() などの、文字列操作用メソッドを追加しました。
+
+2018-10-22  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* datetime 型に ISO 文字列を取得する isoformat() を、timedelta 型に経過秒数を取得する total_seconds を追加しました。
+
+	* [experimental] ジョブフローでオブジェクトの検索ができる .find/.glob メソッドをディレクトリ型に追加しました。
+
+2018-10-17  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* REST-API のフィルタリングでフィールド値の絞込み／範囲指定をできるようにしました (issue #1134)
+
+2018-10-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ディレクトリや検索ビューの画面遷移でページサイズとソート順を保持するようにしました。
+
+	* 一覧画面で選択可能な表示件数を 1000 まで拡張しました。
+
+2018-10-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* テーブルに対する .children API で order_by=field:～ によるフィールド値による並び替えを指定できるようにしました (issue #1224)
+
+	* オブジェクト選択フィールドでページ送りが出来ない問題を修正（暫定対処）しました (issue #1225)
+
+	* ディレクトリ一覧表示のパフォーマンスを改善しました
+
+2018-10-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* プロセス一覧表示のパフォーマンスを改善しました
+
+	* js ライブラリを追加および更新しました (JsRender v0.9.91, Moment v2.22.2)
+
+2018-09-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* テーブル編集画面に「表示フィールドの追加」メニューを追加しました
+
+2018-09-29  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* プロセス詳細・一覧画面の UI を改善しました (issue #1219)
+
+	* ファイル名にNFDな濁点を含むファイルからディレクトリインポートに失敗する問題を修正しました (issue #1222)
+
+2018-09-13  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* REST API で API キーによる認証を cookie より優先するようにしました (issue #1191)
+
+	* $RESULTや$ERRORに日本語を含むプロセスオブジェクトをmanage.py dumpdataできない問題を修正しました (issue #1216)
+
+	* 多重度設定したジョブフローの並列実行が終了しない問題を修正しました (issue #1215)
+
+2018-09-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 配列・辞書フィールドでデフォルト値を設定できるようにしました (issue #880)
+
+	* 配列・辞書フィールドの順序入れ替えを簡単にできるようにしました (issue #867)
+
+2018-09-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* フィールド修飾子に指定できる項目を追加しました (issue #1214)
+
+	* フィールド修飾子をポップアップ画面で編集できるようにしました (issue #1212)
+
+	* インシデントの新規作成機能を追加しました
+
+	* インシデントの編集画面でデバイス名とサービス名も編集できるようにしました
+
+	* インシデント詳細画面での作業履歴のデザインを変更しました
+
+2018-08-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* インストール時の proxy 指定を apache にも反映するように変更 (issue #1197)
+
+2018-08-17  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* mailto() で Date ヘッダにローカルタイムの日時を設定するように変更 (issue #1151)
+
+	* mailto() で名前に日本語を含む添付ファイルを送信したときに、環境によっては正しくファイル名を扱えない場合がある問題を修正 (issue #1031)
+
+2018-08-09  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* インストーラ内部で取得しているバックアップのリストアに失敗する問題を修正 (issue #1204)
+
+2018-08-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* fork したプロセスに監視モードが引き継がれ、detach 後に異常終了した場合はメール通知されるように機能追加 (issue #1004)
+
+	* ジョブフローからプロセスの監視モード monitoring_mode を読み書きできるように機能追加 (issue #1004)
+
+	* スケジューラや API から実行したジョブフローが異常終了してもメール通知されない問題を修正 (issue #1178)
+
+2018-08-02  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* manage.py export_dir --property-mode で権限情報をエクスポートするようにしました (issue #1143)
+
+2018-07-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ジョブフローから起動したスケジュールを削除した際、プロセスが終了しなくなる問題を修正 (issue #1198)
+
+2018-06-15  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* IMAP4_SSL でのメールのフェッチに失敗する問題を修正[1.5.0b2] (issue #1195)
+
+2018-05-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成で kompira をアップデートしやすく改善 (issue #1192)
+
+	* sync_master.sh でリソース状況の確認や設定を確認するように機能追加
+
+	* sync_master.sh 実行時にスタンバイ側であるかことのチェックを追加 (issue #1112)
+
+	* 冗長構成で rabbitmq のダウンだけではフェイルオーバーしない問題を修正 (issue #1186)
+
+	* 冗長構成で rabbitmq-server のダウンを検出できない問題を修正 (issue #1185)
+
+	* Windows への kompira_sendevt インストール方法に関するドキュメントを修正 (issue #1188)
+
+2017-12-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 冗長構成構築時にVIP無しやハートビートネットワークの手動設定を指定できるように対応 (issue #1173)
+
+2017-11-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* オフラインパッケージでのインストールに失敗する問題を修正 (issue #1172)
+
+	* yumのpython-cryptoパッケージがインストールされているサーバへのインストールが不完全になる問題を修正 (issue #1153)
+
+	* Amazon EC2 上にkopmpiraをインストールするとパッケージコンフリクトが発生する問題を修正 (issue #1168)
+
+	* 冗長構成構築時に pcs コマンドでエラーが発生する問題を修正 (issue #1158)
+
+	* install.sh でのインストールに失敗する問題を修正 (issue #1169)
+
+2017-09-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* SMTPの認証方式がCRAM-MD5のときにメール送信に失敗する問題を修正 (issue #1159)
+
+2017-08-17  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Kompira 1.4.10.post2 の新規インストールに失敗する問題を修正 (issue #1157)
+
+	* Kompira 1.4.10 がインストールされた状態で 1.4.10 以降へアップデートできない問題を修正 (issue #1150)
+
+2017-06-27  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* urlopen() に files パラメータを追加してファイルをアップロードできるように機能追加 (issue #1144)
+
+2017-06-26  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オフラインパッケージ用のインストールモードを追加 (issue #1147)
+
+	* pyOpenSSL がyum経由のものとpip経由のものでコンフリクトする問題を修正 (issue #1142)
+
+	* RHEL でインストールに失敗する問題を修正 (issue #1146)
+
+2017-05-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* manage.py dumpdata したとき、ProcessオブジェクトのJsonFieldが正しく出力されない問題を修正 (issue #1139)
+
+2017-05-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Jinja2 に対する requiments を ~= 2.8 から ~= 2.8.1 に変更
+
+2017-04-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* README の動作要件にネットワークインタフェース1つ以上の要件を追記 (issue #1114)
+
+	* install.shのサポートOSに関する記述を修正 (issue #1093)
+
+	* ログ設定のドキュメントで、kompirad.log がkompira.conf でログ設定できる旨の記述を削除 (issue #1118)
+
+	* マニュアルから「モジュール索引」のリンクを削除 (issue #982)
+
+	* ドキュメントに SSH の対応バージョンが v2 のみであることを明記 (issue #438)
+
+2017-03-07  Shinya Mizoe  <mizoe@fixpoint.co.jp>
+
+	* peek_channel, pop_channelコマンドを追加
+
+2017-02-27  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* urlopen の引数に Kompira オブジェクトなど DB 参照を渡すとクラッシュすることがある問題を修正 (issue #1122)
+
+2017-02-21  Shinya Mizoe  <mizoe@fixpoint.co.jp>
+
+	* チャネルrecvメソッド内での結果取得ポーリング間隔をパラメータで設定できるように変更
+
+2017-02-20  Shinya Mizoe  <mizoe@fixpoint.co.jp>
+
+	* メールチャネルの受信チェック間隔単位を秒に設定できるパラメータを追加 (issue #1120)
+
+2017-02-07  Shinya Mizoe  <mizoe@fixpoint.co.jp>
+
+	* ジョブフローwaitメソッド内での結果取得ポーリング間隔をパラメータで設定できるように変更 (issue #1117)
+
+2017-01-19  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* リストをキーに持つ辞書を返すジョブフローを呼び出すとハングする問題を修正 (issue #1115)
+
+2016-11-14  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* メールチャネルのタイムアウト設定を追加 (issue #1106)
+
+2016-10-31  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* フィールド修飾子が不正な場合のエラーメッセージを改良し、オブジェクトとフィールド名が出力されるようにした
+
+	* スケジュール取得時のエラーメッセージを修正
+
+2016-10-17  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ドキュメントの 1.6.3 バックアップ、のデッドリンクの箇所と、8.4.4 プロセスの実行完了を待つ、のコードブロック表示を修正
+
+2016-10-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* forkの戻り値で得た子プロセスリストをprintするとpython内部表記で表示されてしまう問題を修正 (issue #1098)
+
+2016-10-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 冗長構成時、ブラウザからインポートしたライセンスファイルのパーミッションが通常と異なる問題を修正 (issue #1096)
+
+	* ライセンスファイルの読み取りパーミッションが不許可時のジョブフロー実行時のエラーメッセージを修正 (issue #1095)
+
+2016-10-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* OrdereDict を orderedict 1.1 の実装ではなく、collections の実装を使用するように変更
+
+2016-10-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 巨大なデータをジョブフロープロセスで return すると、プロセス一覧の表示に時間がかかる問題を修正 (issue #1094)
+
+2016-09-26  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* インストール時に実行する curl コマンドに -L オプションを追加し、Location をフォローするように修正
+
+2016-09-23  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Configオブジェクトのデータを export_dir で出力するように追加 (issue #1089)
+
+	* エクスポート／インポートのダイアログでチェックボックス位置ずれを修正 (issue #1072)
+
+	* オブジェクト保存時のフィールドエラーが各フィールド位置に表示されない問題を修正 (issue #1082)
+
+2016-09-16  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* プロセスをチャネルに渡してプロセス終了を待てるように機能追加 (issue #1075)
+
+2016-09-15  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* REST API にプロセスの実行完了を待つ wait メソッドを追加 (issue #1050)
+
+	* current_jobが実行中のジョブフローでない場合がある問題を修正 (issue #1081)
+
+	* mailto の from オプションに関するドキュメントを修正 (issue #1083)
+
+2016-09-09  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* suspend() 組み込みジョブを追加 (issue #1062)
+
+2016-09-07  Shinya Mizoe   <mizoe@fixpoint.co.jp>
+
+	* フィールド修飾子にhelp_textを追加 (issue #590)
+
+2016-09-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 日本語のPython(str)文字列を出力するpythonライブラリを呼び出すとジョブフロープロセスが中止できなくなる問題を修正 (issue #1079)
+
+2016-09-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 設定オブジェクトの文字列フィールドが Python(str) 型に見える場合がある問題を修正 (issue #1073)
+
+	* スケジュールオブジェクトaddメソッドのドキュメントを修正 (issue #1056)
+
+	* export_data で --owner-mode 指定時に同じオーナ情報が複数回エクスポートされる問題を修正 (issue #1074)
+
+2016-08-22  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* コマンドジョブ、スクリプトジョブ実行時の文字列長の制限を追加 (issue #1069)
+
+2016-07-27  Yasunaka Cho  <cho@fixpoint.co.jp>
+
+	* ヘルプの位置がrootの下に隠れてしまって分かりづらいため、rootの左横に配置することで修正。(issue #1054)
+
+2016-07-19  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Content-Type が含まれないHTTPレスポンスではurlopenが失敗する問題を修正し、application/octet-stream として扱うように修正。(issue #1052)
+
+2016-07-14  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* フォームに実行権限が無いときにも実行ボタンが押せてしまう問題を修正 (issue #1045)
+
+2016-07-13  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Datetime型フィールドでデフォルト値を設定できるように修正 (issue #1051)
+
+2016-07-12  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* export_data のメモリ消費量を改善 (issue #1043)
+
+2016-07-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* __timeout__のデフォルト設定に関する記述をドキュメントに追加 (issue #1047)
+
+	* レポジトリオブジェクトのプッシュ時にオブジェクトのプロパティが出力されない問題を修正 (issue #1049)
+
+2016-06-22  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* REHL へのインンストール時に、必要なリポジトリを設定するように処理を追加
+
+2016-06-21  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* REST APIでチャネルからメッセージを取得する方法をドキュメントに追記 (issue #1035)
+
+2016-06-13  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* プロセス一覧から「選択したプロセスを削除」の実行に失敗する問題を修正 (issue #1040)
+
+2016-06-10  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブフローが受信待ちしているチャネルオブジェクトを削除したら、チャネル待ちの$STATUSを-1にセットして抜けるように変更 (issue #1036)
+
+	* メールチャネルの受信間隔が正しく反映されない (issue #1038)
+
+2016-06-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* __dir__ の説明にメタ文字に関する制限を追記 (issue #1029)
+
+	* 比較演算子=~の動作がリファレンスマニュアルと異なる問題を修正 (issue #1032)
+
+2016-06-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 冗長構成の sync_master.sh 時に postgresql のログを残すように変更 (issue #993)
+
+	* pacemaker-1.1.14 以降では sync_master.sh 実行すると、マスター側の postgresql が停止する問題を修正 (issue #1033)
+
+	* 公式の Linux HA resource-agents を利用するため、config/cluster/pgsql, config/cluster/rabbitmq-server を削除
+
+2016-06-01  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* get組み込みジョブのlocal_pathに%を指定するとエラーとなる問題を修正 (issue #598)
+
+2016-05-31  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブマネージャのワーカーがERROR終了するケースがある問題を修正 (issue #1028)
+
+2016-05-30  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 親プロセスで生成したパターンオブジェクトを、子プロセス側でマッチ実行中に子プロセスを中止させても、親プロセス側が終了しない問題を修正 (issue #1019)
+
+	* フォームオブジェクトのArrayフィールドの値をそのままmailtoのtoフィールドに指定すると、メール送信が失敗する問題を修正 (issue #1025)
+
+	* Dateteime型オブジェクトにformatメソッドを追加 (issue #1023)
+
+2016-05-24  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* KompiraPattern を runtime=None で作成するとエラーになる問題を修正 (issue #1020)
+
+2016-05-23  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Windows のPUT組み込み関数でファイル名に空白があると失敗する問題を修正 (issue #1018)
+
+	* ジョブフロービューのデフォルト監視モードの表示が正しくない問題を修正 (issue #1013)
+
+2016-05-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Zabbix用Kompira監視テンプレートのプロセス監視でプロセス名の間違いを修正しました (issue #1017)
+
+2016-05-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* export_data でエクスポート対象のオブジェクト所有者も自動的に出力できるように対応 (issue #978)
+
+2016-05-10  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* fork したプロセスの実行順序が順番にならない問題を修正 (issue #1012)
+
+2016-05-09  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Kompira サーバのRPC接続先サーバ名をsettings.pyに定義するようにし、デフォルトを127.0.0.1に変更
+
+2016-04-28  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* パターンマッチで計算処理が爆発するマッチングを行おうとするとKompiraエンジンがビジーになり、操作を受け付けなくなる問題を修正 (issue #1010)
+
+2016-04-14  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* / ディレクトリでエクスポートしたオブジェクトは / 以外でインポートできない。(issue #939)
+
+2016-04-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 設定オブジェクトのインポート時、既存の設定データは上書きしないように変更 (issue #1001)
+
+	* Configオブジェクトコピー時にデータがコピーされない問題を修正 (issue #1008)
+
+2016-04-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* codemirror/addon/addons.min.js がインストールされない問題を修正 (issue #1007)
+
+2016-03-28  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* テキスト型オブジェクトのテンプレートエンジンがエラーになった場合は、そのまま出力するように修正 (issue #1003)
+
+2016-03-24  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* Zabbix監視設定テンプレートのライセンス残日数の項目が冗長構成スタンバイ機で取得出来ない問題を修正しました (issue #1000)
+
+2016-03-24  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* プロセスのコンソールバッファサイズを超えた場合、process.logへの書込みが途中で停止する問題を修正 (issue #998)
+
+2016-03-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 新規オブジェクト作成時にオブジェクト選択ができない場合がある問題を修正 (issue #995)
+
+2016-03-17  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* コンソール出力/タスクメッセージに URL リンクを張れるように変更 (issue #987)
+
+	* フォーム画面を開いたときにURLパラメータからフィールドに値を設定できるように機能追加 (issue #843)
+
+	* メールチャネルの POP3 対応 (issue #988)
+
+2016-03-11  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 日本語の名前を持つパラメータを定義すると実行時エラーとなる問題を修正 (issue #985)
+
+2016-03-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 同じ環境に冗長構成を2セット作るとスプリットブレイン状態になることがある問題を修正しました (issue #986)
+
+2016-03-08  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 仮想オブジェクトについてもパーミッションによるアクセス権限チェックを行なうように対応しました (issue #952)
+
+2016-03-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ディレクトリ、テーブル以外のオブジェクトをイテレートした時に、オブジェクトのフィールド名を返すように変更 (issue #981)
+
+	* ジョブフローで読み込み権限の無いオブジェクトをイテレートできて（ディレクトリの中身が見えて）しまう問題を修正 (issue #969)
+
+2016-03-07  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 実行中プロセスのユーザアカウントを削除するとプロセスを停止できなくなる問題を修正 (issue #968)
+
+	* SystemInfo 型オブジェクトを新規追加し、REST API からログインユーザ情報を取得できるように対応 (issue #795)
+
+2016-03-07  Shinya Mizoe <mizoe@fixpoint.co.jp>
+
+	* Kompiraドキュメントの検索アルゴリズムを改良 (issue #848)
+
+2016-03-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* setup_cluster.sh で ifcfg-eth1 が無い時にエラーになる問題を修正しました (issue #974)
+
+	* setup_cluster.sh でハートビート用の IP の割り当て開始アドレスで指定できるように対応しました (issue #973)
+
+	* 冗長構成構築時に cman の起動に失敗することがある問題を修正しました (issue #934)
+
+2016-03-03  Shinya Mizoe <mizoe@fixpoint.co.jp>
+
+	* 古いドキュメントファイルを削除 (issue #971)
+
+2016-03-03  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ホームディレクトリを設定していないユーザでは directory 修飾子に含まれる ~ の展開でエラーになる問題を修正 (issue #972)
+
+2016-02-29  Shinya Mizoe <mizoe@fixpoint.co.jp>
+
+	* ドキュメントに冗長構成環境下におけるライセンスファイルに関する記述を追加 (issue #959)
+
+2016-02-26  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ユーザ編集画面でホームディレクトリの選択肢が表示されない問題を修正しました (issue #965)
+
+2016-02-25  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* オブジェクト選択肢で検索の基点となるディレクトリを指定する directory 修飾子に対応しました (issue #956)
+
+2016-02-24  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オブジェクト検索で更新日時が「60分以内」を指定しても、1分以内で検索されてしまう問題を修正 (issue #961)
+
+2016-02-23  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スケジューラ登録時の日時パラメータチェックを追加 (issue #960)
+
+	* ジョブフローで user.groups にアクセスすると内部実装で見えてしまう問題を修正 (issue #958)
+
+2016-02-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 添付ファイルのサイズ制限エラーのメッセージで正しい制限サイズが表示されない問題を修正 (issue #957)
+
+2016-02-16  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 他ユーザの REST API トークンが見えてしまう問題を修正(一般ユーザは他ユーザの詳細情報を参照できないように修正) (issue #951)
+
+	* ジョブフロープロセス終了時のログに、ジョブフローのパスの記載を追加 (issue #945)
+
+2016-02-15  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Windows サーバへの put() のタイムアウトが 10 秒固定となる問題を修正 (issue #950)
+
+	* try でキャッチした例外のデバッグ情報が $DEBUG 変数に不必要に追加される問題を修正 (issue #948)
+
+2016-02-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 子プロセス一覧の表示件数が切り替わらない問題を修正 (issue #938)
+
+2016-02-02  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* プロセス削除時に不要なプロセス中止処理を省くように修正 (issue #937)
+
+	* 高負荷の状態で sleep などのタイムアウトイベントの発火に失敗する場合がある問題を修正(reopened) (issue #801)
+
+2016-01-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* プロセス詳細画面で Ajax エラーが発生したらデータ更新されなくなる問題を修正 (issue #935)
+
+2016-01-25  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* kompira_sendevt で送信するメッセージをログで追跡できるようにする (issue #926)
+
+	* メールチャネルの「受信チェック間隔」を負の値に設定したときにハングする問題を修正
+
+	* メールチャネルのフィールド「受信チェック間隔」を0以下にした場合の仕様をドキュメントに記載 (issue #931)
+
+2016-01-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 権限のないオブジェクトURLにアクセスしたとき、URLに日本語が含まれているとリダイレクトループとなる問題を修正 (issue #929)
+
+2016-01-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* プロセスコンソールのスクロール位置を固定できるようにした (issue #921)
+
+2016-01-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* try ブロックで捉えたエラー内容を $DEBUG に格納するように機能追加 (issue #891)
+
+	* ライブラリオブジェクトの呼び出しでエラー発生した場合のエラー発生箇所を表示するように変更 (issue #916)
+
+2016-01-07  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* session ブロック内で self() を呼び出してブロックを抜けても、セッションがクローズされない問題を修正 (issue #919)
+
+	* 外部要因によりセッションが不意に切断した場合、セッションクローズ時にジョブフローがハングすることがある問題を修正 (issue #920)
+
+2015-12-28  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* try ブロック中で矢印演算子でアサーションエラーをキャッチした場合のエラーメッセージを改善 (issue #911)
+
+	* localhost に対して正しいアドレス情報を返すことをチェックする処理をインストーラに追加 (issue #569)
+
+	* GUI からのインポート時にインポートボタンクリック後にボタンを無効化し、2重インポートを防止するようにした (issue #914)
+
+	* Firefoxではジョブフロー実行画面から詳細画面に戻ったときに実行ボタンが押せない問題を修正 (issue #397)
+
+2015-12-22  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* プロセスのコンソールテキストをログファイルに吐き出すよう機能追加 (issue #855)
+
+2015-12-21  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* datetime() 関数でフォーマット指定省略時のドキュメントの記述を修正 (issue #910)
+
+	* フィールドの型を文字列から辞書に変更すると、既存のオブジェクトが編集できなくなる問題を修正 (issue #903)
+
+2015-12-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* postgresqlがインストール済みの場合、install.sh 実行時に postgresql をアンインストールする指示のメッセージ出力して終了するように修正 (issue #913)
+
+2015-12-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Kompira 起動時に実行開始されるジョブフローを登録できるようにした (issue #684)
+
+2015-12-07  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* メールチャネルの受信フォルダを指定できるようにした (issue #760)
+
+	* チャネルのメッセージ数、ライセンスオブジェクトのノード数をAPIから取得できるようにした (issue #840)
+
+	* ジョブフローからプロセスユーザーを変更できるようにした (issue #688)
+
+	* urlopenでHTTPSアクセスする際にWarning表示を抑止するオプションを追加 (issue #894)
+
+2015-12-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オブジェクトの name プロパティをジョブフローから書き込み可能に変更 (issue #898)
+
+	* http_proxy 環境変数を設定してkompira_jobmngrdを起動するとwinrsでコマンド実行に失敗する問題を修正 (issue #657)
+
+2015-12-02  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 文字列系フィールドに true/false を書き込むと "True" / "False" とキャメルケースになる問題を修正 (issue #904)
+
+	* mailto() のデフォルトの送り元アドレスにプロセスユーザまたは管理者を利用するよう変更 (issue #699)
+
+	* kompira_sendevt の引数に空文字列を渡した場合無視するように変更 (issue #850)
+
+	* スクリプトジョブの「コマンドライン」の表示を「コマンドライン引数」に変更 (issue #849)
+
+	* フィールドの型を辞書以外から辞書に変更すると、既存のオブジェクトが編集できなくなる問題を修正 (issue #903)
+
+2015-12-01  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* /bin/bashが存在しない環境に対してジョブフローの<<を使うと失敗する問題を修正 (issue #905)
+
+	* put/get に対して __sudo__ が使えるように修正 (issue #527)
+
+	* Fabric のバージョンを 1.10.2 にアップデートし、OpenSSH-Win32 に対して接続できるようにした (issue #902)
+
+2015-11-27  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ハードウェアID不一致のときにライセンス情報画面での表示を分かりやすく修正 (issue #899)
+
+	* RFC違反のヘッダや異体字など特殊な文字コードを含むメールの mail_parse が失敗することがある問題を修正 (issue #900)
+
+2015-11-25  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ディレクトリの add メソッドに overwrite 引数を追加 (issue #897)
+
+	* オブジェクトのメソッドを関数呼び出し形式で呼び出せるようにした (issue #888)
+
+	* 名前変更で重複エラーが発生したときのエラーメッセージを平易なものに修正 (issue #893)
+
+	* 型オブジェクトや設定オブジェクトに存在しないフィールドを含んだ update を呼び出すと、型情報が消えてしまう問題を修正 (issue #895)
+
+2015-11-19  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 検索結果画面から選択オブジェクトの移動やコピーでダイアログを開いたときに自ディレクトリが (not found) と表示される問題を修正 (issue #892)
+
+	* コンパイルエラーのジョブフローをフォームから実行しようとした時のエラーメッセージを修正 (issue #887)
+
+2015-11-12  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* インシデント画面の表示件数選択が機能しない問題を修正 (issue #885)
+
+2015-11-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* SMTP サーバの設定を /system/config からできるように機能追加 (issue #879)
+
+	* 新たに Text 型オブジェクトを導入。(issue #763)
+
+2015-10-29  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ライブラリ呼び出しでエラーが発生したときのコンソール出力が不安定な問題を修正 (issue #878)
+
+2015-10-27  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 新規のKompiraサーバにプロセス仮想オブジェクトをインポートすると、ジョブフロー実行できない問題を修正 (issue #876)
+
+	* バージョン 1.4.2 以前からの直接のアップデートインストールを禁止し、エラーメッセージを出すように変更 (issue #877)
+
+2015-10-26  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ライブラリで update といったようなオブジェクトのプロパティと同じ名前の関数を定義しても呼び出せない制限をマニュアルに追記 (issue #865)
+
+	* urlopenのプロキシ設定を追加した (issue #512)
+
+	* ディレクトリやテーブル、検索結果一覧のページあたりの表示件数を変更可能にした (issue #870)
+
+2015-10-23  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* install.sh 実行時に余分なコマンドライン引数をチェックするように修正 (issue #851)
+
+	* オブジェクト表示名の最後の１文字が折り返されるときがある問題を修正 (issue #873)
+
+	* SSH 接続キャッシュに有効期限を設けるように変更 (issue #634)
+
+	* セッションを保持したままのコマンド実行、suコマンドに対応 (issue #199, #444)
+
+2015-10-22  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ヘルプリンクが別タブで開かれるように変更 (issue #868)
+
+2015-10-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* テーブルの編集時に表示フィールド一覧をデフォルトに戻すとエラーになる問題を修正 (issue #864)
+
+	* self で戻った時に引数が参照エラーになる問題を修正 (issue #863)
+
+	* Choiceブロック中の末尾呼び出しの処理が正しくない問題を修正 (issue #861)
+
+2015-10-07  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 新規作成時に保存ボタンを2回連続で押すとリダイレクトループエラーが一瞬出る問題を修正 (issue #857)
+
+2015-10-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブフローを再コンパイルする manage.py compile_jobflow コマンドを追加 (issue #856)
+
+	* for 文の中に try ブロックがある場合にループが異常終了するケースがある問題を修正 (issue #819)
+
+2015-09-28  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オブジェクトの型選択でキー入力で検索を開始するときに最初の１文字しか受け付けない問題を修正 (issue #682)
+
+	* ディレクトリ形式のエクスポートでライブラリオブジェクトの出力形式を変更 (issue #842)
+
+2015-09-25  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ユーザ設定で環境変数オブジェクトを指定するとパーミッションが無くてもジョブフローから値が読み込める問題を修正 (issue #833)
+
+2015-09-24  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 類似比較演算子 =~, !~ を追加し、パターンマッチやキー順序を無視した辞書データの比較ができるようにした (issue #386)
+
+	* ジョブフローでの正規表現サポートを追加 (issue #351)
+
+2015-09-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* caseブロックで複数のマッチパターンを記述できるように機能追加 (issue #331)
+
+2015-09-18  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 監視項目取得スクリプト kompira_jq.sh の REST-API 対応 (issue #837)
+
+	* 収集スクリプトをインストール対象に追加 (issue #838)
+
+2015-09-16  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* pattern 組み込み関数を追加
+
+	* オブジェクト新規作成時のエラーメッセージの文言を修正 (issue #836)
+
+2015-09-15  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ガード付きメッセージ受信の機能を追加
+
+2015-09-14  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オンメモリのチャネルオブジェクトを作成する channel() 組み込み関数を追加
+
+2015-09-11  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブフローからプロセスオブジェクトの elapsed_time プロパティにアクセス可能に変更 (issue #826)
+
+	* timedelta() の引数にマイクロ秒 (microseconds) を追加 (issue #825)
+
+	* console 出力が空のプロセスデータのインポートに失敗する問題を修正 (issue #834)
+
+2015-09-10  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オブジェクト編集中に、別ウィンドウで別アカウントにログインして、保存を押すとビューエラーが発生する問題を修正 (issue #829)
+
+	* ユーザーとホームディレクトリをエクスポートしたデータを owner_mode でインポートできない問題を修正 (issue #830)
+
+2015-09-09  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* プロセス仮想オブジェクトの job や current_job プロパティがジョブフローオブジェクトとの等価判定に失敗する問題を修正 (issue #827)
+
+2015-09-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブマネージャの Worker プロセスが稀に開始しなくなる可能性がある問題を修正 (issue #824)
+
+2015-09-07  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* REST API における経過時間(elapsed_time, duration)を固定小数点で返すように変更
+
+	* 2つ以上の引数をコンストラクタに持つ例外をライブラリ中でスローするとワーカーマネージャスレッドが異常終了する問題を修正 (issue #822)
+
+2015-09-01  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* for ブロック内の try ブロックで挙動がおかしくなる問題を修正 (issue #819)
+
+2015-08-28  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブフローパラメータで先に登場したパラメータを参照できない場合がある問題を修正 (issue #816)
+
+2015-08-27  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 仮想オブジェクトのプロパティを編集しようとするとエラーになる問題を修正 (issue #814)
+
+	* admin, root, guest ユーザ、および、other, wheel グループを削除できないように変更 (issue #807)
+
+	* ordereddict 1.2 環境でチャネルへのメッセージ送信に失敗する問題を修正 (issue #815)
+
+2015-08-26  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 検索結果の一覧の最後に不要な行が表示される問題を修正 (issue #813)
+
+2015-08-24  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ページネートでクエリが失われる問題を修正 (issue #808)
+
+	* 検索画面で期間指定をするとエラーになる問題を修正 (issue #809)
+
+	* 「name」という名前のフィールドを持つ型オブジェクトを設定したテーブルを作ると、「オブジェクトの新規作成」欄が2つ表示される問題を修正 (issue #810)
+
+	* ジョブフロー削除時に対応するジョブフロープロセスデータを削除しないように変更 (issue #804)
+
+2015-08-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Kompiraという型名のオブジェクトをエクスポートすると失敗する問題を修正 (issue #806)
+
+	* ジョブフロー制限ぴったりの場合、ジョブフローのインポートができない問題を修正 (issue #805)
+
+2015-08-17  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オブジェクト移動・削除操作後に元のページに戻るように修正 (issue #211)
+
+	* requests 2.7.0 へアップデート (issue #385)
+
+	* BASIC 認証付きの urlopen のためのテストコード追加 (issue #27)
+
+2015-08-12  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 高負荷の状態で sleep などのタイムアウトイベントの発火に失敗する場合がある問題を修正 (issue #801)
+
+	* 複数の子プロセスで sleep を並列実行すると親プロセスで join されない場合がある (issue #774)
+
+2015-08-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スケジュールオブジェクトのパラメータフィールドがエクスポートされない問題を修正 (issue #782)
+
+	* REST-API でジョブフローオブジェクトを新規作成しても実行可能にならない問題を修正 (issue #796)
+
+	* インシデントの REST API 情報取得に duration　を含めた (issue #797)
+
+2015-08-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* インシデントの作業ログ、アラート履歴がインポートされない問題を修正 (issue #783)
+
+2015-08-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Form/Config型オブジェクトの型フィールド修飾子で相対パスが使えない問題を修正 (issue #792)
+
+	* Form型オブジェクトに対して REST API でアクセスしてもHTMLが返ってくる問題を修正 (issue #790)
+
+	* ユーザ管理画面の「ホーム」フィールドのリストが表示されない問題を修正 (issue #786)
+
+	* チャネル型をrenameしてから再度ジョブフローで待ち受けをするとエラーとなる問題を修正 (issue #771)
+
+2015-08-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Windows接続時、パスワードに「@」が含まれていると接続エラーとなる問題を修正 (issue #772)
+
+	* オブジェクト移動・コピーのダイアログ表示後、削除ダイアログを表示するとダイアログが正しくない問題を修正 (issue #789)
+
+	* オブジェクト未選択時でも「c」や「m」キーを押すとダイアログが表示される問題を修正 (issue #769)
+
+	* ScriptJob の実行を中止できない問題を修正 (issue #781)
+
+	* プロセス再開時にステップモードやチェックポイントモードを指定しても反映されない問題を修正 (issue #785)
+
+2015-07-31  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スケジューラの datepicker での選択と入力値がずれる問題を修正 (issue #779)
+
+	* 言語リファレンスの if_block と case_block の構文表記誤りを修正 (issue #768)
+
+2015-07-22  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* タイムゾーンを有効にし、datetime オブジェクトをタイムゾーン aware に変更
+
+2015-07-09  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* REST API 導入にともない PublicChannel を廃止
+
+2015-06-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* kompiraのjsonデータインポート時、存在しないユーザ/グループのパーミッションが含まれているジョブフローが正常に保存されない問題を修正 (issue #743)
+
+2015-06-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* SyntaxErrorのメッセージ改善（矢印忘れ）に対応 (issue #756)
+
+2015-06-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* nstall.sh に失敗してもステータスコードが非0を返さない問題を修正 (issue #620)
+
+	* クエリセットを含む配列型の等価判定が正しく無い問題を修正 (issue #751)
+
+	* `json_dump()` の結果をprintしたりコマンドラインに渡すとエスケープ文字 '\' が二重 '\\' になる問題を修正 (issue #755)
+
+	* Fileフィールドを持つフォームオブジェクトでファイル未指定の場合パラメータが渡されない問題を修正 (issue #761)
+
+	* 異常終了時のプロセス詳細画面のジョブフロータブに異常終了したジョブフローでなく起動したジョブフローが表示される問題を修正 (issue #757)
+
+2015-06-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブフローからタスクがクローズできない場合がある問題を修正 (issue #759)
+
+	* ライブラリでKompiraの辞書データを渡すと順序関係が失われる問題を修正 (issue #762)
+
+2015-05-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 添付ファイルのアップロードディレクトリのパーミッションが許可されていないと内部エラーとなる問題を修正 (issue #749)
+
+	* Form型のオブジェクトフィールドでもdefault指定ができるように修正 (issue #750)
+
+2015-05-13  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 他ユーザーのスケジュールが閲覧・編集・削除できてしまう問題を修正 (issue #748)
+
+2015-05-11  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* user/group 組み込み関数を追加 (issue #723)
+
+2015-05-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スケジューラで不正な形式のパラメータを設定するとエラーになったことが確認できない問題を修正 (issue #744)
+
+	* スケジューラの編集でパラメータを削除して保存を2回連続クリックすると内部エラーとなる問題を修正 (issue #747)
+
+2015-05-07  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* basic 認証によるログインをサポート (issue #746)
+
+2015-04-28  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 所有者でないオブジェクトのフィールドを>>で更新しようとするとエラーになる問題を修正 (issue #738)
+
+	* Fileフィールドと辞書フィールドを持つオブジェクトの編集でエラーが出ることがある問題を修正 (issue #740)
+
+2015-04-22  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 旧バージョンのインポート時、description フィールドが null だと失敗する問題を修正 (issue #742)
+
+2015-04-20  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Config型オブジェクトの属性をジョブフローから変更できない問題を修正 (issue #737)
+
+	* Integer 型フィールドの type() が Python(long) と出力される問題を修正 (issue #736)
+
+	* sleep 組み込みジョブで Integer 型フィールド の値を渡すとエラーとなる問題を修正 (issue #734)
+
+	* ユーザ設定画面のメールアドレス欄に常にログインユーザのメールアドレスが表示される問題を修正 (issue #735)
+
+2015-04-16  Shinya Mizoe   <mizoe@fixpoint.co.jp>
+
+	* 冗長構成時にcmanを使用するように変更 (issue #724)
+
+2015-04-16  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* チャネルのタイムアウトとデータ受信が同時に発生すると場合によっては変数の値が破壊される問題を修正 (issue #733)
+
+2015-04-13  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* コマンド発行後にジョブマネージャを起動するとAMQP接続エラーとなる場合がある問題を修正 (issue #731)
+
+	* try ブロックを追加 (issue #618)
+
+2015-04-10  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 型判定の組み込み関数 type を追加 (issue #701)
+
+2015-04-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Django のバージョンを 1.6.11 にアップデート (issue #726)
+
+	* インシデントにアクセス制御機能を追加 (issue #711)
+
+2015-04-07  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オブジェクトのフィールド名と表示名の表示を切り替えられるように変更 (issue #698)
+
+	* return組み込みジョブにerror引数を追加 (issue #673)
+
+2015-04-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 英語版の Windows Server に対してリモートコマンドが実行できない問題を修正 (issue #674)
+
+	* Datetime 型フィールドの入力補助として datetime picker を追加 (issue #429)
+
+2015-04-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オブジェクト新規作成時、ディレクトリのパーミッションを継承するように変更 (issue #722)
+
+	* Kompiraの kompirad.log ログファイルにパスワード情報が表示されないように修正 (issue #714)
+
+	* setup_cluster.sh実行時にpostgresqlプロセスが起動していない状態の場合、冗長構成インストールが正常に完了しない問題を修正 (issue #719)
+
+	* httpsモードでインストールすると冗長構成に失敗する問題を修正 (issue #729)
+
+2015-04-02  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ssh鍵パスフレーズとsudoパスワードが異なる場合に、鍵ログイン後に sudo できない問題を修正 (issue #262)
+
+	* 異なる鍵ファイルで多段SSH接続できない問題を修正 (issue #725)
+
+2015-03-30  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* テーブル表示で所有者カラムがフィールドカラムより前にある問題を修正 (issue #718)
+
+	* 相対パスでエクスポートしたフォームデータを再びインポートするとオブジェクトフィールドが正しくインポートできない問題を修正 (issue #721)
+
+	* 冗長系インストール後の起動に失敗する問題を修正 (issue #719)
+
+2015-03-25  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Wikiページのテーブルの罫線が表示されない問題を修正 (issue #717)
+
+2015-03-24  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* テーブルの表示フィールドに指定されている型フィールドを削除するとinvalid requestとなる問題を修正 (issue #715)
+
+2015-03-19  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* テーブルのオブジェクトフィールドでもソートできるようにした (issue #700)
+
+	* order_byのパラメータに存在しない属性名を入れると内部エラーとなる問題を修正 (issue #713)
+
+2015-03-17  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 型オブジェクトのフィールドを編集したときの動作が不定となる問題を修正 (issue #710)
+
+	* install.sh --update時にkompira.confを上書きしないように変更 (issue #712)
+
+	* テーブルのメニューにジョブフロー実行を追加し、選択したオブジェクトからジョブフロー実行する機能を実装 (issue #697)
+
+2015-03-13  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* virtual オブジェクトの検索（AJAX アクセスのみ）に対応した (issue #707)
+
+2015-03-13  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Config型オブジェクトをexport_dataするとdataフィールドが出力されない問題を修正 (issue #694)
+
+	* ライセンスファイルを更新した直後も「ライセンスエラー: 有効期限切れです」と表示される問題を修正 (issue #708)
+
+	* ジョブマネージャコネクション断時から復旧までの時間が長い問題を修正 (issue #253)
+
+2015-03-12  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* virtual オブジェクトの AJAX アクセスで取得フィールドの指定に対応した (issue #706)
+
+	* Kompora オブジェクトの検索を AJAX アクセスに対応した (issue #705)
+
+2015-03-11  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 組み込みのsleepジョブを追加 (issue #696)
+
+	* チャネルタイムアウトに0や空文字を指定するとタイムアウトしない問題を修正 (issue #704)
+
+	* チャネルタイムアウトに絶対時刻を指定できるようにした (issue #703)
+
+	* 辞書型データに get_item メソッドを追加 (issue #702)
+
+2015-03-10  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* アップロード時のファイルサイズをデフォルト 64MB に制限するようにした (issue #691)
+
+2015-03-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* pip パッケージの依存関係の制約を一部緩和して、以下のように変更 (issue #692)
+          APScheduler ~= 2.1.2
+          Creoleparser ~= 0.7.4
+          Django == 1.6.4
+          Django-Select2 == 4.2.2
+          Fabric == 1.8.3
+          Markdown ~= 2.4.1
+          PyYAML ~= 3.11
+          Pygments ~= 1.6
+          amqp ~= 1.4.5
+          decorator ~= 3.4
+          hgapi ~= 1.7.1
+          ipaddr ~= 2.1.11
+          ordereddict ~= 1.1
+          ply == 3.4
+          psycopg2 ~= 2.5.3
+          pycrypto ~= 2.6.1
+          python-daemon ~= 1.6
+          requests ~= 1.2.3
+          simplejson ~= 3.3
+          textile ~= 2.2.1
+
+	* テーブル中のフィールドの表示がで一時的に Internal Error が出ることがある問題を修正 (issue #695)
+
+2015-03-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 辞書式の表記法を拡張し、{"key with space": "value", x + y: 999} のような表記にも対応 (issue #469)
+
+2015-03-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Amazon Linux上でPostgresqlのインストールに失敗する問題を修正 (issue #681)
+
+2015-02-27  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* チャネルsendを間違って書いた場合のエラーメッセージを改善 (issue #689)
+
+	* reという名前でsafe_sourceモードのライブラリを作成するとDB接続エラーが発生する問題を修正 (issue #680)
+
+	* 辞書や配列を表示するテーブル画面のスタイルが正しくない問題を修正 (issue #690)
+
+	* テーブルの表示フィールド選択リストに invisible なフィールドは含まれないように変更
+
+2015-02-26  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* GUI 上でのインポート／エクスポートをサポート (issue #416)
+
+2015-02-09  Shinya Mizoe  <mizoe@fixpoint.co.jp>
+
+	* 冗長構成構築時にcorosync用のポート設定がiptablesにされない問題を修正 (issue #679)
+
+2015-02-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 冗長構成構築時に退避したifcfgファイルが読み込まれる問題を修正 (issue #660)
+
+	* 書き込み禁止設定されているディレクトリのコピーに失敗する問題を修正 (issue #677)
+
+	* in/not in演算子の追加 (issue #675)
+
+2015-02-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Kompiraオブジェクトをコピー/移動する際、表示名も一緒に変更するようにした (issue #645)
+
+	* オブジェクト型フィールドのテーブル表示を表示名のみのショート形式に変更
+
+	* Enum 型フィールドの修飾子で２文字からなる選択列を与えた場合、表示で内部エラーとなる問題を修正
+
+	* kompira_sendevt.logのパーミッションによってログが書かれないことがある問題を修正 (issue #650)
+
+	* 開始時刻がNoneなプロセス情報があると、プロセス一覧の画面更新に失敗する問題を修正 (issue #670)
+
+	* インシデントの状態を CLOSED にしても closed_date が更新されない問題を修正 (issue #672)
+
+2015-02-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オブジェクトのパーミッションが読み取り不可でもコピーできてしまう問題を修正 (issue #669)
+
+2015-02-02  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 読み取り不可設定したジョブフローでもプロセス詳細のジョブフロータブから見える問題を修正 (issue #666)
+
+2015-01-28  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 添付ファイルオブジェクトのメール送信でエラーになる問題を修正 (issue #667)
+
+	* 一般ユーザーはライセンスファイルのインポートや削除ができないように修正
+
+	* 書き込み権限が無いユーザーはチャネルのメッセージ消去ボタンを押せないように修正
+
+	* チャネル(Channel)型オブジェクトを編集不可に変更
+
+	* パーミッションに関係なくオブジェクトの名前変更できてしまう問題を修正 (issue #668)
+
+	* パーミッションに応じた編集ボタンや実行ボタンを無効化するように修正 (issue #539)
+
+2015-01-27  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 空のアドレスに対する mailto はフィルタするように修正 (issue #648)
+
+2015-01-26  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* フォームの送信／実行ボタンを連打できないように修正 (issue #664)
+
+	* ライブラリ呼び出しを同時並列に行うとDBエラーとなりハングする可能性がある問題を修正 (issue #665)
+
+2015-01-20  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スケジュールの実行予定日時を10回先まで表示されるように追加 (issue #534)
+
+	* ローカルコマンドでも __timeout__ の設定が反映されるように修正 (issue #661)
+
+	* copy メソッドの返り値として $RESULT にコピーしたオブジェクトを設定するように変更 (issue #651)
+
+2015-01-19  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スケジューラで時が設定されていて分が省略している場合、*ではなく0分として解釈されるように変更 (issue #652)
+
+2015-01-19  Shinya Mizoe   <mizoe@fixpoint.co.jp>
+
+	* 冗長構成環境下でのcorosync.logローテート設定を追加 (issue #628)
+
+	* setup_cluster.shでKompiraのバージョンを正しく取得できない問題を修正 (issue #654)
+
+2015-01-15  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブフローの監視機能を追加（正常/異常終了時にメール送信する機能）(issue #16)
+
+2015-01-14  Shinya Mizoe   <mizoe@fixpoint.co.jp>
+
+	* 冗長構成環境のインストールおよびフェイルバック時、データベースディレクトリに直接データを配置するように変更 (issue #656)
+
+2015-01-09  Shinya Mizoe   <mizoe@fixpoint.co.jp>
+
+	* 冗長構成時、WALファイルのアーカイブ設定を無効に変更 (issue #653)
+
+2015-01-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* メールテンプレート型を追加
+
+2015-01-07  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 1.3以前のバージョンでエクスポートしたチャネルオブジェクトのインポートに時間がかかる問題を修正 (issue #643)
+
+	* ライブラリオブジェクトのインポート時にコンパイルされない問題を修正 (issue #644)
+
+2015-01-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ディレクトリ/テーブル内のオブジェクト数が多くなると追加に時間がかかる問題を修正 (issue #649)
+
+2014-12-16  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* SSH 接続キャッシュを無効化するための設定オプションを追加
+
+2014-12-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 配列型オブジェクトにadd_itemメソッドを追加 (issue #637)
+
+2014-12-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ディレクトリ表示における読み取り不可オブジェクトに対してもハイパーリンクが張られる問題を修正 (issue #625)
+
+	* オブジェクトが多数あるとユーザー編集画面を開くのに時間がかかる問題を修正 (issue #631)
+
+2014-12-01  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* for/while で break/continue 時に $STATUS がクリアされない問題を修正 (issue #626)
+
+	* whileループにおいて、各ループの最後のジョブのSTATUSが非0でもループが失敗しない (issue #635)
+
+	* license_infoコマンドの結果に日本語が含まれている状態でリダイレクトするとエラーとなる問題を修正 (issue #630)
+
+2014-11-27  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* null をキーとするような辞書フィールドを作成するとそのオブジェクトが表示できなくなる問題を修正 (issue #629)
+
+	* 辞書や配列オブジェクトにpop_itemメソッドを追加 (issue #607)
+
+	* インストール直後の各Kompiraオブジェクトのパーミッション設定を修正 (issue #624)
+
+	* プロセス実行中にそのプロセスやジョブフローを削除した場合にはプロセスを強制終了するようにした
+
+	* ジョブフロー実行中にジョブフローオブジェクトを削除するとエンジンが終了する時がある問題を修正 (issue #627)
+
+2014-11-26  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* インストーラで iptables をフラッシュせず、適切なポートの許可を追加するように変更
+
+	* インストーラにproxyオプション追加 (issue #616)
+
+2014-11-26  Shinya Mizoe   <mizoe@fixpoint.co.jp>
+
+	* ログ収集スクリプト(kompira_dump.sh)に冗長構成に関するログ収集の設定を追加
+
+2014-11-25  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* admin が作成した safe_source ライブラリを root ユーザが編集すると source モードになってしまう問題を修正 (issue #623)
+
+	* safe_source ライブラリ 'lib' のメソッド 'method' を lib.method(...) で呼び出した場合のパフォーマンスを改善 (issue #615)
+
+2014-11-21  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* safe_source ライブラリのメソッドを lib.method() 形式のあとに method() 形式で呼ぶと 内部で import したモジュールが None になる問題を修正 (issue #622)
+
+	* 文字列等に \x という不正なエスケープを含むとオブジェクトの作成・更新に失敗したり内部エラーが発生する問題を修正 (issue #621)
+
+2014-11-18  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* スクリプト追加: ログ収集(kompira_dump.sh)、監視項目取得(kompira_jq.sh) (issue #617)
+
+2014-11-17  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ライブラリで import 文を書くと __warningregistry__ が DATA に表示される問題を修正 (issue #614)
+
+2014-11-13  Shinya Mizoe   <mizoe@fixpoint.co.jp>
+
+	* setup_cluster.shのオプション--heartbeat-netaddr, --hostname-prefixを設定すると冗長構成が正しく稼働しない問題を修正 (issue #612, #613)
+
+2014-11-12  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブフロー/スクリプトジョブにプロセス実行の多重度を設定できるように機能拡張 (issue #611)
+
+2014-11-07  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 仮想オブジェクトに対するAjaxリクエストで取得フィールドを指定できるように機能拡張 (issue #610)
+
+2014-11-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 辞書や配列の要素を指定して削除する機能を追加 (issue #562)
+
+	* 1.3系でエクスポートしたデータに datetime 形のフィールドがあると 1.4 系へのインポートに失敗する問題を修正 (issue #599)
+
+2014-10-31  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* for/pfor 構文において整数値を指定して反復できるように機能拡張 (issue #606)
+
+2014-10-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* インストールしたサーバのタイムゾーンを Asia/Tokyo に設定するように変更 (issue #602)
+
+	* インストール時のkompiraユーザー作成をログイン不可ユーザーになるように変更 (issue #594)
+
+	* AWSでyum update すると postgresql9.3 が amzn-main のものに置き換えられてしまう問題を修正 (issue #588)
+
+2014-10-30  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* openwsman メモリリークを回避するための処理を追加
+
+	* Windowsノードに対してリモートコマンドを同時に多数実行するとコマンドが完了しない問題を修正 (issue #604)
+
+2014-10-29  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Windowsノードに対してリモートコマンド実行するとメモリリークする問題を修正 (issue #597)
+
+2014-10-28  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* mailtoで送った日本語メールをメールチャネルから受け取りmail_parseするとエラーとなる問題を修正 (issue #600)
+
+	* MailChannelで同じメールを重複受信する場合がある問題を修正 (issue #596)
+
+2014-10-23  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* kompira_sendevtからkey-valueデータを受信すると、文字列がPythonのstring型となる問題を修正 (issue #591)
+
+	* fork時の$RESULTにフォークしたプロセスのリストを格納するように拡張 (issue #593)
+
+2014-10-23  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* フィールド名によってテーブル画面の表示が乱れる場合がある問題を修正 (issue #589)
+	* テーブル画面でオブジェクトのリンクを名称ではなく表示名で表示するように変更 (issue #576)
+
+2014-10-22  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* eth0が無効な状態でkompiradを起動し、その後eth0を有効にするとジョブフロー実行時ライセンスエラーとなる問題を修正 (issue #587)
+
+	* Wikiの記法にMarkdownとTextileを追加 (issue #530)
+
+2014-10-21  Shinya Mizoe   <mizoe@fixpoint.co.jp>
+
+	* license_info コマンドが使用できない問題を修正 (issue #586)
+
+2014-10-20  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* export_data/import_dataしたときにKompiraオブジェクトの順序が保存されない問題を修正 (issue #584)
+
+	* オブジェクトインポート時、Objectフィールドで参照先オブジェクトが存在しないと以降のフィールド値が挿入されない問題を修正 (issue #581)
+
+2014-10-20  Shinya Mizoe   <mizoe@fixpoint.co.jp>
+
+	* ドキュメントにKompiraで使用するポートについての情報を追加 (issue #566)
+
+2014-10-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* mailto() で送信するメール本文に "." だけの行があるとそれ以降が捨てられる問題を修正 (issue #583)
+	* mailto() で送信するメールのエンベロープ From に from_user を設定するように変更 (issue #582)
+
+2014-10-20  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 新規にライブラリ型を追加しました。これにより Python のプログラムをジョブフローから呼び出すことが可能になりました。(issue #541)
+
+	* 型定義におけるオブジェクトフィールドの修飾子でdefaultにパスを指定すると内部エラーとなる問題を修正 (issue #578)
+
+	* 設定オブジェクトでオブジェクトフィールドの値が参照できなくなると内部エラーとなる問題を修正 (issue #579)
+
+2014-10-16  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 複数のジョブフローがタイムアウト付きでチャネル待ちを繰り返すとイベントのゴミが回収されない問題を修正 (issue #580)
+
+2014-10-15  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Amazon LinuxでKompiraを新規インストールするとpostgresql9.3のインストールで失敗する問題を修正 (issue #573)
+
+2014-10-10  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* install.sh を sh コマンドにも対応するように修正 (issue #572)
+
+2014-10-09  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* kompira_sendevt/kompira_jobmngrd インストール時に不要な rpm パッケージをインストールしないように修正 (issue #571)
+
+	* 組み込み関数/ジョブの実装をリファクタリング
+
+	* download組み込みジョブに不正なパラメータを渡すと、ジョブフローがハングする問題を修正 (issue #574)
+
+	* ジョブのステータスチェック失敗してアボートする際にステータスコードを1で上書きしないように修正
+
+2014-09-24  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* テーブルオブジェクトで、添付ファイルフィールドを表示させたとき、添付ファイルが存在しないときに、unknown fieldという誤ったエラーメッセージが表示される問題を修正 (issue #565)
+
+	* 設定オブジェクトの添付ファイルがダウンロードできない問題を修正 (issue #556)
+
+2014-09-22  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* has_keyの処理速度を改善 (issue #563)
+
+2014-09-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* $RESULTへの書き込みがsyntax errorとなる問題を修正 (issue #553)
+
+	* INT_MAXを超えるパラメータを入力してジョブフローを実行すると内部エラーとなる問題を修正 (issue #559)
+
+	* ジョブフローから書き込み権限の無いオブジェクトのパーミッション変更ができない問題を修正 (issue #560)
+
+	* 未保存の設定オブジェクトのdataをジョブフローから参照すると実行時エラーとなる問題を修正 (issue #555)
+
+	* フォーム/設定オブジェクトで、詳細ビューの削除ボタンが効かない問題を修正 (issue #558)
+
+2014-09-17  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* フォーム/設定オブジェクトの submit 時に実行パーミッションチェックを追加
+
+	* 書き込み禁止のオブジェクトでも書き込みできてしまうケースがある問題を修正 (issue #557)
+
+2014-09-16  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* インストール時にkompiraという文字列を含むユーザが存在すると正しくインストールされない問題を修正 (issue #554)
+
+	* 一般ユーザーでのimport_data時のエラーメッセージが出る問題を修正 (issue #552)
+
+2014-09-12  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* フィールド種別を String から Object に変更すると、既存オブジェクトの保存に失敗する問題を修正 (issue #551)
+
+2014-09-11  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* MailChannelでメッセージが削除できない問題を修正 (issue #550)
+
+2014-09-10  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ユーザーのホームディレクトリ変更時にメニューバーのキャッシュをクリアするように変更
+
+	* Kompira組み込み型オブジェクトに新しく設定型 (Config) を追加
+
+2014-09-09  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スケジュール管理、ユーザ・グループ管理の新規作成ボタンのUIを統一 (issue #545)
+
+	* スケジューラでジョブフローのパラメータを指定できるように機能拡張 (issue #457)
+
+2014-09-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スケジュール情報画面のプロセス情報一覧でプロセス全選択できない問題を修正 (issue #548)
+
+	* スケジューラに登録されたスクリプトジョブが実行されない問題を修正 (issue #546)
+
+2014-09-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* proxy使用時、プロキシノードと接続対象ノードで異なるアカウントを指定すると接続できない問題を修正 (issue #542)
+
+	* Fabricのバージョンアップに伴いローカルコマンドでのsudoが効かなくなっていた問題を修正 (issue #543)
+
+2014-09-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Windowsサーバで__dir__を指定してコマンド実行すると異常終了 (issue #540)
+
+2014-09-02  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 保存/提出ボタンの位置を右側に変更 (issue #532)
+
+	* フォーム型オブジェクトを導入し、フォームチャネル型オブジェクトを廃止 (issue #525)
+
+2014-09-01  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Chromeで.tar.gzの添付ファイルをダウンロードするとさらにgz圧縮される問題を修正 (issue #529)
+
+2014-08-27  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* export_data 時にパーミッション情報が出力されない問題を修正 (issue #526)
+
+2014-08-27  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* license_infoコマンドを追加 (issue #508)
+
+2014-08-25  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Ajax で更新されるプロセス一覧のリンク先が正しくない問題を修正 (issue #520)
+
+	* /user/app, /user/lib, /user/data ディレクトリを追加
+
+2014-08-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ver1.3以前のexport_dataでno-ownerオプションを付与したjsonデータをv1.4のimport_dataでインポートできない問題を修正 (issue #518)
+
+	* 辞書の要素を更新するジョブで$STATUSが更新されない問題を修正 (issue #517)
+
+	* ライセンスファイルのハードウェアIDがミスマッチの場合の表示を改良 (issue #459)
+
+2014-08-12  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ホームディレクトリ削除時にユーザーも消さないように仕様を変更 (issue #514)
+
+2014-08-11  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 「ホームディレクトリ」の名称を「ホーム」に変更 (issue #507)
+
+2014-08-11  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 読み取り権限の無いオブジェクトをホームに設定するとリダイレクトループする問題を修正 (issue #515)
+
+2014-08-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブフローからスケジュールの操作ができるようにAPIを公開 (issue #510)
+
+	* スケジューラ登録時、全てのフィールドが空の場合は次の実行日時が未定義となるように仕様を変更
+
+2014-08-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* HTTPS対応として、install.shに--httpsオプションを追加 (issue #61)
+
+2014-07-31  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ジョブフローを実行してプロセス詳細画面からブラウザで「戻る」とJSONが表示されることがある問題を修正 (issue #509)
+
+2014-07-30  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* IE8 および Firefox の互換性向上
+	* ディレクトリ画面で Ctrl-Left / Ctrl-Right で前後のページへ移動するように機能拡張
+
+2014-07-23  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 「名前の変更」などで操作対象となるオブジェクトに一貫性が無かった問題を修正 (issue #472)
+
+	* [windows] 転送したスクリプトジョブの改行コードが \r\r\n となり実行エラーとなることがある問題を修正 (issue #454)
+
+	* mailto の送り元パラメータを from_user から from に変更 (issue #506)
+
+2014-07-23  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* datetime/timedeltaオブジェクトのプロパティをジョブフローからアクセス可能なように拡張 (issue #342)
+
+	* スケジューラのAjaxビューが更新されない問題を修正 (issue #504)
+
+2014-07-22  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スケジュールジョブを実行中に当該スケジュールを削除するとエンジンが異常終了する問題に対応 (issue #503)
+
+	* 文字列中の$変数展開で特殊変数にも対応するように機能拡張 (issue #501)
+
+2014-07-17  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* テーブルオブジェクトの新UI対応に対応 (issue #447)
+	* テーブルオブジェクト作成時に表示フィールド名の入力支援の機能拡張 (issue #185)
+	* テーブルの一覧削除機能 (issue #320)
+
+2014-07-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* オブジェクトの移動／コピー時に名前の変更も同時に指定できるように機能拡張 (issue #499)
+
+2014-07-10  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* path 組み込みジョブで存在しない日本語文字列のパスを与えた場合、kompiradがクラッシュする場合がある問題を修正 (issue #498)
+
+	* mailto 組み込みジョブの title 引数を廃止
+
+2014-07-07  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* オブジェクトコピー時、表示名、説明、ユーザー/グループパーミッションもコピーするように修正 (issue #448)
+
+	* install.sh に --force オプションを追加 (issue #493)
+
+2014-07-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スクリプトジョブ直接実行時のプロセス詳細画面がジョブフロー用になっている問題を修正 (issue #464)
+
+	* export/import すると辞書フィールドの順序が失われる問題を修正 (issue #494)
+
+2014-07-03  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* install.sh のオプションを変更
+
+	* Kompira_agent パッケージを Kompira_jobmngr パッケージに変更し、新たに Kompira_sendevt パッケージを追加
+
+2014-07-01  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* export_dataのdirectory指定パスに日本語が含まれているとエラーとなる問題を修正 (issue #485)
+
+2014-06-24  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 比較演算式を x < y < z のように連鎖できるように機能拡張
+
+2014-06-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* APSchedulerのバージョンを固定
+
+2014-06-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 型オブジェクトとそのインスタンスを作成したユーザーを削除する場合に内部エラーとなる問題を修正 (issue #474)
+
+	* 管理領域を新規作成すると内部エラーとなる問題を修正 (issue #473)
+
+	* 論理演算子の優先順位と結合度を一般的な扱いへ変更 (issue #471)
+
+2014-06-04  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 束縛式リストで識別子が重複していたらシンタックスエラーとするように変更 (issue #470)
+
+	* チャネルの send メソッドの引数名 mesg を message に変更
+
+	* 実行中のプロセス数が上限に達して fork した場合に abort とするかわりに、待ち状態となるよう変更 (issue #433)
+
+2014-05-30  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Integerフィールドに範囲外の値を保存すると内部エラーとなる問題を修正 (issue #467)
+
+2014-05-21  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 最大名前長とパス長の制限をそれぞれ 128 と 1024 に変更
+
+2014-02-24  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* チャネルに存在しないオブジェクトへの参照データが含まれているとエラーとなる問題を修正 (issue #392)
+
+2014-02-25  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ディレクトリおよびテーブルのビューにオブジェクトの検索機能を追加
+
+2014-02-21  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* clean_uploaded_files を廃止 (issue #423)
+
+2014-02-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* findのfield_dataで文字列型以外のフィールドを扱えるように対応 (issue #418)
+
+2014-02-19  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ./, ../といったパス表記を受け入れるように修正
+
+2014-02-13  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ファイルシステムメニューから /samples ディレクトリを削除し、/packages ディレクトリを追加
+
+	* ライセンス管理画面でノード数のリセットボタンを追加
+
+	* ライセンス管理画面でライセンスファイルの削除操作を追加
+
+	* ライセンスファイルの形式を変更
+
+2014-02-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 完了プロセスの行番号がNoneと表示される問題を修正 (issue #411)
+
+2014-02-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 修飾子が指定されたフィールドをDIR形式で正しくエクスポート・インポートできない問題を修正 (issue #413)
+
+	* mailto で添付コンテンツのインライン表示をできるように対応 (issue #410)
+
+	* urlopen でバイナリのコンテンツを取得できるように対応 (issue #408)
+
+2014-02-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ノード情報(NodeInfo)オブジェクトにプロキシ(proxy)フィールド追加
+
+	* __via__制御変数を__proxy__に変更
+
+2014-01-30  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* pacemakerの監視対象にlsyncdを追加 (issue #390)
+
+2014-01-28  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* RabbitMQのバージョンを3.1系に更新
+
+	* AMQP接続断時にジョブマネージャのメッセージ送信プロセスが終了する問題に対応
+
+2014-01-27  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* decode/encode 組み込み関数の追加とマニュアルへの追記
+
+	* エンジン構成のリファクタリング（マルチスレッド化とXMLRPCによるリクエスト処理の導入）
+
+	* スクリプトジョブをUIから直接実行する機能に対応
+
+2014-01-27  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* エラーページにホームディレクトリへのリンクを追加 (issue #325)
+
+2014-01-23  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 組み込み関数upload, downloadと同様の処理が可能な記述をマニュアルに追加 (issue #388)
+
+2014-01-23  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ノード情報のuse_shellでFalseが効かない問題を修正 (issue #404)
+
+2014-01-22  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* 添付ファイルのdataにUnicodeを渡すとエラーになる問題を修正 (issue #400)
+
+	* extend.Object に get(k[,d]) メソッドを追加した (issue #401)
+
+	* __node__, __account__ を辞書で指定するときフィールドを省略できるようにした (issue #398)
+
+2014-01-15  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Windowsでスクリプトジョブが実行できない問題を修正 (issue #393)
+
+2014-01-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* urlopen で "Content-Type:" などのヘッダを指定できるように対応 (issue #384)
+
+2013-12-24  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* extends.Object の parent_object, type_object, children, field_names を公開 (issue #381)
+
+2013-12-20  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* core.models.Object.fields() 高速化 (issue #375)
+
+2013-12-19  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* findで最大検索個数を指定するlimit引数を追加した (issue #378)
+
+	* findのfield_dataとしてuserを指定するとエラーになる問題を修正 (issue #376)
+
+	* findのfield_dataを指定したとき、field_data以外の条件指定が無視される場合がある問題を修正 (issue #377)
+
+2013-12-17  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ジョブフロー異常終了時にデバッグ情報を出力するようにした (issue #373)
+
+2013-12-17  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* テーブルやノード情報作成時の表示名に、デフォルトでオブジェクト名が入るように変更
+
+2013-12-16  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ローカルでsudoをするのに必要な設定をドキュメントに記述 (issue #204)
+
+	* 標準出力の結果文字列の前後の空白文字が削除される問題を修正 (issue #367)
+
+2013-12-11  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* テンプレート文字列の波括弧付き置換プレースホルダ "%{identifier}" にpython識別子以外も使えるように対応 (issue #368)
+
+2013-12-10  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* mailtoで任意のメールヘッダ項目を設定する機能に対応 (issue #365)
+
+2013-12-09  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* ドキュメントの kompira_sendevt の説明に誤りがあるのを修正 (issue #366)
+
+	* プロキシ環境下でのインストール方法を README.txt に追記しました (issue #364)
+
+2013-12-06  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* チャネルに大量のイベントが溜まるとハングアップする問題を修正 (issue #254)
+
+2013-12-06  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* オブジェクトビュー／エディット画面のスタイル等を調整しました (issue #363)
+
+2013-12-05  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* インポート時のオーナー指定が優先されるように仕様変更した (issue #354)
+
+	* 自分が所有しているタスクもタスク一覧に表示するようにした (issue #334)
+
+2013-12-04  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* テーブルでのオブジェクト表記を絶対パスの文字列でなくリンクにするようにした (issue #361)
+
+2013-11-28  Ichiro TAKAHASHI  <takahashi@fixpoint.co.jp>
+
+	* stringifyでのオブジェクトの文字列化時に値が同じ数値のとき省略表記になってしまう問題を修正 (issue #357)
+
+2013-11-19  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* チェックポイント機能をデフォルトでOffとし、実行時に選択可能となるように変更 (issue #348)
+
+	* チャネルのイベントキューにイベントが溜まる問題を修正 (issue #353)
+
+	* ステップモード実行時、プロセス状態が保存されない問題を修正 (issue #350)
+
+2013-11-18  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* forループの中でのデータpickleに失敗し、チェックポイントの保存ができない問題に対応 (issue #84)
+
+	* 型オブジェクトにノード情報とアカウント情報を追加し、ジョブフローから__node__, __account__制御変数により指定できるようにした
+
+2013-11-08  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* 結合子で直前のコマンドの実行に失敗した場合、コマンドのエラー出力($ERROR)をコンソールに表示するようにした (issue #321)
+
+	* 添付ファイルフィールドを含むオブジェクトを削除した時に、添付ファイルも削除するようにした
+
+	* Django 1.5.5 に対応
+
+2013-11-07  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* ジョブフローから添付ファイルフィールドのファイル名の変更ができない (issue #346)
+
+	* 添付ファイルオブジェクトをコピーしたとき保存済みのファイルがコピーされない問題を修正 (issue #318)
+
+2013-11-06  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* オブジェクト追加および更新で不正なフィールド値が指定された場合は処理失敗とするようにした (issue #330)
+	* 特定のフィールド種別以外でフィールド修飾子が指定されているとフォームが作成できない問題を修正 (issue #329)
+	* フィールドデータの型を変更したあとに、オブジェクトのupdateやcopyで失敗することがある問題を修正 (issue #264)
+
+2013-11-05  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Objectフィールドのqualifierにテーブルオブジェクトが設定できるようにした (issue #345)
+
+	* known_hostsが原因でリモートコマンドの実行に失敗した場合のエラーメッセージを改善 (issue #341)
+
+	* 同一のKompiraオブジェクトの等価判定が等しくならない問題を修正 (issue #344)
+
+	* Kompiraオブジェクトにノード情報型、アカウント情報型を追加し、接続先に指定できるようにした
+
+2013-11-01  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* Kompiraオブジェクトを編集する際、不正な値をいれたときに表示される画面が初期画面と異なる問題を修正 (issue #313)
+
+	* 文字列展開で辞書型データの表示が正しくない問題を修正 (issue #337)
+
+	* kompira_sendevt で値部分に '=' を含む key-value を渡せない問題を修正 (issue #338)
+
+2013-10-31  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* UTF-8以外の文字コード設定のサーバに対して、コマンド実行するとkompiradがエラーになる問題を修正 (issue #340)
+
+2013-10-30  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* __dir__指定時、もしくはローカルでの__sudo__指定時に、日本語を含むコマンドジョブの実行がエラーになる問題を修正 (issue #336)
+
+2013-10-29  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* チャネルにメッセージ送信しても、イベントがクリアされないケースがある問題を修正
+
+	* 特権ユーザーの場合、他ユーザーのスケジュールも一覧で表示するように修正
+
+	* 一般ユーザーのスケジュール作成時、所有者変更できないように修正 (issue #327)
+
+2013-10-23  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* urlopenがハングする場合がある問題を修正 (issue #332)
+
+2013-10-15  Hattori Kenta  <hattori@hattori-server.dev.fixpoint.co.jp>
+
+	* スケジュールを削除すると、実行プロセス情報も削除される問題を修正 (issue #328)
+
+	* 一般ユーザーが自分以外のプロセス実行結果を削除できないように修正 (issue #316)
+
+2013-10-09  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* ユーザー設定で、姓名に日本語を入れると一覧表示で内部エラーとなる問題を修正 (issue #319)
+
+2013-10-07  Hattori Kenta  <hattori@hattori-server>
+
+	* mailto組み込みジョブでtoアドレスに日本語が含まれていると一部環境でメール送信できない問題に対応 (issue #315)
+
+2013-10-07  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* オブジェクトのテンプレート文字列展開に失敗する問題を修正 (issue #314)
+
+2013-10-01  Hattori Kenta  <hattori@hattori-server>
+
+	* import_dataでスケジューラをインポートするとステータスが「不明」となる問題を修正 (issue #310)
+
+2013-09-30  Hattori Kenta  <hattori@hattori-server>
+
+	* 冗長構成時にライセンスファイルも同期してしまう問題を修正 (issue #310)
+
+	* 無制限ライセンス時のノード数制限が0になる問題を修正 (issue #311)
+
+2013-09-27  Hattori Kenta  <hattori@hattori-server>
+
+	* 冗長構成時の添付ファイルの同期を行うようにした (issue #308)
+
+	* 編集権限を持たないユーザが添付ファイルを削除できる問題を修正 (issue #305)
+
+	* setup_cluster.shが失敗する問題に対応 (issue #304)
+
+	* 冗長構成時、添付ファイルオブジェクトのパスに日本語が含まれると内部エラーとなる問題を修正 (issue #307)
+
+2013-09-27  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* リモートコマンド実行時のシェルプログラムを指定する特殊変数の導入 (issue #121)
+
+2013-09-24  Hattori Kenta  <hattori@hattori-server>
+
+	* __via__ を指定しても踏み台アクセスにならず、そのホストでコマンドが実行されてしまう問題を修正 (issue #303)
+
+	* 読み込み権限が無いページに直接アクセスした場合のエラーメッセ―ジ改善 (issue #301)
+
+	* エラーメッセージが重複して表示される問題を修正 (issue #302)
+
+2013-09-20  Hattori Kenta  <hattori@hattori-server>
+
+	* オブジェクト移動時にそのabspathが移動先ディレクトリのabspathに前方一致していると移動できない問題を修正 (issue #299)
+
+2013-09-19  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* 表示するタブの指定はハッシュ URI にする (issue #298)
+	* ジョブフローが非完了状態から完了状態に遷移しても「削除」ボタンが表示されない (issue #296)
+	* プロセス詳細画面に戻った時に画面が初期状態に戻ってしまう (issue #252)
+	* プロセス一覧画面などのAjaxリクエストで不要なデータを返さないようにする (issue #120)
+
+2013-09-19  Hattori Kenta  <hattori@hattori-server>
+
+	* ジョブフロー数の上限チェックを追加
+
+2013-09-18  Hattori Kenta  <hattori@hattori-server>
+
+	* オブジェクトに set_user/group_permission, clear_user/group_permission メソッドを追加 (issue #295)
+
+2013-09-10  Hattori Kenta  <hattori@hattori-server>
+
+	* 複数行にわたる文字列リテラルの形式を追加
+
+2013-09-09  Hattori Kenta  <hattori@hattori-server>
+
+	* エクスポート時のユーザー、グループ情報をIDではなく名前で出力するように変更 (issue #143)
+
+	* オブジェクト型のフィールドを追加
+
+	* 添付ファイルのデータをジョブフローから扱えるように拡張
+
+2013-09-06  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* Directory.find メソッドでフィールドデータを完全一致で検索できるように拡張 (issue #293)
+
+2013-09-04  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* stringify で循環参照を含むリストや辞書を文字列化できない問題を修正 (issue #291)
+
+2013-09-02  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* 標準入力へのリダイレクトでバイナリデータ（str文字列）をunicode化しようとして失敗する問題を修正 (issue #289)
+	* 標準入力へのKompiraオブジェクトのリダイレクトが新文字列化形式に対応していない問題に対応 (issue #288)
+	* [BUG] Jenkins失敗テスト(391)対応 (kompira.core.* に対応) (issue #287)
+
+2013-08-30  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* get_object() 高速化 (issue #286)
+	* path()組み込み関数にKompiraオブジェクトを渡す例をドキュメントに追加 (issue #285)
+
+2013-08-30  Hattori Kenta  <hattori@hattori-server>
+
+	* Datetimeフィールドの値更新時のフォーマットのエラーを修正 (issue #283)
+
+2013-08-30  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* javascript_catalog をキャッシュするようにするように対応 (issue #278)
+	* kompira.web.context_processors.kompira をキャッシュするように対応 (issue #282)
+
+2013-08-27  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* Codemirrorを最新版(3.16)にアップデート (issue #273)
+	* ジョブフロー等の編集画面で保存せずに画面遷移しようとしたときに警告をだすように対応 (issue #218)
+	* ジョブフローでのオブジェクト文字列化をジョブフローの文法に合わせるよう変更 (issue #276)
+	* ジョブフローで記述した辞書型オブジェクトのキー順序が保存するよう修正 (issue #205)
+	* true/falseリテラルと真偽値の表示が合うように修正 (issue #134)
+
+2013-08-26  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* ユーザの first_name と last_name を使えるように機能追加 (issue #277)
+
+2013-08-23  Hattori Kenta  <hattori@hattori-server>
+
+	* ルートに `Xadmin` など正規表現 `.admin` にマッチするディレクトリを作ると、`Xadmin/` というパスでdjangoのadmin画面に行ってしまう問題を修正 (issue #268)
+
+2013-08-23  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* 一時変数を経由した辞書への値書き込みに失敗する問題を修正しました (issue #261)
+	* タスクやインシデントの一覧を新しい順に表示するようにしました (issue #267)
+	* ユーザやグループなどの一覧画面URLに対するAjaxアクセスに失敗する問題を修正しました (issue #269)
+	* find メソッドで本来対象外のディレクトも検索対象にしてしまう問題を修正しました (issue #270)
+	* 仮想オブジェクトも find メソッドで検索できるように機能追加しました (issue #271)
+	* タスクのオブジェクト取得のDBアクセスを効率よく改善する (issue #272)
+
+2013-08-23  Hattori Kenta  <hattori@hattori-server>
+
+	* Integer型のフィールドに 0 が保存されているときに、編集フォームを開くと 0 が消える問題を修正 (issue #266)
+
+2013-08-13  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* ジョブフローからKompiraオブジェクトの名前変更、移動、コピーをできるように機能追加 (issue #263)
+
+2013-08-09  Hattori Kenta  <hattori@hattori-server>
+
+	* ネストしたブロックの中でbreak, continue, self()を呼んでも変数ブロックがポップされない問題を修正 (issue #258)
+
+2013-08-02  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* findメソッド追加／deleteメソッド強化を更新（deleteメソッドのforceオプションを廃止）(issue #246)
+
+2013-08-01  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* 可変行数の入力フォームでのEnterを押した時の動作を修正(issue #248)
+
+2013-07-31  Hattori Kenta  <hattori@hattori-server>
+
+	* 使用ノード数をライセンス情報ページから参照できるように機能追加
+
+	* リモートコマンドが失敗した時でも、管理対象の台数としてカウントされる問題を修正(issue #213)
+
+2013-07-29  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* findメソッド追加／deleteメソッド強化に対応(issue #246)
+	* 複数オブジェクトの更新時にトランザクションを適用する(issue #249)
+
+2013-07-25  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* mailto関数の機能拡張： User-Agent追加、CC, BCCの追加、HTML形式、添付ファイルのサポートに対応(issue #225)
+	* urlopen() でhttpsアクセスしたときSSL証明書チェックが有効になっている問題を修正(issue #239)
+
+2013-07-24  Hattori Kenta  <hattori@hattori-server>
+
+	* アップグレードインストール時にインストール済みKompiraバージョンのチェックを追加
+
+	* インストールログにバージョン番号を記録するよう修正(issue #241)
+
+	* 2つの型オブジェクトを作成し、同じ拡張モジュールを指定すると、後から作成した型のオブジェクトを作成できない問題を修正(issue #233)
+
+2013-07-23  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* ディレクトリ形式のexport/importで配列型フィールドの空データが正しく処理されない問題を修正(issue #245)
+	* import_data時に遅延インポートされるフィールドに日本語が含まれているとUnicodeDecodeErrorになる問題を修正(issue #244)
+	* インポートしたジョブフローが実行不可状態のときはエラーを表示するように変更(issue #247)
+
+2013-07-10  Hattori Kenta  <hattori@hattori-server>
+
+	* wgetでcodecエラーとなる問題を修正(issue #236)
+
+	* 組み込みのput/getジョブの実行に失敗する問題を修正(issue #237)
+
+2013-07-03  Hattori Kenta  <hattori@hattori-server>
+
+	* パフォーマンス向上のためtype情報をFieldDataオブジェクトに持たせるように変更
+
+2013-06-25  Hattori Kenta  <hattori@hattori-server>
+
+	* 長いジョブフローをコンパイルエラーで拒絶するようにした(issue #219)
+
+	* コマンド実行結果がUTF-8以外の文字コードを返す場合に異常終了するに対応(issue #149)
+
+2013-06-25  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* path() 組み込み関数に Kompira オブジェクトを渡せるように対応(issue #221)
+
+2013-06-21  Hattori Kenta  <hattori@hattori-server>
+
+	* kompira_sendevt コマンドのバイナリデータ送信に対応(issue #133)
+
+2013-06-21  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* Wiki ビューで「削除」ボタンが効かない問題を修正／その他改善に対応(issue #220)
+	* ジョブフローの画面を開いたときのパラメータをURLで指定できるように対応(issue #216)
+
+2013-06-20  Hattori Kenta  <hattori@hattori-server>
+
+	* rootディレクトリ削除時の内部エラーに対応(issue #217)
+
+2013-06-20  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* PrettifyとCodeMirrorでのタブ幅が異なる問題を修正(IEでは制限あり)(issue #214)
+
+2013-06-19  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* Kompiraオブジェクトに対する Ajax アクセスに対応(issue #212)
+
+2013-06-14  Hattori Kenta  <hattori@hattori-server>
+
+	* 長いジョブフローを保存すると内部エラーとなる問題を修正(issue #172)
+
+2013-06-13  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* [data >> obj.field] でフィールドを更新しても、オブジェクトの更新日時が更新されない問題を修正(issue #201)
+
+2013-06-13  Hattori Kenta  <hattori@hattori-server>
+
+	* SSH コネクションを再利用するようにジョブマネージャの実装を変更(issue #60)
+
+	* Windows に対応(issue #11)
+
+2013-06-13  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* 辞書オブジェクトのフィールドを update した後に print すると Data クラスとして見える問題を修正(issue #207)
+
+2013-06-12  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* オブジェクトを移動/コピーする時に、絶対パスかつ最後に「/」をつけると、表示されるメッセージが空白になる問題を修正(issue #203)
+
+2013-06-11  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* ジョブマネージャインストール時、amqpライブラリがインストールされない問題を修正(issue #202)
+
+2013-06-10  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* とても大きいジョブフローを実行するとプロセス詳細でブラウザが応答しなくなる問題を対処(issue #195)
+
+2013-06-06  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* パスワード型オブジェクトが編集画面でパスワード丸見えな問題に対処(issue #198)
+	* デバッグ用のプロセス統計情報が正しくカウントされない問題を修正(issue #196)
+
+2013-06-05  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* CodeMirrorのエディタを全画面対応にする(issue #193)
+	* ジョブフロー編集時、一定以上の行数部分で改行するとスクロールが正しく追従しない問題に対処(issue #173)
+
+2013-06-05  Hattori Kenta  <hattori@hattori-server>
+
+	* ジョブマネージャまわりを全面的にリファクタリングし、SSHコネクションの再利用を実装 (issue #60)
+
+2013-05-29  Hattori Kenta  <hattori@hattori-server>
+
+	* 型オブジェクトのフィールド定義を削除しても、古いフィールドデータが中途半端に残る問題を修正 (issue #191)
+
+2013-05-29  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* 組み込み関数 path() で引数名 path= を指定できなくなっていた問題を修正、リストでも渡せるように変更(issue #188)
+
+2013-05-28  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* get_user()/get_group() でlong値を渡すとエラーになる問題に対処(issue #187)
+
+2013-05-27  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* wiki ページでのテーブルを見やすくする(#issue 184)
+	* GZipMiddlewareを利用してHTTPレスポンスを圧縮するように変更(issue #174)
+
+2013-05-27  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* Fabricを1.5.1から1.6.1に変更(issue #181)
+
+2013-05-23  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* 組み込み関数 path() で引数をリストで受け入れて join() して abspath を生成するように変更(issue #167)
+	* RabbitMQの接続が切れたときに例外が発生する場合がある問題に対処(issue #178)
+
+2013-05-22  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* ローカルコマンド実行時に__sudo__変数が有効になるように変更(issue #110)
+
+2013-05-22  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* 再接続時にプロセスプールは終了させないように変更(issue #177)
+	* テーブルの表示フィールドに配列や辞書を指定するとJSONのまま表示されてしまう問題を修正(issue #162)
+	* テーブルの一覧画面で型オブジェクトへのリンクを貼る(issue #176)
+
+2013-05-20  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* ジョブフローのプロセス割り当てを最大時間方式に変更[update](issue #171)
+
+2013-05-17  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* ディレクトリの要素が多い場合に表示が遅くなる問題を改善
+
+2013-05-17  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* ジョブフローの実行行番号が更新されない場合がある問題を修正(issue #160)
+	* ジョブフローのプロセス割り当てを最大時間方式に変更(issue #171)
+
+2013-05-16  TAKAHASHI Ichiro  <takahashi@fixpoint.co.jp>
+
+	* [パフォーマンス改善] プロセスの状態保存の頻度を下げてジョブフローの実行を高速化(issue #160)
+
+2013-05-15  Hattori Kenta  <hattori@hattori-server>
+
+	* 文字列中で "$オブジェクト" と指定されたとき文字列化して展開するように修正(issue #166)
+
+2013-05-14  Hattori Kenta  <hattori@hattori-server>
+
+	* フェールオーバー後、rabbitmqのconsumerがcancelされる問題に対応(issue #99)
+
+	* ライブラリをamqplibからamqpへ変更。これに伴ってamqplib_patchを廃止
+
+2013-05-10  TAKAHASHI Ichiro  <takahashi.ichiro@takahashi-server.forschooner.net>
+
+	* 特定の状況でDjangoテストを行うとエラーが発生する問題を修正(issue #163)
+
+2013-05-02  TAKAHASHI Ichiro  <takahashi.ichiro@takahashi-server.forschooner.net>
+
+	* TypeObject型のフィールドデータが循環参照しているとインポートできない問題を修正(issue #159)
+	* import_data/export_data 機能拡張のテストケースを追加（基本的なテストケース）(issue #154)
+	* 上記に伴う、import_data/export_data 機能拡張（ディレクトリ形式対応）の内部実装改変(issue #150)
+
+2013-05-01  Hattori Kenta  <hattori@hattori-server>
+
+	* ライセンスファイルをデータベース上ではなくファイルとして保存するように変更(issue #85)
+
+2013-04-25  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* IEでコンソール出力時に空白行が挿入されることがある問題を修正(issue #74)
+
+2013-04-23  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 添付ファイル編集画面のレイアウトを修正(issue #138, #139)
+
+2013-04-18  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 添付ファイル削除時のメッセージを修正(issue #140)
+
+2013-04-11  TAKAHASHI Ichiro  <takahashi.ichiro@takahashi-server.forschooner.net>
+
+	* ソースコード表示領域で３桁以上の行番号がpre領域をはみ出る問題を修正(issue #125)
+
+2013-04-10  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* Django1.5.1に対応
+
+2013-04-09  TAKAHASHI Ichiro  <takahashi.ichiro@takahashi-server.forschooner.net>
+
+	* インシデントを上書きインポートするとworklogとalertが追加されてしまう問題を修正(issue #147)
+	* インポート時に対象オブジェクトが存在しないときに時刻情報が上書きされない問題を修正(issue #148)
+	* import_data/export_data 機能拡張（ディレクトリ形式対応）(issue #150)
+	* task のインポート時に action リストがエンコードされていない問題を修正(issue #152)
+
+2013-04-02  Hattori Kenta  <hattori@hattori-server>
+
+	* print組み込みジョブの第1パラメータが文字列以外のケースで異常終了する問題を修正(issue #146)
+
+	* ルートディレクトリをパスとして指定できない問題を修正(issue #100)
+
+	* elif構文を追加(issue #6)
+
+	* 全角の数字を整数リテラルとしてしようできないよう修正(issue #130)
+
+2013-04-01  Hattori Kenta  <hattori@hattori-server>
+
+	* IncidentやTaskのexport_dataに失敗する問題に対応(issue #144)
+
+	* プロセス経過時間を"%d日, %d:%02d:%02d"に変更(issue #131)
+
+2013-03-29  TAKAHASHI Ichiro  <takahashi.ichiro@takahashi-server.forschooner.net>
+
+	* ジョブフローの中で<pre></pre>を使うとビューが乱れる問題に対応(issue #137)
+	* プロセス詳細のジョブフローのソースコード表示がpreに戻ってしまう問題に対応(issue #142)
+
+2013-03-28  TAKAHASHI Ichiro  <takahashi.ichiro@takahashi-server.forschooner.net>
+
+	* HTML構造変化によりpy.testでのテストに失敗する問題に対応(issue #135)
+
+2013-03-27  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* ディレクトリもしくはテーブル削除時に、配下にオブジェクトがある場合は警告を表示するように変更
+
+2013-03-26  TAKAHASHI Ichiro  <takahashi.ichiro@takahashi-server.forschooner.net>
+
+	* 辞書データの編集でデータ挿入できるように（順序入れ替えによって）対応(issue #123)
+	* 辞書データの表示で値となる文字列が長いとレイアウトが崩れる問題の再調整(issue #73)
+	* jquery.formset のカスタマイズ版 jquery.formset.custom.js を追加
+	* kompira.css の読み込み順を最後に移動(base.html)
+	* CSS の調整（タイトルバーの文字縮小など）
+
+2013-03-26  Hattori Kenta  <hattori@hattori-server>
+
+	* 自分自身のプロセスオブジェクトを取得する組み込み関数currentの追加(issue #103)
+
+	* オブジェクトのIDを取得する方法の追加(issue #129)
+
+	* オブジェクトに対して、has_key組み込み関数が使用できるように拡張(issue #54)
+
+2013-03-25  Hattori Kenta  <hattori@hattori-server>
+
+	* 組み込み関数アボート時の日本語メッセージが不適切な問題を修正(issue #128)
+
+2013-03-19  Hattori Kenta  <hattori@hattori-server>
+
+	* export_data時にJSON形式をpretty print出力するように変更
+
+	* サンプルのジョブフローSUDO削除でパーミッションが不適切になる問題を修正(issue #118)
+
+	* kompira_sendevtコマンドのログファイルをファイルサイズでローテートするように変更(issue #92)
+
+2013-03-18  Hattori Kenta  <hattori@hattori-server>
+
+	* 仮想オブジェクトのアクセスパスを修正(issue #126)
+
+	* --upgradeオプション使用時のエラーを修正(issue #111)
+
+	* 大文字・小文字違いのオブジェクト作成時の内部エラーを修正(issue #122)
+
+2013-03-05  TAKAHASHI Ichiro  <takahashi.ichiro@takahashi-server.forschooner.net>
+
+	* ファイルシステム一覧画面の新規作成行にあるテキストボックスのサイズ最適化に対応(issue #116)
+
+2013-03-05  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* int組み込み関数を追加
+
+2013-03-05  TAKAHASHI Ichiro  <takahashi.ichiro@takahashi-server.forschooner.net>
+
+	* 一覧表示画面で表示要素が無いときtablesorterがエラーを出す問題を修正(issue #114)
+
+2013-03-04  TAKAHASHI Ichiro  <takahashi.ichiro@takahashi-server.forschooner.net>
+
+	* プロセス詳細のタブ切替時にコンソールスクロールが上に戻ってしまう問題を修正(issue #112)
+
+2013-03-04  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* install.shでKompiraをアップグレードした際、初期ユーザ(root, guest), 初期グループ(other, wheel)のステータスが初期化されてしまう問題を修正
+
+2013-02-27  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 組み込み関数stringの引数に日本語を含んだ文字を渡すとエラーとなる問題を修正
+
+2013-02-26  Hattori Kenta  <hattori@hattori-server>
+
+	* 仮想オブジェクト作成時に不正なモジュールを指定した場合の内部エラーに対応(issue #105)
+
+2013-02-25  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* Wiki記法のヘルプページを追加
+
+	* ウィキページの編集画面にWiki記法ヘルプページへのリンクを追加
+
+2013-02-25  Hattori Kenta  <hattori@hattori-server>
+
+	* 一部のユニコード文字列を含むデータをチャネルに書き込んだ場合のエラーに対応(issue #106)
+
+2013-02-19  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 組み込み関数の評価が失敗した場合、abortするように変更
+
+2013-02-15  Hattori Kenta  <hattori@hattori-server>
+
+	* フェイルオーバー時にrabbitmq-serverを再起動するように変更(consumer cancel notification問題への暫定対応)
+
+2013-02-14  Hattori Kenta  <hattori@hattori-server>
+
+	* チャネル書きこみ時にStringIOのflush呼びだしを追加
+
+	* チャネルの読み出し時にエラー処理を追加
+
+2013-02-08  Hattori Kenta  <hattori@hattori-server>
+
+	* kompira_sendevtのバイナリデータ対応(issue #97)
+
+2013-02-07  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 組み込み関数json_parseのエラー時に表示されるメッセージが適切でない問題を修正
+
+	* 未定義の組み込み関数、組み込みジョブがあったとき、コンパイル時に検出できるように変更
+
+	* 一部ページのレイアウトが崩れる問題に対応
+
+2013-02-07  Hattori Kenta  <hattori@hattori-server>
+
+	* COMMIT命令実行直後にプロセスコンテクスト切替が発生すると、プロセスがWAITING状態からREADY状態に変更される問題に対応(issue #81)
+
+2013-02-05  Hattori Kenta  <hattori@hattori-server>
+
+	* 子プロセスを取得する属性childrenを追加
+
+2013-02-01  Hattori Kenta  <hattori@hattori-server>
+
+	* ループ内部でのreturn実行時、呼出側のスタックをクリアしてしまう問題に対応(issue #82)
+
+2013-01-29  Hattori Kenta  <hattori@hattori-server>
+
+	* has_key, length組み込み関数を追加
+
+	* ユーザ名として使用できる文字を制限('@', '.', '+', '-'を使用不可, 1文字目に数字の使用不可)
+
+2013-01-28  Hattori Kenta  <hattori@hattori-server>
+
+	* json_dump組み込み関数を追加
+
+	* Directoryオブジェクトにhas_childメソッドを追加
+
+2013-01-23  Hattori Kenta  <hattori@hattori-server>
+
+	* メソッド実行時エラーの時のエラー処理を追加
+
+2013-01-22  Hattori Kenta  <hattori@hattori-server>
+
+	* string組み込み関数を追加
+
+	* datetime, timedelta組み込み関数を追加
+
+	* Tableのaddメソッドの引数から型オブジェクトを削除
+
+2013-01-15  Hattori Kenta  <hattori@hattori-server>
+
+	* path組み込み関数を追加
+
+	* フィールド名をidとした時にそのオブジェクトをテーブルで表示する場合に内部エラーとなる問題を修正
+
+	* エラー表示ページのメニューバーが白色だったのを黒色に修正
+
+	* 日本語(UTF-8)フィールド名を持つ型オブジェクトを定義した場合、その型のオブジェクトを作成時に内部エラーとなる問題を修正
+
+2013-01-07  Hattori Kenta  <hattori@hattori-server>
+
+	* ユーザー設定でアカウントの有効／無効を指定可能に変更
+
+	* デフォルトでadminによるログインを禁止
+
+2013-01-07  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* ブラウザの設定言語とAjax自動更新時に挿入される文字の言語が異なる問題を修正
+
+2013-01-07  Hattori Kenta  <hattori@hattori-server>
+
+	* 添付ファイルのダウンロードでファイル名が正しくなるように修正
+
+2013-01-04  Hattori Kenta  <hattori@hattori-server>
+
+	* スケジューラに登録したジョブフローの実行が進行しない問題を修正
+
+2012-12-28  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 各種テーブルのDateTime列に対するソートが正しくされるよう修正
+
+2012-12-27  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 組み込みジョブrebootの引数にint型が使えない問題を修正
+
+2012-12-27  Hattori Kenta  <hattori@hattori-server>
+
+	* 日本語パラメータを持つジョブフロー実行時のエラーを修正
+
+2012-12-25  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 制御変数__via__を追加
+
+2012-12-19  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* オブジェクトの編集画面でText, LargeTextの入力欄の幅が大きくなるように変更
+
+2012-12-17  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* ディレクトリ表示の際、読み込み権限のないファイルはリンクを張らないように変更
+
+2012-12-11  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* アラートが1つ以上登録されているインシデントを表示するとエラーとなる問題を修正
+
+2012-12-11  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 同じ内容のエラーメッセージが複数表示される問題を修正
+
+2012-12-10  Hattori Kenta  <hattori@hattori-server>
+
+	* プロセス一覧のページ数が多い場合に動作が極端に重くなる問題に対応
+
+2012-12-07  Hattori Kenta  <hattori@hattori-server>
+
+	* ライセンス管理機能を追加
+
+	* Datetimeフィールドの値とnow()で取れる値をdatetime型に変更
+
+2012-12-07  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 未定義の組み込み関数/ジョブが実行された時のエラーメッセージを修正
+
+2012-12-07  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* kompira_sendevt実行時、ログファイルの書き込み権限がない場合でもイベント送信が実行されるように変更
+
+2012-12-07  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* import_dataコマンドの--no-overwriteコマンドを削除
+
+	* import_dataコマンドの--overwriteコマンドを追加
+
+	* import_dataコマンド実行時、ファイルが存在した場合のデフォルト動作を「上書きする」から「上書きしない」に変更
+
+2012-12-07  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 書き込み権限がディレクトリ中のオブジェクトを削除しようとする際、エラーメッセージの表示がレイアウトされない問題を修正
+
+2012-12-07  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* スクリプトジョブの呼び出し時に、引数として文字列以外を指定するとエラーとなる問題を修正
+
+2012-12-07  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* ジョブフローがシンタックスエラーの際、削除ボタンを押すとエラーになる問題を修正
+
+2012-11-29  Hattori Kenta  <hattori@hattori-server>
+
+	* continue, breakを追加
+
+2012-11-28  Hattori Kenta  <hattori@hattori-server>
+
+	* while構文を追加
+
+2012-11-27  Hattori Kenta  <hattori@hattori-server>
+
+	* スケジューラをプリエンプティブ方式に変更
+
+2012-11-21  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* タスク、インシデント、プロセス一覧画面に全てのチェックボックスをチェックする/チェックを外すチェックボックスを追加
+
+	* タスク、インシデント、プロセス一覧画面表示時に全てのチェックボックスを明示的にchecked=falseにするように変更
+
+2012-11-19  Hattori Kenta  <hattori@kompira-server2>
+
+	* クラスタ構成に対応
+
+	* 配布パッケージ作成用スクリプトをMakefileに移行
+
+2012-11-19  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* チャネルのメッセージを全て消去できるボタンを追加
+
+2012-11-14  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* urlopenにhttp_method引数を追加
+
+2012-11-09  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 組み込み関数iprangeを追加
+
+2012-11-07  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* 表示するページが多い場合に省略されるように変更
+
+2012-11-02  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* now, mail_parse, json_parseを組み込み関数に変更
+
+2012-10-31  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* ジョブフローの結合子として ->>, =>> を追加
+
+2012-10-22  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* ドキュメントに文字列処理, インシデント, タスクに関する記述を追加
+
+2012-10-12  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* if構文にelse節がない場合、条件がfalseの場合でもstatus=0となるように変更
+
+2012-10-11  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* kompira_sendevtにmax_retry, retry_intervalオプションを追加
+
+2012-10-09  Hattori Kenta  <hattori@hattori-server>
+
+	* kompiradに--settingsオプションを追加
+
+2012-10-05  Hattori Kenta  <hattori@hattori-server>
+
+	* ジョブマネージャ冗長化対応
+
+	* Bootstrap Version 2.1.1に更新
+
+2012-10-02  Hattori Kenta  <hattori@hattori-server>
+
+	* mail_parse組み込みジョブを追加
+
+	* ジョブフロー型の属性にcompilerVersionを追加
+
+2012-10-01  Hattori Kenta  <hattori@hattori-server>
+
+	* upload/download組み込みジョブを追加
+
+	* 添付ファイルのためのフィールド型を追加
+
+2012-09-27  Hattori Kenta  <hattori@hattori-server>
+
+	* テーブル型データの型オブジェクトフィールドを絶対パスでエクスポートするように変更
+
+	* 参照されている型オブジェクトを削除した時に日本語パスを含む場合にエラーとなる問題を修正
+
+2012-09-26  Hattori Kenta  <hattori@hattori-server>
+
+	* settings.pyでのHOSTの設定を廃止
+
+2012-09-25  Shinya Mizoe  <mizoe@mizoe-server>
+
+	* urlopenのオプションにencodeを追加
+
+2012-09-24  Hattori Kenta  <hattori@hattori-server>
+
+	* ジョブフローで標準入力のリダイレクト記法をサポート
+
+2012-09-20  Hattori Kenta  <hattori@hattori-server>
+
+	* 仮想ファイルシステムの一覧オブジェクトをiterableに修正
+
+	* 仮想ファイルシステムのオブジェクトにdeleteメソッドを追加
+
+2012-09-19  Hattori Kenta  <hattori@hattori-server>
+
+	* データインポート時のroot_pathに日本語を含む場合にエラーとなる問題を修正
+
+	* データエクスポートに相対パスモードのオプションを追加
+
+2012-09-18    <hattori@HATTORI-PC>
+
+	* 各種テーブル一覧にソート機能を追加
+
+2012-09-14    <hattori@HATTORI-PC>
+
+	* forブロック内にcaseブロックがあると、ループ途中で失敗する問題を修正
+
+	* テーブル定義の表示フィールド指定で不正な名前を指定した場合のエラー
+	  に対応
+
+2012-09-13  Hattori Kenta  <hattori@hattori-server>
+
+	* forブロック内部の繰り返しでフローの最後のジョブが非zeroを返しても
+	  ステータスがチェックされない問題を修正
+
+2012-09-06    <hattori@HATTORI-PC>
+
+	* プロセス詳細のコンソールでスクロール位置の初期値を最下段に変更
+
+	* プロセス状態の表記に関するバグを修正
+
+2012-09-05    <hattori@HATTORI-PC>
+
+	* 半角英数字のみのパスだとプロセス詳細表示が崩れる問題に対応
+
+	* detach組み込みジョブが親プロセスに通知しないバグを修正
+
+2012-09-04    <hattori@HATTORI-PC>
+
+	* 日本語パスを含むコピー時に内部エラーとなるバグを修正
+
+2012-09-03    <hattori@HATTORI-PC>
+
+	* 1.0.0正式リリース
+
+2012-08-31    <hattori@HATTORI-PC>
+
+	* コンパイルエラーのジョブフローをスケジューラから起動できないよう修正
+
+	* グループ名で不正な名前のチェックを追加
+
+	* 実行ボタンの連打抑止
+
+	* パス名の最大長を255、オブジェクト名の最大を64に制限
+
+2012-08-30    <kenta@KENTA-PC>
+
+	* スケジュール入力時，入力エラー後のカレンダーが1970年表示になる不具合を修正
+
+	* Ajaxビューで/process, /schedulerが権限無しで取得できる不具合を修正
+
+	* サンプル用ジョブフローを/shareから/samplesに移動
+
+	* 移動先やコピー先にに../の指定ができない不具合を修正
+
+2012-08-29    <hattori@HATTORI-PC>
+
+	* 日本語の含まれるスクリプトジョブが実行できない問題を修正
+
+	* リモートジョブキャンセル時にRabbitMQ内のキューが削除されない問題を修正
+
+2012-08-28    <hattori@HATTORI-PC>
+
+	* ジョブマネージャパッケージ作成のためパッケージ構成を変更
+
+	* IEで削除ボタンが動作しない問題に対応
+
+	* IEでプロセスの終了、停止、続行時に内部エラーになる問題に対応
+
+2012-08-27    <hattori@HATTORI-PC>
+
+	* コンパイルエラーのジョブフロー呼び出しチェックを追加
+
+	* ユーザー、グループ、スケジュール、タスク、インシデント、プロセス情報のインポート、エクスポート対応
+
+2012-08-24    <hattori@HATTORI-PC>
+
+	* タスク一覧、インシデント一覧、プロセス一覧に一括削除機能を追加
+
+2012-08-23    <hattori@HATTORI-PC>
+
+	* インシデント詳細の対応履歴、アラート一覧にページネート追加
+
+	* ディレクトリ、テーブル一覧にページネート追加
+
+	* 辞書型データの最後に空エントリが残っていると、削除できない問題に対応
+
+	* 辞書型データの順序を保存するように修正
+
+	* 辞書型データの値をオプショナルに変更
+
+	* フィールド書き込み時のエラーチェック追加
+
+	* ../path/to/objectのように..で始まるパスが参照エラーになる問題に対応
+
+	* 型オブジェクトのフィールド変更時のexport_data/import_dataに対応
+
+2012-08-22    <hattori@HATTORI-PC>
+
+	* DB接続エラー時にkompiradが再接続を試みるようにした
+
+2012-08-17    <hattori@HATTORI-PC>
+
+	* json_parse組み込みジョブを追加
+
+	* スケジュール詳細、プロセス詳細のプロセス一覧をページネート
+
+	* ジョブフローの実行状況に応じてコード行を表示する機能を追加
+
+2012-08-10    <hattori@HATTORI-PC>
+
+	* データインポート機能に相対パスオプションを追加
+
+	* ステップ実行機能を追加
+
+2012-08-09    <hattori@HATTORI-PC>
+
+	* パスワード用のフィールド型を追加
+
+	* ScriptJob/Jobflowのコード編集用テキストエリアを改良
+
+	* カレンダー（スケジュール）機能を追加
+
+2012-08-03    <hattori@HATTORI-PC>
+
+	* ファイル転送のためのput/get組み込みジョブを実装
+
+2012-08-02    <hattori@HATTORI-PC>
+
+	* URLアクセス機能を追加
+
+2012-08-01    <hattori@HATTORI-PC>
+
+	* チャネルのイベント待ちタイムアウト指定に対応
+
+2012-07-31    <hattori@HATTORI-PC>
+
+	* kompiradが未起動時にエラーメッセージを表示するように変更
+
+	* kompiradが異常終了時に再起動するようkompirad.confの設定を変更
+
+	* 子プロセス情報を削除した場合に、kompiradがクラッシュする問題に対応
+
+2012-07-30    <hattori@HATTORI-PC>
+
+	* サーバー再起動時に、kompiradの起動に失敗する問題に対応
+
+	* プロセス状況を新しいプロセスから順に表示するように変更
+
+	* ディレクトリ、テーブルのコピーを深いコピーに変更
+
+2012-07-25    <hattori@HATTORI-PC>
+
+	* kompiradの起動をmanage.py経由から直接kompirad.pyからに変更
+
+2012-07-24    <hattori@HATTORI-PC>
+
+	* amqplibのパッチをmonkypatch方式に変更
+
+2012-07-23    <hattori@HATTORI-PC>
+
+	* ログファイルを1日毎にローテートする方式に変更
+
+2012-07-20    <hattori@HATTORI-PC>
+
+	* ドキュメント改定
+
+2012-07-19    <kenta@KENTA-PC>
+
+	* テンプレート変換で引数が足りない場合，置換せずに続行するよう変更
+
+	* リモートコマンドの引数や結果の日本語に対応
+
+2012-07-18    <kenta@KENTA-PC>
+
+	* kompirad, kompira_jobmngrdをサーバ起動時に自動起動するように設定
+
+	* ジョブマネージャ名称をjobmanagerからkompira_jobmngrdに変更
+
+	* ログファイルを64KBサイズでローテートするようにした
+
+	* ログファイルを/var/log/kompirad.log, kompira_jobmngrd.logに集約
+
+2012-07-13    <hattori@HATTORI-PC>
+
+	* チャネルビューにメッセージ数、イベント数の表示を追加
+
+	* プロセスディスパッチ時のrabbitmq経由での通知を廃止
+
+	* インスタンスが残存しているときの型オブジェクト削除エラーを修正
+
+2012-07-12    <hattori@HATTORI-PC>
+
+	* ジョブフロー実行時のパラメータ指定をサポート
+
+2012-07-11    <hattori@HATTORI-PC>
+
+	* checkpoint/restart機能追加
+
+2012-07-04    <hattori@HATTORI-PC>
+
+	* チャネル内のデータをDBに保存するように修正
+
+2012-06-29    <hattori@HATTORI-PC>
+
+	* コンソール出力バッファをStringIOからリングバッファに変更
+
+2012-06-27    <hattori@HATTORI-PC>
+
+	* リモートジョブの実行ログをジョブ実行コンソールに反映するよう修正
+
+	* リモートジョブのタイムアウト指定に対応
+
+2012-06-26    <hattori@HATTORI-PC>
+
+	* ジョブフロー作成直後にジョブを実行するとエラーになる不具合を修正
+
+2012-06-25    <hattori@HATTORI-PC>
+
+	* __port__, __keyfile__によるsshポート番号、鍵ファイルの指定に対応
+
+	* タスクメッセージの改行対応
+
+2012-06-22    <hattori@HATTORI-PC>
+
+	* 管理対象領域の管理機能を追加
+
+2012-06-21    <hattori@HATTORI-PC>
+
+	* 移動、複製先がディレクトリ以外の場合に内部エラーになるバグを修正
+
+	* 移動、複製先に相対パスを指定可能にした
+
+
+2012-06-20    <hattori@HATTORI-PC>
+
+	* ジョブマネージャにハートビート送信機能を追加
+
+	* ジョブマネージャにコネクションの再接続機能を追加
+
+2012-06-14    <hattori@HATTORI-PC>
+
+	* ユーザー権限管理機能を実装
+
+2012-06-13    <kenta@KENTA-PC>
+
+	* ポート番号と鍵ファイルを設定ファイルにて指定可能にした
+
+2012-06-13    <hattori@HATTORI-PC>
+
+	* デフォルトとしてall, rootグループを追加
+
+2012-06-11    <hattori@HATTORI-PC>
+
+	* 型情報を変更した際、古い型で定義したオブジェクトを参照すると内部
+	エラーになる問題を修正
+
+2012-06-08    <hattori@HATTORI-PC>
+
+	* if文の追加
+
+	* 組み込み関数、およびメソッド呼び出しの構文を変更
+
+	* リスト、辞書データを実装
+
+	* 算術演算子、論理演算子、比較演算子を追加
+
+2012-06-01    <hattori@HATTORI-PC>
+
+	* Django管理画面、静的ファイル等のURLプレフィクスを.に変更
+
+	* ユーザー/グループ管理を仮想ファイルシステムに統合
+
+	* マニュアルへのURLリンクをメニューバーに追加
+
+2012-05-30    <hattori@HATTORI-PC>
+
+	* 複製と移動操作を実装
+
+	* モデル名とフィールド名の重複に関する一意制約追加
+
+2012-05-29    <hattori@HATTORI-PC>
+
+	* キャッシュを追加しパフォーマンスを向上
+
+	* MySQL/InnoDB構成でジョブフロー実行時に内部エラーになる問題に対応
+
+2012-05-14    <hattori@HATTORI-PC>
+
+	* IncidentFs, ProcFsの実装位置を各アプリ配下に移動
+
+2012-05-08    <hattori@HATTORI-PC>
+
+	* Objectにownerフィールドを追加
+
+	* taskモジュール追加
+
+	* モジュール名変更: im -> incident, jfm -> jobflow
+
+2012-05-01    <hattori@HATTORI-PC>
+
+	* チャネルのタイムアウト処理のバグに対応
+
+	* JobFlowビューで適切にHTMLエスケープされない問題に対応
+
+2012-04-25    <hattori@HATTORI-PC>
+
+	* pidlockfileモジュールインポート時のImportErrorに対応
+	(utils/daemon_ctrl.py)
+
+2012-04-24    <hattori@HATTORI-PC>
+
+	* kobj.Channel.get_recvqのバグを修正(poll_recvqという未定義のメソッ
+	ドを呼び出していた)

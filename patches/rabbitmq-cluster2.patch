@@ -1,0 +1,11 @@
+--- /usr/lib/ocf/resource.d/heartbeat/rabbitmq-cluster	2022-02-24 02:10:51.000000000 +0900
++++ /usr/lib/ocf/resource.d/heartbeat/rabbitmq-cluster	2023-01-17 22:29:55.500016406 +0900
+@@ -56,6 +56,7 @@
+ # we can continue to map an offline pcmk node to it's rmq node name
+ # equivalent. 
+ RMQ_CRM_ATTR_COOKIE_LAST_KNOWN="rmq-node-attr-last-known-${OCF_RESOURCE_INSTANCE}"
++LC_ALL=en_US.UTF-8
+ 
+ meta_data() {
+ 	cat <<END
+

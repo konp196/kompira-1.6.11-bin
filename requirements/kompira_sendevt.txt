@@ -1,0 +1,2 @@
+amqp ~= 2.6.1  # DROP py3.6 @ 5.1.0
+packaging >= 21.0

@@ -1,0 +1,102 @@
+[{
+    "owner": "root",
+    "fields": {
+        "mainBackColor": "#d2d2e1",
+        "menubarBackColor": "#f7f7ff",
+        "menubarTextColor": "#0a0a14",
+        "invertMode": true
+    },
+    "user_permissions": {},
+    "group_permissions": {},
+    "display_name": "DarkMode",
+    "description": "",
+    "parent_object": "system/styles",
+    "objpath": "system/styles/DarkMode",
+    "typepath": "/system/types/CustomStyle"
+},
+{
+    "owner": "root",
+    "fields": {
+        "mainBackColor": "#fef4f4",
+        "menubarBackColor": "#e89495",
+        "menubarTextColor": "#fef4f4",
+        "invertMode": false
+    },
+    "user_permissions": {},
+    "group_permissions": {
+        "other": {
+            "readable": true,
+            "writable": false,
+            "executable": false,
+            "priority": 0
+        }
+    },
+    "display_name": "PrettyPink",
+    "description": "",
+    "parent_object": "system/styles",
+    "objpath": "system/styles/PrettyPink",
+    "typepath": "/system/types/CustomStyle"
+},
+{
+    "owner": "root",
+    "fields": {
+        "mainBackColor": "#f5f8fd",
+        "menubarBackColor": "#028bb8",
+        "menubarTextColor": "#dff2fc",
+        "invertMode": false
+    },
+    "user_permissions": {},
+    "group_permissions": {
+        "other": {
+            "readable": true,
+            "writable": false,
+            "executable": false,
+            "priority": 0
+        }
+    },
+    "display_name": "SkyBlue",
+    "description": "",
+    "parent_object": "system/styles",
+    "objpath": "system/styles/SkyBlue",
+    "typepath": "/system/types/CustomStyle"
+},
+{
+    "owner": "root",
+    "fields": {
+        "mainBackColor": "#f5fbfc",
+        "menubarBackColor": "#3F9E91",
+        "menubarTextColor": "#ffffff",
+        "invertMode": false
+    },
+    "user_permissions": {},
+    "group_permissions": {
+        "other": {
+            "readable": true,
+            "writable": false,
+            "executable": false,
+            "priority": 0
+        }
+    },
+    "display_name": "EmeraldGreen",
+    "description": "",
+    "parent_object": "system/styles",
+    "objpath": "system/styles/EmeraldGreen",
+    "typepath": "/system/types/CustomStyle"
+},
+{
+    "id": 271,
+    "owner": "root",
+    "fields": {
+        "mainBackColor": "#d2d2e1",
+        "menubarBackColor": "#4b4b60",
+        "menubarTextColor": "#c8c8d2",
+        "invertMode": false
+    },
+    "user_permissions": {},
+    "group_permissions": {},
+    "display_name": "LightPurple",
+    "description": "",
+    "parent_object": "system/styles",
+    "objpath": "system/styles/LightPurple",
+    "typepath": "/system/types/CustomStyle"
+}]

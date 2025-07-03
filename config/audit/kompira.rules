@@ -1,0 +1,5 @@
+## audit rules for kompira
+-a exclude,never -F msgtype=USER_START -F exe=/usr/sbin/runuser
+-a exclude,never -F msgtype=USER_END -F exe=/usr/sbin/runuser
+-a exclude,never -F msgtype=CRED_DISP -F exe=/usr/sbin/runuser
+-a exclude,never -F msgtype=CRED_ACQ -F exe=/usr/sbin/runuser

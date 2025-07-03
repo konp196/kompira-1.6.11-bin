@@ -1,0 +1,10 @@
+$PG_LOG_DIR/*.log {
+    daily
+    compress
+    delaycompress
+    notifempty
+    copytruncate
+    missingok
+    create 0640 postgres postgres
+    rotate 30
+}

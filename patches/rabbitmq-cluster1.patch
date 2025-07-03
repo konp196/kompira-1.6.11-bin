@@ -1,0 +1,19 @@
+--- /usr/lib/ocf/resource.d/heartbeat/rabbitmq-cluster	2022-02-24 02:10:51.000000000 +0900
++++ /usr/lib/ocf/resource.d/heartbeat/rabbitmq-cluster	2023-01-17 22:29:55.500016406 +0900
+@@ -167,11 +169,12 @@
+ rmq_local_node()
+ {
+ 
+-	local node_name=$($RMQ_CTL status 2>&1 | sed -n -e "s/^.*[S|s]tatus of node \(.*\)\s.*$/\1/p" | tr -d "'")
++	#local node_name=$($RMQ_CTL status 2>&1 | sed -n -e "s/^.*[S|s]tatus of node \(.*\)\s.*$/\1/p" | tr -d "'")
+ 
+-	if [ -z "$node_name" ]; then
+-		node_name=$(cat /etc/rabbitmq/rabbitmq-env.conf 2>/dev/null | grep "\s*RABBITMQ_NODENAME=" | awk -F= '{print $2}')
+-	fi
++	#if [ -z "$node_name" ]; then
++	#	node_name=$(cat /etc/rabbitmq/rabbitmq-env.conf 2>/dev/null | grep "\s*RABBITMQ_NODENAME=" | awk -F= '{print $2}')
++	#fi
++	node_name=$(cat /etc/rabbitmq/rabbitmq-env.conf 2>/dev/null | grep "\s*NODENAME=" | awk -F= '{print $2}')
+ 
+ 	echo "$node_name"
+ }

@@ -1,0 +1,1477 @@
+[
+    {
+        "objpath": "config",
+        "display_name": "設定情報",
+        "description": "",
+        "owner": "root",
+        "typepath": "system/types/Directory",
+        "fields": {},
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/License",
+        "display_name": "ライセンス",
+        "description": "ライセンス情報の型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [],
+            "fieldTypes": [],
+            "fieldNames": []
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "config/license",
+        "display_name": "ライセンス管理",
+        "description": "ライセンスファイルの登録設定",
+        "owner": "root",
+        "typepath": "system/types/License",
+        "fields": {},
+        "user_permissions": {},
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/TypeObject",
+        "display_name": "型オブジェクト",
+        "description": "型の型オブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "拡張モジュール",
+                "フィールド名の列",
+                "フィールド表示名の列",
+                "フィールド型の列"
+            ],
+            "fieldTypes": [
+                "String",
+                "Array",
+                "Array",
+                "Array"
+            ],
+            "fieldNames": [
+                "extend",
+                "fieldNames",
+                "fieldDisplayNames",
+                "fieldTypes"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Directory",
+        "display_name": "ディレクトリ",
+        "description": "ディレクトリの型オブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "ソート順",
+                "ページサイズ"
+            ],
+            "fieldTypes": [
+                "String",
+                "Integer#{\"default\": 25, \"min_value\": 10, \"max_value\": 1000}"
+            ],
+            "fieldNames": [
+                "orderBy",
+                "pageSize"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Virtual",
+        "display_name": "仮想オブジェクト",
+        "description": "仮想オブジェクトの型オブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "実装モジュール"
+            ],
+            "fieldTypes": [
+                "String"
+            ],
+            "fieldNames": [
+                "virtual"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Jobflow",
+        "display_name": "ジョブフロー",
+        "description": "ジョブフロー定義データのオブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "ソース",
+                "コード",
+                "パラメータ",
+                "実行可能",
+                "エラー",
+                "コンパイラバージョン",
+                "多重度",
+                "デフォルトチェックポイントモード",
+                "デフォルト監視モード",
+                "コンパイル日時"
+            ],
+            "fieldTypes": [
+                "LargeText",
+                "LargeText#{\"invisible\": true}",
+                "Dictionary#{\"invisible\": true}",
+                "Boolean#{\"invisible\": true}",
+                "Dictionary#{\"invisible\": true}",
+                "String#{\"invisible\": true}",
+                "Integer",
+                "Boolean",
+                "Enum#{\"enum\": [[\"NOTHING\", \"何もしない\"], [\"MAIL\", \"プロセス終了時にメール送信\"], [\"ABORT_MAIL\", \"プロセス異常終了時のみメール送信\"]]}",
+                "Datetime#{\"invisible\": true}"
+            ],
+            "fieldNames": [
+                "source",
+                "code",
+                "parameters",
+                "executable",
+                "errors",
+                "compilerVersion",
+                "multiplicity",
+                "defaultCheckpointMode",
+                "defaultMonitoringMode",
+                "compiledDatetime"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Channel",
+        "display_name": "チャネル",
+        "description": "チャネル定義を扱うオブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "メッセージキュー",
+                "イベントキュー",
+                "アクション種別",
+                "アクションターゲット"
+            ],
+            "fieldTypes": [
+                "Array<Binary>#{\"invisible\": true}",
+                "Array<Binary>#{\"invisible\": true}",
+                "Enum#{\"enum\":[[\"NoAction\",\"何もしない\"],[\"ExecuteJobflow\",\"ジョブフローを実行する\"]],\"default\":\"NoAction\"}",
+                "Object#{\"object\":{\"switch\":\"$[action_type]\",\"case\":{\"NoAction\":[],\"ExecuteJobflow\":\"/system/types/Jobflow\"}}}"
+            ],
+            "fieldNames": [
+                "message_queue",
+                "event_queue",
+                "action_type",
+                "action_target"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Wiki",
+        "display_name": "Wikiページ",
+        "description": "単純なウィキページオブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "Wikiテキスト",
+                "スタイル"
+            ],
+            "fieldTypes": [
+                "LargeText",
+                "Enum#{\"enum\": [\"Creole\", \"Markdown\", \"Textile\"], \"default\": \"Creole\"}"
+            ],
+            "fieldNames": [
+                "wikitext",
+                "style"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/ScriptJob",
+        "display_name": "スクリプトジョブ",
+        "description": "スクリプト実行を行うジョブ定義",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "ソース",
+                "拡張子",
+                "多重度"
+            ],
+            "fieldTypes": [
+                "LargeText",
+                "String",
+                "Integer"
+            ],
+            "fieldNames": [
+                "source",
+                "ext",
+                "multiplicity"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Environment",
+        "display_name": "環境変数",
+        "description": "ジョブフロー実行時に渡す環境変数の設定用オブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "環境変数"
+            ],
+            "fieldTypes": [
+                "Dictionary"
+            ],
+            "fieldNames": [
+                "environment"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Template",
+        "display_name": "テンプレート",
+        "description": "テンプレート情報用のオブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "テンプレート"
+            ],
+            "fieldTypes": [
+                "LargeText"
+            ],
+            "fieldNames": [
+                "template"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Table",
+        "display_name": "テーブル",
+        "description": "テーブルオブジェクト用",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "オブジェクト型",
+                "関連オブジェクト",
+                "表示フィールド一覧",
+                "ソート順",
+                "ページサイズ"
+            ],
+            "fieldTypes": [
+                "Object#{\"object\": \"/system/types/TypeObject\", \"no_empty\": true}",
+                "Object#{\"object\": [\"/system/types/Jobflow\", \"/system/types/Form\"]}",
+                "Array",
+                "String",
+                "Integer#{\"default\": 25, \"min_value\": 10, \"max_value\": 1000}"
+            ],
+            "fieldNames": [
+                "typeObject",
+                "relatedObject",
+                "displayList",
+                "orderBy",
+                "pageSize"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Realm",
+        "display_name": "管理領域",
+        "description": "管理領域の定義用の型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "対象範囲",
+                "無効"
+            ],
+            "fieldTypes": [
+                "Array",
+                "Boolean"
+            ],
+            "fieldNames": [
+                "range",
+                "disabled"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/AttachedFile",
+        "display_name": "添付ファイル",
+        "description": "添付ファイルのための型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "添付ファイル1",
+                "添付ファイル2",
+                "添付ファイル3"
+            ],
+            "fieldTypes": [
+                "File",
+                "File",
+                "File"
+            ],
+            "fieldNames": [
+                "attached1",
+                "attached2",
+                "attached3"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/NodeInfo",
+        "display_name": "ノード情報",
+        "description": "管理対象のノード情報",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "ノード種別",
+                "接続種別",
+                "ホスト名",
+                "IPアドレス",
+                "ポート番号",
+                "シェル",
+                "シェル使用",
+                "プロキシ",
+                "アカウント"
+            ],
+            "fieldTypes": [
+                "Object#{\"object\":\"/system/types/NodeType\"}",
+                "Enum#{\"enum\":\"$[nodetype][conntypes]\"}",
+                "String",
+                "IPAddress",
+                "Integer#{\"min_value\": 0, \"max_value\": 65535}",
+                "String",
+                "Boolean#{\"default\": false}",
+                "Object#{\"object\": \"/system/types/NodeInfo\"}",
+                "Object#{\"object\": \"/system/types/AccountInfo\"}"
+            ],
+            "fieldNames": [
+                "nodetype",
+                "conntype",
+                "hostname",
+                "ipaddr",
+                "port",
+                "shell",
+                "use_shell",
+                "proxy",
+                "account"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/AccountInfo",
+        "display_name": "アカウント情報",
+        "description": "アカウント情報を定義する型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "ユーザ名",
+                "パスワード",
+                "SSH鍵ファイル",
+                "SSH鍵パスフレーズ"
+            ],
+            "fieldTypes": [
+                "String",
+                "Password",
+                "File",
+                "Password"
+            ],
+            "fieldNames": [
+                "user",
+                "password",
+                "keyfile",
+                "passphrase"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Repository",
+        "display_name": "リポジトリ",
+        "description": "リポジトリ連携を行うための型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "URL",
+                "リポジトリ種別",
+                "ポート番号",
+                "ユーザー名",
+                "パスワード",
+                "ディレクトリ",
+                "設定データを上書きする",
+                "ログ"
+            ],
+            "fieldNames": [
+                "URL",
+                "repositoryType",
+                "port",
+                "username",
+                "password",
+                "directory",
+                "updateConfig",
+                "log"
+            ],
+            "fieldTypes": [
+                "URL",
+                "Enum#{\"enum\": [\"git\", \"mercurial\"]}",
+                "Integer#{\"min_value\": 0, \"max_value\": 65535}",
+                "String",
+                "Password",
+                "Object#{\"object\": \"/system/types/Directory\"}",
+                "Boolean",
+                "LargeText#{\"invisible\": true}"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/MailChannel",
+        "display_name": "メールチャネル",
+        "description": "メールチャネル定義を扱うオブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "メッセージキュー",
+                "イベントキュー",
+                "サーバ名",
+                "プロトコル",
+                "SSL",
+                "ポート番号",
+                "ユーザ名",
+                "パスワード",
+                "接続タイムアウト",
+                "OAuth2使用",
+                "OAuth2プロバイダ",
+                "リフレッシュトークン",
+                "アクセストークン",
+                "トークン有効期限",
+                "メールボックス",
+                "受信モード",
+                "受信チェック間隔",
+                "アクション種別",
+                "アクションターゲット",
+                "ログ",
+                "ログサイズ",
+                "無効"
+            ],
+            "fieldTypes": [
+                "Array<Binary>#{\"invisible\": true}",
+                "Array<Binary>#{\"invisible\": true}",
+                "String",
+                "Enum#{\"enum\": [\"IMAP4\", \"POP3\"], \"default\": \"IMAP4\"}",
+                "Boolean",
+                "Integer#{\"min_value\": 0, \"max_value\": 65535}",
+                "String",
+                "Password",
+                "Integer#{\"default\": 60, \"min_value\": 0}",
+                "Boolean",
+                "Object#{\"object\": \"/system/types/OAuth2Provider\"}",
+                "Password#{\"invisible\": true}",
+                "Password#{\"invisible\": true}",
+                "Datetime#{\"invisible\": true}",
+                "String#{\"default\": \"INBOX\"}",
+                "Enum#{\"enum\":{\"switch\":\"$[protocol]\",\"case\":{\"IMAP4\":[[\"ReceiveAllAndDelete\",\"全てのメールを受信して削除する\"],[\"ReceiveUnseenAndSetSeen\",\"未読のメールを受信して既読にする\"]],\"POP3\":[[\"ReceiveAllAndDelete\",\"全てのメールを受信して削除する\"]]}}}",
+                "Integer#{\"default\": 10, \"min_value\": 0}",
+                "Enum#{\"enum\":[[\"NoAction\",\"何もしない\"],[\"ExecuteJobflow\",\"ジョブフローを実行する\"]],\"default\":\"NoAction\"}",
+                "Object#{\"object\":{\"switch\":\"$[action_type]\",\"case\":{\"NoAction\":[],\"ExecuteJobflow\":\"/system/types/Jobflow\"}}}",
+                "LargeText#{\"invisible\": true}",
+                "Integer#{\"default\": 65536}",
+                "Boolean#{\"default\": true}"
+            ],
+            "fieldNames": [
+                "message_queue",
+                "event_queue",
+                "serverName",
+                "protocol",
+                "SSL",
+                "port",
+                "username",
+                "password",
+                "timeout",
+                "use_oauth2",
+                "oauth2_provider",
+                "refresh_token",
+                "access_token",
+                "token_expires_at",
+                "mailbox",
+                "receive_mode",
+                "checkInterval",
+                "action_type",
+                "action_target",
+                "log",
+                "logSize",
+                "disabled"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Form",
+        "display_name": "フォーム",
+        "description": "入力フォーム定義を扱うオブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "提出オブジェクト",
+                "フィールド名の列",
+                "フィールド表示名の列",
+                "フィールド型の列"
+            ],
+            "fieldTypes": [
+                "Object#{\"object\": [\"/system/types/Jobflow\", \"/system/types/Channel\"], \"no_empty\": true}",
+                "Array",
+                "Array",
+                "Array"
+            ],
+            "fieldNames": [
+                "submitObject",
+                "fieldNames",
+                "fieldDisplayNames",
+                "fieldTypes"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Config",
+        "display_name": "設定",
+        "description": "設定を扱うオブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "フィールド名の列",
+                "フィールド表示名の列",
+                "フィールド型の列"
+            ],
+            "fieldTypes": [
+                "Array",
+                "Array",
+                "Array"
+            ],
+            "fieldNames": [
+                "fieldNames",
+                "fieldDisplayNames",
+                "fieldTypes"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Library",
+        "display_name": "ライブラリ",
+        "description": "ライブラリ定義を扱うオブジェクト",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "ライブラリ種別",
+                "モジュールパス",
+                "ソーステキスト",
+                "ドキュメント",
+                "実行可能"
+            ],
+            "fieldTypes": [
+                "Enum#{\"enum\": [\"source\", \"safe_source\", \"module\"], \"default\": \"source\"}",
+                "String",
+                "LargeText",
+                "LargeText#{\"invisible\": true}",
+                "Boolean#{\"invisible\": true}"
+            ],
+            "fieldNames": [
+                "libraryType",
+                "modulePath",
+                "sourceText",
+                "document",
+                "executable"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/MailTemplate",
+        "display_name": "メールテンプレート",
+        "description": "メールテンプレートのための型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "件名",
+                "本文"
+            ],
+            "fieldTypes": [
+                "String",
+                "LargeText"
+            ],
+            "fieldNames": [
+                "subject",
+                "body"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/Text",
+        "display_name": "テキスト",
+        "description": "プレインテキストや HTML テキストを格納するための型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [
+                "テキスト",
+                "拡張子",
+                "コンテントタイプ",
+                "コンテキスト"
+            ],
+            "fieldTypes": [
+                "LargeText",
+                "String",
+                "String",
+                "Object#{\"object\": \"/system/types/Environment\"}"
+            ],
+            "fieldNames": [
+                "text",
+                "ext",
+                "contentType",
+                "context"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/SystemInfo",
+        "display_name": "システム情報",
+        "description": "システム情報の型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldDisplayNames": [],
+            "fieldTypes": [],
+            "fieldNames": []
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/NodeType",
+        "display_name": "ノード種別",
+        "description": "ノード種別を定義するための型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldNames": [
+                "conntypes"
+            ],
+            "fieldDisplayNames": [
+                "接続種別"
+            ],
+            "fieldTypes": [
+                "Dictionary"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/CustomStyle",
+        "display_name": "カスタムスタイル",
+        "description": "カスタムスタイルを定義するための型",
+        "owner": "root",
+        "typepath": "/system/types/TypeObject",
+        "fields": {
+            "extend": "",
+            "fieldNames": [
+                "mainBackColor",
+                "menubarBackColor",
+                "menubarTextColor",
+                "invertMode"
+            ],
+            "fieldDisplayNames": [
+                "メイン背景色",
+                "メニューバー背景色",
+                "メニューバー文字色",
+                "反転モード"
+            ],
+            "fieldTypes": [
+                "String#{\"pattern\":\"^(#[0-9A-Fa-f]{3}|#[0-9A-Fa-f]{6}|(rgb|hsl)\\\\(.+,.+,.+\\\\)|[A-Za-z]+)$\"}",
+                "String#{\"pattern\":\"^(#[0-9A-Fa-f]{3}|#[0-9A-Fa-f]{6}|(rgb|hsl)\\\\(.+,.+,.+\\\\)|[A-Za-z]+)$\"}",
+                "String#{\"pattern\":\"^(#[0-9A-Fa-f]{3}|#[0-9A-Fa-f]{6}|(rgb|hsl)\\\\(.+,.+,.+\\\\)|[A-Za-z]+)$\"}",
+                "Boolean"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/OAuth2Provider",
+        "display_name": "OAuth2プロバイダ",
+        "description": "OAuth2プロバイダ設定情報を格納するための型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldNames": [
+                "client_id",
+                "client_secret",
+                "auth_endpoint",
+                "token_endpoint",
+                "scope",
+                "redirect_url"
+            ],
+            "fieldDisplayNames": [
+                "クライアントID",
+                "クライアントシークレット",
+                "認証エンドポイント",
+                "トークンエンドポイント",
+                "スコープ",
+                "リダイレクトURL"
+            ],
+            "fieldTypes": [
+                "String",
+                "Password",
+                "URL",
+                "URL",
+                "Array",
+                "URL"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/SmtpServer",
+        "display_name": "SMTPサーバ",
+        "description": "SMTPサーバ設定情報を格納するための型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldNames": [
+                "hostname",
+                "port",
+                "username",
+                "password",
+                "timeout",
+                "use_tls",
+                "use_ssl",
+                "use_oauth2",
+                "oauth2_provider",
+                "refresh_token",
+                "access_token",
+                "token_expires_at"
+            ],
+            "fieldDisplayNames": [
+                "ホスト名",
+                "ポート番号",
+                "ユーザー名",
+                "パスワード",
+                "接続タイムアウト",
+                "TLS使用",
+                "SSL使用",
+                "OAuth2使用",
+                "OAuth2プロバイダ",
+                "リフレッシュトークン",
+                "アクセストークン",
+                "トークン有効期限"
+            ],
+            "fieldTypes": [
+                "String",
+                "Integer#{\"min_value\": 0, \"max_value\": 65535}",
+                "String",
+                "Password",
+                "Integer#{\"default\": 60, \"min_value\": 0}",
+                "Boolean",
+                "Boolean",
+                "Boolean",
+                "Object#{\"object\": \"/system/types/OAuth2Provider\"}",
+                "Password#{\"invisible\": true}",
+                "Password#{\"invisible\": true}",
+                "Datetime#{\"invisible\": true}"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    },
+    {
+        "objpath": "system/types/LdapServer",
+        "display_name": "LDAPサーバ",
+        "description": "LDAPサーバ設定情報を格納するための型",
+        "owner": "root",
+        "typepath": "system/types/TypeObject",
+        "fields": {
+            "fieldNames": [
+                "server_url",
+                "timeout",
+                "use_starttls",
+                "fallback_login",
+                "session_expiration",
+                "bind_dn",
+                "bind_password",
+                "user_search_dn",
+                "user_search_scope",
+                "user_search_attribute",
+                "target_users",
+                "required_group_dn",
+                "group_search_dn",
+                "group_search_scope",
+                "group_search_class",
+                "group_type",
+                "mirror_groups",
+                "user_data_first_name",
+                "user_data_last_name",
+                "user_data_email"
+            ],
+            "fieldDisplayNames": [
+                "サーバURL",
+                "接続タイムアウト(秒)",
+                "STARTTLS使用",
+                "フォールバックログイン",
+                "セッション有効期間(時間)",
+                "バインドDN",
+                "バインドパスワード",
+                "ユーザー検索DN",
+                "ユーザー検索スコープ",
+                "ユーザー検索属性",
+                "対象ユーザ",
+                "所属グループDN",
+                "グループ検索DN",
+                "グループ検索スコープ",
+                "グループ検索クラス",
+                "グループ種別",
+                "反映グループ",
+                "ユーザデータ(名)",
+                "ユーザデータ(姓)",
+                "ユーザデータ(Email)"
+            ],
+            "fieldTypes": [
+                "URL#{\"schemes\": [\"ldap\", \"ldaps\"]}",
+                "Integer#{\"default\": 10}",
+                "Boolean#",
+                "Boolean#",
+                "Float#{\"default\": 0, \"min_value\": 0, \"max_value\": 10000000}",
+                "String#",
+                "Password#",
+                "String#",
+                "Enum#{\"enum\": [\"BASE\", \"ONELEVEL\", \"SUBTREE\"], \"default\": \"SUBTREE\"}",
+                "String#{\"default\": \"name\"}",
+                "Array#",
+                "Array#",
+                "String#",
+                "Enum#{\"enum\": [\"BASE\", \"ONELEVEL\", \"SUBTREE\"], \"default\": \"SUBTREE\"}",
+                "String#{\"default\": \"group\"}",
+                "Enum#{\"enum\": [\"PosixGroup\", \"GroupOfNames\", \"NestedGroupOfNames\", \"GroupOfUniqueNames\", \"NestedGroupOfUniqueNames\", \"ActiveDirectoryGroup\", \"NestedActiveDirectoryGroup\", \"OrganizationalRoleGroup\", \"NestedOrganizationalRoleGroup\"]}",
+                "Array#",
+                "String#{\"default\": \"givenName\"}",
+                "String#{\"default\": \"sn\"}",
+                "String#{\"default\": \"mail\"}"
+            ]
+        },
+        "user_permissions": {
+            "root": {
+                "readable": true,
+                "writable": false,
+                "executable": false
+            }
+        },
+        "group_permissions": {
+            "other": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            },
+            "wheel": {
+                "readable": true,
+                "writable": false,
+                "executable": false,
+                "priority": 0
+            }
+        }
+    }
+]
